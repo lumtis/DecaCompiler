@@ -5,8 +5,8 @@ import fr.ensimag.deca.tree.Location;
 /**
  * Definition of an identifier.
  * 
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl35
+ * @date 01/01/2017
  */
 public abstract class Definition {
     @Override

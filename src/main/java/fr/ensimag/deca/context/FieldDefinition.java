@@ -6,8 +6,8 @@ import fr.ensimag.deca.tree.Visibility;
 /**
  * Definition of a field (data member of a class).
  *
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl35
+ * @date 01/01/2017
  */
 public class FieldDefinition extends ExpDefinition {
     public int getIndex() {

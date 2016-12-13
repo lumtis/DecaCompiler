@@ -8,7 +8,7 @@ import fr.ensimag.ima.pseudocode.ImmediateInteger;
 /**
  *
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2017
  */
 public class CMP extends BinaryInstructionDValToReg {
 

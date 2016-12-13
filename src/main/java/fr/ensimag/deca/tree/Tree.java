@@ -13,8 +13,8 @@ import org.apache.log4j.Logger;
  * Factors all the common elements and utility functions to manipulate trees
  * (location in source-code, pretty-printing, ...).
  *
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl35
+ * @date 01/01/2017
  *
  */
 public abstract class Tree {

@@ -6,8 +6,8 @@ import fr.ensimag.deca.tree.LocationException;
 /**
  * Exception raised when a contextual error is found.
  *
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl35
+ * @date 01/01/2017
  */
 public class ContextualError extends LocationException {
     private static final long serialVersionUID = -8122514996569278575L;

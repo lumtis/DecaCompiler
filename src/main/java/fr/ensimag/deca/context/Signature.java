@@ -6,8 +6,8 @@ import java.util.List;
 /**
  * Signature of a method (i.e. list of arguments)
  *
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl35
+ * @date 01/01/2017
  */
 public class Signature {
     List<Type> args = new ArrayList<Type>();

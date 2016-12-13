@@ -4,8 +4,8 @@ package fr.ensimag.deca.tree;
 /**
  * Operator "x >= y"
  * 
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl35
+ * @date 01/01/2017
  */
 public class GreaterOrEqual extends AbstractOpIneq {
 

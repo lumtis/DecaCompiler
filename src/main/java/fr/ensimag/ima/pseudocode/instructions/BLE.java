@@ -6,7 +6,7 @@ import fr.ensimag.ima.pseudocode.Label;
 /**
  *
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2017
  */
 public class BLE extends BranchInstruction {
 

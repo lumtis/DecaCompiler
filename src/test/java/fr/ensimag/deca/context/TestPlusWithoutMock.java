@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  * of tests.
  *
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2017
  */
 public class TestPlusWithoutMock {
     static final Type INT = new IntType(null);

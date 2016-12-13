@@ -11,8 +11,8 @@ import java.io.PrintStream;
 
 /**
  * 
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl35
+ * @date 01/01/2017
  */
 public class NoOperation extends AbstractInst {
 

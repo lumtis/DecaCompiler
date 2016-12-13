@@ -3,8 +3,8 @@ package fr.ensimag.deca.tools;
 /**
  * Internal error of the compiler. Should never happen.
  *
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl35
+ * @date 01/01/2017
  */
 public class DecacInternalError extends RuntimeException {
     private static final long serialVersionUID = -7489681854632778463L;
