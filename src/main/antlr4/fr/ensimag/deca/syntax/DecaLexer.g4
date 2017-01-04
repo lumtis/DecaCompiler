@@ -47,13 +47,6 @@ DOT : '.' ;
 READINT: 'readInt' ;
 READFLOAT: 'readFloat' ;
 NEW : 'new' ;
-fragment DIGIT : '0' .. '9';
-fragment LETTER : ('a' .. 'z' | 'A' .. 'Z');
-INT : DIGIT+;
-FLOAT:INT DOT INT;
-STRING : '"' (~[\r\n"] | '""')* '"' ;       //Pas sûr du tout
-MULTI_LINE_STRING:'"' (~["] | '""')* '"' ; //Pas sûr du tout ..
-IDENT:(LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')* //A rajouter : exception mot clé java ne peuvent pas être des noms de variables/
 TRUE: 'true' ;
 FALSE: 'false' ;
 THIS: 'this' ;
@@ -62,14 +55,30 @@ CLASS: 'class' ;
 EXTENDS : 'extends' ;
 PROTECTED : 'protected';
 ASM: 'asm' ;
+fragment DIGIT : '0' .. '9';
+fragment LETTER : ('a' .. 'z' | 'A' .. 'Z');
+fragment STRING_CAR : ~['"' | '\n' | '\'] ;
+INT : DIGIT+;
+FLOAT:INT DOT INT;
+STRING : '"' (STRING_CAR | '\"' | '\\')* '"' ;
+MULTI_LINE_STRING:'"' (STRING_CAR | '\n' | '\"' | '\\')* '"' ;
+IDENT:(LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')* //A rajouter : exception mot clé java ne peuvent pas être des noms de variables/
 
-//Commentaire ? non traités
+COMMENT_CLASSIC: '/*' (~'*/')* '*/'
+                    {
+                        skip();
+                    };
+
+COMMENT_LINE :'//' (~'\n')* '\n'
+                    {
+                        skip();
+                    };
+
 
 // Ignore spaces, tabs, newlines and whitespaces
 WS  :   ( ' '
         | '\t'
         | '\r'
-        | '\n'
         ) {
               skip(); // avoid producing a token
           }
