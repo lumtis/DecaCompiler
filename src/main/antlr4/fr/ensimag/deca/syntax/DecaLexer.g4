@@ -57,7 +57,7 @@ PROTECTED : 'protected';
 ASM: 'asm' ;
 fragment DIGIT : '0' .. '9';
 fragment LETTER : ('a' .. 'z' | 'A' .. 'Z');
-fragment STRING_CAR : ~['"' | '\n' | '\'] ;
+fragment STRING_CAR : ~('"' | '\n' | '\\') ;
 INT : DIGIT+;
 FLOAT:INT DOT INT;
 STRING : '"' (STRING_CAR | '\"' | '\\')* '"' ;
