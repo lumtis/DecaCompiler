@@ -13,6 +13,7 @@ options {
 
 // Deca lexer rules.
 
+//DUMMY_TOKEN : .;
 OBRACE : '{' ;
 CBRACE : '}' ;
 OPARENT : '(' ;
@@ -62,9 +63,9 @@ INT : DIGIT+;
 FLOAT:INT DOT INT;
 STRING : '"' (STRING_CAR | '\"' | '\\')* '"' ;
 MULTI_LINE_STRING:'"' (STRING_CAR | '\n' | '\"' | '\\')* '"' ;
-IDENT:(LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')* //A rajouter : exception mot clé java ne peuvent pas être des noms de variables/
+IDENT:(LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')* ;//A rajouter : exception mot clé java ne peuvent pas être des noms de variables/
 
-COMMENT_CLASSIC: '/*' (~'*/')* '*/'
+COMMENT_CLASSIC: '/*' .* '*/'
                     {
                         skip();
                     };
@@ -79,6 +80,7 @@ COMMENT_LINE :'//' (~'\n')* '\n'
 WS  :   ( ' '
         | '\t'
         | '\r'
+        | '\n'
         ) {
               skip(); // avoid producing a token
           }
