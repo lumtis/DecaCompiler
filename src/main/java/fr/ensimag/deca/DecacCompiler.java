@@ -125,9 +125,12 @@ public class DecacCompiler {
      */
     public boolean compile() {
         String sourceFile = source.getAbsolutePath();
-        String destFile = null;
-        // A FAIRE: calculer le nom du fichier .ass à partir du nom du
-        // A FAIRE: fichier .deca.
+        if(!sourceFile.endsWith(".deca")){
+            throw new IllegalArgumentException();
+        }
+
+        String destFile=sourceFile.substring(0,sourceFile.length()-5);
+        destFile=destFile.concat(".ass");
         PrintStream err = System.err;
         PrintStream out = System.out;
         LOG.debug("Compiling file " + sourceFile + " to assembly file " + destFile);
@@ -170,6 +173,8 @@ public class DecacCompiler {
     private boolean doCompile(String sourceName, String destName,
             PrintStream out, PrintStream err)
             throws DecacFatalError, LocationException {
+        
+        // Partie A
         AbstractProgram prog = doLexingAndParsing(sourceName, err);
 
         if (prog == null) {
@@ -178,13 +183,17 @@ public class DecacCompiler {
         }
         assert(prog.checkAllLocations());
 
-
+        // Partie B
         prog.verifyProgram(this);
+        
         assert(prog.checkAllDecorations());
-
         addComment("start main program");
+        
+        // Partie C
         prog.codeGenProgram(this);
+        
         addComment("end main program");
+        
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);
 

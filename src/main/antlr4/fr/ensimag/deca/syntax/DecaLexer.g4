@@ -65,6 +65,8 @@ STRING : '"' (STRING_CAR | '\"' | '\\')* '"' ;
 MULTI_LINE_STRING:'"' (STRING_CAR | '\n' | '\"' | '\\')* '"' ;
 IDENT:(LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')* ;//A rajouter : exception mot clé java ne peuvent pas être des noms de variables/
 
+CLE: ASM | PROTECTED | EXTENDS | CLASS | NULL | THIS| FALSE | TRUE | NEW | READFLOAT | READINT ;
+
 COMMENT_CLASSIC: '/*' .* '*/'
                     {
                         skip();
@@ -74,7 +76,6 @@ COMMENT_LINE :'//' (~'\n')* '\n'
                     {
                         skip();
                     };
-
 
 // Ignore spaces, tabs, newlines and whitespaces
 WS  :   ( ' '
