@@ -6,6 +6,8 @@ import fr.ensimag.deca.tree.AbstractProgram;
 import java.io.File;
 import java.io.IOException;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 /**
  * Driver to test the Parser (and lexer).
@@ -17,7 +19,7 @@ public class ManualTestSynt {
     public static void main(String[] args) throws IOException {
         // Uncomment the following line to activate debug traces
         // unconditionally for test_synt
-        // Logger.getRootLogger().setLevel(Level.DEBUG);
+        Logger.getRootLogger().setLevel(Level.DEBUG);
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
         CommonTokenStream tokens = new CommonTokenStream(lex);
         DecaParser parser = new DecaParser(tokens);
