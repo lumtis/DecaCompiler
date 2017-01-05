@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -43,7 +44,30 @@ public class CompilerOptions {
 
     
     public void parseArgs(String[] args) throws CLIException {
-        // A FAIRE : parcourir args pour positionner les options correctement.
+        //TODO : A modifier plus tard
+        int i=0;
+        while (i<args.length) {
+            switch (args[i]) {
+                case "-d":
+                    i++;
+                    debug = Integer.parseInt(args[i]);
+                    break;
+                case "-p":
+                    parallel = true;
+                    break;
+                case "-b":
+                    printBanner = true;
+                    break;
+                case "-s":
+                    i++;
+                    File f = new File(args[i]);
+                    if (f == null) {
+                        throw new IllegalArgumentException("Fichier non valide.");
+                    }
+                    sourceFiles.add(f);
+            }
+            i++;
+        }
         Logger logger = Logger.getRootLogger();
         // map command-line debug option to log4j's level.
         switch (getDebug()) {
@@ -67,7 +91,7 @@ public class CompilerOptions {
             logger.info("Java assertions disabled");
         }
 
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
     }
 
     protected void displayUsage() {

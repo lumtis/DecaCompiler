@@ -1,6 +1,8 @@
 package fr.ensimag.deca.tools;
 
 import java.util.HashMap;
+import java.util.IllegalFormatCodePointException;
+import java.util.IllegalFormatException;
 import java.util.Map;
 
 /**
@@ -25,7 +27,12 @@ public class SymbolTable {
      * this Symbol. Otherwise, create a new Symbol and add it to the table.
      */
     public Symbol create(String name) {
-        throw new UnsupportedOperationException("Symbol creation");
+        if (!map.containsKey(name)) {
+            Symbol s = new Symbol(name);
+            map.put(name,s);
+            return s;
+        }
+        throw new IllegalArgumentException("Nom de variable déjà existant");
     }
 
     public static class Symbol {
