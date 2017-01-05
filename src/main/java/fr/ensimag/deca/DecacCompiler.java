@@ -170,6 +170,8 @@ public class DecacCompiler {
     private boolean doCompile(String sourceName, String destName,
             PrintStream out, PrintStream err)
             throws DecacFatalError, LocationException {
+        
+        // Partie A
         AbstractProgram prog = doLexingAndParsing(sourceName, err);
 
         if (prog == null) {
@@ -178,13 +180,17 @@ public class DecacCompiler {
         }
         assert(prog.checkAllLocations());
 
-
+        // Partie B
         prog.verifyProgram(this);
+        
         assert(prog.checkAllDecorations());
-
         addComment("start main program");
+        
+        // Partie C
         prog.codeGenProgram(this);
+        
         addComment("end main program");
+        
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);
 
