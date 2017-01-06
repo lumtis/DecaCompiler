@@ -1,5 +1,6 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
 import fr.ensimag.deca.tools.DecacInternalError;
@@ -15,6 +16,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.HashMap;
+import fr.ensimag.deca.tools.SymbolTable.Symbol;
 
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -43,25 +46,49 @@ public class DecacCompiler {
      */
     private static final String nl = System.getProperty("line.separator", "\n");
 
-    private SymbolTable env_type;
+    private SymbolTable symbols;
+
+    private HashMap<Symbol, Type> env_type;
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
-        initDefaultEnv();
+        initDefaultEnvType();
     }
 
-    public SymbolTable getEnv_type() {
-        return env_type;
+    public SymbolTable getSymbols() {
+        return symbols;
     }
 
-    private void initDefaultEnv() {
-        this.env_type = new SymbolTable();
-        this.env_type.create("int");
-        this.env_type.create("float");
-        this.env_type.create("boolean");
-        this.env_type.create("void");
+    public Type getType(Symbol sym) {
+        if (env_type.containsKey(sym)) {
+            return env_type.get(sym);
+        }
+        else {
+            throw new IllegalArgumentException("Type désiré non existant");
+        }
+    }
+
+    public Type getType(String str) {
+        //A modifier potentiellement
+        return getType(symbols.create(str));
+    }
+
+    private void initDefaultEnvType() {
+        //A compléter
+        this.symbols = new SymbolTable();
+        this.env_type = new HashMap<>();
+        Symbol intSym = this.symbols.create("int");
+        env_type.put(intSym, new IntType(intSym));
+        Symbol strSym = this.symbols.create("String");
+        env_type.put(strSym, new StringType(strSym));
+        Symbol floatSym = this.symbols.create("float");
+        env_type.put(floatSym, new FloatType(floatSym));
+        Symbol boolSym = this.symbols.create("boolean");
+        env_type.put(boolSym, new BooleanType(boolSym));
+        Symbol voidSym = this.symbols.create("void");
+        env_type.put(voidSym, new VoidType(voidSym));
     }
 
     /**
