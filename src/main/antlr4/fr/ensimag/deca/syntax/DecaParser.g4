@@ -398,7 +398,7 @@ literal returns[AbstractExpr tree]
 
 ident returns[AbstractIdentifier tree]
     : IDENT {
-            $tree = new Identifier(super.getEnv_type().create($IDENT.text));
+            $tree = new Identifier(super.getSymbols().create($IDENT.text));
         }
     ;
 

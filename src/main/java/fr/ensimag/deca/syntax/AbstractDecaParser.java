@@ -27,18 +27,12 @@ public abstract class AbstractDecaParser extends Parser {
 
     private DecacCompiler decacCompiler;
 
-    private SymbolTable env_exp = new SymbolTable();
-
-    protected SymbolTable getEnv_exp() {
-        return env_exp;
+    protected SymbolTable getSymbols() {
+        return decacCompiler.getSymbols();
     }
 
     protected DecacCompiler getDecacCompiler() {
         return decacCompiler;
-    }
-
-    protected SymbolTable getEnv_type() {
-        return decacCompiler.getEnv_type();
     }
 
     public void setDecacCompiler(DecacCompiler decacCompiler) {

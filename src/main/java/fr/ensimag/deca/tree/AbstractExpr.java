@@ -91,7 +91,8 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type t = this.verifyExpr(compiler,localEnv,currentClass);
+        //A compléter
     }
 
     /**
