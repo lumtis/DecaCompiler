@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+import fr.ensimag.ima.pseudocode.GPRegister;
 
 /**
  * Binary expressions.
@@ -12,6 +13,7 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2017
  */
 public abstract class AbstractBinaryExpr extends AbstractExpr {
+    GPRegister R= new GPRegister();
 
     public AbstractExpr getLeftOperand() {
         return leftOperand;

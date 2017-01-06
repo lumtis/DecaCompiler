@@ -12,7 +12,7 @@ import fr.ensimag.ima.pseudocode.*;
 public class GenCode {
     static DecacCompiler comp;
     private int labelIndex;
-
+     static Register R2=new Register("R2");
     
     public GenCode(DecacCompiler comp) {
         labelIndex = 0;
@@ -40,7 +40,7 @@ public class GenCode {
         comp.addInstruction(new POP(R));
     }
 
-    public static void del (GPRegister R){
+    public void del (GPRegister R){
 
         comp.addInstruction(new DEL(R));
     }
@@ -51,11 +51,11 @@ public class GenCode {
     }
 
     /* stocke la valeur de R dans une adresse de GB */
-    void store (Register R, DAddr d){
+    public void store (Register R, DAddr d){
         comp.addInstruction(new STORE (R, d));
     }
 
-    void add (DVal v, GPRegister R){
+    public void add(DVal v, GPRegister R){
         comp.addInstruction(new ADD (v, R));
     }
 
@@ -85,28 +85,12 @@ public class GenCode {
         comp.addInstruction(new QUO(v,R));
     }
 
-    /*faire une operation binaire entre deux valeurs v1 et v2 et la mettre dans R*/
-    /*public static void instructionBinaireDValToReg (DVal v1 , DVal v2, GPRegister R , BinaryInstructionDValToReg A){
-        Register R2= new Register("R2"); //pas sur que c'est le R2 de l'assembleur
-        load(v2,R2);
+    /*Stocke la valeur v dans le registre R*/
+    public void StockeRegBinaire(DVal v, GPRegister R){
+        load(v,R2);
         store(R2,R);
-
-        switch (A) {
-            case ADD:
-                add(v1,R);
-            case SUB:
-                sub(v1,R);
-            case MUL:
-                mul(v1,R);
-            case NEW:
-                new1(v1,R);
-            case OPP:
-                opp(v1,R);
-            case QUO:
-                quo(v1,R);
-        }
-    //a priori le resultat est dans le registre R mais peut etre il faut sortir avec la valeur et pas le registre
-    }*/
-
+    }
 }
+
+
 
