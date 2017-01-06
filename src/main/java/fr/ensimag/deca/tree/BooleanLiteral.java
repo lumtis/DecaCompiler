@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -50,6 +51,11 @@ public class BooleanLiteral extends AbstractExpr {
     @Override
     String prettyPrintNode() {
         return "BooleanLiteral (" + value + ")";
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

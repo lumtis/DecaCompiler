@@ -6,28 +6,48 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import fr.ensimag.deca.*;
+import fr.ensimag.ima.pseudocode.Label;
 
 
 public class GenCode {
 
+    private int labelIndex;
+    private DecacCompiler comp;
+    
+    public GenCode(DecacCompiler comp) {
+        labelIndex = 0;
+        this.comp = comp;
+    }
+    
+    
+    /* Obtient un nom qui n'a jamais été pris pour un nouveau label */
+    public Label newLabel() {
+        String name = "l" + labelIndex;
+        labelIndex++;
+        
+        Label l = new Label(name);
+        return l;
+    }
+    
+    
     /* permet de stocker la valeur de R dans la pile PC*/
-    static void push (Register R , DecacCompiler comp){
+    void push (Register R){
         comp.addInstruction(new PUSH(R));
     }
     /* permet de dépiler PC et mettre la valeur dépilée dans R */
-    static void pop (GPRegister R , DecacCompiler comp){
+    void pop (GPRegister R){
         comp.addInstruction(new POP(R));
     }
     /* stocke la valeur v dans R*/
-    static void load (DVal v, GPRegister R , DecacCompiler comp){
+    void load (DVal v, GPRegister R){
         comp.addInstruction(new LOAD (v, R));
     }
     /* stocke la valeur de R dans une adresse de GB */
-    static void store (Register R, DAddr d , DecacCompiler comp){
+    void store (Register R, DAddr d){
         comp.addInstruction(new STORE (R, d));
     }
 
-    static void add (DVal v, GPRegister R , DecacCompiler comp){
+    void add (DVal v, GPRegister R){
         comp.addInstruction(new ADD (v, R));
     }
 
