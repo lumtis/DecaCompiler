@@ -60,7 +60,7 @@ fragment DIGIT : '0' .. '9';
 fragment POSITIVE_DIGIT : '1' .. '9';
 fragment LETTER : ('a' .. 'z' | 'A' .. 'Z');
 fragment STRING_CAR : ~('"' | '\n' | '\\') ;
-SIGN : '+' | '-' | ' ';
+SIGN : '+' | '-' | ;
 NUM : DIGIT+;
 EXP : ('E' | 'e' ) SIGN NUM;
 INT : '0' | POSITIVE_DIGIT*;
