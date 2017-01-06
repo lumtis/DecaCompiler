@@ -13,7 +13,6 @@ import fr.ensimag.ima.pseudocode.GPRegister;
  * @date 01/01/2017
  */
 public abstract class AbstractBinaryExpr extends AbstractExpr {
-    GPRegister R= new GPRegister();
 
     public AbstractExpr getLeftOperand() {
         return leftOperand;

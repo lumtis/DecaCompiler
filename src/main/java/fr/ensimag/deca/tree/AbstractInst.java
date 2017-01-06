@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -33,7 +34,7 @@ public abstract class AbstractInst extends Tree {
      * 
      * @param compiler
      */
-    protected abstract void codeGenInst(DecacCompiler compiler);
+    protected abstract void codeGenInst(DecacCompiler compiler, GenCode gc);
 
 
     /**

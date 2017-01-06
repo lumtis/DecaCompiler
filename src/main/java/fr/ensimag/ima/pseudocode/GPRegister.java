@@ -16,7 +16,7 @@ public class GPRegister extends Register {
 
     private int number;
 
-    GPRegister(String name, int number) {
+    public GPRegister(String name, int number) {
         super(name);
         this.number = number;
     }

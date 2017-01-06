@@ -4,6 +4,7 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.context.FloatType;
 import fr.ensimag.deca.context.IntType;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -43,7 +44,7 @@ public abstract class AbstractPrint extends AbstractInst {
     }
 
     @Override
-    protected void codeGenInst(DecacCompiler compiler) {
+    protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         for (AbstractExpr a : getArguments().getList()) {
             a.codeGenPrint(compiler);
         }

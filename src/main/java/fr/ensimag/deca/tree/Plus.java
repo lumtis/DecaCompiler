@@ -24,9 +24,6 @@ public class Plus extends AbstractOpArith {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    gc.StockeRegBinaire(this.getRightOperand(),R);
-    gc.add(this.getLeftOperand(),R);
-
+        //gc.add(this.getLeftOperand(),R);
     }
 }

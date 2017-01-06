@@ -10,13 +10,15 @@ import fr.ensimag.ima.pseudocode.*;
 
 
 public class GenCode {
-    static DecacCompiler comp;
+    private DecacCompiler comp;
     private int labelIndex;
-     static Register R2=new Register("R2");
+    private GPRegister R2;
     
+     
     public GenCode(DecacCompiler comp) {
         labelIndex = 0;
         this.comp = comp;
+        R2 = new GPRegister("R2", 2);
     }
     
     
@@ -29,6 +31,13 @@ public class GenCode {
         return l;
     }
     
+    
+    
+    
+    
+    
+    /************************************************************/
+    /*              OPERATIONS                                  */
     
     /* permet de stocker la valeur de R dans la pile PC*/
     public void push (Register R){
@@ -83,12 +92,6 @@ public class GenCode {
     public void quo (DVal v, GPRegister R){
 
         comp.addInstruction(new QUO(v,R));
-    }
-
-    /*Stocke la valeur v dans le registre R*/
-    public void StockeRegBinaire(DVal v, GPRegister R){
-        load(v,R2);
-        store(R2,R);
     }
 }
 

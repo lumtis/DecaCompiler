@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -117,8 +118,7 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void codeGenPrint(DecacCompiler compiler) {
     }
 
-    @Override
-    protected void codeGenInst(DecacCompiler compiler) {
+    protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         throw new UnsupportedOperationException("not yet implemented");
     }
     
