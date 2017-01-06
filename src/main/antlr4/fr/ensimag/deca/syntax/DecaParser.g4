@@ -380,7 +380,7 @@ literal returns[AbstractExpr tree]
         }
     | STRING {
             try {
-                $tree = new StringLiteral($STRING.text);
+                $tree = new StringLiteral($STRING.text.substring(1,$STRING.text.length()-1));
                 //TODO : location ..
             } catch (NumberFormatException e) {
                 $tree = null;
