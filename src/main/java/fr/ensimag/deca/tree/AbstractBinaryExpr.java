@@ -69,4 +69,8 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
         rightOperand.prettyPrint(s, prefix, true);
     }
 
+    protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        gc.StockeRegBinaire(this.getRightOperand(),R);
+    }
+
 }
