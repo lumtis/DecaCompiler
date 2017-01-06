@@ -57,14 +57,25 @@ EXTENDS : 'extends' ;
 PROTECTED : 'protected';
 ASM: 'asm' ;
 fragment DIGIT : '0' .. '9';
+fragment POSITIVE_DIGIT : '1' .. '9';
 fragment LETTER : ('a' .. 'z' | 'A' .. 'Z');
 fragment STRING_CAR : ~('"' | '\n' | '\\') ;
-INT : DIGIT+;
-FLOAT:INT DOT INT;
+SIGN : '+' | '-' | ' ';
+NUM : DIGIT+;
+EXP : ('E' | 'e' ) SIGN NUM;
+INT : '0' | POSITIVE_DIGIT*;
+DEC:NUM DOT NUM;
+FLOATDEC: (DEC | DEC EXP)('F' | 'f' | ' ');
+DIGITHEX : DIGIT | ('A' .. 'F') | ('a' .. 'f' );
+NUMHEX : DIGITHEX+;
+FLOATHEX : ('0x' | '0X' ) NUMHEX DOT NUMHEX ('P' | 'p') SIGN NUM ('F' | 'f' | ' ');
+FLOAT :FLOATDEC + FLOATHEX;
 STRING : '"' (STRING_CAR | '\"' | '\\')* '"' ;
 MULTI_LINE_STRING:'"' (STRING_CAR | '\n' | '\"' | '\\')* '"' ;
 IDENT:(LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')* ;//A rajouter : exception mot clé java ne peuvent pas être des noms de variables/
 
+FILENAME : (LETTER | DIGIT | DOT | MINUS | '_' )+;
+INCLUDE : '#include' (' ')* '"' FILENAME '"';
 CLE: ASM | PROTECTED | EXTENDS | CLASS | NULL | THIS| FALSE | TRUE | NEW | READFLOAT | READINT ;
 
 COMMENT_CLASSIC: '/*' .* '*/'
