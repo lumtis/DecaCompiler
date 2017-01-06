@@ -26,4 +26,8 @@ public class Plus extends AbstractOpArith {
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         //gc.add(this.getLeftOperand(),R);
     }
+
+
+
+
 }
