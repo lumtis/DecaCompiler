@@ -27,12 +27,15 @@ public class SymbolTable {
      * this Symbol. Otherwise, create a new Symbol and add it to the table.
      */
     public Symbol create(String name) {
+        Symbol s;
         if (!map.containsKey(name)) {
-            Symbol s = new Symbol(name);
+            s = new Symbol(name);
             map.put(name,s);
-            return s;
         }
-        throw new IllegalArgumentException("Nom de variable déjà existant");
+        else {
+            s = map.get(name);
+        }
+        return s;
     }
 
     public static class Symbol {

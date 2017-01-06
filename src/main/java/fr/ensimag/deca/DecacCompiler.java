@@ -3,6 +3,7 @@ package fr.ensimag.deca;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
 import fr.ensimag.deca.tools.DecacInternalError;
+import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.LocationException;
 import fr.ensimag.ima.pseudocode.AbstractLine;
@@ -14,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
@@ -41,10 +43,25 @@ public class DecacCompiler {
      */
     private static final String nl = System.getProperty("line.separator", "\n");
 
+    private SymbolTable env_type;
+
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
+        initDefaultEnv();
+    }
+
+    public SymbolTable getEnv_type() {
+        return env_type;
+    }
+
+    private void initDefaultEnv() {
+        this.env_type = new SymbolTable();
+        this.env_type.create("int");
+        this.env_type.create("float");
+        this.env_type.create("boolean");
+        this.env_type.create("void");
     }
 
     /**
@@ -185,7 +202,7 @@ public class DecacCompiler {
 
         // Partie B
         prog.verifyProgram(this);
-        
+
         assert(prog.checkAllDecorations());
         addComment("start main program");
         
@@ -238,5 +255,4 @@ public class DecacCompiler {
         parser.setDecacCompiler(this);
         return parser.parseProgramAndManageErrors(err);
     }
-
 }

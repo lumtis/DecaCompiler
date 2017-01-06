@@ -35,8 +35,9 @@ public class Program extends AbstractProgram {
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify program: start");
-        throw new UnsupportedOperationException("not yet implemented");
-        // LOG.debug("verify program: end");
+
+        // throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify program: end");
     }
 
     @Override

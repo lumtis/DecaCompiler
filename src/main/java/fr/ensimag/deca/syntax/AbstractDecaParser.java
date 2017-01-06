@@ -2,12 +2,14 @@ package fr.ensimag.deca.syntax;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.DecacInternalError;
+import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.Location;
 import fr.ensimag.deca.tree.LocationException;
 import fr.ensimag.deca.tree.Tree;
 
 import java.io.PrintStream;
+import java.util.HashMap;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -25,8 +27,18 @@ public abstract class AbstractDecaParser extends Parser {
 
     private DecacCompiler decacCompiler;
 
+    private SymbolTable env_exp = new SymbolTable();
+
+    protected SymbolTable getEnv_exp() {
+        return env_exp;
+    }
+
     protected DecacCompiler getDecacCompiler() {
         return decacCompiler;
+    }
+
+    protected SymbolTable getEnv_type() {
+        return decacCompiler.getEnv_type();
     }
 
     public void setDecacCompiler(DecacCompiler decacCompiler) {

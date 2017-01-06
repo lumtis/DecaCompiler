@@ -30,8 +30,6 @@ options {
 }
 
 @members {
-    private SymbolTable symbols = new SymbolTable();
-
     @Override
     protected AbstractProgram parseProgram() {
         return prog().tree;
@@ -400,8 +398,7 @@ literal returns[AbstractExpr tree]
 
 ident returns[AbstractIdentifier tree]
     : IDENT {
-            //TODO : modifier pour ne pas créer de symbole pour les types
-            $tree = new Identifier(symbols.create($IDENT.text));
+            $tree = new Identifier(super.getEnv_type().create($IDENT.text));
         }
     ;
 
