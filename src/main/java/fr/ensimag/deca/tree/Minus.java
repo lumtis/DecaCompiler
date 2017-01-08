@@ -21,7 +21,7 @@ public class Minus extends AbstractOpArith {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        //gc.sub(this.getLeftOperand(),R);
+        gc.sub(this.getLeftOperand(), this.getRightOperand());
     }
-    
+
 }

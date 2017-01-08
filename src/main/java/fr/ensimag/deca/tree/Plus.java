@@ -15,7 +15,7 @@ public class Plus extends AbstractOpArith {
     public Plus(AbstractExpr leftOperand, AbstractExpr rightOperand) {
         super(leftOperand, rightOperand);
     }
- 
+
 
     @Override
     protected String getOperatorName() {
@@ -24,7 +24,7 @@ public class Plus extends AbstractOpArith {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        //gc.add(this.getLeftOperand(),R);
+        gc.add(this.getLeftOperand(), this.getRightOperand());
     }
 
 
