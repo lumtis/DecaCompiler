@@ -8,17 +8,18 @@ import fr.ensimag.ima.pseudocode.instructions.*;
 import fr.ensimag.deca.*;
 import fr.ensimag.deca.tree.AbstractExpr;
 import fr.ensimag.ima.pseudocode.*;
+import static fr.ensimag.ima.pseudocode.Register.*;
 import java.util.Set;
 
 
 public class GenCode {
-    private IMAProgram ima;
     private DecacCompiler comp;
     private int labelIndex=0;
     private GPRegister R2;
     private final int  taillePile=20;
     private Label pile_pleine= newLabel();
-    private Set <String> listeVar; //liste des variables globales
+    private Set <DVal> listeVar; //liste des variables globales
+    
     
 
     private GPRegister op1;
@@ -56,7 +57,7 @@ public class GenCode {
         comp.addInstruction(new TSTO(taillePile));
         comp.addInstruction(new BOV(pile_pleine));
         
-        initDecla(); //cette fonction va faire l'initialisation des variables globales ADDSP #d2
+        initDecla(); //initialisation des variables globales 
     }
     
     public void terminateProgram(){
@@ -77,14 +78,16 @@ public class GenCode {
     public void initDecla()
     {
         comp.addComment("variables globales");
-        //ajout des variables dans listeVar
+        //ajout des variables dans listeVar qui manque
         GenCodeVar gcv=new GenCodeVar(listeVar);
-        /*Permet de remplir la liste de correspondance et stocker les valeurs des variables
-          dans les registres Gb en meme temps*/
-        for (String s: listeVar){
+        
+        /*Permet de remplir la liste de correspondance et stocker les 
+          valeurs des variables dans les registres GB en meme temps*/
+        for (DVal s: listeVar){
             gcv.ajoutElement(s);
-            
-            //il manque le stockage de la variable s dans GB   
+            comp.addInstruction(new LOAD(s,R2)); 
+            comp.addInstruction(new STORE(R2,new RegisterOffset(gcv.obtenirIndice(s),GB)));
+            // stockage de la valeur de la variable s dans GB   
         }
     }
 

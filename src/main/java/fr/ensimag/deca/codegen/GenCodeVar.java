@@ -5,6 +5,7 @@
  */
 package fr.ensimag.deca.codegen;
 
+import fr.ensimag.ima.pseudocode.DVal;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -13,32 +14,32 @@ import java.util.Set;
  * @author belhadjn
  */
 public class GenCodeVar {
-    private HashMap <String,Integer> listeCorr;
-    private Set <String> listeVar;
+    private HashMap <DVal,Integer> listeCorr;
+    private Set <DVal> listeVar;
     private Integer i=1;
     
     public GenCodeVar(Set listeVar) {
-        this.listeCorr = new HashMap <String,Integer>();
+        this.listeCorr = new HashMap <DVal,Integer>();
         this.listeVar=listeVar;
     }
 
-    public HashMap <String,Integer> getListeCorr(){
+    public HashMap <DVal,Integer> getListeCorr(){
        return this.listeCorr;
    }
     
     
-    public void ajoutElement(String s){
+    public void ajoutElement(DVal s){
         this.i++;
         this.listeCorr.put(s,i);
     }
     
-    public void supprimeElement(String s){
+    public void supprimeElement(DVal s){
         this.listeCorr.remove(s);
         
     }
             
     
-    public Integer obtenirIndice(String s){
+    public Integer obtenirIndice(DVal s){
         return this.listeCorr.get(s);
     }
       
