@@ -95,6 +95,7 @@ decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
       (EQUALS e=expr {
         }
       )? {
+            //A modifier dans le cas ou $e.tree est null
             $tree = new DeclVar($t, $i.tree, new Initialization($e.tree));
         }
     ;
