@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
  */
 public class Program extends AbstractProgram {
     private static final Logger LOG = Logger.getLogger(Program.class);
-    
+
     public Program(ListDeclClass classes, AbstractMain main) {
         Validate.notNull(classes);
         Validate.notNull(main);
@@ -42,10 +42,13 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        // A FAIRE: compléter ce squelette très rudimentaire de code
+        GenCode gc = new GenCode(compiler);
+
+        gc.initProgram();
         compiler.addComment("Main program");
-        main.codeGenMain(compiler, new GenCode(compiler));
+        main.codeGenMain(compiler, gc);
         compiler.addInstruction(new HALT());
+        gc.terminateProgram();
     }
 
     @Override
@@ -53,7 +56,7 @@ public class Program extends AbstractProgram {
         getClasses().decompile(s);
         getMain().decompile(s);
     }
-    
+
     @Override
     protected void iterChildren(TreeFunction f) {
         classes.iter(f);

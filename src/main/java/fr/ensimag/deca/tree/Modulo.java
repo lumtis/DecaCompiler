@@ -6,6 +6,7 @@ import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
  *
@@ -32,7 +33,9 @@ public class Modulo extends AbstractOpArith {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.codeGenInst(compiler, gc);
+
+        compiler.addInstruction(new REM(gc.getTmpReg(), gc.getRetReg()));
     }
 
 }
