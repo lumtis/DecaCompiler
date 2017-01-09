@@ -6,6 +6,7 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import fr.ensimag.deca.*;
+import fr.ensimag.deca.tree.AbstractExpr;
 import fr.ensimag.ima.pseudocode.*;
 
 
