@@ -15,6 +15,8 @@ public class GenCode {
     private int labelIndex;
     private GPRegister R2;
 
+    private GPRegister op1;
+    private GPRegister op2;
 
     public GenCode(DecacCompiler comp) {
         labelIndex = 0;
