@@ -78,7 +78,7 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
         getLeftOperand().codeGenInst(compiler, gc);
 
         // On met le resultat de la premiere expression dans un registre temporaire
-        compiler.addInstruction(new LOAD(gc.getTmpReg(), gc.getRetReg()));
+        compiler.addInstruction(new LOAD(gc.getRetReg(), gc.getTmpReg()));
 
         // On ajoute le code permettant de réaliser l'expression 2
         getRightOperand().codeGenInst(compiler, gc);
