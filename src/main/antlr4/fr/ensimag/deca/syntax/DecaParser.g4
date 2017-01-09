@@ -27,6 +27,8 @@ options {
     import fr.ensimag.deca.tree.*;
     import java.io.PrintStream;
     import fr.ensimag.deca.tools.*;
+    import java.util.LinkedList;
+    import java.util.ListIterator;
 }
 
 @members {
@@ -92,6 +94,7 @@ decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
             AbstractInitialization ini= null;
         }
     : i=ident {
+           // setLocation($tree, $i.start);
         }
       (EQUALS e=expr {
             ini = new Initialization($e.tree);
@@ -149,7 +152,7 @@ inst returns[AbstractInst tree]
         }
     | e2=if_then_else {
             assert($if_then_else.tree != null);
-            // TODO
+            $tree = $e2.tree;
         }
     | WHILE OPARENT condition=expr CPARENT OBRACE body=list_inst CBRACE {
             assert($condition.tree != null);
@@ -165,21 +168,41 @@ inst returns[AbstractInst tree]
 
 if_then_else returns[IfThenElse tree]
 @init {
-    //ListInst thenBranch = null;
-    //ListInst elseBranch = null;
+   List<ListInst> li = new LinkedList<>();
+   List<AbstractExpr> le = new LinkedList<>();
+   boolean elseExist=false;
 
 }
     : if1=IF OPARENT condition=expr CPARENT OBRACE li_if=list_inst CBRACE {
-         //   exp = $condition.tree;
-           // thenBranch = $li_if.tree;
+            le.add($condition.tree);
+            li.add($li_if.tree);
         }
       (ELSE elsif=IF OPARENT elsif_cond=expr CPARENT OBRACE elsif_li=list_inst CBRACE {
-           //  cour = new IfThenElse($
+           le.add($elsif_cond.tree);
+           li.add($elsif_li.tree);
         }
       )*
       (ELSE OBRACE li_else=list_inst CBRACE {
+            elseExist=true;
+            li.add($li_else.tree);
         }
-      )?
+      )?{
+         if (!elseExist) {
+            li.add(new ListInst());
+         }
+         ListIterator<ListInst> it_li = li.listIterator(li.size());
+         ListIterator<AbstractExpr> it_le = le.listIterator(le.size());
+         ListInst prev = it_li.previous();
+         IfThenElse cour=null;
+         while (it_le.hasPrevious()) {
+            ListInst courInst = it_li.previous();
+            cour = new IfThenElse(it_le.previous(),courInst,prev);
+            prev = new ListInst();
+            prev.add(cour);
+         }
+         $tree=cour;
+
+      }
     ;
 
 list_expr returns[ListExpr tree]
@@ -215,7 +238,7 @@ assign_expr returns[AbstractExpr tree]
             assert($e2.tree != null);
             AbstractLValue lvalue = (AbstractLValue)$e.tree;
             $tree= new Assign(lvalue,$e2.tree);
-            setLocation($tree, $e.start);
+            setLocation($tree, $EQUALS);
         }
       | /* epsilon */ {
             assert($e.tree != null);
@@ -334,6 +357,7 @@ mult_expr returns[AbstractExpr tree]
             assert($e1.tree != null);                                         
             assert($e2.tree != null);
             $tree= new Multiply($e1.tree,$e2.tree);
+            setLocation($tree,$TIMES);
         }
     | e1=mult_expr SLASH e2=unary_expr {
             assert($e1.tree != null);                                         
