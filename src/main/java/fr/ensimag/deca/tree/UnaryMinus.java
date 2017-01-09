@@ -31,7 +31,7 @@ public class UnaryMinus extends AbstractUnaryExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        gc.opp(getOperand());
     }
 
 }

@@ -13,15 +13,20 @@ import fr.ensimag.ima.pseudocode.*;
 public class GenCode {
     private DecacCompiler comp;
     private int labelIndex;
-    private GPRegister R2;
 
-    private GPRegister op1;
-    private GPRegister op2;
+    private GPRegister tmpReg;
+    private GPRegister returnReg;
 
     public GenCode(DecacCompiler comp) {
         labelIndex = 0;
         this.comp = comp;
-        R2 = new GPRegister("R2", 2);
+
+        // Le registre qui contient le retour d'une expression est le 2
+        returnReg = new GPRegister("R2", 2);
+
+        // Le registre qui contient le une valeur temporaire pour une expression
+        // binaire est le 3
+        tmpReg = new GPRegister("R3", 3);
     }
 
 
@@ -55,29 +60,25 @@ public class GenCode {
     }
 
     /* Ajoute les instructions au debut d'une expression binaire */
-    public void initBinaryExpr()
+    public void initBinaryExpr(AbstractExpr e1, AbstractExpr e2)
     {
-        // TODO: ...
+        // On ajoute le code permettant de réaliser l'expression 1
+        e1.codeGenInst(comp, this);
+
+        // On met le resultat de la premiere expression dans un registre temporaire
+        comp.addInstruction(new LOAD(returnReg, tmpReg));
+
+        // On ajoute le code permettant de réaliser l'expression 2
+        e2.codeGenInst(comp, this);
     }
 
-    /* Ajoute les instructions de fin d'une expression binaire */
-    public void terminateBinaryExpr()
-    {
-        // TODO: ...
-    }
 
     /* Ajoute les instructions au debut d'une expression unaire */
-    public void initUnaryExpr()
+    public void initUnaryExpr(AbstractExpr e)
     {
-        // TODO: ...
+        // On ajoute le code permettant de réaliser l'expression
+        e.codeGenInst(comp, this);
     }
-
-    /* Ajoute les instructions de fin d'une expression unaire */
-    public void terminateUnaryExpr()
-    {
-        // TODO: ...
-    }
-
 
 
     /************************************************************/
@@ -93,11 +94,6 @@ public class GenCode {
         //comp.addInstruction(new POP(R));
     }
 
-    public void del (GPRegister R){
-
-        //comp.addInstruction(new DEL(R));
-    }
-
     /* stocke la valeur v dans R*/
     public void load (DVal v, GPRegister R){
         //comp.addInstruction(new LOAD (v,R));
@@ -109,21 +105,29 @@ public class GenCode {
     }
 
     public void add(AbstractExpr e1, AbstractExpr e2){
-        initBinaryExpr();
-        //comp.addInstruction(new ADD (v, R));
-        terminateBinaryExpr();
+        initBinaryExpr(e1, e2);
+        comp.addInstruction(new ADD(tmpReg, returnReg));
     }
 
     public void sub (AbstractExpr e1, AbstractExpr e2){
-        initBinaryExpr();
-        //comp.addInstruction(new SUB(v,R));
-        terminateBinaryExpr();
+        initBinaryExpr(e1, e2);
+        comp.addInstruction(new SUB(tmpReg, returnReg));
     }
 
     public void mul (AbstractExpr e1, AbstractExpr e2){
-        initBinaryExpr();
-        //comp.addInstruction(new MUL(v,R));
-        terminateBinaryExpr();
+        initBinaryExpr(e1, e2);
+        comp.addInstruction(new MUL(tmpReg, returnReg));
+    }
+
+    public void quo (AbstractExpr e1, AbstractExpr e2){
+        initBinaryExpr(e1, e2);
+        comp.addInstruction(new QUO(tmpReg, returnReg));
+    }
+
+
+    public void opp (AbstractExpr e){
+        initUnaryExpr(e);
+        comp.addInstruction(new OPP(returnReg, returnReg));
     }
 
 
@@ -132,16 +136,10 @@ public class GenCode {
         //comp.addInstruction(new NEW(v,R));
     }
 
-    public void opp (DVal v, GPRegister R){
+    public void del (GPRegister R){
 
-        //comp.addInstruction(new OPP(v,R));
+        //comp.addInstruction(new DEL(R));
     }
-
-    public void quo (DVal v, GPRegister R){
-
-        //comp.addInstruction(new QUO(v,R));
-    }
-
 
     // TODO : Ajouter les instructions restantes
     //...
