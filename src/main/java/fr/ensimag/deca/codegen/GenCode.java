@@ -21,6 +21,8 @@ public class GenCode {
     private Set <String> listeVar; //liste des variables globales
     
 
+    private GPRegister op1;
+    private GPRegister op2;
 
     public GenCode(DecacCompiler comp) {
         this.comp=comp;
