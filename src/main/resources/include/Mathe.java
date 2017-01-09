@@ -1,7 +1,7 @@
 // Grenoble INP - Ensimag projet GL -*- mode: java -*-
 // Library for class Math of Deca, coded in Deca
 
-class Math {
+class Mathe {
     float sin(float f) {
         println("sin(f) not yet implemented");
     }
