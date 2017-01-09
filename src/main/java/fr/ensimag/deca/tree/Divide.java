@@ -2,7 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.GenCode;
-
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
  *
@@ -22,7 +22,9 @@ public class Divide extends AbstractOpArith {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        gc.quo(this.getLeftOperand(), this.getRightOperand());
+        super.codeGenInst(compiler, gc);
+
+        compiler.addInstruction(new QUO(gc.getTmpReg(), gc.getRetReg()));
     }
 
 }

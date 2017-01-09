@@ -8,27 +8,42 @@ import fr.ensimag.ima.pseudocode.instructions.*;
 import fr.ensimag.deca.*;
 import fr.ensimag.deca.tree.AbstractExpr;
 import fr.ensimag.ima.pseudocode.*;
+import java.util.Set;
 
 
 public class GenCode {
+    private IMAProgram ima;
     private DecacCompiler comp;
-    private int labelIndex;
+
+    private int labelIndex = 0;
+    private final int  taillePile=20;
+    private Label pile_pleine= newLabel();
+    private Set <String> listeVar; //liste des variables globales
 
     private GPRegister tmpReg;
-    private GPRegister returnReg;
+    private GPRegister retReg;
 
     public GenCode(DecacCompiler comp) {
-        labelIndex = 0;
         this.comp = comp;
 
         // Le registre qui contient le retour d'une expression est le 2
-        returnReg = new GPRegister("R2", 2);
+        retReg = new GPRegister("R2", 2);
 
         // Le registre qui contient le une valeur temporaire pour une expression
         // binaire est le 3
         tmpReg = new GPRegister("R3", 3);
     }
 
+
+    public GPRegister getTmpReg()
+    {
+        return tmpReg;
+    }
+
+    public GPRegister getRetReg()
+    {
+        return retReg;
+    }
 
     /* Obtient un nom qui n'a jamais été pris pour un nouveau label */
     public Label newLabel() {
@@ -50,95 +65,41 @@ public class GenCode {
     /* Ajoute les instructions au debut du programme */
     public void initProgram()
     {
-        // TODO: ...
+        comp.addComment("Début du programme principal");
+        comp.addComment("Taille maximale de la pile");
+        comp.addInstruction(new TSTO(taillePile));
+        comp.addInstruction(new BOV(pile_pleine));
+
+        initDecla(); //cette fonction va faire l'initialisation des variables globales ADDSP #d2
+    }
+
+    public void terminateProgram(){
+        comp.addComment("Code du programme principal");
+        comp.addInstruction(new HALT());
+        comp.addComment("Messages d’erreurs");
+        comp.addLabel(pile_pleine);
+        comp.addInstruction(new WSTR("Erreur: Pile pleine"));
+        comp.addInstruction(new WNL());
+        comp.addInstruction(new ERROR());
+        comp.addComment("Autres erreurs");
+        //à compléter les autres erreurs possibles
+
+
     }
 
     /* Ajoute les declarations de variable au programme */
     public void initDecla()
     {
-        // TODO: ...
-    }
+        comp.addComment("variables globales");
+        //ajout des variables dans listeVar
+        GenCodeVar gcv=new GenCodeVar(listeVar);
+        /*Permet de remplir la liste de correspondance et stocker les valeurs des variables
+          dans les registres Gb en meme temps*/
+        for (String s: listeVar){
+            gcv.ajoutElement(s);
 
-    /* Ajoute les instructions au debut d'une expression binaire */
-    public void initBinaryExpr(AbstractExpr e1, AbstractExpr e2)
-    {
-        // On ajoute le code permettant de réaliser l'expression 1
-        e1.codeGenInst(comp, this);
-
-        // On met le resultat de la premiere expression dans un registre temporaire
-        comp.addInstruction(new LOAD(returnReg, tmpReg));
-
-        // On ajoute le code permettant de réaliser l'expression 2
-        e2.codeGenInst(comp, this);
-    }
-
-
-    /* Ajoute les instructions au debut d'une expression unaire */
-    public void initUnaryExpr(AbstractExpr e)
-    {
-        // On ajoute le code permettant de réaliser l'expression
-        e.codeGenInst(comp, this);
-    }
-
-
-    /************************************************************/
-    /*              OPERATIONS                                  */
-
-    /* permet de stocker la valeur de R dans la pile PC*/
-    public void push (Register R){
-        //comp.addInstruction(new PUSH(R));
-    }
-
-    /* permet de dépiler PC et mettre la valeur dépilée dans R */
-    public void pop (GPRegister R){
-        //comp.addInstruction(new POP(R));
-    }
-
-    /* stocke la valeur v dans R*/
-    public void load (DVal v, GPRegister R){
-        //comp.addInstruction(new LOAD (v,R));
-    }
-
-    /* stocke la valeur de R dans une adresse de GB */
-    public void store (Register R, DAddr d){
-        //comp.addInstruction(new STORE (R, d));
-    }
-
-    public void add(AbstractExpr e1, AbstractExpr e2){
-        initBinaryExpr(e1, e2);
-        comp.addInstruction(new ADD(tmpReg, returnReg));
-    }
-
-    public void sub (AbstractExpr e1, AbstractExpr e2){
-        initBinaryExpr(e1, e2);
-        comp.addInstruction(new SUB(tmpReg, returnReg));
-    }
-
-    public void mul (AbstractExpr e1, AbstractExpr e2){
-        initBinaryExpr(e1, e2);
-        comp.addInstruction(new MUL(tmpReg, returnReg));
-    }
-
-    public void quo (AbstractExpr e1, AbstractExpr e2){
-        initBinaryExpr(e1, e2);
-        comp.addInstruction(new QUO(tmpReg, returnReg));
-    }
-
-
-    public void opp (AbstractExpr e){
-        initUnaryExpr(e);
-        comp.addInstruction(new OPP(returnReg, returnReg));
-    }
-
-
-    public void new1 (DVal v, GPRegister R){
-
-        //comp.addInstruction(new NEW(v,R));
-    }
-
-    public void del (GPRegister R){
-
-        //comp.addInstruction(new DEL(R));
+            //il manque le stockage de la variable s dans GB
+        }
     }
 
     // TODO : Ajouter les instructions restantes

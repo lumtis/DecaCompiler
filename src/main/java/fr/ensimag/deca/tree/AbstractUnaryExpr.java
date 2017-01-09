@@ -3,6 +3,8 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.GenCode;
 
 /**
  * Unary expression.
@@ -23,7 +25,7 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
 
 
     protected abstract String getOperatorName();
-  
+
     @Override
     public void decompile(IndentPrintStream s) {
         throw new UnsupportedOperationException("not yet implemented");
@@ -39,4 +41,9 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
         operand.prettyPrint(s, prefix, true);
     }
 
+    @Override
+    protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        // On ajoute le code permettant de réaliser l'expression
+        getOperand().codeGenInst(compiler, gc);
+    }
 }
