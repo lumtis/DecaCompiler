@@ -8,18 +8,24 @@ import fr.ensimag.ima.pseudocode.instructions.*;
 import fr.ensimag.deca.*;
 import fr.ensimag.deca.tree.AbstractExpr;
 import fr.ensimag.ima.pseudocode.*;
+import java.util.Set;
 
 
 public class GenCode {
+    private IMAProgram ima;
     private DecacCompiler comp;
-    private int labelIndex;
+    private int labelIndex=0;
     private GPRegister R2;
+    private final int  taillePile=20;
+    private Label pile_pleine= newLabel();
+    private Set <String> listeVar; //liste des variables globales
+    
 
 
     public GenCode(DecacCompiler comp) {
-        labelIndex = 0;
-        this.comp = comp;
+        this.comp=comp;
         R2 = new GPRegister("R2", 2);
+        //this.listeVar= new Set <String>();
     }
 
 
@@ -43,13 +49,41 @@ public class GenCode {
     /* Ajoute les instructions au debut du programme */
     public void initProgram()
     {
-        // TODO: ...
+        comp.addComment("Début du programme principal");
+        comp.addComment("Taille maximale de la pile");
+        comp.addInstruction(new TSTO(taillePile));
+        comp.addInstruction(new BOV(pile_pleine));
+        
+        initDecla(); //cette fonction va faire l'initialisation des variables globales ADDSP #d2
+    }
+    
+    public void terminateProgram(){
+        comp.addComment("Code du programme principal");
+        comp.addInstruction(new HALT());
+        comp.addComment("Messages d’erreurs");
+        comp.addLabel(pile_pleine);
+        comp.addInstruction(new WSTR("Erreur: Pile pleine"));
+        comp.addInstruction(new WNL());
+        comp.addInstruction(new ERROR());
+        comp.addComment("Autres erreurs");
+        //à compléter les autres erreurs possibles
+        
+        
     }
 
     /* Ajoute les declarations de variable au programme */
     public void initDecla()
     {
-        // TODO: ...
+        comp.addComment("variables globales");
+        //ajout des variables dans listeVar
+        GenCodeVar gcv=new GenCodeVar(listeVar);
+        /*Permet de remplir la liste de correspondance et stocker les valeurs des variables
+          dans les registres Gb en meme temps*/
+        for (String s: listeVar){
+            gcv.ajoutElement(s);
+            
+            //il manque le stockage de la variable s dans GB   
+        }
     }
 
     /* Ajoute les instructions au debut d'une expression binaire */
