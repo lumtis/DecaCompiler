@@ -6,6 +6,9 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.GenCode;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
  * Binary expressions.
@@ -69,10 +72,16 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
         rightOperand.prettyPrint(s, prefix, true);
     }
 
-    /*
+    @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        
+        // On ajoute le code permettant de réaliser l'expression 1
+        getLeftOperand().codeGenInst(compiler, gc);
+
+        // On met le resultat de la premiere expression dans un registre temporaire
+        compiler.addInstruction(new LOAD(gc.getRetReg(), gc.getTmpReg()));
+
+        // On ajoute le code permettant de réaliser l'expression 2
+        getRightOperand().codeGenInst(compiler, gc);
     }
-    */
 
 }

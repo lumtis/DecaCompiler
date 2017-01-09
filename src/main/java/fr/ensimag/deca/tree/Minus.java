@@ -2,7 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.GenCode;
-
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
  * @author gl35
@@ -21,7 +21,9 @@ public class Minus extends AbstractOpArith {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        gc.sub(this.getLeftOperand(), this.getRightOperand());
+        super.codeGenInst(compiler, gc);
+
+        compiler.addInstruction(new SUB(gc.getTmpReg(), gc.getRetReg()));
     }
 
 }
