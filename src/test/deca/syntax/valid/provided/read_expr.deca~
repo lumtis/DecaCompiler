@@ -1,4 +1,0 @@
-{
-int x = ReadInt();
-float y = ReadFloat();
-}
