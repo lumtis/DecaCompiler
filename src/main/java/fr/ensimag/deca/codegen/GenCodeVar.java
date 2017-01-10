@@ -6,8 +6,13 @@
 package fr.ensimag.deca.codegen;
 
 import fr.ensimag.deca.context.VariableDefinition;
-import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.deca.tree.AbstractDeclVar;
+import fr.ensimag.deca.tree.DeclVar;
+import fr.ensimag.deca.tree.Identifier;
+import java.util.AbstractList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,38 +20,43 @@ import java.util.Set;
  * @author belhadjn
  */
 public class GenCodeVar {
-    private HashMap <VariableDefinition,Integer> listeCorr;
-    private Set<VariableDefinition> listeVar;
+    private HashMap <Identifier,Integer> listeCorr;
+    private Set<Identifier> listeVar;
     private Integer i=1;
 
-    public GenCodeVar(Set<VariableDefinition> listeVar) {
-        this.listeCorr = new HashMap <VariableDefinition,Integer>();
-        this.listeVar=listeVar;
+    public GenCodeVar(List<AbstractDeclVar> a) {
+        this.listeCorr = new HashMap <Identifier,Integer>();
+        this.listeVar= new HashSet<Identifier>() ;
+        for (AbstractDeclVar d:a){
+            DeclVar e=(DeclVar)d;
+            this.listeVar.add((Identifier) e.getName());
+            
+        }
     }
 
-    public HashMap <VariableDefinition,Integer> getListeCorr(){
+    public HashMap <Identifier,Integer> getListeCorr(){
        return this.listeCorr;
 
     }
     
-    public Set<VariableDefinition> getListeVar(){
+    public Set<Identifier> getListeVar(){
         return this.listeVar;
     }
     
     
 
-    public void ajoutElement(VariableDefinition s){
+    public void ajoutElement(Identifier s){
         this.i++;
         this.listeCorr.put(s,i);
     }
 
-    public void supprimeElement(VariableDefinition s){
+    public void supprimeElement(Identifier s){
         this.listeCorr.remove(s);
 
     }
 
 
-    public Integer obtenirIndice(VariableDefinition s){
+    public Integer obtenirIndice(Identifier s){
         return this.listeCorr.get(s);
     }
 

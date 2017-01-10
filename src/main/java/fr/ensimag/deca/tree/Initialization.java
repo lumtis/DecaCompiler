@@ -31,11 +31,19 @@ public class Initialization extends AbstractInitialization {
         this.expression = expression;
     }
 
+    /**Vérifie que l'AbstractExpr est correct et renvoie un objet compatible
+     * au type de la variable
+     * @param compiler contains "env_types" attribute
+     * @param t corresponds to the "type" attribute
+     * @param localEnv corresponds to the "env_exp" attribute
+     * @param currentClass
+     * @throws ContextualError
+     */
     @Override
     protected void verifyInitialization(DecacCompiler compiler, Type t,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        expression = expression.verifyRValue(compiler,localEnv,currentClass,t);
     }
 
 

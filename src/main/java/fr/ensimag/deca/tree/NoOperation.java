@@ -21,12 +21,12 @@ public class NoOperation extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        //Apparemment rien à faire.
     }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        throw new UnsupportedOperationException("not yet implemented");
+        //Apparemment rien à faire.
     }
 
     @Override

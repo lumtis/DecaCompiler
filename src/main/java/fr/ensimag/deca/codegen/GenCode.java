@@ -8,6 +8,7 @@ import fr.ensimag.ima.pseudocode.instructions.*;
 import fr.ensimag.deca.*;
 import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tree.AbstractExpr;
+import fr.ensimag.deca.tree.Identifier;
 import fr.ensimag.ima.pseudocode.*;
 import static fr.ensimag.ima.pseudocode.Register.*;
 import java.util.Set;
@@ -18,7 +19,7 @@ public class GenCode {
     private DecacCompiler comp;
     private GenCodeVar gcv;
 
-    private Set<VariableDefinition> listeVar; //liste des variables globales/locales
+    private Set<Identifier> listeVar; //liste des variables globales/locales
     private Stack<GenCodeVar> pileListeVar; //pile qui contient les listes de var
    
     private int labelIndex = 0;
@@ -101,9 +102,9 @@ public class GenCode {
           valeurs des variables dans les registres GB en meme temps*/
     public void initDecla(){
         comp.addComment("variables globales");
-        for (VariableDefinition v: listeVar){
+        for (Identifier v: listeVar){
             gcv.ajoutElement(v); //ajout de la variable v à la table de correspondance
-            comp.addInstruction(new LOAD(v.getOperand(),retReg)); //on load sa valeur
+            comp.addInstruction(new LOAD(v.getVariableDefinition().getOperand(),retReg)); //on load sa valeur
             comp.addInstruction(new STORE(retReg,new RegisterOffset(gcv.obtenirIndice(v),GB))); 
             //on store sa valeur dans x(GB) avec x l'indice de v dans la table
         }

@@ -72,8 +72,8 @@ public class DecacCompiler {
         return env_type.getType(symbols.create(str));
     }
 
-    public Location getTypeLocation(Type t) {
-        return env_type.getDefinition(t).getLocation();
+    public Definition getTypeDef(Type t) {
+        return env_type.getDefinition(t);
     }
 
     /**
