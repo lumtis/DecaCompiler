@@ -31,7 +31,7 @@ public class Main extends AbstractMain {
         LOG.debug("verify Main: start");
         //A modifier plus tard
         EnvironmentExp env_exp = new EnvironmentExp(null);
-        this.declVariables.verifyListDeclVariable(compiler,env_exp,null);
+        this.declVariables.verifyListDeclVariable(compiler,compiler.getEnvExpPredef(),null);
         this.insts.verifyListInst(compiler,env_exp,null,compiler.getType("void"));
         LOG.debug("verify Main: end");
     }
