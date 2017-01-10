@@ -9,25 +9,31 @@ import fr.ensimag.deca.*;
 import fr.ensimag.deca.tree.AbstractExpr;
 import fr.ensimag.ima.pseudocode.*;
 import static fr.ensimag.ima.pseudocode.Register.*;
+import java.util.LinkedList;
 import java.util.Set;
 
 
 public class GenCode {
     private DecacCompiler comp;
-
+    private GenCodeVar gcv;
+    private Set<DVal> listeVar; //liste des variables globales/locales
+    private LinkedList<GenCodeVar> pile; //pile qui contient les listes de var
+    
     private int labelIndex = 0;
     private final int  taillePile=20;
     private Label pile_pleine= newLabel();
-    private Set <DVal> listeVar; //liste des variables globales
     
 
 
     private GPRegister tmpReg;
     private GPRegister retReg;
 
-    public GenCode(DecacCompiler comp) {
+    public GenCode(DecacCompiler comp , GenCodeVar gcv) {
         this.comp = comp;
-
+        this.gcv=gcv;
+        this.listeVar=gcv.getListeVar();
+        this.pile= new LinkedList<GenCodeVar>();
+        
         // Le registre qui contient le retour d'une expression est le 2
         retReg = new GPRegister("R2", 2);
 
@@ -92,8 +98,6 @@ public class GenCode {
     public void initDecla()
     {
         comp.addComment("variables globales");
-        //ajout des variables dans listeVar qui manque
-        GenCodeVar gcv=new GenCodeVar(listeVar);
         
         /*Permet de remplir la liste de correspondance et stocker les 
           valeurs des variables dans les registres GB en meme temps*/
