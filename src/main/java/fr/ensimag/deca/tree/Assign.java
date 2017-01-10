@@ -7,6 +7,8 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
  * Assignment, i.e. lvalue = expr.
@@ -46,7 +48,13 @@ public class Assign extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        DAddr addrVar = gc.getVariablesG().getVariable((Identifier)getLeftOperand());
 
+        // On réalise l'expression
+        getRightOperand().codeGenInst(compiler, gc);
+
+        // Si l'instruction est fausse on saute directement au else
+        compiler.addInstruction(new STORE(gc.getRetReg(), addrVar));
     }
 
 }

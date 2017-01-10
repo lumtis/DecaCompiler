@@ -6,58 +6,71 @@
 package fr.ensimag.deca.codegen;
 
 import fr.ensimag.deca.context.VariableDefinition;
-import fr.ensimag.deca.tree.AbstractDeclVar;
-import fr.ensimag.deca.tree.DeclVar;
-import fr.ensimag.deca.tree.Identifier;
+import fr.ensimag.deca.tree.*;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.GenCode;
 import java.util.AbstractList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 /**
  *
  * @author belhadjn
  */
 public class GenCodeVar {
-    private HashMap <Identifier,Integer> listeCorr;
-    private Set<Identifier> listeVar;
-    private Integer i=1;
+    private DecacCompiler comp;
+    private GenCode gc;
+    private HashMap<String, Integer> listeCorr;
+    private Integer i=0;
 
-    public GenCodeVar(List<AbstractDeclVar> a) {
-        this.listeCorr = new HashMap <Identifier,Integer>();
-        this.listeVar= new HashSet<Identifier>() ;
+    public GenCodeVar(DecacCompiler comp) {
+
+        this.comp = comp;
+        this.listeCorr = new HashMap<String,Integer>();
+    }
+
+    public void setGenCode(GenCode gc) {
+        this.gc = gc;
+    }
+
+    public void initVar(List<AbstractDeclVar> a) {
+
+        comp.addComment("variables globales");
         for (AbstractDeclVar d:a){
-            DeclVar e=(DeclVar)d;
-            this.listeVar.add((Identifier) e.getName());
-            
+            DeclVar declVar=(DeclVar)d;
+            Identifier var = (Identifier)declVar.getVarName();
+
+            //ajout de la variable v à la table de correspondance
+            ajoutVariable(var);
+
+            // On initialise la variable
+            declVar.getInitialization().codeGenInit(new RegisterOffset(i, Register.GB), comp, gc);
+            this.i++;
         }
     }
 
-    public HashMap <Identifier,Integer> getListeCorr(){
+    public HashMap <String,Integer> getListeCorr(){
        return this.listeCorr;
 
     }
-    
-    public Set<Identifier> getListeVar(){
-        return this.listeVar;
-    }
-    
-    
 
-    public void ajoutElement(Identifier s){
-        this.i++;
-        this.listeCorr.put(s,i);
+    public void ajoutVariable(Identifier v){
+        String nameVar = v.getName().getName();
+        this.listeCorr.put(nameVar,i);
     }
 
-    public void supprimeElement(Identifier s){
-        this.listeCorr.remove(s);
-
+    public Integer obtenirIndice(Identifier v){
+        String nameVar = v.getName().getName();
+        return this.listeCorr.get(nameVar);
     }
 
-
-    public Integer obtenirIndice(Identifier s){
-        return this.listeCorr.get(s);
+    public DAddr getVariable(Identifier v){
+        return new RegisterOffset(obtenirIndice(v), Register.GB);
     }
 
 }

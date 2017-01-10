@@ -1,0 +1,10 @@
+// Description:
+//    tests d'expressions entieres
+//
+// Resultats:
+//    10
+
+{
+   int a = 7;
+   println(a+2+3);
+}

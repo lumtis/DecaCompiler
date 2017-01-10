@@ -138,7 +138,7 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         throw new UnsupportedOperationException("not yet implemented");
     }
-*/  
+*/
 
     @Override
     protected void decompileInst(IndentPrintStream s) {
@@ -155,5 +155,10 @@ public abstract class AbstractExpr extends AbstractInst {
             s.print(t);
             s.println();
         }
+    }
+
+    // Genere le code de l'expression
+    public void codeGenExpr(DecacCompiler compiler, GenCode gc) {
+        codeGenInst(compiler, gc);
     }
 }
