@@ -23,7 +23,7 @@ public class BooleanType extends Type {
 
     @Override
     public boolean sameType(Type otherType) {
-        throw new UnsupportedOperationException("not yet implemented");
+        return otherType.isBoolean();
     }
 
 
