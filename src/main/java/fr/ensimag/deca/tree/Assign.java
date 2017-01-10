@@ -30,7 +30,11 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type t = compiler.getType("void");
+        this.setType(t);
+        AbstractExpr expr = this.getLeftOperand();
+        setRightOperand(verifyRValue(compiler, localEnv, currentClass, expr.getType()));
+        return t;
     }
 
 
@@ -41,7 +45,7 @@ public class Assign extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
 }

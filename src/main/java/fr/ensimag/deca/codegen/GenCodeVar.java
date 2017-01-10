@@ -15,16 +15,17 @@ import java.util.Set;
  */
 public class GenCodeVar {
     private HashMap <DVal,Integer> listeCorr;
-    private Set <DVal> listeVar;
+    private Set<DVal> listeVar;
     private Integer i=1;
-    
-    public GenCodeVar(Set listeVar) {
+
+    public GenCodeVar(Set<DVal> listeVar) {
         this.listeCorr = new HashMap <DVal,Integer>();
         this.listeVar=listeVar;
     }
 
     public HashMap <DVal,Integer> getListeCorr(){
        return this.listeCorr;
+
     }
     
     public Set<DVal> getListeVar(){
@@ -32,21 +33,20 @@ public class GenCodeVar {
     }
     
     
+
     public void ajoutElement(DVal s){
         this.i++;
         this.listeCorr.put(s,i);
     }
-    
+
     public void supprimeElement(DVal s){
         this.listeCorr.remove(s);
-        
+
     }
-            
-    
+
+
     public Integer obtenirIndice(DVal s){
         return this.listeCorr.get(s);
     }
-      
+
 }
-            
-    

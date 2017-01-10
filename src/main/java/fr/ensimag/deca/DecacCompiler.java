@@ -6,7 +6,9 @@ import fr.ensimag.deca.syntax.DecaParser;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tree.AbstractProgram;
+import fr.ensimag.deca.tree.Location;
 import fr.ensimag.deca.tree.LocationException;
+import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.ima.pseudocode.AbstractLine;
 import fr.ensimag.ima.pseudocode.IMAProgram;
 import fr.ensimag.ima.pseudocode.Instruction;
@@ -16,7 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.HashMap;
+
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 
 import org.antlr.v4.runtime.ANTLRFileStream;
@@ -48,13 +50,14 @@ public class DecacCompiler {
 
     private SymbolTable symbols;
 
-    private HashMap<Symbol, Type> env_type;
+    private EnvironmentType env_type;
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
-        initDefaultEnvType();
+        this.symbols = new SymbolTable();
+        this.env_type = new EnvironmentType(this.symbols);
     }
 
     public SymbolTable getSymbols() {
@@ -62,33 +65,15 @@ public class DecacCompiler {
     }
 
     public Type getType(Symbol sym) {
-        if (env_type.containsKey(sym)) {
-            return env_type.get(sym);
-        }
-        else {
-            throw new IllegalArgumentException("Type désiré non existant");
-        }
+        return env_type.getType(sym);
     }
 
     public Type getType(String str) {
-        //A modifier potentiellement
-        return getType(symbols.create(str));
+        return env_type.getType(symbols.create(str));
     }
 
-    private void initDefaultEnvType() {
-        //A compléter
-        this.symbols = new SymbolTable();
-        this.env_type = new HashMap<>();
-        Symbol intSym = this.symbols.create("int");
-        env_type.put(intSym, new IntType(intSym));
-        Symbol strSym = this.symbols.create("String");
-        env_type.put(strSym, new StringType(strSym));
-        Symbol floatSym = this.symbols.create("float");
-        env_type.put(floatSym, new FloatType(floatSym));
-        Symbol boolSym = this.symbols.create("boolean");
-        env_type.put(boolSym, new BooleanType(boolSym));
-        Symbol voidSym = this.symbols.create("void");
-        env_type.put(voidSym, new VoidType(voidSym));
+    public Location getTypeLocation(Type t) {
+        return env_type.getDefinition(t).getLocation();
     }
 
     /**
