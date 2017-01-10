@@ -1,0 +1,7 @@
+//ERROR :5:
+{
+String s="iniesta";
+int messi=10;
+float xavi = s*messi;
+
+}
