@@ -1,4 +1,4 @@
-//ERROR :4:
+//ERROR :3:
 {
      integer a = 3;
 }
