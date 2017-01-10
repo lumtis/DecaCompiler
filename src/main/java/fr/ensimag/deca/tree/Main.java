@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -29,7 +30,9 @@ public class Main extends AbstractMain {
     protected void verifyMain(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify Main: start");
         //A modifier plus tard
-        this.insts.verifyListInst(compiler,null,null,null);
+        EnvironmentExp env_exp = new EnvironmentExp(null);
+        this.declVariables.verifyListDeclVariable(compiler,env_exp,null);
+        this.insts.verifyListInst(compiler,env_exp,null,compiler.getType("void"));
         LOG.debug("verify Main: end");
     }
 
