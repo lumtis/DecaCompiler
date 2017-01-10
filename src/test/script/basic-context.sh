@@ -38,6 +38,6 @@ echo ""
 echo "---Debut tests valides---"
 for cas_de_test in src/test/deca/context/valid/*.deca
 do
-    test_context_invalid "$cas_de_test"
+    test_context_valid "$cas_de_test"
 done
 
