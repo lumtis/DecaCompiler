@@ -13,6 +13,21 @@ options {
 
 // Deca lexer rules.
 
+//Fragment rules
+fragment DIGIT : '0' .. '9';
+fragment POSITIVE_DIGIT : '1' .. '9';
+fragment LETTER : ('a' .. 'z' | 'A' .. 'Z');
+fragment STRING_CAR : ~('"' | '\n' | '\\') ;
+fragment SIGN : '+' | '-' | ;
+fragment NUM : DIGIT+;
+fragment DEC:NUM DOT NUM;
+fragment FLOATDEC: (DEC | DEC EXP)('F' | 'f' | );
+fragment DIGITHEX : DIGIT | ('A' .. 'F') | ('a' .. 'f' );
+fragment NUMHEX : DIGITHEX+;
+fragment FLOATHEX : ('0x' | '0X' ) NUMHEX DOT NUMHEX ('P' | 'p') SIGN NUM ('F' | 'f' | );
+fragment FILENAME : (LETTER | DIGIT | DOT | MINUS | '_' )+;
+
+//non fragment rules
 OBRACE : '{' ;
 CBRACE : '}' ;
 OPARENT : '(' ;
@@ -55,24 +70,14 @@ CLASS: 'class' ;
 EXTENDS : 'extends' ;
 PROTECTED : 'protected';
 ASM: 'asm' ;
-fragment DIGIT : '0' .. '9';
-fragment POSITIVE_DIGIT : '1' .. '9';
-fragment LETTER : ('a' .. 'z' | 'A' .. 'Z');
-fragment STRING_CAR : ~('"' | '\n' | '\\') ;
-fragment SIGN : '+' | '-' | ;
-fragment NUM : DIGIT+;
-fragment DEC:NUM DOT NUM;
-fragment FLOATDEC: (DEC | DEC EXP)('F' | 'f' | );
-fragment DIGITHEX : DIGIT | ('A' .. 'F') | ('a' .. 'f' );
-fragment NUMHEX : DIGITHEX+;
-fragment FLOATHEX : ('0x' | '0X' ) NUMHEX DOT NUMHEX ('P' | 'p') SIGN NUM ('F' | 'f' | );
+
 EXP : ('E' | 'e' ) SIGN NUM;
 INT : '0' | POSITIVE_DIGIT DIGIT*;
 FLOAT :FLOATDEC | FLOATHEX;
 STRING : '"' (STRING_CAR | '\"' | '\\')* '"' ;
 MULTI_LINE_STRING:'"' (STRING_CAR | '\n' | '\"' | '\\')* '"' ;
 IDENT:(LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')* ;
-fragment FILENAME : (LETTER | DIGIT | DOT | MINUS | '_' )+;
+
 INCLUDE : '#include' (' ')* '"' FILENAME '"';
 CLE: ASM | PROTECTED | EXTENDS | CLASS | NULL | THIS| FALSE | TRUE | NEW | READFLOAT | READINT ;
 
