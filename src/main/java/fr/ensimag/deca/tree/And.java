@@ -31,14 +31,14 @@ public class And extends AbstractOpBool {
 
         // Si l'évaluation est fausse on va dans le code correspondant
         compiler.addInstruction(new CMP(0, gc.getRetReg()));
-        compiler.addInstruction(new BEQ(fin));
+        compiler.addInstruction(new BEQ(faux));
 
         // On ajoute le code permettant de réaliser l'expression 2
         getRightOperand().codeGenInst(compiler, gc);
 
         // Si l'évaluation est fausse on va dans le code correspondant
         compiler.addInstruction(new CMP(0, gc.getRetReg()));
-        compiler.addInstruction(new BEQ(fin));
+        compiler.addInstruction(new BEQ(faux));
 
         // Comparaison bonne
         compiler.addInstruction(new LOAD(1, gc.getRetReg()));

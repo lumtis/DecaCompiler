@@ -11,6 +11,8 @@ import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.*;
 
 /**
  *
@@ -38,14 +40,26 @@ public class While extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        //Label while= newLabel();
-        //compiler.addLabel(while);
-        
-        
-        
-         
-        //compiler.addInstruction(new BOV(while)); 
+        Label debutWhile = gc.newLabel();
+        Label bloc = gc.newLabel();
+        Label finWhile = gc.newLabel();
+
+        compiler.addLabel(debutWhile);
+
+        // On réalise l'expression et on la test
+        condition.codeGenInst(compiler, gc);
+        compiler.addInstruction(new CMP(1, gc.getRetReg()));
+        compiler.addInstruction(new BEQ(bloc));
+        compiler.addInstruction(new BEQ(finWhile));
+
+        // Bloc du while
+        compiler.addLabel(bloc);
+        body.codeGenListInst(compiler, gc);
+        compiler.addInstruction(new BEQ(debutWhile));
+
+        compiler.addLabel(finWhile);
     }
+
 
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
