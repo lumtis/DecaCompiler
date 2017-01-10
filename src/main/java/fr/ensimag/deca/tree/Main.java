@@ -2,10 +2,13 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.GenCode;
+import fr.ensimag.deca.codegen.GenCodeVar;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
+import java.util.HashSet;
+import java.util.List;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -35,12 +38,18 @@ public class Main extends AbstractMain {
         this.insts.verifyListInst(compiler,env_exp,null,compiler.getType("void"));
         LOG.debug("verify Main: end");
     }
-
     @Override
-    protected void codeGenMain(DecacCompiler compiler, GenCode gc) {
-        // A FAIRE: traiter les déclarations de variables.
+    protected void codeGenMain(DecacCompiler compiler) {
+        
+        //HashSet <Identifier> listeVar= new HashSet<Identifier>(); //à compléter
+    
+        
+        GenCodeVar gcv= new GenCodeVar(this.declVariables.getList());
+        GenCode gc = new GenCode(compiler,gcv);
+        gc.initProgram();
         compiler.addComment("Beginning of main instructions:");
         insts.codeGenListInst(compiler, gc);
+        gc.terminateProgram();
     }
     
     @Override

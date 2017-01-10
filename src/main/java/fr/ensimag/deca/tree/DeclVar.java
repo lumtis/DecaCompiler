@@ -27,6 +27,10 @@ public class DeclVar extends AbstractDeclVar {
         this.varName = varName;
         this.initialization = initialization;
     }
+    
+    public AbstractIdentifier getName(){
+        return this.varName;
+    }
 
     @Override
     protected void verifyDeclVar(DecacCompiler compiler,

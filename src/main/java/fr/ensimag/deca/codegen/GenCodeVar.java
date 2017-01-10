@@ -6,9 +6,13 @@
 package fr.ensimag.deca.codegen;
 
 import fr.ensimag.deca.context.VariableDefinition;
+import fr.ensimag.deca.tree.AbstractDeclVar;
+import fr.ensimag.deca.tree.DeclVar;
 import fr.ensimag.deca.tree.Identifier;
-import fr.ensimag.ima.pseudocode.DVal;
+import java.util.AbstractList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,9 +24,14 @@ public class GenCodeVar {
     private Set<Identifier> listeVar;
     private Integer i=1;
 
-    public GenCodeVar(Set<Identifier> listeVar) {
+    public GenCodeVar(List<AbstractDeclVar> a) {
         this.listeCorr = new HashMap <Identifier,Integer>();
-        this.listeVar=listeVar;
+        this.listeVar= new HashSet<Identifier>() ;
+        for (AbstractDeclVar d:a){
+            DeclVar e=(DeclVar)d;
+            this.listeVar.add((Identifier) e.getName());
+            
+        }
     }
 
     public HashMap <Identifier,Integer> getListeCorr(){
