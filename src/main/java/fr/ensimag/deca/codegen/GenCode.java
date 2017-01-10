@@ -17,14 +17,13 @@ import java.util.Stack;
 public class GenCode {
     private DecacCompiler comp;
     private GenCodeVar gcv;
+
     private Set<VariableDefinition> listeVar; //liste des variables globales/locales
     private Stack<GenCodeVar> pileListeVar; //pile qui contient les listes de var
-    
+   
     private int labelIndex = 0;
     private final int  taillePile=20;
     private Label pile_pleine= newLabel();
-    
-
 
     private GPRegister tmpReg;
     private GPRegister retReg;
@@ -33,8 +32,9 @@ public class GenCode {
         this.comp = comp;
         this.gcv=gcv;
         this.listeVar=gcv.getListeVar();
+
         this.pileListeVar= new Stack<GenCodeVar>();
-        
+
         // Le registre qui contient le retour d'une expression est le 2
         retReg = new GPRegister("R2", 2);
 
@@ -77,8 +77,8 @@ public class GenCode {
         comp.addComment("Début du programme principal");
         comp.addComment("Taille maximale de la pile");
         comp.addInstruction(new TSTO(taillePile));
-        comp.addInstruction(new BOV(pile_pleine));  
-        initDecla(); //initialisation des variables globales 
+        comp.addInstruction(new BOV(pile_pleine));
+        initDecla(); //initialisation des variables globales
     }
 
     public void terminateProgram(){
@@ -96,6 +96,7 @@ public class GenCode {
     }
 
     /* Ajoute les declarations de variable au programme */
+
     /*Permet de remplir la liste de correspondance et stocker les 
           valeurs des variables dans les registres GB en meme temps*/
     public void initDecla(){
@@ -107,7 +108,4 @@ public class GenCode {
             //on store sa valeur dans x(GB) avec x l'indice de v dans la table
         }
     }    
-        
-    
-    
 }
