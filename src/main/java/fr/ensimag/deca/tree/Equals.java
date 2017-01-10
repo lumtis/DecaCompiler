@@ -41,5 +41,4 @@ public class Equals extends AbstractOpExactCmp {
 
         compiler.addLabel(fin);
     }
-
 }
