@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.codegen.GenCodeVar;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.instructions.*;
@@ -46,15 +47,11 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        Set <DVal> listeVar= new HashSet<DVal>(); //à compléter
-        GenCodeVar gcv= new GenCodeVar(listeVar);
-        GenCode gc = new GenCode(compiler,gcv);
-
-        gc.initProgram();
+        
         compiler.addComment("Main program");
-        main.codeGenMain(compiler, gc);
+        main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
-        gc.terminateProgram();
+        
     }
 
     @Override

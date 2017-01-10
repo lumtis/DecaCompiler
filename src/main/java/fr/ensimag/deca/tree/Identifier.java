@@ -168,7 +168,11 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        ExpDefinition def = localEnv.get(this.name);
+        if (def == null) {
+            throw new ContextualError("Variable non déclarée.", this.getLocation());
+        }
+        return def.getType();
     }
 
     /**
@@ -177,7 +181,11 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type t = compiler.getType(name);
+        if (t == null) {
+            throw new ContextualError("Type non déclaré.",this.getLocation());
+        }
+        return t;
     }
     
     

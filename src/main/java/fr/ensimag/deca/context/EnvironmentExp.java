@@ -24,7 +24,7 @@ import java.util.HashMap;
 public class EnvironmentExp {
     private HashMap<Symbol, ExpDefinition> variables;
 
-    EnvironmentExp parentEnvironment;
+    private EnvironmentExp parentEnvironment;
     
     public EnvironmentExp(EnvironmentExp parentEnvironment) {
         this.parentEnvironment = parentEnvironment;
@@ -41,6 +41,10 @@ public class EnvironmentExp {
      */
     public ExpDefinition get(Symbol key) {
         return (variables.containsKey(key))?variables.get(key):null;
+    }
+
+    public EnvironmentExp getParent() {
+        return parentEnvironment;
     }
 
     /**

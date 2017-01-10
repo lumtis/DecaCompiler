@@ -1,0 +1,6 @@
+{
+int x=8;
+float y=4.0;
+String s="Kaamelott";
+boolean b=true;
+}

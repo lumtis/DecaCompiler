@@ -13,6 +13,8 @@ import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
+import javax.naming.Context;
+
 /**
  * Expression, i.e. anything that has a value.
  *
@@ -84,16 +86,17 @@ public abstract class AbstractExpr extends AbstractInst {
             EnvironmentExp localEnv, ClassDefinition currentClass,
             Type expectedType)
             throws ContextualError {
-        Type t = this.getType();
+
+        Type t = verifyExpr(compiler, localEnv, currentClass);
         if (expectedType.sameType(t)) {
             return this;
         }
-        else if (expectedType.isFloat() && t.isInt()) {
+        if (expectedType.isFloat() && t.isInt()) {
             AbstractExpr expr = new ConvFloat(this);
             return expr;
         }
         else {
-            throw new ContextualError("Affectation non valide.", currentClass.getLocation());
+            throw new ContextualError("Affectation non valide.", this.getLocation());
         }
     }
 
@@ -102,7 +105,7 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        //A compléter
+        verifyExpr(compiler,localEnv,currentClass);
     }
 
     /**
@@ -135,7 +138,7 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         throw new UnsupportedOperationException("not yet implemented");
     }
-*/  
+*/
 
     @Override
     protected void decompileInst(IndentPrintStream s) {
@@ -152,5 +155,10 @@ public abstract class AbstractExpr extends AbstractInst {
             s.print(t);
             s.println();
         }
+    }
+
+    // Genere le code de l'expression
+    public void codeGenExpr(DecacCompiler compiler, GenCode gc) {
+        codeGenInst(compiler, gc);
     }
 }
