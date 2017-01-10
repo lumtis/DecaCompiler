@@ -19,7 +19,6 @@ public class GenCode {
     private final int  taillePile=20;
     private Label pile_pleine= newLabel();
     private Set <DVal> listeVar; //liste des variables globales
-    
 
 
     private GPRegister tmpReg;
@@ -70,8 +69,8 @@ public class GenCode {
         comp.addComment("Début du programme principal");
         comp.addComment("Taille maximale de la pile");
         comp.addInstruction(new TSTO(taillePile));
-        comp.addInstruction(new BOV(pile_pleine));  
-        initDecla(); //initialisation des variables globales 
+        comp.addInstruction(new BOV(pile_pleine));
+        initDecla(); //initialisation des variables globales
     }
 
     public void terminateProgram(){
@@ -94,16 +93,16 @@ public class GenCode {
         comp.addComment("variables globales");
         //ajout des variables dans listeVar qui manque
         GenCodeVar gcv=new GenCodeVar(listeVar);
-        
-        /*Permet de remplir la liste de correspondance et stocker les 
+
+        /*Permet de remplir la liste de correspondance et stocker les
           valeurs des variables dans les registres GB en meme temps*/
         for (DVal s: listeVar){
             gcv.ajoutElement(s);
 
-            comp.addInstruction(new LOAD(s,retReg)); 
+            comp.addInstruction(new LOAD(s,retReg));
             comp.addInstruction(new STORE(retReg,new RegisterOffset(gcv.obtenirIndice(s),GB)));
-            // stockage de la valeur de la variable s dans GB   
+            // stockage de la valeur de la variable s dans GB
         }
     }
-    
+
 }
