@@ -50,7 +50,7 @@ public class EnvironmentType {
             return env_type.get(sym);
         }
         else {
-            throw new IllegalArgumentException("Type désiré non existant");
+            return null;
         }
     }
 
