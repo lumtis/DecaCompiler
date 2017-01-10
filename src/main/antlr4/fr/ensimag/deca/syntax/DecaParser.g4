@@ -128,7 +128,7 @@ inst returns[AbstractInst tree]
             $tree = $e1.tree;
         }
     | SEMI {
-        $tree = null; // A tester!
+        $tree = new NoOperation();
         }
     | PRINT OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
