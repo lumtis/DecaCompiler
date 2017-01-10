@@ -1,0 +1,5 @@
+{
+int y= -8;
+boolean b=true;
+boolean c=(!b);
+}

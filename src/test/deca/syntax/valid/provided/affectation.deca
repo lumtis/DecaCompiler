@@ -1,3 +1,6 @@
 {
 int x;
+float y;
+String s;
+boolean t;
 }

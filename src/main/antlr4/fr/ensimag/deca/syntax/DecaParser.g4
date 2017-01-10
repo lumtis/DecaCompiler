@@ -153,16 +153,19 @@ inst returns[AbstractInst tree]
     | e2=if_then_else {
             assert($if_then_else.tree != null);
             $tree = $e2.tree;
+            setLocation($tree, $e2.start);
         }
     | WHILE OPARENT condition=expr CPARENT OBRACE body=list_inst CBRACE {
             assert($condition.tree != null);
             assert($body.tree != null);
-            //TODO
+            $tree = new While($condition.tree,$body.tree);
+            setLocation($tree, $WHILE);
         }
     | RETURN expr SEMI {
             assert($expr.tree != null);
             $tree = $expr.tree;
-            //TODO
+            //Pas sûr ..
+            setLocation($tree, $RETURN);
         }
     ;
 
@@ -176,15 +179,18 @@ if_then_else returns[IfThenElse tree]
     : if1=IF OPARENT condition=expr CPARENT OBRACE li_if=list_inst CBRACE {
             le.add($condition.tree);
             li.add($li_if.tree);
+            //setLocation($tree, $if1);
         }
       (ELSE elsif=IF OPARENT elsif_cond=expr CPARENT OBRACE elsif_li=list_inst CBRACE {
            le.add($elsif_cond.tree);
            li.add($elsif_li.tree);
+           //setLocation($tree, $elsif);
         }
       )*
       (ELSE OBRACE li_else=list_inst CBRACE {
             elseExist=true;
             li.add($li_else.tree);
+            //setLocation($tree, $ELSE);
         }
       )?{
          if (!elseExist) {
@@ -285,11 +291,13 @@ eq_neq_expr returns[AbstractExpr tree]
             assert($e1.tree != null);
             assert($e2.tree != null);
             $tree= new Equals($e1.tree,$e2.tree);
+            setLocation($tree, $EQEQ);
         }
     | e1=eq_neq_expr NEQ e2=inequality_expr {
             assert($e1.tree != null);
             assert($e2.tree != null);
             $tree= new NotEquals($e1.tree,$e2.tree);
+            setLocation($tree, $NEQ);
         }
     ;
 
@@ -303,21 +311,25 @@ inequality_expr returns[AbstractExpr tree]
             assert($e1.tree != null);
             assert($e2.tree != null);
             $tree= new LowerOrEqual($e1.tree,$e2.tree);
+            setLocation($tree, $LEQ);
         }
     | e1=inequality_expr GEQ e2=sum_expr {
             assert($e1.tree != null);
             assert($e2.tree != null);
             $tree= new GreaterOrEqual($e1.tree,$e2.tree);
+            setLocation($tree, $GEQ);
         }
     | e1=inequality_expr GT e2=sum_expr {
             assert($e1.tree != null);
             assert($e2.tree != null);
             $tree= new Greater($e1.tree,$e2.tree);
+            setLocation($tree, $GT);
         }
     | e1=inequality_expr LT e2=sum_expr {
             assert($e1.tree != null);
             assert($e2.tree != null);
             $tree= new Lower($e1.tree,$e2.tree);
+            setLocation($tree, $LT);
         }
     | e1=inequality_expr INSTANCEOF type {
             assert($e1.tree != null);
@@ -363,11 +375,13 @@ mult_expr returns[AbstractExpr tree]
             assert($e1.tree != null);                                         
             assert($e2.tree != null);
             $tree= new Divide($e1.tree,$e2.tree);
+            setLocation($tree, $SLASH);
         }
     | e1=mult_expr PERCENT e2=unary_expr {
             assert($e1.tree != null);                                                                          
             assert($e2.tree != null);
             $tree= new Modulo($e1.tree,$e2.tree);
+            setLocation($tree, $PERCENT);
         }
     ;
 
@@ -375,10 +389,12 @@ unary_expr returns[AbstractExpr tree]
     : op=MINUS e=unary_expr {
             assert($e.tree != null);
             $tree= new UnaryMinus($e.tree);
+            setLocation($tree, $op);
         }
     | op=EXCLAM e=unary_expr {
             assert($e.tree != null);
             $tree= new Not($e.tree);
+            setLocation($tree, $op);
         }
     | select_expr {
             assert($select_expr.tree != null);
@@ -494,6 +510,7 @@ literal returns[AbstractExpr tree]
 ident returns[AbstractIdentifier tree]
     : IDENT {
             $tree = new Identifier(super.getSymbols().create($IDENT.text));
+            setLocation($tree,$IDENT);
         }
     ;
 
