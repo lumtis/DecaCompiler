@@ -27,24 +27,33 @@ public class DeclVar extends AbstractDeclVar {
         this.varName = varName;
         this.initialization = initialization;
     }
+    
+    public AbstractIdentifier getName(){
+        return this.varName;
+    }
 
     @Override
     protected void verifyDeclVar(DecacCompiler compiler,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
         Type t = this.type.verifyType(compiler);
+        //On vérifie si le nom de variable utilisé est le même que celui d'un type
+        if (compiler.getType(varName.getName()) != null) {
+            throw new ContextualError("Nom de variable utilisé est un type.", this.getLocation());
+        }
         varName.setDefinition(new VariableDefinition(t,this.getLocation()));
+        //On doit parcourir tous les env_exp parents pour vérifier si la variable existe déjà.
         try {
             EnvironmentExp cour = localEnv;
             while (cour != null) {
                 if (cour.get(varName.getName()) != null) {
-                    throw new ContextualError("Variable définie 2 fois.", this.getLocation());
+                    throw new ContextualError("Variable déjà définie.", this.getLocation());
                 }
                 cour = cour.getParent();
             }
             localEnv.declare(varName.getName(), varName.getExpDefinition());
         } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Variable définie 2 fois.", this.getLocation());
+            throw new ContextualError("Variable déjà définie.", this.getLocation());
         }
         initialization.verifyInitialization(compiler, t, localEnv, currentClass);
     }

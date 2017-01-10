@@ -105,7 +105,7 @@ public class GenCode {
         for (Identifier v: listeVar){
             gcv.ajoutElement(v); //ajout de la variable v à la table de correspondance
             comp.addInstruction(new LOAD(v.getVariableDefinition().getOperand(),retReg)); //on load sa valeur
-            comp.addInstruction(new STORE(retReg,new RegisterOffset(gcv.obtenirIndice(v.getVariableDefinition()),GB))); 
+            comp.addInstruction(new STORE(retReg,new RegisterOffset(gcv.obtenirIndice(v),GB))); 
             //on store sa valeur dans x(GB) avec x l'indice de v dans la table
         }
     }    

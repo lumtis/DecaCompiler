@@ -47,16 +47,11 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        HashSet <Identifier> listeVar= new HashSet<Identifier>(); //à compléter
-        //remplissage
-        GenCodeVar gcv= new GenCodeVar(listeVar);
-        GenCode gc = new GenCode(compiler,gcv);
-
-        gc.initProgram();
+        
         compiler.addComment("Main program");
-        main.codeGenMain(compiler, gc);
+        main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
-        gc.terminateProgram();
+        
     }
 
     @Override

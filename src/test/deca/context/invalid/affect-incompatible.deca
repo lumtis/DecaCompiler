@@ -1,0 +1,8 @@
+//ERROR :7:
+{
+   int a;
+   boolean b;
+
+   // Doit etre refuse.
+   a = b;
+}

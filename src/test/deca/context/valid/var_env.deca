@@ -1,0 +1,8 @@
+{
+int x=5;
+int b,c;
+while(x>10) {
+   b=x;
+   c=b*5;
+}
+}

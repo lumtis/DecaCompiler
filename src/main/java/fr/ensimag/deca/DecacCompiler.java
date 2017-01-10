@@ -13,11 +13,8 @@ import fr.ensimag.ima.pseudocode.AbstractLine;
 import fr.ensimag.ima.pseudocode.IMAProgram;
 import fr.ensimag.ima.pseudocode.Instruction;
 import fr.ensimag.ima.pseudocode.Label;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+
+import java.io.*;
 
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 
@@ -52,12 +49,15 @@ public class DecacCompiler {
 
     private EnvironmentType env_type;
 
+    private EnvironmentExp env_exp_predef;
+
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
         this.symbols = new SymbolTable();
         this.env_type = new EnvironmentType(this.symbols);
+        initDefaultEnvExp();
     }
 
     public SymbolTable getSymbols() {
@@ -72,8 +72,28 @@ public class DecacCompiler {
         return env_type.getType(symbols.create(str));
     }
 
-    public Definition getTypeDef(Type t) {
-        return env_type.getDefinition(t);
+    private void initDefaultEnvExp() {
+        this.env_exp_predef = new EnvironmentExp(null);
+        Symbol trueSym = symbols.create("true");
+        Type bool = this.getType("boolean");
+        ExpDefinition defTrue = new VariableDefinition(bool,new Location(0,0,"Default"));
+        Symbol falseSym = symbols.create("false");
+        ExpDefinition defFalse = new VariableDefinition(bool,new Location(0,0,"Default"));
+        Symbol nullSym = symbols.create("null");
+        Type nullType = new NullType(nullSym);
+        ExpDefinition defNull = new VariableDefinition(nullType,new Location(0,0,"Default"));
+        try {
+            this.env_exp_predef.declare(trueSym, defTrue);
+            this.env_exp_predef.declare(falseSym, defFalse);
+            this.env_exp_predef.declare(nullSym, defNull);
+        }
+        catch (EnvironmentExp.DoubleDefException e) {
+            throw new ExceptionInInitializerError("Erreur initialisation environnement par défaut.");
+        }
+    }
+
+    public EnvironmentExp getEnvExpPredef() {
+        return this.env_exp_predef;
     }
 
     /**
