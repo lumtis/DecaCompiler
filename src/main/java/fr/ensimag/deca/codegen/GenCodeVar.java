@@ -56,7 +56,7 @@ public class GenCodeVar {
     }
 
 
-    public Integer obtenirIndice(VariableDefinition s){
+    public Integer obtenirIndice(Identifier s){
         return this.listeCorr.get(s);
     }
 
