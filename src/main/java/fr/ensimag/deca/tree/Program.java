@@ -2,10 +2,15 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.GenCode;
+import fr.ensimag.deca.codegen.GenCodeVar;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
+import java.util.HashSet;
+import java.util.Set;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -42,7 +47,9 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        GenCode gc = new GenCode(compiler);
+        HashSet <VariableDefinition> listeVar= new HashSet<VariableDefinition>(); //à compléter
+        GenCodeVar gcv= new GenCodeVar(listeVar);
+        GenCode gc = new GenCode(compiler,gcv);
 
         gc.initProgram();
         compiler.addComment("Main program");

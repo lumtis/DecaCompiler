@@ -9,6 +9,9 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.*;
+
 
 /**
  * Full if/else if/else statement.
@@ -17,8 +20,8 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2017
  */
 public class IfThenElse extends AbstractInst {
-    
-    private final AbstractExpr condition; 
+
+    private final AbstractExpr condition;
     private final ListInst thenBranch;
     private ListInst elseBranch;
 
@@ -30,7 +33,7 @@ public class IfThenElse extends AbstractInst {
         this.thenBranch = thenBranch;
         this.elseBranch = elseBranch;
     }
-    
+
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
@@ -45,7 +48,25 @@ public class IfThenElse extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        throw new UnsupportedOperationException("not yet implemented");
+        Label sinon = gc.newLabel();
+        Label fin = gc.newLabel();
+
+        // On réalise l'expression
+        condition.codeGenInst(compiler, gc);
+
+        // Si l'instruction est fausse on saute directement au else
+        compiler.addInstruction(new CMP(0, gc.getRetReg()));
+        compiler.addInstruction(new BEQ(sinon));
+
+        // then
+        thenBranch.codeGenListInst(compiler, gc);
+        compiler.addInstruction(new BRA(fin));
+
+        // else
+        compiler.addLabel(sinon);
+        elseBranch.codeGenListInst(compiler, gc);
+
+        compiler.addLabel(fin);
     }
 
     @Override
