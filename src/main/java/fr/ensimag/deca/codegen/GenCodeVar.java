@@ -25,8 +25,14 @@ public class GenCodeVar {
 
     public HashMap <DVal,Integer> getListeCorr(){
        return this.listeCorr;
-   }
 
+    }
+    
+    public Set<DVal> getListeVar(){
+        return this.listeVar;
+    }
+    
+    
 
     public void ajoutElement(DVal s){
         this.i++;
