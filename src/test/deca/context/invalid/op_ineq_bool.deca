@@ -1,4 +1,4 @@
-//ERROR ::
+//ERROR :5:
 {
 boolean a=true;
 boolean b=false;

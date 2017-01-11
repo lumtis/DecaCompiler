@@ -180,6 +180,8 @@ public class Identifier extends AbstractIdentifier {
         if (def == null) {
             throw new ContextualError("Variable non déclarée.", this.getLocation());
         }
+        this.setDefinition(def);
+        this.setType(def.getType());
         return def.getType();
     }
 
@@ -193,6 +195,8 @@ public class Identifier extends AbstractIdentifier {
         if (t == null) {
             throw new ContextualError("Type non déclaré.",this.getLocation());
         }
+        this.setType(t);
+        this.setDefinition(compiler.getDefinition(t));
         return t;
     }
     

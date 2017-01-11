@@ -72,6 +72,10 @@ public class DecacCompiler {
         return env_type.getType(symbols.create(str));
     }
 
+    public Definition getDefinition(Type t) {
+        return env_type.getDefinition(t);
+    }
+
     private void initDefaultEnvExp() {
         this.env_exp_predef = new EnvironmentExp(null);
         Symbol trueSym = symbols.create("true");
