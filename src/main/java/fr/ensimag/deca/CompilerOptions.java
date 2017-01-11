@@ -34,6 +34,8 @@ public class CompilerOptions {
     }
 
     public boolean getVerifOnly() { return verifOnly;}
+
+    public boolean getParse() { return parse;}
     
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
@@ -43,6 +45,8 @@ public class CompilerOptions {
     private boolean parallel = false;
     private boolean printBanner = false;
     private boolean verifOnly = false;
+    private boolean parse = false;
+    private boolean needFiles = false;
     private List<File> sourceFiles = new ArrayList<File>();
 
     
@@ -52,19 +56,30 @@ public class CompilerOptions {
         while (i<args.length) {
             switch (args[i]) {
                 case "-d":
-                    i++;
+                    needFiles = true;
                     debug = Integer.parseInt(args[i]);
                     break;
                 case "-p":
-                    parallel = true;
+                    needFiles = true;
+                    parse = true;
+                    if(verifOnly){
+                        erreurIncompatible_pv();
+                    }
                     break;
-                case "-v":
-                    verifOnly = true;
                 case "-b":
+                    if(args.length>1){
+                        erreurIncompatible_banner();
+                    }
                     printBanner = true;
                     break;
-                case "-s":
-                    i++;
+                case "-v":
+                    needFiles = true;
+                    verifOnly = true;
+                    if(parse){
+                        erreurIncompatible_pv();
+                    }
+                    break;
+                default:
                     File f = new File(args[i]);
                     if (f == null) {
                         throw new IllegalArgumentException("Fichier non valide.");
@@ -72,6 +87,9 @@ public class CompilerOptions {
                     sourceFiles.add(f);
             }
             i++;
+        }
+        if (needFiles && sourceFiles.size()==0){
+            erreurNeedFiles();
         }
         Logger logger = Logger.getRootLogger();
         // map command-line debug option to log4j's level.
@@ -97,6 +115,15 @@ public class CompilerOptions {
         }
 
         //throw new UnsupportedOperationException("not yet implemented");
+    }
+    public void erreurIncompatible_pv(){
+        throw new IllegalArgumentException("Les options -v et -p sont incompatibles");
+    }
+    public void erreurIncompatible_banner(){
+        throw new IllegalArgumentException("La commande -b est incompatible avec toutes autres options ou fichiers");
+    }
+    public void erreurNeedFiles(){
+        throw new IllegalArgumentException("Vous devez inclure au moins un fichier en argument");
     }
 
     public void afficheBanner(){

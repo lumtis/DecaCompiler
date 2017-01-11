@@ -241,9 +241,18 @@ public class DecacCompiler {
 
         assert(prog.checkAllDecorations());
 
+
         if(compilerOptions.getVerifOnly()){
             return true;
         }
+        if(compilerOptions.getParse()){
+
+            prog.prettyPrint(System.out);
+            //doDecompile()
+            return true;
+
+        }
+
         
         // Partie C
         addComment("start main program");
@@ -290,6 +299,7 @@ public class DecacCompiler {
         } catch (IOException ex) {
             throw new DecacFatalError("Failed to open input file: " + ex.getLocalizedMessage());
         }
+
         lex.setDecacCompiler(this);
         CommonTokenStream tokens = new CommonTokenStream(lex);
         DecaParser parser = new DecaParser(tokens);
