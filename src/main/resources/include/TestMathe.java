@@ -108,20 +108,6 @@ public class TestMathe {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         //test ulp
         float ulp =Mathe.ulp((float)1);
         if ( ulp == Mathe.pow( (float)2, -23) ){
@@ -154,5 +140,50 @@ public class TestMathe {
         else {
             System.out.println("ulp 4: not pass");
         }
+
+
+
+
+
+
+
+
+
+
+
+        // test factoriel
+        int fact =Mathe.factoriel(5);
+        System.out.println("factoriel "+ fact );
+        if (fact==120){
+            System.out.println("factoriel : Pass");
+        }
+        else {
+            System.out.println("factoriel : not pass");
+        }
+
+
+
+        //float sin1 =Mathe.sin((float)0);
+        //System.out.println(" sin 0 =" + sin1);
+        float sin2= Mathe.sin_ser((float)0.52360);
+        System.out.println( "Sin pi/6= " + sin2);
+        //float erreursin = (float)0.5 - sin2;
+        //System.out.println( " lucas gros hmar " + erreursin);
+
+        float tan= Mathe.atan((float)0.5);
+        System.out.println("tan 0.5=" + tan);
+        float erreurtan= tan  - (float)0.46364761;
+        ulp =Mathe.ulp((float)0.46364761);
+        //System.out.println("ulp"+ ulp);
+        //System.out.println(" erreur"+ erreurtan);
+        if ( erreurtan <= Mathe.ulp((float)0.46364761)){
+            System.out.println("bsa7tek artan pass");
+        }
+        else {
+            System.out.println("artan not pass");
+        }
+
+
+
     }
 }
