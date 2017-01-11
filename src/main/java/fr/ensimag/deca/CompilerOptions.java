@@ -44,7 +44,7 @@ public class CompilerOptions {
 
     
     public void parseArgs(String[] args) throws CLIException {
-        //TODO : A modifier plus tard
+
         int i=0;
         while (i<args.length) {
             switch (args[i]) {
@@ -92,6 +92,17 @@ public class CompilerOptions {
         }
 
         //throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    public void afficheBanner(){
+
+        System.out.println("-------------------------------------------------------------------------------------");
+        System.out.println("\n                               Equipe n° : 35");
+        System.out.println("\n Membres de l'équipe: Thami Benjelloun, Nizar Bel Hadj Salah, Lucas Bertrand, Tony Buthod-Garçon, Thomas Clastres");
+        System.out.println("\n Projet GL 2017");
+        System.out.println("-------------------------------------------------------------------------------------");
+
+
     }
 
     protected void displayUsage() {
