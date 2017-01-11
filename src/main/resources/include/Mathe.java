@@ -3,6 +3,10 @@
 
 public class Mathe {
 
+    
+    
+
+
     // fonction sinus première solution
     public static float sin_ser(float f) {
         int k=0;
@@ -50,7 +54,8 @@ public class Mathe {
 
 
     // fonction cosinus
-    public float cos(float f) {
+    public static float cos(float f) {
+
         System.out.println("cos(f) not yet implemented");
         return f;
     }
