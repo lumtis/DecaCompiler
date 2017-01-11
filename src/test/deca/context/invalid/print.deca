@@ -1,0 +1,8 @@
+//ERROR :7:
+{
+        int a, b, c;
+        float d;
+        boolean bool = true;
+        print(a, "Bonjour",b);
+        println(c, d, bool);
+}

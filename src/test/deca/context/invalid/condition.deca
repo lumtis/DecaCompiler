@@ -1,0 +1,11 @@
+//ERROR :8:
+{
+        int abcd, efgh;
+        if (false) {
+           abcd = 6;
+        }
+        efgh = 7;
+        else if (true) {
+             efgh = 2;
+        }
+}

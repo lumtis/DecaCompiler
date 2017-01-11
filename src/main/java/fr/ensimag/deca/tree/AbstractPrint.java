@@ -44,7 +44,7 @@ public abstract class AbstractPrint extends AbstractInst {
             a.verifyInst(compiler,localEnv,currentClass,returnType);
             Type t = a.verifyExpr(compiler,localEnv,currentClass);
             if (!t.isString() && !t.isInt() && !t.isFloat()) {
-                throw new ContextualError("Erreur de type.", null);
+                throw new ContextualError("Erreur de type.", this.getLocation());
             }
         }
     }
