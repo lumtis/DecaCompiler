@@ -1,4 +1,4 @@
-//ERROR ::
+//ERROR :5:
 {
 float x=8.0;
 int y = 2;
