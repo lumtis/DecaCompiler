@@ -2,11 +2,11 @@
 // Library for class Math of Deca, coded in Deca
 
 public class Mathe {
-    public float sin(float f) {
+    public static float sin(float f) {
         System.out.println("sin(f) not yet implemented");
         return f;
     }
-    public float cos(float f) {
+    public static float cos(float f) {
         System.out.println("cos(f) not yet implemented");
         return f;
     }
