@@ -26,7 +26,7 @@ public class GenCodeVar {
     private DecacCompiler comp;
     private GenCode gc;
     private HashMap<String, Integer> listeCorr;
-    private Integer i=0;
+    private Integer i=1;
 
     public GenCodeVar(DecacCompiler comp) {
 

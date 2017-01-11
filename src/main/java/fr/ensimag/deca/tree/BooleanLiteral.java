@@ -8,6 +8,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
  *
@@ -57,7 +58,9 @@ public class BooleanLiteral extends AbstractExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(value == false)
+            compiler.addInstruction(new LOAD(0, gc.getRetReg()));
+        else
+            compiler.addInstruction(new LOAD(1, gc.getRetReg()));
     }
-
 }
