@@ -14,7 +14,7 @@ import org.apache.commons.lang.Validate;
  */
 public class DeclVar extends AbstractDeclVar {
 
-    
+
     final private AbstractIdentifier type;
     final private AbstractIdentifier varName;
     final private AbstractInitialization initialization;
@@ -27,9 +27,17 @@ public class DeclVar extends AbstractDeclVar {
         this.varName = varName;
         this.initialization = initialization;
     }
-    
-    public AbstractIdentifier getName(){
+
+    public AbstractIdentifier getVarName(){
         return this.varName;
+    }
+
+    public AbstractIdentifier getType(){
+        return this.type;
+    }
+
+    public AbstractInitialization getInitialization(){
+        return this.initialization;
     }
 
     @Override
@@ -58,7 +66,7 @@ public class DeclVar extends AbstractDeclVar {
         initialization.verifyInitialization(compiler, t, localEnv, currentClass);
     }
 
-    
+
     @Override
     public void decompile(IndentPrintStream s) {
         throw new UnsupportedOperationException("not yet implemented");
@@ -71,7 +79,7 @@ public class DeclVar extends AbstractDeclVar {
         varName.iter(f);
         initialization.iter(f);
     }
-    
+
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         type.prettyPrint(s, prefix, false);

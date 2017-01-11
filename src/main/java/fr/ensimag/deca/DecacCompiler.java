@@ -39,7 +39,7 @@ import org.apache.log4j.Logger;
  */
 public class DecacCompiler {
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
-    
+
     /**
      * Portable newline character.
      */
@@ -70,6 +70,10 @@ public class DecacCompiler {
 
     public Type getType(String str) {
         return env_type.getType(symbols.create(str));
+    }
+
+    public Definition getDefinition(Type t) {
+        return env_type.getDefinition(t);
     }
 
     private void initDefaultEnvExp() {
@@ -150,22 +154,22 @@ public class DecacCompiler {
     public void addInstruction(Instruction instruction, String comment) {
         program.addInstruction(instruction, comment);
     }
-    
+
     /**
-     * @see 
+     * @see
      * fr.ensimag.ima.pseudocode.IMAProgram#display()
      */
     public String displayIMAProgram() {
         return program.display();
     }
-    
+
     private final CompilerOptions compilerOptions;
     private final File source;
     /**
      * The main program. Every instruction generated will eventually end up here.
      */
     private final IMAProgram program = new IMAProgram();
- 
+
 
     /**
      * Run the compiler (parse source file, generate code)
@@ -222,7 +226,7 @@ public class DecacCompiler {
     private boolean doCompile(String sourceName, String destName,
             PrintStream out, PrintStream err)
             throws DecacFatalError, LocationException {
-        
+
         // Partie A
         AbstractProgram prog = doLexingAndParsing(sourceName, err);
 
@@ -237,12 +241,27 @@ public class DecacCompiler {
 
         assert(prog.checkAllDecorations());
         addComment("start main program");
-        
+
+
+        if(compilerOptions.getVerifOnly()){
+            return true;
+        }
+
+        if(compilerOptions.getParse()){
+
+            prog.prettyPrint(System.out);
+            //doDecompile()
+            return true;
+
+        }
+
         // Partie C
+        addComment("start main program");
+
         prog.codeGenProgram(this);
-        
+
         addComment("end main program");
-        
+
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);
 
@@ -281,6 +300,7 @@ public class DecacCompiler {
         } catch (IOException ex) {
             throw new DecacFatalError("Failed to open input file: " + ex.getLocalizedMessage());
         }
+
         lex.setDecacCompiler(this);
         CommonTokenStream tokens = new CommonTokenStream(lex);
         DecaParser parser = new DecaParser(tokens);

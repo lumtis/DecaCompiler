@@ -1,0 +1,6 @@
+{
+        int a = 7;
+        float b = 9;
+        String bonjour = "Bonjour !";
+        print("Ceci est une string", a, b, bonjour);
+}

@@ -1,0 +1,7 @@
+//ERROR :4:
+{
+        int Int=4,INT=2;
+        while (Int = INT) {
+              print("On boucle indéfiniment.");
+        }
+}

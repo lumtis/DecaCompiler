@@ -23,7 +23,7 @@ public abstract class AbstractPrint extends AbstractInst {
 
     private boolean printHex;
     private ListExpr arguments = new ListExpr();
-    
+
     abstract String getSuffix();
 
     public AbstractPrint(boolean printHex, ListExpr arguments) {
@@ -44,7 +44,7 @@ public abstract class AbstractPrint extends AbstractInst {
             a.verifyInst(compiler,localEnv,currentClass,returnType);
             Type t = a.verifyExpr(compiler,localEnv,currentClass);
             if (!t.isString() && !t.isInt() && !t.isFloat()) {
-                throw new ContextualError("Erreur de type.", null);
+                throw new ContextualError("Erreur de type.", this.getLocation());
             }
         }
     }
@@ -52,7 +52,7 @@ public abstract class AbstractPrint extends AbstractInst {
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         for (AbstractExpr a : getArguments().getList()) {
-            a.codeGenPrint(compiler);
+            a.codeGenPrint(compiler, gc);
         }
     }
 

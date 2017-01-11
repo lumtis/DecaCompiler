@@ -28,7 +28,7 @@ public class Lower extends AbstractOpIneq {
         Label fin = gc.newLabel();   // Label de la fin de l'expression
 
         super.codeGenInst(compiler, gc);
-        compiler.addInstruction(new CMP(gc.getTmpReg(), gc.getRetReg()));
+        compiler.addInstruction(new CMP(gc.getRetReg(), gc.getTmpReg()));
         compiler.addInstruction(new BLT(vrai));
 
         // Les expressions ne sont pas egales

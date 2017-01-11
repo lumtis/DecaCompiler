@@ -1,0 +1,9 @@
+// Description:
+//    tests d'expressions entieres
+//
+// Resultats:
+//    5
+
+{
+   println(15%10);
+}

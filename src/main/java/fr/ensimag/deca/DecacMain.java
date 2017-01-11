@@ -26,10 +26,11 @@ public class DecacMain {
             System.exit(1);
         }
         if (options.getPrintBanner()) {
-            throw new UnsupportedOperationException("decac -b not yet implemented");
+            options.afficheBanner();
+            System.exit(0);
         }
         if (options.getSourceFiles().isEmpty()) {
-            throw new UnsupportedOperationException("decac without argument not yet implemented");
+            options.affiche_commande();
         }
         if (options.getParallel()) {
             // A FAIRE : instancier DecacCompiler pour chaque fichier à
@@ -47,4 +48,5 @@ public class DecacMain {
         }
         System.exit(error ? 1 : 0);
     }
+
 }

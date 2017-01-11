@@ -18,6 +18,8 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
+import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.*;
 
 /**
  * Deca Identifier
@@ -26,7 +28,7 @@ import org.apache.log4j.Logger;
  * @date 01/01/2017
  */
 public class Identifier extends AbstractIdentifier {
-    
+
     @Override
     protected void checkDecoration() {
         if (getDefinition() == null) {
@@ -42,10 +44,10 @@ public class Identifier extends AbstractIdentifier {
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * ClassDefinition.
-     * 
+     *
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
+     *
      * @throws DecacInternalError
      *             if the definition is not a class definition.
      */
@@ -64,10 +66,10 @@ public class Identifier extends AbstractIdentifier {
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * MethodDefinition.
-     * 
+     *
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
+     *
      * @throws DecacInternalError
      *             if the definition is not a method definition.
      */
@@ -86,10 +88,10 @@ public class Identifier extends AbstractIdentifier {
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * FieldDefinition.
-     * 
+     *
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
+     *
      * @throws DecacInternalError
      *             if the definition is not a field definition.
      */
@@ -108,10 +110,10 @@ public class Identifier extends AbstractIdentifier {
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * VariableDefinition.
-     * 
+     *
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
+     *
      * @throws DecacInternalError
      *             if the definition is not a field definition.
      */
@@ -129,10 +131,10 @@ public class Identifier extends AbstractIdentifier {
 
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a ExpDefinition.
-     * 
+     *
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
+     *
      * @throws DecacInternalError
      *             if the definition is not a field definition.
      */
@@ -168,10 +170,20 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        ExpDefinition def = localEnv.get(this.name);
+        EnvironmentExp cour = localEnv;
+        ExpDefinition def = null;
+        while (cour != null) {
+            def = cour.get(this.name);
+            if (def != null) {
+                break;
+            }
+            cour = cour.getParent();
+        }
         if (def == null) {
             throw new ContextualError("Variable non déclarée.", this.getLocation());
         }
+        this.setDefinition(def);
+        this.setType(def.getType());
         return def.getType();
     }
 
@@ -185,10 +197,12 @@ public class Identifier extends AbstractIdentifier {
         if (t == null) {
             throw new ContextualError("Type non déclaré.",this.getLocation());
         }
+        this.setType(t);
+        this.setDefinition(compiler.getDefinition(t));
         return t;
     }
-    
-    
+
+
     private Definition definition;
 
 
@@ -225,7 +239,24 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // TODO: Gerer les string
+
+        // On récupère l'adresse de la variable
+        DAddr addr = gc.getVariablesG().getVariable(this);
+
+        // On met la valeur de cette adresse dans le registre de retour
+        compiler.addInstruction(new LOAD(addr, gc.getRetReg()));
     }
 
+
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler, GenCode gc) {
+        // TODO: Gerer les string
+
+        // On récupère l'adresse de la variable
+        DAddr addr = gc.getVariablesG().getVariable(this);
+
+        compiler.addInstruction(new LOAD(addr, new GPRegister("R1", 1)));
+        compiler.addInstruction(new WINT());
+    }
 }

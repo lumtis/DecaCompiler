@@ -12,8 +12,10 @@ import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
-
+import fr.ensimag.ima.pseudocode.*;
 import javax.naming.Context;
+import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.*;
 
 /**
  * Expression, i.e. anything that has a value.
@@ -46,7 +48,8 @@ public abstract class AbstractExpr extends AbstractInst {
     @Override
     protected void checkDecoration() {
         if (getType() == null) {
-            throw new DecacInternalError("Expression " + decompile() + " has no Type decoration");
+
+            throw new DecacInternalError("Expression " + /*decompile() +*/ " has no Type decoration");
         }
     }
 
@@ -86,13 +89,14 @@ public abstract class AbstractExpr extends AbstractInst {
             EnvironmentExp localEnv, ClassDefinition currentClass,
             Type expectedType)
             throws ContextualError {
-
-        Type t = verifyExpr(compiler, localEnv, currentClass);
+        Type t = this.verifyExpr(compiler, localEnv, currentClass);
         if (expectedType.sameType(t)) {
             return this;
         }
         if (expectedType.isFloat() && t.isInt()) {
             AbstractExpr expr = new ConvFloat(this);
+            expr.verifyExpr(compiler, localEnv, currentClass);
+            expr.setLocation(this.getLocation());
             return expr;
         }
         else {
@@ -105,7 +109,7 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        verifyExpr(compiler,localEnv,currentClass);
+        this.verifyExpr(compiler,localEnv,currentClass);
     }
 
     /**
@@ -120,25 +124,26 @@ public abstract class AbstractExpr extends AbstractInst {
      */
     void verifyCondition(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        Type t = verifyExpr(compiler,localEnv, currentClass);
+        Type t = this.verifyExpr(compiler,localEnv, currentClass);
         if (!t.isBoolean()) {
-            throw new ContextualError("L'expression n'est pas une condition.", currentClass.getLocation());
+            throw new ContextualError("L'expression n'est pas une condition.", this.getLocation());
         }
     }
 
-    /**
-     * Generate code to print the expression
-     *
-     * @param compiler
-     */
-    protected void codeGenPrint(DecacCompiler compiler) {
+    protected void codeGenPrint(DecacCompiler compiler, GenCode gc) {
+        // On réalise l'expression
+        this.codeGenInst(compiler, gc);
+
+        // On met le retour de l'expression dans le registre r1
+        compiler.addInstruction(new LOAD(gc.getRetReg(), new GPRegister("R1", 1)));
+        compiler.addInstruction(new WINT());
     }
 
 /*
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         throw new UnsupportedOperationException("not yet implemented");
     }
-*/  
+*/
 
     @Override
     protected void decompileInst(IndentPrintStream s) {
@@ -155,5 +160,10 @@ public abstract class AbstractExpr extends AbstractInst {
             s.print(t);
             s.println();
         }
+    }
+
+    // Genere le code de l'expression
+    public void codeGenExpr(DecacCompiler compiler, GenCode gc) {
+        codeGenInst(compiler, gc);
     }
 }

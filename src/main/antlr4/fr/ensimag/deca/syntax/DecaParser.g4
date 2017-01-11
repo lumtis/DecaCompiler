@@ -502,7 +502,7 @@ literal returns[AbstractExpr tree]
             setLocation($tree, $TRUE);
         }
     | FALSE {
-            $tree= new BooleanLiteral(true);
+            $tree= new BooleanLiteral(false);
             setLocation($tree, $FALSE);
         }
     | THIS {

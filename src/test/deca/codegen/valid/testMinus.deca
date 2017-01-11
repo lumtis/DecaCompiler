@@ -1,0 +1,14 @@
+// Description:
+//    tests d'expressions entieres
+//
+// Resultats:
+//    85
+//    -80
+//    -5
+
+{
+   int test = 90;
+   println(test-5);
+   println(10-test);
+   println(-5);
+}

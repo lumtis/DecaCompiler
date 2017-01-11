@@ -33,6 +33,8 @@ public class ManualTestContext {
         }
         try {
             prog.verifyProgram(compiler);
+            prog.checkAllDecorations();
+            prog.checkAllLocations();
         } catch (LocationException e) {
             e.display(System.err);
             System.exit(1);
