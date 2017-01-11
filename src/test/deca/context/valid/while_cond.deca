@@ -1,0 +1,25 @@
+{
+int a, b, pass, i=0;
+float f = readFloat();
+boolean okay;
+a = readInt();
+b = readInt();
+while (b != 0) {
+      if (a >= b) {
+         a = a-b;
+      }
+      else {
+           pass = a;
+           a = b;
+           b = pass;
+      }
+      if (false && f==2.7 || okay) {
+         if (2 != 3) {
+            println("Bonjour");
+            while (i<10) {
+                  i = i+1;
+            }
+         }
+      }
+} 
+}

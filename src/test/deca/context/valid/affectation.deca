@@ -1,5 +1,5 @@
 {
-    float x = 14;
+    float x = -14;
     float b;
     b = x*x - 2;
 }

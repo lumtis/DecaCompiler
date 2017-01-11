@@ -7,18 +7,18 @@ import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
 import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.LocationException;
-import java.io.IOException;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 /**
- * Driver to test the contextual analysis (together with lexer/parser)
- * 
- * @author Ensimag
- * @date 01/01/2017
+ * Created by buthodgt on 1/11/17.
  */
-public class ManualTestContext {
+public class ManualTestDecompile {
     public static void main(String[] args) throws IOException {
         Logger.getRootLogger().setLevel(Level.DEBUG);
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
@@ -33,12 +33,20 @@ public class ManualTestContext {
         }
         try {
             prog.verifyProgram(compiler);
-            prog.checkAllDecorations();
-            prog.checkAllLocations();
         } catch (LocationException e) {
             e.display(System.err);
             System.exit(1);
         }
-        prog.prettyPrint(System.out);
+        System.out.println("---------Code source----------");
+        FileReader file = new FileReader(lex.getSourceName());
+        BufferedReader buff = new BufferedReader(file);
+        String str;
+        String output = "";
+        while ((str=buff.readLine())!=null) {
+            output += str+"\n";
+        }
+        System.out.println(output);
+        System.out.println("---------Code décompilé----------");
+        System.out.println(prog.decompile());
     }
 }

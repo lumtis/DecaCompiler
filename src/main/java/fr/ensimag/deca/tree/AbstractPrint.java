@@ -44,7 +44,7 @@ public abstract class AbstractPrint extends AbstractInst {
             a.verifyInst(compiler,localEnv,currentClass,returnType);
             Type t = a.verifyExpr(compiler,localEnv,currentClass);
             if (!t.isString() && !t.isInt() && !t.isFloat()) {
-                throw new ContextualError("Erreur de type.", null);
+                throw new ContextualError("Erreur de type.", this.getLocation());
             }
         }
     }
@@ -62,7 +62,16 @@ public abstract class AbstractPrint extends AbstractInst {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        s.print("print"+this.getSuffix()+((printHex)?"x":"")+"(");
+        int nbArg = 0;
+        for (AbstractInst i : arguments.getList()) {
+            nbArg++;
+            if (nbArg>1) {
+                s.print(", ");
+            }
+            i.decompile(s);
+        }
+        s.print(");");
     }
 
     @Override

@@ -1,0 +1,23 @@
+
+{
+int a=4,b=3,c;
+boolean bool;
+float f;
+f = 1;
+if (a == b) {
+   bool = false;
+}
+if (f*b > 18) {
+   f = 0.5;
+} 
+else if (f+a<7.3) {
+   f = f+f-4;
+}
+else if (false) {
+     println("On ne fait rien.");
+}
+else {
+     f = 42%b;
+}
+print(f/a*(b-1.74));
+}
