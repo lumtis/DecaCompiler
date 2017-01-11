@@ -32,6 +32,8 @@ public class CompilerOptions {
     public boolean getPrintBanner() {
         return printBanner;
     }
+
+    public boolean getVerifOnly() { return verifOnly;}
     
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
@@ -40,6 +42,7 @@ public class CompilerOptions {
     private int debug = 0;
     private boolean parallel = false;
     private boolean printBanner = false;
+    private boolean verifOnly = false;
     private List<File> sourceFiles = new ArrayList<File>();
 
     
@@ -55,6 +58,8 @@ public class CompilerOptions {
                 case "-p":
                     parallel = true;
                     break;
+                case "-v":
+                    verifOnly = true;
                 case "-b":
                     printBanner = true;
                     break;
@@ -96,12 +101,38 @@ public class CompilerOptions {
 
     public void afficheBanner(){
 
-        System.out.println("-------------------------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------------");
         System.out.println("\n                               Equipe n° : 35");
         System.out.println("\n Membres de l'équipe: Thami Benjelloun, Nizar Bel Hadj Salah, Lucas Bertrand, Tony Buthod-Garçon, Thomas Clastres");
         System.out.println("\n Projet GL 2017");
-        System.out.println("-------------------------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------------");
 
+
+    }
+    public void affiche_commande(){
+        System.out.println("usage : decac [[-p | -v] [-n] [-r X] <fichier deca>...] | [-b]");
+        System.out.println("\n -b  (banner) : affiche une bannière indiquant le nom de l’équipe");
+        System.out.println("\n -p  (parse) : arrête decac après l’étape de construction de\n" +
+                "l’arbre, et affiche la décompilation de ce dernier\n" +
+                "(i.e. s’il n’y a qu’un fichier source à\n" +
+                "compiler, la sortie doit être un programme\n" +
+                "deca syntaxiquement correct)");
+        System.out.println("\n -v  (verification) arrête decac après l’étape de vérifications\n" +
+                "(ne produit aucune sortie en l’absence d’erreur)");
+        System.out.println("\n -n  (no check) supprime les tests de débordement à l’exécution\n" +
+                "- débordement arithmétique\n" +
+                "- débordement mémoire\n" +
+                "- déréférencement de null");
+        System.out.println("\n -r X (registers) limite les registres banalisés disponibles à\n" +
+                "R0 ... R{X-1}, avec 4 <= X <= 16");
+        System.out.println("\n -d  (debug) active les traces de debug. Répéter\n" +
+                "l’option plusieurs fois pour avoir plus de\n" +
+                "traces.");
+        System.out.println("\n -P  (parallel) s’il y a plusieurs fichiers sources,\n" +
+                "lance la compilation des fichiers en\n" +
+                "parallèle (pour accélérer la compilation)");
+        System.out.println("\n -w (warning) autorise l’affichage de messages d’avertissement (« warnings »)\n" +
+                "en cours de compilation.");
 
     }
 
