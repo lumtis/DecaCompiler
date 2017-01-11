@@ -39,7 +39,7 @@ import org.apache.log4j.Logger;
  */
 public class DecacCompiler {
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
-    
+
     /**
      * Portable newline character.
      */
@@ -154,22 +154,22 @@ public class DecacCompiler {
     public void addInstruction(Instruction instruction, String comment) {
         program.addInstruction(instruction, comment);
     }
-    
+
     /**
-     * @see 
+     * @see
      * fr.ensimag.ima.pseudocode.IMAProgram#display()
      */
     public String displayIMAProgram() {
         return program.display();
     }
-    
+
     private final CompilerOptions compilerOptions;
     private final File source;
     /**
      * The main program. Every instruction generated will eventually end up here.
      */
     private final IMAProgram program = new IMAProgram();
- 
+
 
     /**
      * Run the compiler (parse source file, generate code)
@@ -226,7 +226,7 @@ public class DecacCompiler {
     private boolean doCompile(String sourceName, String destName,
             PrintStream out, PrintStream err)
             throws DecacFatalError, LocationException {
-        
+
         // Partie A
         AbstractProgram prog = doLexingAndParsing(sourceName, err);
 
@@ -240,11 +240,13 @@ public class DecacCompiler {
         prog.verifyProgram(this);
 
         assert(prog.checkAllDecorations());
+        addComment("start main program");
 
 
         if(compilerOptions.getVerifOnly()){
             return true;
         }
+
         if(compilerOptions.getParse()){
 
             prog.prettyPrint(System.out);
@@ -253,14 +255,13 @@ public class DecacCompiler {
 
         }
 
-        
         // Partie C
         addComment("start main program");
 
         prog.codeGenProgram(this);
-        
+
         addComment("end main program");
-        
+
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);
 

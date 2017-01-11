@@ -66,7 +66,7 @@ public class FloatLiteral extends AbstractExpr {
     }
 
     @Override
-    protected void codeGenPrint(DecacCompiler compiler) {
+    protected void codeGenPrint(DecacCompiler compiler, GenCode gc) {
 
         // Mettre getValue() dans r1
         compiler.addInstruction(new WFLOAT());

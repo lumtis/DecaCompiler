@@ -50,12 +50,12 @@ public class While extends AbstractInst {
         condition.codeGenInst(compiler, gc);
         compiler.addInstruction(new CMP(1, gc.getRetReg()));
         compiler.addInstruction(new BEQ(bloc));
-        compiler.addInstruction(new BEQ(finWhile));
+        compiler.addInstruction(new BRA(finWhile));
 
         // Bloc du while
         compiler.addLabel(bloc);
         body.codeGenListInst(compiler, gc);
-        compiler.addInstruction(new BEQ(debutWhile));
+        compiler.addInstruction(new BRA(debutWhile));
 
         compiler.addLabel(finWhile);
     }

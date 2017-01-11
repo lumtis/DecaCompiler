@@ -2,9 +2,11 @@
 //    tests d'expressions entieres
 //
 // Resultats:
-//    10
+//    12
 
 {
    int a = 7;
-   println(a+2+3);
+   int b;     // Pour tester variable non initialisé
+   int c = 3;
+   println(a+2+c);
 }
