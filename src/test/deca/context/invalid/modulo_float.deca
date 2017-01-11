@@ -1,0 +1,7 @@
+//ERROR ::
+{
+float x=8.0;
+int y = 2;
+int z = y%x;
+
+}
