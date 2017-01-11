@@ -8,6 +8,9 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.deca.codegen.GenCode;
 
 /**
  * @author gl35
@@ -61,5 +64,11 @@ public class Initialization extends AbstractInitialization {
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         expression.prettyPrint(s, prefix, true);
+    }
+
+    @Override
+    public void codeGenInit(DAddr addr, DecacCompiler comp, GenCode gc){
+        getExpression().codeGenExpr(comp, gc);
+        comp.addInstruction(new STORE(gc.getRetReg() ,addr));
     }
 }

@@ -19,9 +19,6 @@ public class GenCode {
     private DecacCompiler comp;
     private GenCodeVar gcv;
 
-    private Set<Identifier> listeVar; //liste des variables globales/locales
-    private Stack<GenCodeVar> pileListeVar; //pile qui contient les listes de var
-   
     private int labelIndex = 0;
     private final int  taillePile=20;
     private Label pile_pleine= newLabel();
@@ -31,10 +28,7 @@ public class GenCode {
 
     public GenCode(DecacCompiler comp , GenCodeVar gcv) {
         this.comp = comp;
-        this.gcv=gcv;
-        this.listeVar=gcv.getListeVar();
-
-        this.pileListeVar= new Stack<GenCodeVar>();
+        this.gcv = gcv;
 
         // Le registre qui contient le retour d'une expression est le 2
         retReg = new GPRegister("R2", 2);
@@ -53,6 +47,10 @@ public class GenCode {
     public GPRegister getRetReg()
     {
         return retReg;
+    }
+
+    public GenCodeVar getVariablesG() {
+        return gcv;
     }
 
     /* Obtient un nom qui n'a jamais été pris pour un nouveau label */
@@ -79,7 +77,6 @@ public class GenCode {
         comp.addComment("Taille maximale de la pile");
         comp.addInstruction(new TSTO(taillePile));
         comp.addInstruction(new BOV(pile_pleine));
-        initDecla(); //initialisation des variables globales
     }
 
     public void terminateProgram(){
@@ -92,21 +89,5 @@ public class GenCode {
         comp.addInstruction(new ERROR());
         comp.addComment("Autres erreurs");
         //à compléter les autres erreurs possibles à la fin
-
-
     }
-
-    /* Ajoute les declarations de variable au programme */
-
-    /*Permet de remplir la liste de correspondance et stocker les 
-          valeurs des variables dans les registres GB en meme temps*/
-    public void initDecla(){
-        comp.addComment("variables globales");
-        for (Identifier v: listeVar){
-            gcv.ajoutElement(v); //ajout de la variable v à la table de correspondance
-            comp.addInstruction(new LOAD(v.getVariableDefinition().getOperand(),retReg)); //on load sa valeur
-            comp.addInstruction(new STORE(retReg,new RegisterOffset(gcv.obtenirIndice(v),GB))); 
-            //on store sa valeur dans x(GB) avec x l'indice de v dans la table
-        }
-    }    
 }

@@ -20,7 +20,10 @@ public class ConvFloat extends AbstractUnaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) {
-        throw new UnsupportedOperationException("not yet implemented");
+        //A modifier surement, mais pour le moment on sait déjà que operand est un int
+        Type t = compiler.getType("float");
+        this.setType(t);
+        return t;
     }
 
 

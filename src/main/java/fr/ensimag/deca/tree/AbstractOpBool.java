@@ -20,7 +20,13 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        AbstractExpr leftOp = this.getLeftOperand();
+        AbstractExpr rightOp = this.getRightOperand();
+        leftOp.verifyCondition(compiler, localEnv, currentClass);
+        rightOp.verifyCondition(compiler, localEnv, currentClass);
+        Type bool = leftOp.getType();
+        this.setType(bool);
+        return bool;
     }
 
 }
