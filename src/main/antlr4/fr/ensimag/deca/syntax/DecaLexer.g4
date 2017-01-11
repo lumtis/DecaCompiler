@@ -78,7 +78,10 @@ STRING : '"' (STRING_CAR | '\"' | '\\')* '"' ;
 MULTI_LINE_STRING:'"' (STRING_CAR | '\n' | '\"' | '\\')*? '"' ;
 IDENT:(LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')* ;
 
-INCLUDE : '#include' (' ')* '"' FILENAME '"';
+INCLUDE : '#include' (' ')* '"' FILENAME '"' {
+    doInclude(getText());
+
+};
 CLE: ASM | PROTECTED | EXTENDS | CLASS | NULL | THIS| FALSE | TRUE | NEW | READFLOAT | READINT ;
 
 COMMENT_CLASSIC: '/*' .*? '*/'
