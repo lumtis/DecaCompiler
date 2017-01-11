@@ -1,9 +1,9 @@
 {
 int a, b, pass, i=0;
-float f = ReadFloat();
+float f = readFloat();
 boolean okay;
-a = ReadInt();
-b = ReadInt();
+a = readInt();
+b = readInt();
 while (b != 0) {
       if (a >= b) {
          a = a-b;
