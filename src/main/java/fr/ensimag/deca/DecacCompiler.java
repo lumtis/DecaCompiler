@@ -236,9 +236,14 @@ public class DecacCompiler {
         prog.verifyProgram(this);
 
         assert(prog.checkAllDecorations());
-        addComment("start main program");
+
+        if(compilerOptions.getVerifOnly()){
+            return true;
+        }
         
         // Partie C
+        addComment("start main program");
+
         prog.codeGenProgram(this);
         
         addComment("end main program");
