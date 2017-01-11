@@ -12,8 +12,10 @@ import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
-
+import fr.ensimag.ima.pseudocode.*;
 import javax.naming.Context;
+import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.*;
 
 /**
  * Expression, i.e. anything that has a value.
@@ -128,12 +130,13 @@ public abstract class AbstractExpr extends AbstractInst {
         }
     }
 
-    /**
-     * Generate code to print the expression
-     *
-     * @param compiler
-     */
-    protected void codeGenPrint(DecacCompiler compiler) {
+    protected void codeGenPrint(DecacCompiler compiler, GenCode gc) {
+        // On réalise l'expression
+        this.codeGenInst(compiler, gc);
+
+        // On met le retour de l'expression dans le registre r1
+        compiler.addInstruction(new LOAD(gc.getRetReg(), new GPRegister("R1", 1)));
+        compiler.addInstruction(new WINT());
     }
 
 /*
