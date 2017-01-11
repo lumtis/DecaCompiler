@@ -1,0 +1,7 @@
+//ERROR :5:
+{
+  int x=4;
+  int y=7;
+  int z= x || y;
+
+}

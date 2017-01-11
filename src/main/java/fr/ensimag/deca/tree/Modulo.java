@@ -8,6 +8,8 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
+import javax.naming.Context;
+
 /**
  *
  * @author gl35
@@ -22,7 +24,15 @@ public class Modulo extends AbstractOpArith {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        AbstractExpr leftOp = this.getLeftOperand();
+        AbstractExpr rightOp = this.getRightOperand();
+        Type typeL = leftOp.verifyExpr(compiler,localEnv,currentClass);
+        Type typeR = rightOp.verifyExpr(compiler, localEnv, currentClass);
+        if (!typeL.isInt() || !typeR.isInt()) {
+            throw new ContextualError("Le modulo s'applique qu'à des int.", this.getLocation());
+        }
+        this.setType(typeL);
+        return typeL;
     }
 
 

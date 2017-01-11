@@ -48,7 +48,8 @@ public abstract class AbstractExpr extends AbstractInst {
     @Override
     protected void checkDecoration() {
         if (getType() == null) {
-            throw new DecacInternalError("Expression " + decompile() + " has no Type decoration");
+
+            throw new DecacInternalError("Expression " + /*decompile() +*/ " has no Type decoration");
         }
     }
 
@@ -88,13 +89,14 @@ public abstract class AbstractExpr extends AbstractInst {
             EnvironmentExp localEnv, ClassDefinition currentClass,
             Type expectedType)
             throws ContextualError {
-
-        Type t = verifyExpr(compiler, localEnv, currentClass);
+        Type t = this.verifyExpr(compiler, localEnv, currentClass);
         if (expectedType.sameType(t)) {
             return this;
         }
         if (expectedType.isFloat() && t.isInt()) {
             AbstractExpr expr = new ConvFloat(this);
+            expr.verifyExpr(compiler, localEnv, currentClass);
+            expr.setLocation(this.getLocation());
             return expr;
         }
         else {
@@ -107,7 +109,7 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        verifyExpr(compiler,localEnv,currentClass);
+        this.verifyExpr(compiler,localEnv,currentClass);
     }
 
     /**
@@ -122,9 +124,9 @@ public abstract class AbstractExpr extends AbstractInst {
      */
     void verifyCondition(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        Type t = verifyExpr(compiler,localEnv, currentClass);
+        Type t = this.verifyExpr(compiler,localEnv, currentClass);
         if (!t.isBoolean()) {
-            throw new ContextualError("L'expression n'est pas une condition.", currentClass.getLocation());
+            throw new ContextualError("L'expression n'est pas une condition.", this.getLocation());
         }
     }
 

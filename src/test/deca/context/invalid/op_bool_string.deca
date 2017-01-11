@@ -1,0 +1,7 @@
+//ERROR :5:
+{
+String a="r";
+String b="klf";
+String c=a &&b;
+
+}
