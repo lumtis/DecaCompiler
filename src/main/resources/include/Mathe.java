@@ -36,7 +36,7 @@ public class Mathe {
         if (0<=f && f<=pi()/2) {
             float b;
             b = (float) 0.60725294;
-            return b * aux_sin(f, 15);
+            return b * aux_sin(f, 23);
         }
         if (f>pi()/2 && f<=pi()){
             return cos(f-pi()/2);
@@ -115,7 +115,7 @@ public class Mathe {
         if (0<=f && f<=pi()/2) {
             float b;
             b = (float) 0.60725294;
-            return b*aux_cos(f,15);
+            return b*aux_cos(f,23);
         }
         if (f>pi()/2 && f<=pi()){
             return -sin(f-pi()/2);

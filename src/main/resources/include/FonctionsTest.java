@@ -21,6 +21,7 @@ public class FonctionsTest {
     }
     
     public void testSinus(float f){
+        float s=Mathe.sin(f);
         float lim=Mathe.ulp((float) java.lang.Math.sin(f));
         float testsin;
         if (b==true){
@@ -29,7 +30,9 @@ public class FonctionsTest {
         else {
             testsin=this.test;
         }
-        if (abs(java.lang.Math.sin(f)-Mathe.sin(f))<testsin){
+        System.out.print("Erreur ");
+        System.out.println((abs((float)java.lang.Math.sin(f)-s)/lim));
+        if (abs((float)java.lang.Math.sin(f)-s)<=testsin){
             System.out.println("SIN PASS");
         }
         else {
@@ -37,8 +40,9 @@ public class FonctionsTest {
             
         }
     }
-    /*
+    
     public void testSinus2(float f){
+        float s=Mathe.sin_ser(f);
         float lim=java.lang.Math.ulp((float) java.lang.Math.sin(f));
         float testsin;
         if (b==true){
@@ -47,16 +51,19 @@ public class FonctionsTest {
         else {
             testsin=test;
         }
-        if (abs(java.lang.Math.sin(f)-Mathe.sin_ser(f))<testsin){
-            System.out.println("SINSER PASS");
+        System.out.print("Erreur ");
+        System.out.print((abs((float)java.lang.Math.sin(f)-s)/lim));
+        if (abs(java.lang.Math.sin(f)-s)<=testsin){
+            System.out.println(" SINSER PASS");
         }
         else {
-            System.out.println("SINSER NO");
+            System.out.println(" SINSER NO");
             
         }
-    }*/
+    }
     
     public void testCosinus(float f){
+        float s=Mathe.sin(f);
         float lim=java.lang.Math.ulp((float) java.lang.Math.cos(f));
         float testcos;
         if (b==true){
@@ -65,7 +72,7 @@ public class FonctionsTest {
         else {
             testcos=test;
         }
-        if (abs(java.lang.Math.cos(f)-Mathe.cos(f))<testcos){
+        if (abs((float)java.lang.Math.cos(f)-s)<=testcos){
             System.out.println("COS PASS");
         }
         else {
@@ -84,7 +91,7 @@ public class FonctionsTest {
         else {
             testtan=test;
         }
-        if (abs(java.lang.Math.tan(f)-Mathe.tan(f))<testtan){
+        if ((float)abs((float)java.lang.Math.tan(f)-Mathe.tan(f))<=2*testtan){
             System.out.println("TAN PASS");
         }
         else {
@@ -103,7 +110,7 @@ public class FonctionsTest {
         else {
             testasin=test;
         }
-        if (abs(Mathe.asin(f)-Mathe.asin(f))<testasin){
+        if ((float)abs(Mathe.asin(f)-Mathe.asin(f))<=2*testasin){
             System.out.println("ASIN PASS");
         }
         else {
@@ -122,7 +129,7 @@ public class FonctionsTest {
         else {
             testacos=test;
         }
-        if (abs(Mathe.acos(f)-Mathe.acos(f))<testacos){
+        if ((float)abs(Mathe.acos(f)-Mathe.acos(f))<=2*testacos){
             System.out.println("ACOS PASS");
         }
         else {
@@ -140,7 +147,7 @@ public class FonctionsTest {
         else {
             testatan=test;
         }
-        if (abs(java.lang.Math.atan(f)-Mathe.atan(f))<testatan){
+        if ((float)abs(java.lang.Math.atan(f)-Mathe.atan(f))<=testatan){
             System.out.println("ATAN PASS");
         }
         else {
