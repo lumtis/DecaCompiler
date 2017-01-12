@@ -6,8 +6,14 @@
 //    1
 
 {
-   int i = 86;
-   int y = 72;
-   println(10/5);
-   println(i/y);
+   int a = 80;
+   int b = 60;
+
+   float c = 3.0;
+
+   if(a/b == 1) {
+      if(c/1.5 == 2.0) {
+          println("OK");
+      }
+   }
 }

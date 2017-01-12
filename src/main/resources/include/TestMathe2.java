@@ -24,9 +24,6 @@ public class TestMathe2 {
         //System.out.println(u1);
         //System.out.println(u2);
 
-        //float sin=Mathe.sin(py/2);
-        //System.out.println(sin);
-        
         
         System.out.println("TEST SIN");
         for (float i=-py;i<=py;i=i+py/12){    
@@ -42,6 +39,37 @@ public class TestMathe2 {
             FonctionsTest.testSinus2(i);
            
         }
+        
+        /*
+        System.out.println("TEST COS");
+        for (float i=-py;i<=py;i=i+py/12){    
+            System.out.print(i);
+            System.out.print("  ");
+            FonctionsTest.testCosinus(i);
+        }*/
+       
+        /*
+        System.out.println("TEST TAN");
+        for (float i=-py;i<=py;i=i+py/12){    
+            System.out.print(i);
+            System.out.print("  ");
+            FonctionsTest.testTan(i);
+        }*/
+        /*
+        System.out.println("TEST ASIN");
+        for (float i=-py;i<=py;i=i+py/12){    
+            System.out.print(i);
+            System.out.print("  ");
+            FonctionsTest.testAsinus(i);
+        }*/
+        /*
+        System.out.println("TEST ACOS");
+        for (float i=-py;i<=py;i=i+py/12){    
+            System.out.print(i);
+            System.out.print("  ");
+            FonctionsTest.testAcosinus(i);
+        }*/
+        
         
         System.out.println("TEST ATAN");
         for (float i=-py/4;i<=py/4;i=i+py/48){    

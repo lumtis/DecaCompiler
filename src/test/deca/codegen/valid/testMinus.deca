@@ -7,8 +7,11 @@
 //    -5
 
 {
-   int test = 90;
-   println(test-5);
-   println(10-test);
-   println(-5);
+    if(4-2 == 2) {
+         if(-5 < 0) {
+             if(2.5 - 0.5 == 2.0) {
+                println("OK");
+             }
+         }
+    }
 }

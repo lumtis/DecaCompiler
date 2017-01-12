@@ -24,7 +24,10 @@ public class Divide extends AbstractOpArith {
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         super.codeGenInst(compiler, gc);
 
-        compiler.addInstruction(new QUO(gc.getTmpReg(), gc.getRetReg()));
+        if(gc.isExprFloat())
+            compiler.addInstruction(new DIV(gc.getTmpReg(), gc.getRetReg()));
+        else
+            compiler.addInstruction(new QUO(gc.getTmpReg(), gc.getRetReg()));
     }
 
 }
