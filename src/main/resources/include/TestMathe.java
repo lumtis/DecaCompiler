@@ -183,6 +183,14 @@ public class TestMathe {
             System.out.println("artan not pass");
         }
 
+        float cos0 = Mathe.cos(0);
+        float cos1 = Mathe.cos((float)0.5);
+        float cos2= Mathe.cos(1);
+        float cos3= Mathe.cos((float)1.5);
+        System.out.println("cos0 = " + cos0);
+        System.out.println("cos 0.5 = " + cos1);
+        System.out.println("cos 1 = "+ cos2);
+        System.out.println(" cos 1.5 =" + cos3);
 
 
     }
