@@ -36,17 +36,16 @@ else
     fi
 fi
 }
-
+echo "---Début tests invalides---"
 for cas_de_test in src/test/deca/syntax/invalid/provided/*.deca
 do
     test_synt_invalide "$cas_de_test"
-    echo ""
 done
-
+echo ""
+echo "---Debut tests valides---"
 for cas_de_test in src/test/deca/syntax/valid/provided/*.deca
 do
     test_synt_valid "$cas_de_test"
-    echo ""
 done
 
 echo "OK !"

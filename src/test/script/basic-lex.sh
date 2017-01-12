@@ -40,13 +40,11 @@ fi
 for cas_de_test in src/test/deca/lex/invalid/provided/*.deca
 do
     test_lex_invalide "$cas_de_test"
-    echo ""
 done
 
 for cas_de_test in src/test/deca/lex/valid/provided/*.deca
 do
     test_lex_valid "$cas_de_test"
-    echo ""
 done
 
 echo "OK !"

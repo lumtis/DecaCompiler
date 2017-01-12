@@ -11,7 +11,7 @@ public class Mathe {
     public static float sin_ser(float f) {
         int k=0;
         float solution=0;
-        while (k < 5) {
+        while (k < 6) {
             solution+= Mathe.pow((float)-1,k)* Mathe.pow(f,2*k+1)/Mathe.factoriel(2*k+1);
             k+=1;
         }
@@ -22,7 +22,7 @@ public class Mathe {
     public static float sin(float f) {
         int k=0;
         float solution=0;
-        while (k < 5) {
+        while (k < 6) {
             solution+= Mathe.pow((float)-1,k)* Mathe.pow(f,2*k+1)/Mathe.factoriel(2*k+1);
             k+=1;
         }
