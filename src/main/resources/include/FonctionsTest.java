@@ -12,10 +12,24 @@ import static java.lang.Math.abs;
  * @author belhadjn
  */
 public class FonctionsTest {
+    public static float test;
+    public static Boolean b; //true pour utiliser la vraie limite
     
-    public static void testSinus(float f){
+    public FonctionsTest(float i, Boolean b){
+        this.test=i;
+        this.b=b;
+    }
+    
+    public void testSinus(float f){
         float lim=Mathe.ulp((float) java.lang.Math.sin(f));
-        if (abs(java.lang.Math.sin(f)-Mathe.sin(f))<lim){
+        float testsin;
+        if (b==true){
+            testsin=lim;
+        }
+        else {
+            testsin=this.test;
+        }
+        if (abs(java.lang.Math.sin(f)-Mathe.sin(f))<testsin){
             System.out.println("SIN PASS");
         }
         else {
@@ -23,20 +37,35 @@ public class FonctionsTest {
             
         }
     }
-    public static void testSinus2(float f){
+    /*
+    public void testSinus2(float f){
         float lim=java.lang.Math.ulp((float) java.lang.Math.sin(f));
-        if (abs(java.lang.Math.sin(f)-Mathe.sin_ser(f))<lim){
+        float testsin;
+        if (b==true){
+            testsin=lim;
+        }
+        else {
+            testsin=test;
+        }
+        if (abs(java.lang.Math.sin(f)-Mathe.sin_ser(f))<testsin){
             System.out.println("SINSER PASS");
         }
         else {
             System.out.println("SINSER NO");
             
         }
-    }
+    }*/
     
-    public static void testCosinus(float f){
+    public void testCosinus(float f){
         float lim=java.lang.Math.ulp((float) java.lang.Math.cos(f));
-        if (abs(java.lang.Math.cos(f)-Mathe.cos(f))<lim){
+        float testcos;
+        if (b==true){
+            testcos=lim;
+        }
+        else {
+            testcos=test;
+        }
+        if (abs(java.lang.Math.cos(f)-Mathe.cos(f))<testcos){
             System.out.println("COS PASS");
         }
         else {
@@ -46,9 +75,16 @@ public class FonctionsTest {
     }
     
     /*
-    public static void testTan(float f){
+    public void testTan(float f){
         float lim=Mathe.ulp((float) java.lang.Math.tan(f));
-        if (abs(java.lang.Math.tan(f)-Mathe.tan(f))<lim){
+        float testtan;
+        if (b==true){
+            testtan=lim;
+        }
+        else {
+            testtan=test;
+        }
+        if (abs(java.lang.Math.tan(f)-Mathe.tan(f))<testtan){
             System.out.println("TAN PASS");
         }
         else {
@@ -58,9 +94,16 @@ public class FonctionsTest {
     }*/
     
     /*
-    public static void testAsinus(float f){
+    public void testAsinus(float f){
         float lim=Mathe.ulp((float) java.lang.Math.asin(f));
-        if (abs(Mathe.asin(f)-Mathe.asin(f))<lim){
+        float testcasin;
+        if (b==true){
+            testasin=lim;
+        }
+        else {
+            testasin=test;
+        }
+        if (abs(Mathe.asin(f)-Mathe.asin(f))<testasin){
             System.out.println("ASIN PASS");
         }
         else {
@@ -70,9 +113,16 @@ public class FonctionsTest {
     }*/
     
     /*
-    public static void testAcosinus(float f){
+    public void testAcosinus(float f){
         float lim=Mathe.ulp((float) java.lang.Math.acos(f));
-        if (abs(Mathe.acos(f)-Mathe.acos(f))<lim){
+        float testacos;
+        if (b==true){
+            testcos=lim;
+        }
+        else {
+            testacos=test;
+        }
+        if (abs(Mathe.acos(f)-Mathe.acos(f))<testacos){
             System.out.println("ACOS PASS");
         }
         else {
@@ -81,9 +131,16 @@ public class FonctionsTest {
         }
     }*/
     
-    public static void testAtan(float f){
+    public void testAtan(float f){
         float lim=Mathe.ulp((float) java.lang.Math.atan(f));
-        if (abs(java.lang.Math.atan(f)-Mathe.atan(f))<lim){
+        float testatan;
+        if (b==true){
+            testatan=lim;
+        }
+        else {
+            testatan=test;
+        }
+        if (abs(java.lang.Math.atan(f)-Mathe.atan(f))<testatan){
             System.out.println("ATAN PASS");
         }
         else {
