@@ -1,13 +1,14 @@
-//ERROR :7:
+//ERROR :5:
 {
         int var =7;
         float x=9, y=10.6;
+        boolean var;
         while (false != true) {
               if (x>y) {
-                   bool var = true;
+                   var = true;
               }
               else {
-                   bool var = false;
+                   var = false;
               }
         }
 }
