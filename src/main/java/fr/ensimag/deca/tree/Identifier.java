@@ -239,10 +239,17 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        // TODO: Gerer les string
+
+        // On regarde si la variable est un float
+        if(definition.getType().isFloat()) {
+            gc.setExprFloat(true);
+        }
+        else {
+            gc.setExprFloat(false);
+        }
 
         // On récupère l'adresse de la variable
-        DAddr addr = gc.getVariablesG().getVariable(this);
+        DAddr addr = gc.getAddrVar(this);
 
         // On met la valeur de cette adresse dans le registre de retour
         compiler.addInstruction(new LOAD(addr, gc.getRetReg()));
@@ -251,12 +258,16 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler, GenCode gc) {
-        // TODO: Gerer les string
-
         // On récupère l'adresse de la variable
-        DAddr addr = gc.getVariablesG().getVariable(this);
+        DAddr addr = gc.getAddrVar(this);
 
         compiler.addInstruction(new LOAD(addr, new GPRegister("R1", 1)));
-        compiler.addInstruction(new WINT());
+
+        if(definition.getType().isFloat()) {
+            compiler.addInstruction(new WFLOAT());
+        }
+        else {
+            compiler.addInstruction(new WINT());
+        }
     }
 }
