@@ -20,8 +20,9 @@ public class Mathe {
 
     // fonction sinus cornic
     public static float sin(float f) {
-
-        return aux_sin(f,10);
+        float b;
+        b=(float)0.60725294;
+        return b*aux_sin(f,10);
 
     }
 
@@ -43,6 +44,7 @@ public class Mathe {
     }
 
     public static float aux_cos(float f, int n) {
+        
         if (n ==0) {
             return 1;
         }
@@ -78,8 +80,9 @@ public class Mathe {
 
     // fonction cosinus
     public static float cos(float f) {
-
-        return aux_cos(f,10);
+        float b;
+        b=(float)0.60725294;
+        return b*aux_cos(f,10);
 
     }
 

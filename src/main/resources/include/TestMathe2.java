@@ -24,29 +24,31 @@ public class TestMathe2 {
         //System.out.println(u1);
         //System.out.println(u2);
 
-        
+        /*
         System.out.println("TEST SIN");
         for (float i=-py;i<=py;i=i+py/12){    
             System.out.print(i);
             System.out.print("  ");
             FonctionsTest.testSinus(i);
-        }
-        
+        }*/
+        /*
         System.out.println("TEST SINSER");
         for (float i=-py;i<=py;i=i+py/12){    
             System.out.print(i);
             System.out.print("  ");
             FonctionsTest.testSinus2(i);
            
-        }
+        }*/
         
-        /*
+        
         System.out.println("TEST COS");
         for (float i=-py;i<=py;i=i+py/12){    
             System.out.print(i);
             System.out.print("  ");
-            FonctionsTest.testCosinus(i);
-        }*/
+            float a=Mathe.aux_sin(i,10);
+            System.out.println(a);
+            //FonctionsTest.testCosinus(i);
+        }
        
         /*
         System.out.println("TEST TAN");
@@ -70,13 +72,13 @@ public class TestMathe2 {
             FonctionsTest.testAcosinus(i);
         }*/
         
-        
+        /*
         System.out.println("TEST ATAN");
         for (float i=-py/4;i<=py/4;i=i+py/48){    
             System.out.print(i);
             System.out.print("  ");
             FonctionsTest.testAtan(i);
-        }
+        }*/
         
         
         

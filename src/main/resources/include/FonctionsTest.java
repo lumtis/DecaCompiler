@@ -15,7 +15,7 @@ public class FonctionsTest {
     
     public static void testSinus(float f){
         float lim=Mathe.ulp((float) java.lang.Math.sin(f));
-        if (abs(Mathe.sin(f)-Mathe.sin(f))<lim){
+        if (abs(java.lang.Math.sin(f)-Mathe.sin(f))<lim){
             System.out.println("SIN PASS");
         }
         else {
