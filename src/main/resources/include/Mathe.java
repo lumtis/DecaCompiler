@@ -20,28 +20,42 @@ public class Mathe {
 
     // fonction sinus cornic
     public static float sin(float f) {
-        float b;
-        b=(float)0.60725294;
-        return b*aux_sin(f,10);
-
+        if (0<=f && f<=pi()/2) {
+            float b;
+            b = (float) 0.60725294;
+            return b * aux_sin(f, 10);
+        }
+        if (f>pi()/2 && f<=pi()){
+            return cos(f-pi()/2);
+        }
+        if (-pi()<=f && f<0){
+            return -sin(f);
+        }
+        throw new IllegalArgumentException(" rentrez un argument entre -pi et pi aller c'est pas compliqué");
     }
 
     //fonction aux sin
 
     public static float aux_sin(float f, int n ){
-
-        if (n ==0) {
+        if (n == 0) {
             return 0;
+            }
+        float prec = aux_trigo(f, n - 1);
+        if (prec < 0) {
+            return aux_sin(f, n - 1) - aux_cos(f, n - 1) * Mathe.pow(2, -(n - 1));
         }
-        float prec=aux_trigo(f,n-1);
-        if ( prec < 0){
-            return aux_sin(f,n-1) - aux_cos(f,n-1)*Mathe.pow(2,-(n-1));
+        if (prec == 0) {
+            return aux_sin(f, n - 1);
         }
-        if (prec ==0){
-            return aux_sin(f,n-1);
-        }
-        return aux_sin(f,n-1) + aux_cos(f,n-1)*Mathe.pow(2,-(n-1));
+        return aux_sin(f, n - 1) + aux_cos(f, n - 1) * Mathe.pow(2, -(n - 1));
+
     }
+
+
+    public static float pi (){
+        return (float)3.141592653589793238462643383279;
+    }
+
 
     public static float aux_cos(float f, int n) {
         
