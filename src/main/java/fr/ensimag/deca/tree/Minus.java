@@ -23,7 +23,8 @@ public class Minus extends AbstractOpArith {
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         super.codeGenInst(compiler, gc);
 
-        compiler.addInstruction(new SUB(gc.getTmpReg(), gc.getRetReg()));
+        compiler.addInstruction(new SUB(gc.getRetReg(), gc.getTmpReg()));
+        compiler.addInstruction(new LOAD(gc.getTmpReg(), gc.getRetReg()));
     }
 
 }

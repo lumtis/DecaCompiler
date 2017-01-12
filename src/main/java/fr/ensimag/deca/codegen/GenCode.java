@@ -18,6 +18,8 @@ import java.util.List;
 public class GenCode {
     private DecacCompiler comp;
 
+    private int maxReg;
+
     private int labelIndex = 0;
     private final int  taillePile=20;
     private Label pile_pleine= newLabel();
@@ -44,6 +46,7 @@ public class GenCode {
 
         exprFloat = false;
         indexMem = 1;
+        maxReg = comp.getCompilerOptions().getRegisters();    // TODO: gerer option du compiler
     }
 
 
