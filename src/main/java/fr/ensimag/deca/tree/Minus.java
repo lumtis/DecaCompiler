@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.*;
 
 /**
  * @author gl35
@@ -21,10 +22,13 @@ public class Minus extends AbstractOpArith {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        GPRegister tmp;   // registre temporaire pour les expressions binaires
         super.codeGenInst(compiler, gc);
 
-        compiler.addInstruction(new SUB(gc.getRetReg(), gc.getTmpReg()));
-        compiler.addInstruction(new LOAD(gc.getTmpReg(), gc.getRetReg()));
+        tmp = gc.popTmpReg();
+
+        compiler.addInstruction(new SUB(gc.getRetReg(), tmp));
+        compiler.addInstruction(new LOAD(tmp, gc.getRetReg()));
     }
 
 }

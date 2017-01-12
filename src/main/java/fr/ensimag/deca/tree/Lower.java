@@ -24,11 +24,12 @@ public class Lower extends AbstractOpIneq {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        GPRegister tmp = gc.popTmpReg();
         Label vrai = gc.newLabel();  // Label lorsque l'expression est vrai
         Label fin = gc.newLabel();   // Label de la fin de l'expression
 
         super.codeGenInst(compiler, gc);
-        compiler.addInstruction(new CMP(gc.getRetReg(), gc.getTmpReg()));
+        compiler.addInstruction(new CMP(gc.getRetReg(), tmp));
         compiler.addInstruction(new BLT(vrai));
 
         // Les expressions ne sont pas egales
