@@ -5,14 +5,12 @@
 //    12
 
 {
-   int a;
-   int b = 8+9;
-   float c = 4.3;
-   float d;
+     int a;
+     int b = 8+9;
 
-   a = 3;
-   d = 4.3;
+     a = 5;
 
-   println(a+b);
-   println(c+d);
+     if(b+a == 22) {
+         println("OK");
+     }
 }
