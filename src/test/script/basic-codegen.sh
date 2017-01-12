@@ -1,4 +1,4 @@
-#! /bin/sh
+##! /bin/sh
 
 # Auteur : gl35
 # Version initiale : 01/01/2017
@@ -8,30 +8,27 @@
 
 # Ce genre d'approche est bien sûr généralisable, en conservant le
 # résultat attendu dans un fichier pour chaque fichier source.
-cd "$(dirname "$0")"/../../.. || exit 1
+#cd "$(dirname "$0")"/../../.. || exit 1
 
-PATH=./src/test/script/launchers:./src/main/bin:"$PATH"
+#PATH=./src/test/script/launchers:./src/main/bin:"$PATH"
 
-# On ne teste qu'un fichier. Avec une boucle for appropriée, on
-# pourrait faire bien mieux ...
 for cas_de_test in src/test/deca/codegen/valid/*.deca
-
-    nom_ass=${1/.deca/.ass};
+do
+    nom_ass=${cas_de_test/.deca/.ass}
     rm -f $nom_ass 2>/dev/null;
-    decac $1 || exit 1
+    decac $cas_de_test || exit 1
     if [ ! -f $nom_ass ]; then
         echo "Fichier cond0.ass non généré."
         exit 1
      else
-        attendu=OK
-        if test "$nom_ass"="$attendu"
+        resultat=$(ima "$nom_ass")
+        if echo $resultat | grep -q -e "OK"
         then
-            echo "$1 : PASS."
+            echo "$cas_de_test : PASS."
         else
-            echo "$1 : ERROR.";
-            exit 1
+            echo "$cas_de_test : ERROR.";
+
         fi
     fi
 
 done
-
