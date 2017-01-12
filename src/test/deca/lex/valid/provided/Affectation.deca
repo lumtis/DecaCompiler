@@ -1,0 +1,10 @@
+{
+int x = 4;
+int y;
+if (true) {
+   y = 2*x;
+}
+else {
+     y = 0;
+}
+}

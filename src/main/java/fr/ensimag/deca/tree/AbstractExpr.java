@@ -136,14 +136,18 @@ public abstract class AbstractExpr extends AbstractInst {
 
         // On met le retour de l'expression dans le registre r1
         compiler.addInstruction(new LOAD(gc.getRetReg(), new GPRegister("R1", 1)));
-        compiler.addInstruction(new WINT());
+
+        // On affiche un float si l'expression evalue un float
+        if(gc.isExprFloat())
+            compiler.addInstruction(new WFLOAT());
+        else
+            compiler.addInstruction(new WINT());
     }
 
-/*
+    @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         throw new UnsupportedOperationException("not yet implemented");
     }
-*/
 
     @Override
     protected void decompileInst(IndentPrintStream s) {

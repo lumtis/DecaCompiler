@@ -2,7 +2,6 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.GenCode;
-import fr.ensimag.deca.codegen.GenCodeVar;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
@@ -40,13 +39,11 @@ public class Main extends AbstractMain {
     }
     @Override
     protected void codeGenMain(DecacCompiler compiler) {
-        GenCodeVar gcv = new GenCodeVar(compiler);
-        GenCode gc = new GenCode(compiler,gcv);
-        gcv.setGenCode(gc);
+        GenCode gc = new GenCode(compiler);
 
         // On initialise le début du code
         gc.initProgram();
-        gcv.initVar(this.declVariables.getList());
+        gc.initGlobalVar(this.declVariables.getList());
 
         compiler.addComment("Beginning of main instructions:");
         insts.codeGenListInst(compiler, gc);

@@ -34,12 +34,26 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                     rightOp.getLocation());
         }
         //A partir d'ici, les deux types sont soit des int, soit des float
-        //Si typeL et typeR sont des int, opType est un int, sinon opType est un float.
-        Type opType = typeL;
-        if (typeR.isFloat()) {
-            opType = typeR;
+        //Il faut faire des ConvFloat si nécessaire
+        if (typeL.isFloat() && typeR.isInt()) {
+            ConvFloat conv = new ConvFloat(this.getRightOperand());
+            conv.verifyExpr(compiler, localEnv, currentClass);
+            conv.setLocation(this.getRightOperand().getLocation());
+            this.setRightOperand(conv);
         }
-        this.setType(opType);
-        return opType;
+        else if (typeR.isFloat() && typeL.isInt()) {
+            ConvFloat conv = new ConvFloat(this.getLeftOperand());
+            conv.verifyExpr(compiler, localEnv, currentClass);
+            conv.setLocation(this.getLeftOperand().getLocation());
+            this.setLeftOperand(conv);
+        }
+        Type t;
+        if (typeR.isFloat() || typeL.isFloat()) {
+            t = compiler.getType("float");
+        } else {
+            t = compiler.getType("int");
+        }
+        this.setType(t);
+        return t;
     }
 }

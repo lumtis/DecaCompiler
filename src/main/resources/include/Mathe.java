@@ -3,11 +3,15 @@
 
 public class Mathe {
 
+    
+    
+
+
     // fonction sinus première solution
     public static float sin_ser(float f) {
         int k=0;
         float solution=0;
-        while (k < 5) {
+        while (k < 6) {
             solution+= Mathe.pow((float)-1,k)* Mathe.pow(f,2*k+1)/Mathe.factoriel(2*k+1);
             k+=1;
         }
@@ -16,7 +20,9 @@ public class Mathe {
 
     // fonction sinus cornic
     public static float sin(float f) {
+
         return aux_sin(f,10);
+
     }
 
     //fonction aux sin
@@ -72,7 +78,9 @@ public class Mathe {
 
     // fonction cosinus
     public static float cos(float f) {
+
         return aux_cos(f,10);
+
     }
 
 

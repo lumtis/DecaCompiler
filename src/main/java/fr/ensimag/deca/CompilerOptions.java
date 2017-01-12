@@ -36,12 +36,15 @@ public class CompilerOptions {
     public boolean getVerifOnly() { return verifOnly;}
 
     public boolean getParse() { return parse;}
+
+    public int getRegisters() {return registers;}
     
     public List<File> getSourceFiles() {
         return Collections.unmodifiableList(sourceFiles);
     }
 
     private int debug = 0;
+    private int registers=-1;
     private boolean parallel = false;
     private boolean printBanner = false;
     private boolean verifOnly = false;
@@ -55,6 +58,20 @@ public class CompilerOptions {
         int i=0;
         while (i<args.length) {
             switch (args[i]) {
+                case "-r":
+                    needFiles = true;
+                    i++;
+                    try{
+                        int nbrRegisters=Integer.parseInt(args[i]);
+                        if(nbrRegisters<4 || nbrRegisters >16){
+                            throw new IllegalArgumentException("L'option -r doit être suivi d'un entier entre 4 et 16.");
+                        }
+                        registers = nbrRegisters;
+                    }
+                    catch (Exception e){
+                        throw new IllegalArgumentException("L'option -r doit être suivi d'un entier entre 4 et 16.");
+                    }
+                    break;
                 case "-d":
                     needFiles = true;
                     debug = Integer.parseInt(args[i]);

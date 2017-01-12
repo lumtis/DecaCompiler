@@ -1,0 +1,4 @@
+{
+#include "Affectation.deca"
+print("testInclude");
+}
