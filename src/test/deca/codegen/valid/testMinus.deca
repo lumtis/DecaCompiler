@@ -14,8 +14,4 @@
              }
          }
     }
-
-    println(7-2);
-    println(2.5 - 0.5);
-    //println();
 }
