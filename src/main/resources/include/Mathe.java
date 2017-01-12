@@ -31,7 +31,7 @@ public class Mathe {
         if (-pi()<=f && f<0){
             return -sin(f);
         }
-        throw new IllegalArgumentException(" rentrez un argument entre -pi et pi aller c'est pas compliqué");
+        return 0;
     }
 
     //fonction aux sin
