@@ -15,7 +15,7 @@ public class FonctionsTest {
     
     public static void testSinus(float f){
         float lim=Mathe.ulp((float) java.lang.Math.sin(f));
-        if (abs(java.lang.Math.sin(f)-Mathe.sin(f))<lim){
+        if (abs(Mathe.sin(f)-Mathe.sin(f))<lim){
             System.out.println("SIN PASS");
         }
         else {
@@ -25,7 +25,7 @@ public class FonctionsTest {
     }
     
     public static void testCosinus(float f){
-        float lim=Mathe.ulp((float) java.lang.Math.cos(f));
+        float lim=java.lang.Math.ulp((float) java.lang.Math.cos(f));
         if (abs(java.lang.Math.cos(f)-Mathe.cos(f))<lim){
             System.out.println("COS PASS");
         }
@@ -36,7 +36,7 @@ public class FonctionsTest {
     }
     
     public static void testSinus2(float f){
-        float lim=Mathe.ulp((float) java.lang.Math.sin(f));
+        float lim=java.lang.Math.ulp((float) java.lang.Math.sin(f));
         if (abs(java.lang.Math.sin(f)-Mathe.sin_ser(f))<lim){
             System.out.println("SINSER PASS");
         }

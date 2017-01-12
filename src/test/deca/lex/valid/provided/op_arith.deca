@@ -1,0 +1,12 @@
+{
+int x,y,a,b,c,d,e;
+x=5;
+y=4;
+
+a=x*y;
+b=x/y;
+c=x%y;
+d=x+y;
+e=x-y;
+
+}

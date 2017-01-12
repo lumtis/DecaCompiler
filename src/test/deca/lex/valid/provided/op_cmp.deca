@@ -1,0 +1,13 @@
+{
+int x = 4;
+int y = 6;
+boolean a,b,c,d,e,f;
+
+a=(x==y);
+b=(x!=y);
+c=(x<=y);
+d=(x<y);
+e=(x>=y);
+f=(x>y);
+
+}

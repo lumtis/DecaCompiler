@@ -69,6 +69,7 @@ public class IntLiteral extends AbstractExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        gc.setExprFloat(false);
         compiler.addInstruction(new LOAD(getValue(), gc.getRetReg()));
     }
 }
