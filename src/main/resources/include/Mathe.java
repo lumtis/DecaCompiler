@@ -16,13 +16,7 @@ public class Mathe {
 
     // fonction sinus cornic
     public static float sin(float f) {
-        int k=0;
-        float solution=0;
-        while (k < 5) {
-            solution+= Mathe.pow((float)-1,k)* Mathe.pow(f,2*k+1)/Mathe.factoriel(2*k+1);
-            k+=1;
-        }
-        return solution;
+        return aux_sin(f,10);
     }
 
     //fonction aux sin
@@ -30,17 +24,44 @@ public class Mathe {
     public static float aux_sin(float f, int n ){
 
         if (n ==0) {
+            return 0;
+        }
+        float prec=aux_trigo(f,n-1);
+        if ( prec < 0){
+            return aux_sin(f,n-1) - aux_cos(f,n-1)*Mathe.pow(2,-(n-1));
+        }
+        if (prec ==0){
+            return aux_sin(f,n-1);
+        }
+        return aux_sin(f,n-1) + aux_cos(f,n-1)*Mathe.pow(2,-(n-1));
+    }
+
+    public static float aux_cos(float f, int n) {
+        if (n ==0) {
             return 1;
         }
-        return 1;
+        float prec = aux_trigo(f,n-1);
+        if ( prec < 0){
+            return aux_cos(f,n-1) + aux_sin(f,n-1)*Mathe.pow(2,-(n-1));
+        }
+        if ( prec ==0){
+            return aux_cos(f,n-1);
+        }
+        return aux_cos(f,n-1) - aux_sin(f,n-1)*Mathe.pow(2,-(n-1));
     }
-    public static float aux_sin2(float f, int n) {
+
+
+
+    public static float aux_trigo(float f, int n) {
         if (n ==0){
             return f;
         }
-        float prec = Mathe.aux_sin2(f,n-1);
+        float prec = Mathe.aux_trigo(f,n-1);
         if (prec < 0){
             return prec + Mathe.atan(Mathe.pow(2,-(n-1)));
+        }
+        if (prec==0) {
+            return prec;
         }
         return prec - Mathe.atan(Mathe.pow(2,-(n-1)));
     }
@@ -50,9 +71,8 @@ public class Mathe {
 
 
     // fonction cosinus
-    public float cos(float f) {
-        System.out.println("cos(f) not yet implemented");
-        return f;
+    public static float cos(float f) {
+        return aux_cos(f,10);
     }
 
 
