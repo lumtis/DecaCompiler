@@ -236,23 +236,19 @@ public class DecacCompiler {
         }
         assert(prog.checkAllLocations());
 
+        if(compilerOptions.getParse()){
+            prog.decompile(System.out);
+            return false;
+        }
+
         // Partie B
         prog.verifyProgram(this);
 
         assert(prog.checkAllDecorations());
         addComment("start main program");
 
-
         if(compilerOptions.getVerifOnly()){
-            return true;
-        }
-
-        if(compilerOptions.getParse()){
-
-            prog.prettyPrint(System.out);
-            //doDecompile()
-            return true;
-
+            return false;
         }
 
         // Partie C
