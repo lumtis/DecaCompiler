@@ -1,0 +1,13 @@
+// Description:
+//    tests comparaisons
+//
+// Resultats:
+//    10
+
+{
+   if(4 == 4 && 3 != 4 && 100 > 4 && 4 < 50) {
+      if(3 <= 2 || true) {
+          println("OK");
+      }
+   }
+}

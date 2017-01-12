@@ -14,23 +14,24 @@ PATH=./src/test/script/launchers:./src/main/bin:"$PATH"
 
 # On ne teste qu'un fichier. Avec une boucle for appropriée, on
 # pourrait faire bien mieux ...
-rm -f ./src/test/deca/codegen/valid/provided/cond0.ass 2>/dev/null
-decac ./src/test/deca/codegen/valid/provided/cond0.deca || exit 1
-if [ ! -f ./src/test/deca/codegen/valid/provided/cond0.ass ]; then
-    echo "Fichier cond0.ass non généré."
-    exit 1
-fi
+for cas_de_test in src/test/deca/codegen/valid/*.deca
 
-resultat=$(ima ./src/test/deca/codegen/valid/provided/cond0.ass) || exit 1
-rm -f ./src/test/deca/codegen/valid/provided/cond0.ass
+    nom_ass=${1/.deca/.ass};
+    rm -f $nom_ass 2>/dev/null;
+    decac $1 || exit 1
+    if [ ! -f $nom_ass ]; then
+        echo "Fichier cond0.ass non généré."
+        exit 1
+     else
+        attendu=OK
+        if test "$nom_ass"="$attendu"
+        then
+            echo "$1 : PASS."
+        else
+            echo "$1 : ERROR.";
+            exit 1
+        fi
+    fi
 
-# On code en dur la valeur attendue.
-attendu=ok
+done
 
-if [ "$resultat" = "$attendu" ]; then
-    echo "Tout va bien"
-else
-    echo "Résultat inattendu de ima:"
-    echo "$resultat"
-    exit 1
-fi
