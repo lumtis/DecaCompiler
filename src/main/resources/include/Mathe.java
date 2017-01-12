@@ -1,11 +1,21 @@
+
+
+
 // Grenoble INP - Ensimag projet GL -*- mode: java -*-
 // Library for class Math of Deca, coded in Deca
 
 public class Mathe {
 
-    
-    
-
+    public static float adapt(float f){
+        while (f<=-pi()){
+            f=f+2*pi();
+            
+        }
+        while (f>pi()){
+            f=f-2*pi();
+        }
+        return f;
+    }
 
     // fonction sinus première solution
     public static float sin_ser(float f) {
@@ -20,18 +30,22 @@ public class Mathe {
 
     // fonction sinus cornic
     public static float sin(float f) {
+        
+             
+        f=adapt(f);
         if (0<=f && f<=pi()/2) {
             float b;
             b = (float) 0.60725294;
-            return b * aux_sin(f, 10);
+            return b * aux_sin(f, 15);
         }
         if (f>pi()/2 && f<=pi()){
             return cos(f-pi()/2);
         }
         if (-pi()<=f && f<0){
-            return -sin(f);
+            return -sin(-f);
+            
         }
-        throw new IllegalArgumentException(" rentrez un argument entre -pi et pi aller c'est pas compliqué");
+        return 0;
     }
 
     //fonction aux sin
@@ -94,9 +108,25 @@ public class Mathe {
 
     // fonction cosinus
     public static float cos(float f) {
-        float b;
-        b=(float)0.60725294;
-        return b*aux_cos(f,10);
+        f=adapt(f);
+        if (f==0){
+            return 1;
+        }
+        if (0<=f && f<=pi()/2) {
+            float b;
+            b = (float) 0.60725294;
+            return b*aux_cos(f,15);
+        }
+        if (f>pi()/2 && f<=pi()){
+            return -sin(f-pi()/2);
+        }
+        if (-pi()<=f && f<0){
+            return cos(-f);
+            
+        }
+        return 0;
+        
+        
 
     }
 
