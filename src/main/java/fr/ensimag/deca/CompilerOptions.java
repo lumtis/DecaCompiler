@@ -74,7 +74,7 @@ public class CompilerOptions {
                     break;
                 case "-d":
                     needFiles = true;
-                    debug = Integer.parseInt(args[i]);
+                    debug++;
                     break;
                 case "-p":
                     needFiles = true;
