@@ -8,7 +8,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 
 /**
  * Conversion of an int into a float. Used for implicit conversions.
- * 
+ *
  * @author gl35
  * @date 01/01/2017
  */
@@ -33,7 +33,7 @@ public class ConvFloat extends AbstractUnaryExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         
     }
 
 }

@@ -48,7 +48,7 @@ public class Assign extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        DAddr addrVar = gc.getVariablesG().getVariable((Identifier)getLeftOperand());
+        DAddr addrVar = gc.getAddrVar((Identifier)getLeftOperand());
 
         // On réalise l'expression
         getRightOperand().codeGenInst(compiler, gc);

@@ -69,11 +69,13 @@ public class FloatLiteral extends AbstractExpr {
     protected void codeGenPrint(DecacCompiler compiler, GenCode gc) {
 
         // Mettre getValue() dans r1
+        compiler.addInstruction(new LOAD(new ImmediateFloat(getValue()), new GPRegister("R1", 1)));
         compiler.addInstruction(new WFLOAT());
     }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        //compiler.addInstruction(new LOAD(getValue(), gc.getRetReg()));
+        gc.setExprFloat(true);
+        compiler.addInstruction(new LOAD(new ImmediateFloat(getValue()), gc.getRetReg()));
     }
 }
