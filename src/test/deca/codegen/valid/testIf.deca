@@ -1,0 +1,19 @@
+// Description:
+//    tests du if
+//
+// Resultats:
+//    10
+
+{
+   boolean test = true;
+   boolean test2 = false;
+
+   if(true) {
+        boolean test = false;
+        if(test) {
+        }
+        else {
+            println("OK");
+        }
+   }
+}
