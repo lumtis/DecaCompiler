@@ -170,15 +170,7 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        EnvironmentExp cour = localEnv;
-        ExpDefinition def = null;
-        while (cour != null) {
-            def = cour.get(this.name);
-            if (def != null) {
-                break;
-            }
-            cour = cour.getParent();
-        }
+        ExpDefinition def = localEnv.get(this.name);
         if (def == null) {
             throw new ContextualError("Variable non déclarée.", this.getLocation());
         }
