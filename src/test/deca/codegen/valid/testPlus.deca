@@ -1,9 +1,7 @@
-// Description:
-//    tests d'expressions entieres
-//
-// Resultats:
-//    12
 
 {
-     println(3+(4+(5+(6+(7+(8+7))))));
+     int a = (3+(4+(5+(6+(7+(8+7))))));
+     if (a==40) {
+        print("OK");
+     }
 }
