@@ -20,8 +20,8 @@ public class TestMathe2 {
         py = (float)3.141592653589793238462643383279;
         float u1 = java.lang.Math.ulp((float) java.lang.Math.sin(0.00000000001));
         float u2 = Mathe.ulp((float) java.lang.Math.sin(0.00000000001));
-        float testlimite=(float)0.001;
-        FonctionsTest fon= new FonctionsTest(testlimite,false);
+        float testlimite=(float)0.00001;
+        FonctionsTest fon= new FonctionsTest(testlimite,true);
         //FonctionsTest fon= new FonctionsTest(testlimite,true);
         //true pour utiliser la vraie limite
         //false pour definir une valeur comme limite (testlimite)
