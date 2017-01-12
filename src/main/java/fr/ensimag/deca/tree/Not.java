@@ -23,8 +23,9 @@ public class Not extends AbstractUnaryExpr {
             ClassDefinition currentClass) throws ContextualError {
         AbstractExpr expr = this.getOperand();
         expr.verifyCondition(compiler, localEnv, currentClass);
-        this.setType(expr.getType());
-        return expr.getType();
+        Type t = compiler.getType("boolean");
+        this.setType(t);
+        return t;
     }
 
 

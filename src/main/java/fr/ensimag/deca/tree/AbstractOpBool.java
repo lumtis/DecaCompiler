@@ -24,7 +24,7 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
         AbstractExpr rightOp = this.getRightOperand();
         leftOp.verifyCondition(compiler, localEnv, currentClass);
         rightOp.verifyCondition(compiler, localEnv, currentClass);
-        Type bool = leftOp.getType();
+        Type bool = compiler.getType("boolean");
         this.setType(bool);
         return bool;
     }
