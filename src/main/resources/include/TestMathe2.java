@@ -31,13 +31,13 @@ public class TestMathe2 {
         
         
         System.out.println("TEST SIN");
-        for (float i=-py;i<=py;i=i+py/24){    
+        for (float i=-py+py/24;i<=py;i=i+py/24){    
             System.out.print(i);
             System.out.print("  ");
-            fon.testSinus(i);
+            fon.testSinus2(i);
         }
        
-        
+        /*
         System.out.println("TEST COS");
         for (float i=-py;i<=py;i=i+py/24){    
             System.out.print(i);
@@ -45,7 +45,7 @@ public class TestMathe2 {
             
             
             fon.testCosinus(i);
-        }
+        }*/
        
         /*
         System.out.println("TEST TAN");

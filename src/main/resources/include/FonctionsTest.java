@@ -21,6 +21,7 @@ public class FonctionsTest {
     }
     
     public void testSinus(float f){
+        float s=Mathe.sin(f);
         float lim=Mathe.ulp((float) java.lang.Math.sin(f));
         float testsin;
         if (b==true){
@@ -29,8 +30,9 @@ public class FonctionsTest {
         else {
             testsin=this.test;
         }
-        System.out.println(abs((float)java.lang.Math.sin(f)-Mathe.sin(f)));
-        if (abs((float)java.lang.Math.sin(f)-Mathe.sin(f))<=testsin){
+        System.out.print("Erreur ");
+        System.out.println((abs((float)java.lang.Math.sin(f)-s)/lim));
+        if (abs((float)java.lang.Math.sin(f)-s)<=testsin){
             System.out.println("SIN PASS");
         }
         else {
@@ -38,8 +40,9 @@ public class FonctionsTest {
             
         }
     }
-    /*
+    
     public void testSinus2(float f){
+        float s=Mathe.sin_ser(f);
         float lim=java.lang.Math.ulp((float) java.lang.Math.sin(f));
         float testsin;
         if (b==true){
@@ -48,16 +51,19 @@ public class FonctionsTest {
         else {
             testsin=test;
         }
-        if (abs(java.lang.Math.sin(f)-Mathe.sin_ser(f))<=2*testsin){
-            System.out.println("SINSER PASS");
+        System.out.print("Erreur ");
+        System.out.print((abs((float)java.lang.Math.sin(f)-s)/lim));
+        if (abs(java.lang.Math.sin(f)-s)<=testsin){
+            System.out.println(" SINSER PASS");
         }
         else {
-            System.out.println("SINSER NO");
+            System.out.println(" SINSER NO");
             
         }
-    }*/
+    }
     
     public void testCosinus(float f){
+        float s=Mathe.sin(f);
         float lim=java.lang.Math.ulp((float) java.lang.Math.cos(f));
         float testcos;
         if (b==true){
@@ -66,7 +72,7 @@ public class FonctionsTest {
         else {
             testcos=test;
         }
-        if (abs((float)java.lang.Math.cos(f)-Mathe.cos(f))<=testcos){
+        if (abs((float)java.lang.Math.cos(f)-s)<=testcos){
             System.out.println("COS PASS");
         }
         else {
