@@ -1,0 +1,7 @@
+{
+    int a=1, b=2;
+    float c=2.0, d=1.2876508760;
+    if (a==c || c==a || a==b || c==d && true==!false) {
+        print("On fait quelque chose");
+    }
+}

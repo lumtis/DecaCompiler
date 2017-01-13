@@ -1,0 +1,4 @@
+//ERROR :3:
+{
+    int a = readFloat();
+}

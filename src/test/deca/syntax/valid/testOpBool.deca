@@ -1,0 +1,15 @@
+{
+    boolean a=true, b=false;
+    int x=3, y=5;
+    float r;
+    r = 2.0;
+    if (a && b) {
+
+    }
+    else if (a || b && (!a || y%5!=2)) {
+
+    }
+    while (r == 2.0) {
+     r = x+y;
+    }
+}

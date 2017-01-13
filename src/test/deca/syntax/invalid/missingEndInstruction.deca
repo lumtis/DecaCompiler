@@ -1,0 +1,7 @@
+// Oublie d'un point virgule
+
+{
+    int a = 4;
+    float b
+    print(a);
+}

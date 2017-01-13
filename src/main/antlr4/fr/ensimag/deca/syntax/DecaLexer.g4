@@ -74,7 +74,7 @@ ASM: 'asm' ;
 EXP : ('E' | 'e' ) SIGN NUM;
 INT : '0' | POSITIVE_DIGIT DIGIT*;
 FLOAT :FLOATDEC | FLOATHEX;
-STRING : '"' (STRING_CAR | '\"' | '\\')* '"' ;
+STRING : '"' (STRING_CAR | '\"' | '\\')*? '"' ;
 MULTI_LINE_STRING:'"' (STRING_CAR | '\n' | '\"' | '\\')*? '"' ;
 IDENT:(LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')* ;
 

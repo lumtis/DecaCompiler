@@ -1,0 +1,4 @@
+// Doit renvoyer une erreur car manque une accolade
+
+{
+    int a = 4;

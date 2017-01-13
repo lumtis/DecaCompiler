@@ -1,7 +1,6 @@
-//ERROR :5:
+//ERROR :4:
 {
-String s="iniesta";
 int messi=10;
-float xavi = s*messi;
+float xavi = "aniesta"*messi;
 
 }

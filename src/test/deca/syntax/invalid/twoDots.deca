@@ -1,0 +1,7 @@
+// : au lieu de ;
+
+{
+    int a = 4;
+    float b:
+    boolean x = true;
+}

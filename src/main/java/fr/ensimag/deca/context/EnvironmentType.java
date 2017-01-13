@@ -21,22 +21,19 @@ public class EnvironmentType {
         env_type = new HashMap<>();
         def_type = new HashMap<>();
         //Création des types de base.
-        Type t[] = new Type[5];
+        Type t[] = new Type[4];
         Symbol intSym = symbols.create("int");
         t[0] = new IntType(intSym);
         env_type.put(intSym, t[0]);
-        Symbol strSym = symbols.create("String");
-        t[1] = new StringType(strSym);
-        env_type.put(strSym, t[1]);
         Symbol floatSym = symbols.create("float");
-        t[2] = new FloatType(floatSym);
-        env_type.put(floatSym, t[2]);
+        t[1] = new FloatType(floatSym);
+        env_type.put(floatSym, t[1]);
         Symbol boolSym = symbols.create("boolean");
-        t[3] = new BooleanType(boolSym);
-        env_type.put(boolSym, t[3]);
+        t[2] = new BooleanType(boolSym);
+        env_type.put(boolSym, t[2]);
         Symbol voidSym = symbols.create("void");
-        t[4] = new VoidType(voidSym);
-        env_type.put(voidSym, t[4]);
+        t[3] = new VoidType(voidSym);
+        env_type.put(voidSym, t[3]);
         for (int i=0; i<t.length; i++) {
             Location loc = new Location(0,0,"Default");
             def_type.put(t[i], new TypeDefinition(t[i],loc));

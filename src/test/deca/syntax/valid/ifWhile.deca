@@ -1,0 +1,18 @@
+{
+int a=0;
+int b=4;
+if (a==b) {
+    if (true) {
+        while (b>a) {
+            b = b-1;
+            println(b);
+    }
+}
+}
+else if (a < b) {
+    a=  4;
+}
+else if (a > b) {
+    print("lala");
+}
+}

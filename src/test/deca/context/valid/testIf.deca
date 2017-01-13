@@ -1,0 +1,23 @@
+{
+    int a, b, c, d;
+    if (a==2) {
+        if (b!=4) {
+            if (c>a) {
+            if (d<=d) {
+                if (!false && true || 7>=8) {
+                    print("Gros coup de chance");
+                }
+            }
+        }
+        else if (false) {
+            //On ne fait rien
+        }
+        else {
+            c = a * d + (b%c);
+        }
+    }
+    else if (10*(-10) + 3 == c-b) {
+        c = c;
+    }
+}
+}

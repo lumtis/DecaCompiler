@@ -6,8 +6,8 @@
 
 {
     
-    int a = 0;
-    int b= 1;
+    boolean a = false;
+    boolean b= true;
     int s=1;
     if (a || a == false){
         s=s*1;

@@ -1,0 +1,14 @@
+
+{
+    int a = 0, b;
+    b = 4;
+    if (a == b) {
+        print("Pas bon ca");
+    }
+    else {
+        print("...");
+    }
+    else if (true) {
+        printlnx("Erreur");
+    }
+}
