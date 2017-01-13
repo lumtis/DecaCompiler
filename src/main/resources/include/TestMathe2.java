@@ -26,14 +26,16 @@ public class TestMathe2 {
         //true pour utiliser la vraie limite
         
         //false pour definir une valeur comme limite (testlimite)
-        float a=Mathe.tan((float)1.5707961);
-        float b=(float) java.lang.Math.tan(1.5707961);
-        System.out.println(a);
-        System.out.println(b);
+        //float a=Mathe.cos2((float)1);
+        //float b=Mathe.cos((float)1);
+        //float c=(float) java.lang.Math.cos(1);
+        //System.out.println(a);
+        //System.out.println(b);
+        //System.out.println(c);
         
         
+        /*
         System.out.println("TEST SIN");
-        
         for (float i=-py;i<=py;i=i+py/48){    
             System.out.print(i);
             System.out.print(" ");
@@ -42,9 +44,9 @@ public class TestMathe2 {
             //System.out.print(lim);
             
             fon.testSinus2(i);
-        }
+        }*/
        
-        
+        /*
         System.out.println("TEST COS");
         for (float i=-py;i<=py;i=i+py/24){    
             System.out.print(i);
@@ -54,15 +56,15 @@ public class TestMathe2 {
             //System.out.print(lim);
             //System.out.print(" ");
             fon.testCosinus2(i);
-        }
+        }*/
        
-        
+        /*
         System.out.println("TEST TAN");
         for (float i=0;i<py/2;i=i+py/24){    
             System.out.print(i);
             System.out.print("  ");
             fon.testTan(i);
-        }
+        }*/
         /*
         System.out.println("TEST ASIN");
         for (float i=-py;i<=py;i=i+py/12){    
@@ -78,13 +80,13 @@ public class TestMathe2 {
             fon.testAcosinus(i);
         }*/
         
-        
+        /*
         System.out.println("TEST ATAN");
         for (float i=-py/4;i<=py/4;i=i+py/48){    
             System.out.print(i);
             System.out.print("  ");
             fon.testAtan(i);
-        }
+        }*/
         
         
         
