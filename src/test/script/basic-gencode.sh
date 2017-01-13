@@ -1,4 +1,4 @@
-##! /bin/sh
+#! /bin/sh
 
 # Auteur : gl35
 # Version initiale : 01/01/2017
@@ -8,9 +8,9 @@
 
 # Ce genre d'approche est bien sûr généralisable, en conservant le
 # résultat attendu dans un fichier pour chaque fichier source.
-#cd "$(dirname "$0")"/../../.. || exit 1
+cd "$(dirname "$0")"/../../.. || exit 1
 
-#PATH=./src/test/script/launchers:./src/main/bin:"$PATH"
+PATH=./src/test/script/launchers:./src/main/bin:"$PATH"
 
 for cas_de_test in src/test/deca/codegen/valid/*.deca
 do
