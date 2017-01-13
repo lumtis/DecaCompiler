@@ -19,7 +19,7 @@ public class GenCode {
     private DecacCompiler comp;
 
     private int labelIndex = 0;
-    private final int  taillePile=20;
+    private final int  taillePile=1024;
     private Label pile_pleine= newLabel();
 
     private Stack<GPRegister> tmpReg;
@@ -51,7 +51,7 @@ public class GenCode {
         // On commence l'enregistrement des registres à 3
         indexTmp = 3;
         tmpReg = new Stack<GPRegister>();
-        maxReg = 5;//comp.getCompilerOptions().getRegisters();
+        maxReg = 15;//comp.getCompilerOptions().getRegisters();
 
         exprFloat = false;
         indexMem = 1;
@@ -135,6 +135,7 @@ public class GenCode {
         comp.addComment("Taille maximale de la pile");
         comp.addInstruction(new TSTO(taillePile));
         comp.addInstruction(new BOV(pile_pleine));
+        comp.addInstruction(new ADDSP(taillePile));
     }
 
     public void terminateProgram(){
