@@ -33,6 +33,8 @@ do
 
 done
 
+# On parcourt les fichiers dans interactif, on lit dans le fichier l'input.
+# Puis on exécute le code assembleur généré en lui fournissant l'assembleur lu.
 for cas_de_test in src/test/deca/codegen/valid/interactive/*.deca
 do
     nom_ass=${cas_de_test/.deca/.ass}
@@ -42,7 +44,8 @@ do
         echo "Fichier cond0.ass non généré."
         exit 1
      else
-        resultat=$(echo 5 | ima "$nom_ass")
+        input=$(cat "$cas_de_test" | grep -e "//INPUT [0-9]*" | tail -c +9);
+        resultat=$(echo "$input" | ima "$nom_ass");
         if echo $resultat | grep -q -e "OK"
         then
             echo "$cas_de_test : PASS."
