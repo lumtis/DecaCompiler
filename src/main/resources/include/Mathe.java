@@ -45,7 +45,7 @@ public class Mathe {
             return -sin(-f);
             
         }
-        return 0;
+        throw new IllegalArgumentException(" ça n'arrivera jamais");
     }
 
     //fonction aux sin
