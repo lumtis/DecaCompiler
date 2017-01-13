@@ -41,7 +41,6 @@ public class GenCode {
     }
 
 
-
     public GenCode(DecacCompiler comp) {
         this.comp = comp;
 
@@ -55,6 +54,41 @@ public class GenCode {
 
         exprFloat = false;
         indexMem = 1;
+    }
+
+
+    ////////////////////////////////////////////////////////////////////
+    // Gestion des variables
+
+    // Initialise les variables globlales
+    public void initGlobalVar(List<AbstractDeclVar> a) {
+        initMem();
+
+        for (AbstractDeclVar d:a){
+            DeclVar declVar=(DeclVar)d;
+            Identifier var = (Identifier)declVar.getVarName();
+
+            setMem(Register.GB, var);
+
+            // On initialise la variable
+            declVar.getInitialization().codeGenInit(getAddrVar(var), comp, this);
+        }
+    }
+
+    public void initMem() {
+        indexMem = 1;
+    }
+
+    public void setMem(Register r, Identifier i) {
+        DAddr addr = new RegisterOffset(indexMem, r);
+
+        // On fixe l'adresse de la variable
+        i.getExpDefinition().setOperand(addr);
+        indexMem++;
+    }
+
+    public DAddr getAddrVar(Identifier i) {
+          return i.getExpDefinition().getOperand();
     }
 
     public void pushTmpReg(DVal v) {
@@ -110,6 +144,12 @@ public class GenCode {
         return exprFloat;
     }
 
+    // Gestion des variables
+    ////////////////////////////////////////////////////////////////////
+
+
+    ////////////////////////////////////////////////////////////////////
+    // Gestion des labels
 
     /* Obtient un nom qui n'a jamais été pris pour un nouveau label */
     public Label newLabel() {
@@ -127,6 +167,32 @@ public class GenCode {
         Label l = new Label(name);
         return l;
     }
+
+    // Gestion des labels
+    ////////////////////////////////////////////////////////////////////
+
+
+    ////////////////////////////////////////////////////////////////////
+    // Gestion des classes
+
+
+    public void initClass(List<DeclClass> l) {
+
+        for (DeclClass c:l){
+
+        }
+    }
+
+
+    // Gestion des classes
+    ////////////////////////////////////////////////////////////////////
+
+
+    
+
+
+    ////////////////////////////////////////////////////////////////////
+    // Fonctions generales
 
     /* Ajoute les instructions au debut du programme */
     public void initProgram()
@@ -150,34 +216,8 @@ public class GenCode {
         //à compléter les autres erreurs possibles à la fin
     }
 
-    public void initMem() {
-        indexMem = 1;
-    }
+    // Fonctions generales
+    ////////////////////////////////////////////////////////////////////
 
-    public void setMem(Register r, Identifier i) {
-        DAddr addr = new RegisterOffset(indexMem, r);
 
-        // On fixe l'adresse de la variable
-        i.getExpDefinition().setOperand(addr);
-        indexMem++;
-    }
-
-    public DAddr getAddrVar(Identifier i) {
-          return i.getExpDefinition().getOperand();
-    }
-
-    // Initialise les variables globlales
-    public void initGlobalVar(List<AbstractDeclVar> a) {
-        initMem();
-
-        for (AbstractDeclVar d:a){
-            DeclVar declVar=(DeclVar)d;
-            Identifier var = (Identifier)declVar.getVarName();
-
-            setMem(Register.GB, var);
-
-            // On initialise la variable
-            declVar.getInitialization().codeGenInit(getAddrVar(var), comp, this);
-        }
-    }
 }

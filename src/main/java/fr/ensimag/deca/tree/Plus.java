@@ -31,8 +31,4 @@ public class Plus extends AbstractOpArith {
 
         compiler.addInstruction(new ADD(tmp, gc.getRetReg()));
     }
-
-
-
-
 }
