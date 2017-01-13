@@ -299,7 +299,7 @@ public class Mathe {
         float tmp1;
         float tmp2;
 
-        while( k <50){
+        while( k <100){
             tmp1=z;
             z=tmp1-signe(tmp1)*atan(pow(2,-k));
             tmp2=cos;
@@ -319,7 +319,7 @@ public class Mathe {
         float tmp1;
         float tmp2;
 
-        while (k < 50) {
+        while (k < 100) {
             tmp1 = z;
             z = tmp1 - signe(tmp1) * atan(pow(2, -k));
             tmp2 = cos;

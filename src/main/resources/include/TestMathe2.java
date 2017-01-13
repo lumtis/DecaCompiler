@@ -26,15 +26,16 @@ public class TestMathe2 {
         //true pour utiliser la vraie limite
         
         //false pour definir une valeur comme limite (testlimite)
-        //float a=Mathe.cos2((float)1);
-        //float b=Mathe.cos((float)1);
-        //float c=(float) java.lang.Math.cos(1);
-        //System.out.println(a);
-        //System.out.println(b);
-        //System.out.println(c);
+        float a=Mathe.cos2((float)23*py/48);
+        float b=Mathe.cordic_cos((float)23*py/48);
+        float c=(float) java.lang.Math.cos(23*py/48);
+        
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
         
         
-        /*
+        
         System.out.println("TEST SIN");
         for (float i=-py;i<=py;i=i+py/48){    
             System.out.print(i);
@@ -44,9 +45,9 @@ public class TestMathe2 {
             //System.out.print(lim);
             
             fon.testSinus2(i);
-        }*/
+        }
        
-        /*
+        
         System.out.println("TEST COS");
         for (float i=-py;i<=py;i=i+py/24){    
             System.out.print(i);
@@ -56,7 +57,7 @@ public class TestMathe2 {
             //System.out.print(lim);
             //System.out.print(" ");
             fon.testCosinus2(i);
-        }*/
+        }
        
         /*
         System.out.println("TEST TAN");
