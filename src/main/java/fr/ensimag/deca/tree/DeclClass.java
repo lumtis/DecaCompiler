@@ -17,13 +17,13 @@ public class DeclClass extends AbstractDeclClass {
     final private AbstractIdentifier className;
     final private AbstractIdentifier superName;
     private ListDeclField fields;
-    //private ListDeclMethod methods;
+    private ListDeclMethod methods;
 
     public DeclClass(AbstractIdentifier className, AbstractIdentifier superName) {
         this.className = className;
         this.superName = superName;
         this.fields = new ListDeclField();
-        //this.methods = new ListDeclMethod();
+        this.methods = new ListDeclMethod();
     }
 
     @Override
