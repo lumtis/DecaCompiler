@@ -77,7 +77,12 @@ public abstract class Type {
      */
     public ClassType asClassType(String errorMessage, Location l)
             throws ContextualError {
-        throw new ContextualError(errorMessage, l);
+        try {
+            return (ClassType) this;
+        }
+        catch (ClassCastException e) {
+            throw new ContextualError(errorMessage, l);
+        }
     }
 
 }

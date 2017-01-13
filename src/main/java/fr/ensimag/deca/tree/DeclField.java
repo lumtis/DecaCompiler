@@ -15,7 +15,7 @@ public class DeclField extends AbstractDeclField {
     final private boolean privacy;
     final private AbstractIdentifier type;
     final private AbstractIdentifier fieldName;
-    final private AbstractInitialization initialization;
+    private AbstractInitialization initialization;
 
     public DeclField(boolean privacy, AbstractIdentifier type, AbstractIdentifier fieldName, AbstractInitialization initialization) {
         Validate.notNull(type);
@@ -44,8 +44,7 @@ public class DeclField extends AbstractDeclField {
     }
 
     @Override
-    protected void verifyDeclField(DecacCompiler compiler,
-                                   EnvironmentExp classEnv, ClassDefinition currentClass)
+    protected void verifyDeclField(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError {
         throw new ContextualError("Pas encore fait", this.getLocation());
     }

@@ -14,27 +14,17 @@ import java.io.PrintStream;
  * Created by buthodgt on 1/13/17.
  */
 public class DeclMethod extends AbstractDeclMethod {
-    final private boolean privacy;
     final private AbstractIdentifier type;
     final private AbstractIdentifier fieldName;
     private MethodDefinition definition;
+    private ListDeclParam params;
     private AbstractMain body;
 
-    public DeclMethod(boolean privacy, AbstractIdentifier type, AbstractIdentifier fieldName, MethodDefinition definition,
-                      AbstractMain body) {
+    public DeclMethod(AbstractIdentifier type, AbstractIdentifier fieldName) {
         Validate.notNull(type);
         Validate.notNull(fieldName);
-        Validate.notNull(definition);
-        Validate.notNull(body);
-        this.privacy = privacy;
         this.type = type;
         this.fieldName = fieldName;
-        this.definition = definition;
-        this.body = body;
-    }
-
-    public boolean isPrivate() {
-        return this.privacy;
     }
 
     public AbstractIdentifier getFieldName(){
@@ -54,9 +44,9 @@ public class DeclMethod extends AbstractDeclMethod {
     }
 
     @Override
-    protected void verifyDeclMethod(DecacCompiler compiler,
-                                   EnvironmentExp classEnv, ClassDefinition currentClass)
+    protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition classDef)
             throws ContextualError {
+        params.verifyListParam(compiler, classDef);
         throw new ContextualError("Pas encore fait", this.getLocation());
     }
 

@@ -77,4 +77,12 @@ public class EnvironmentType {
             return null;
         }
     }
+
+    public void addType(Symbol sym, Type t, Definition def) {
+        if (env_type.containsKey(sym) || def_type.containsKey(t)) {
+            throw new DecacInternalError("Insertion dun symbole ou vaiable déjà existante.");
+        }
+        env_type.put(sym, t);
+        def_type.put(t, def);
+    }
 }
