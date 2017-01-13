@@ -27,6 +27,17 @@ public class Mathe {
         }
         return solution;
     }
+    
+    // fonction cosinus première solution
+    public static float cos_ser(float f) {
+        int k=0;
+        float solution=0;
+        while (k < 6) {
+            solution+= Mathe.pow((float)-1,k)* Mathe.pow(f,2*k)/Mathe.factoriel(2*k);
+            k+=1;
+        }
+        return solution;
+    }
 
     // fonction sinus cornic
     public static float sin(float f) {
@@ -43,6 +54,30 @@ public class Mathe {
         }
         if (-pi()<=f && f<0){
             return -sin(-f);
+            
+        }
+        throw new IllegalArgumentException(" ça n'arrivera jamais");
+    }
+    
+    public static float sin2(float f) {
+        if (f==pi()){
+            return 1;
+        }
+             
+        f=adapt(f);
+        if (0<=f && f<=pi()/2) {
+            
+            return sin_ser(f);
+        }
+        if (0<=f && f<=pi()/2) {
+            
+            return sin_ser(f);
+        }
+        if (f>pi()/2 && f<=pi()){
+            return cos2(f-pi()/2);
+        }
+        if (-pi()<=f && f<0){
+            return -sin2(-f);
             
         }
         return 0;
@@ -128,6 +163,40 @@ public class Mathe {
         
         
 
+    }
+    
+    public static float cos2(float f) {
+        f=adapt(f);
+        if (f==0){
+            return 1;
+        }
+        if (0<=f && f<=pi()/4) {
+            
+            return cos_ser(f);
+        }
+        if (0<pi()/4 && f<=pi()/2) {
+            
+            return sin2(pi()/2-f);
+        }
+        
+        if (f>pi()/2 && f<=pi()){
+            return -sin2(f-pi()/2);
+        }
+        if (-pi()<=f && f<0){
+            return cos2(-f);
+            
+        }
+        return 0;
+        
+        
+
+    }
+    
+    public static float tan (float f){
+        if (f==pi()/2){
+            throw new IllegalArgumentException();
+        }
+        return sin2(f)/cos2(f);
     }
 
 
