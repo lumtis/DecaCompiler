@@ -32,3 +32,25 @@ do
     fi
 
 done
+
+for cas_de_test in src/test/deca/codegen/valid/interactive/*.deca
+do
+    nom_ass=${cas_de_test/.deca/.ass}
+    rm -f $nom_ass 2>/dev/null;
+    decac $cas_de_test || exit 1
+    if [ ! -f $nom_ass ]; then
+        echo "Fichier cond0.ass non généré."
+        exit 1
+     else
+        resultat=$(echo 5 | ima "$nom_ass")
+        if echo $resultat | grep -q -e "OK"
+        then
+            echo "$cas_de_test : PASS."
+        else
+            echo "$cas_de_test : ERROR.";
+
+        fi
+    fi
+
+done
+

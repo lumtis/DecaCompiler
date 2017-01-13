@@ -1,0 +1,7 @@
+{
+    int x;
+    x=readInt();
+    if(x == 5){
+        print("OK");
+    }
+}
