@@ -1,0 +1,34 @@
+; start main program
+; start main program
+; Main program
+; Début du programme principal
+; Taille maximale de la pile
+	TSTO #20
+	BOV label0
+	LOAD #0, R2
+	STORE R2, 1(GB)
+; Beginning of main instructions:
+	LOAD #1, R2
+	CMP #0, R2
+	BEQ label1
+	LOAD 1(GB), R2
+	CMP #0, R2
+	BEQ label3
+	BRA label4
+label3:
+	WSTR "OK"
+	WNL
+label4:
+	BRA label2
+label1:
+label2:
+; Code du programme principal
+	HALT
+; Messages d’erreurs
+label0:
+	WSTR "Erreur: Pile pleine"
+	WNL
+	ERROR
+; Autres erreurs
+	HALT
+; end main program

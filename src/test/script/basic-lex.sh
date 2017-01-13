@@ -37,12 +37,12 @@ else
 fi
 }
 
-for cas_de_test in src/test/deca/lex/invalid/provided/*.deca
+for cas_de_test in src/test/deca/lex/invalid/*.deca
 do
     test_lex_invalide "$cas_de_test"
 done
 
-for cas_de_test in src/test/deca/lex/valid/provided/*.deca
+for cas_de_test in src/test/deca/lex/valid/*.deca
 do
     test_lex_valid "$cas_de_test"
 done
