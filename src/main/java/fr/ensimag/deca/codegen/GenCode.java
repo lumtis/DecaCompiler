@@ -51,7 +51,7 @@ public class GenCode {
         // On commence l'enregistrement des registres à 3
         indexTmp = 3;
         tmpReg = new Stack<GPRegister>();
-        maxReg = 15;//comp.getCompilerOptions().getRegisters();
+        maxReg = comp.getCompilerOptions().getRegisters();//comp.getCompilerOptions().getRegisters();
 
         exprFloat = false;
         indexMem = 1;

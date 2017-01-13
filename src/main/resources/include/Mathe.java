@@ -17,7 +17,7 @@ public class Mathe {
         return f;
     }
 
-    // fonction sinus première solution
+    // fonction sinus première solution série entière
     public static float sin_ser(float f) {
         int k=0;
         float solution=0;
@@ -42,13 +42,14 @@ public class Mathe {
     // fonction sinus cornic
     public static float sin(float f) {
         
-             
+        // Si l'angle est entre 0 et pi/2 on applique l'algorithme
         f=adapt(f);
         if (0<=f && f<=pi()/2) {
             float b;
             b = (float) 0.60725294;
             return b * aux_sin(f, 23);
         }
+        // si non on ramène à cet interval
         if (f>pi()/2 && f<=pi()){
             return cos(f-pi()/2);
         }
@@ -56,7 +57,8 @@ public class Mathe {
             return -sin(-f);
             
         }
-        return 0;
+        // on ne devrait jamais en arriver là
+        throw new IllegalArgumentException(" ça n'arrivera jamais");
     }
     
     public static float sin2(float f) {
@@ -69,10 +71,7 @@ public class Mathe {
             
             return sin_ser(f);
         }
-        if (0<=f && f<=pi()/2) {
-            
-            return sin_ser(f);
-        }
+
         if (f>pi()/2 && f<=pi()){
             return cos2(f-pi()/2);
         }
@@ -292,8 +291,45 @@ public class Mathe {
 
     }
 
+    public static float  cordic_cos(float f){
+        int k =0;
+        float cos =1;
+        float sin =0;
+        float z=f;
+        float tmp1;
+        float tmp2;
 
+        while( k <100){
+            tmp1=z;
+            z=tmp1-signe(tmp1)*atan(pow(2,-k));
+            tmp2=cos;
+            cos=cos -signe(tmp1)*sin*pow(2,-k);
+            sin= sin +signe(tmp1)*tmp2*pow(2,-k);
+            k+=1;
 
+        }
+        return (float) 0.60725294*cos;
+    }
+
+    public static float  cordic_sin(float f) {
+        int k = 0;
+        float cos = 1;
+        float sin = 0;
+        float z = f;
+        float tmp1;
+        float tmp2;
+
+        while (k < 100) {
+            tmp1 = z;
+            z = tmp1 - signe(tmp1) * atan(pow(2, -k));
+            tmp2 = cos;
+            cos = cos - signe(tmp1) * sin * pow(2, -k);
+            sin = sin + signe(tmp1) * tmp2 * pow(2, -k);
+            k += 1;
+
+        }
+        return (float) 0.60725294*sin;
+    }
 
     // fonction factoriel
     public static int factoriel(int n){
@@ -304,6 +340,13 @@ public class Mathe {
         }
         return a;
     }
+    public static int signe( float f){
+        if (f<0)
+            return -1;
+        else
+            return 1;
+    }
+
 }
 
 
