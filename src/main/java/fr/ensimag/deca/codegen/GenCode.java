@@ -18,13 +18,13 @@ import java.util.List;
 public class GenCode {
     private DecacCompiler comp;
 
-    private int maxReg;
-
     private int labelIndex = 0;
-    private final int  taillePile=20;
+    private final int  taillePile=1024;
     private Label pile_pleine= newLabel();
 
-    private GPRegister tmpReg;
+    private Stack<GPRegister> tmpReg;
+    private int indexTmp;
+    private int maxReg;
     private GPRegister retReg;
 
     // Definit si l'expression en cours renvoie un float
@@ -34,26 +34,68 @@ public class GenCode {
 
 
 
+    // Fonction utilitaires pour obtenir le nom d'un registre en fonction de
+    // son numero
+    private String getRegName(int n) {
+        return "R" + String.valueOf(n);
+    }
+
+
+
     public GenCode(DecacCompiler comp) {
         this.comp = comp;
 
         // Le registre qui contient le retour d'une expression est le 2
         retReg = new GPRegister("R2", 2);
 
-        // Le registre qui contient le une valeur temporaire pour une expression
-        // binaire est le 3
-        tmpReg = new GPRegister("R3", 3);
+        // On commence l'enregistrement des registres à 3
+        indexTmp = 3;
+        tmpReg = new Stack<GPRegister>();
+        maxReg = 15;//comp.getCompilerOptions().getRegisters();
 
         exprFloat = false;
         indexMem = 1;
-        maxReg = comp.getCompilerOptions().getRegisters();    // TODO: gerer option du compiler
     }
 
+    public void pushTmpReg(DVal v) {
+        GPRegister r;
 
-    public GPRegister getTmpReg()
-    {
-        return tmpReg;
+        // S'il n'y a plus de registre disponible, on push l'ancienne valeur
+        if(indexTmp >= maxReg) {
+            // On met dans la pile (du programme la valeur du dernier registre)
+            comp.addInstruction(new PUSH(tmpReg.peek()));
+
+            r = new GPRegister(getRegName(maxReg-1), maxReg-1);
+            comp.addInstruction(new LOAD(v, r));
+            tmpReg.push(r);
+        }
+        else {
+            r = new GPRegister(getRegName(indexTmp), indexTmp);
+            comp.addInstruction(new LOAD(v, r));
+            tmpReg.push(r);
+        }
+
+        indexTmp++;
     }
+
+    public GPRegister popTmpReg() {
+        GPRegister r;
+        GPRegister r1 = new GPRegister("R1", 1);
+        indexTmp--;
+
+        // S'il n'y a plus de registre disponible, on pop la nouvelle valeur
+        if(indexTmp >= maxReg) {
+            r = tmpReg.pop();
+            comp.addInstruction(new LOAD(r, r1));
+            comp.addInstruction(new POP(r));
+        }
+        else {
+            return tmpReg.pop();
+        }
+
+        return r1;
+    }
+
 
     public GPRegister getRetReg()
     {
@@ -93,6 +135,7 @@ public class GenCode {
         comp.addComment("Taille maximale de la pile");
         comp.addInstruction(new TSTO(taillePile));
         comp.addInstruction(new BOV(pile_pleine));
+        comp.addInstruction(new ADDSP(taillePile));
     }
 
     public void terminateProgram(){

@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.*;
 
 /**
  *
@@ -22,15 +23,18 @@ public class Divide extends AbstractOpArith {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        GPRegister tmp;   // registre temporaire pour les expressions binaires
         super.codeGenInst(compiler, gc);
 
+        tmp = gc.popTmpReg();
+
         if(gc.isExprFloat()) {
-            compiler.addInstruction(new DIV(gc.getRetReg(), gc.getTmpReg()));
-            compiler.addInstruction(new LOAD(gc.getTmpReg(), gc.getRetReg()));
+            compiler.addInstruction(new DIV(gc.getRetReg(), tmp));
+            compiler.addInstruction(new LOAD(tmp, gc.getRetReg()));
         }
         else {
-            compiler.addInstruction(new QUO(gc.getRetReg(), gc.getTmpReg()));
-            compiler.addInstruction(new LOAD(gc.getTmpReg(), gc.getRetReg()));
+            compiler.addInstruction(new QUO(gc.getRetReg(), tmp));
+            compiler.addInstruction(new LOAD(tmp, gc.getRetReg()));
         }
     }
 

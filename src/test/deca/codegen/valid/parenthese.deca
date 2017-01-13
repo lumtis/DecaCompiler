@@ -1,9 +1,9 @@
 {
+    int a=3,b=4,c=5,d;
 
-int a=3,b=4,c=5,d;
-
-d=a+(b+c);
-if(d==12){
-print("OK");
-}
+    d=a+(b+c);
+    
+    if(d==12){
+        print("OK");
+    }
 }

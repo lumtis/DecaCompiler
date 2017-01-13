@@ -32,12 +32,11 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        Type t = compiler.getType("void");
-        this.setType(t);
         AbstractExpr leftOp = this.getLeftOperand();
         Type typeL = leftOp.verifyExpr(compiler,localEnv,currentClass);
         setRightOperand(getRightOperand().verifyRValue(compiler, localEnv, currentClass, typeL));
-        return t;
+        this.setType(typeL);
+        return typeL;
     }
 
 

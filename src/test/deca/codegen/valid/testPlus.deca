@@ -1,16 +1,8 @@
-// Description:
-//    tests d'expressions entieres
-//
-// Resultats:
-//    12
 
 {
-     int a;
-     int b = 8+9;
-
-     a = 5;
-
-     if(b+a == 22) {
-         println("OK");
-     }
+    int a = 2;
+    int b = 3;
+    if(a+b == 5) {
+        println("OK");
+    }
 }

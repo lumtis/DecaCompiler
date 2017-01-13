@@ -24,11 +24,13 @@ public class Equals extends AbstractOpExactCmp {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        GPRegister tmp;
         Label vrai = gc.newLabel();  // Label lorsque l'expression est vrai
         Label fin = gc.newLabel();   // Label de la fin de l'expression
 
         super.codeGenInst(compiler, gc);
-        compiler.addInstruction(new CMP(gc.getTmpReg(), gc.getRetReg()));
+        tmp = gc.popTmpReg();
+        compiler.addInstruction(new CMP(tmp, gc.getRetReg()));
         compiler.addInstruction(new BEQ(vrai));
 
         // Les expressions ne sont pas egales

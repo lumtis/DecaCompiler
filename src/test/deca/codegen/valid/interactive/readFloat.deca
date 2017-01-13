@@ -1,0 +1,9 @@
+//INPUT 7.0
+{
+    float x;
+    x=readFloat();
+    if(x == 7){
+        print("OK");
+    }
+
+}

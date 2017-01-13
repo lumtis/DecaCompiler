@@ -7,7 +7,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.ima.pseudocode.instructions.*;
-
+import fr.ensimag.ima.pseudocode.*;
 import javax.naming.Context;
 
 /**
@@ -43,10 +43,13 @@ public class Modulo extends AbstractOpArith {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        GPRegister tmp;   // registre temporaire pour les expressions binaires
         super.codeGenInst(compiler, gc);
 
-        compiler.addInstruction(new REM(gc.getRetReg(), gc.getTmpReg()));
-        compiler.addInstruction(new LOAD(gc.getTmpReg(), gc.getRetReg()));
+        tmp = gc.popTmpReg();
+
+        compiler.addInstruction(new REM(gc.getRetReg(), tmp));
+        compiler.addInstruction(new LOAD(tmp, gc.getRetReg()));
     }
 
 }
