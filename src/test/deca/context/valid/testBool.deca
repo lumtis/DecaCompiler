@@ -1,0 +1,5 @@
+{
+    boolean bool = false || true;
+    boolean bool2 = !bool;
+    boolean bool3 = bool && bool2;
+}

@@ -1,0 +1,8 @@
+{
+    int a, z, e, r, t, y, u, i, o, p, q, s, d, f, g, h, j, k, l, m;
+    float w, x, c, v, b, n;
+    z = (e = (r = (t = (i = 8))));
+    if (e != 8) {
+        print("NOT OK");
+    }
+}

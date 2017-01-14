@@ -1,0 +1,13 @@
+{
+    boolean bool = false || true;
+    boolean bool2 = !bool;
+    boolean bool3 = bool && bool2;
+    if (!bool3 && bool) {
+        if (!bool2) {
+            //On ne fait rien
+        }
+        else {
+            println("NOT OK");
+        }
+    }
+}
