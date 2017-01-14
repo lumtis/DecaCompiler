@@ -10,6 +10,6 @@ import fr.ensimag.deca.context.EnvironmentExp;
  */
 public abstract class AbstractDeclField extends Tree {
 
-    protected abstract void verifyDeclField(DecacCompiler compiler, ClassDefinition currentClass)
+    protected abstract void verifyDeclFieldHeader(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError;
 }
