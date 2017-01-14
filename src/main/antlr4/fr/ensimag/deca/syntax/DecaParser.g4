@@ -573,7 +573,7 @@ visibility returns[Visibility tree]
             $tree= Visibility.PUBLIC;
         }
     | PROTECTED {
-            $tree= Visibility.PROTECTED;
+                $tree= Visibility.PROTECTED;
         }
     ;
 
