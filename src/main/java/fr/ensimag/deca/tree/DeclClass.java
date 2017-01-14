@@ -23,13 +23,16 @@ public class DeclClass extends AbstractDeclClass {
     private ListDeclField fields;
     private ListDeclMethod methods;
 
-    public DeclClass(AbstractIdentifier className, AbstractIdentifier superName) {
+    public DeclClass(AbstractIdentifier className, AbstractIdentifier superName, ListDeclMethod methods, ListDeclField fields) {
         Validate.notNull(className);
         Validate.notNull(superName);
+        Validate.notNull(methods);
+        Validate.notNull(fields);
         this.className = className;
         this.superName = superName;
-        this.fields = new ListDeclField();
-        this.methods = new ListDeclMethod();
+        this.methods = methods;
+        this.fields =  fields;
+
     }
 
     @Override
