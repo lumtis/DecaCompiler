@@ -557,7 +557,9 @@ class_body returns[ListDeclMethod listMethod, ListDeclField listField]
     }: (m=decl_method {
             $listMethod.add($m.tree);
         }
-      | f=decl_field_set[$tree]
+      | f=decl_field_set[$listField]{
+        setLocation($listField, $f.start);
+      }
       )*
     ;
 
@@ -585,7 +587,7 @@ list_decl_field[ListDeclField l, Visibility v, AbstractIdentifier t]
       )*
     ;
 
-decl_field[Visibility v, AbstractIdentifier t] returns[AbstractDeclField]
+decl_field[Visibility v, AbstractIdentifier t] returns[AbstractDeclField tree]
     @init   {
                 AbstractInitialization ini= null;
             }
@@ -601,12 +603,9 @@ decl_field[Visibility v, AbstractIdentifier t] returns[AbstractDeclField]
                 if (ini == null) {
                     ini = new NoInitialization();
                 }
-                if($v == Visibility.PUBLIC){
-                    $tree = new DeclField(false,$t, $i.tree, ini);
-                }
-                else {
-                    $tree = new DeclField(true,$t, $i.tree, ini);
-                }
+
+                $tree = new DeclField($v,$t, $i.tree, ini);
+
                 setLocation($tree, $i.start);
             }
         ;
@@ -615,7 +614,8 @@ decl_method returns[AbstractDeclMethod tree]
 @init {
 }
     : type ident OPARENT params=list_params CPARENT (block {
-            $tree = new DeclMethod($type.tree, $ident.tree);
+            AbstractMain main_meth = new Main($block.decls, $block.insts);
+            $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, main_meth);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
         }
@@ -630,7 +630,7 @@ list_params returns[ListDeclParam tree]
     : (p1=param {
             $tree.add($p1.tree);
         } (COMMA p2=param {
-            $tree.add($p1.tree)
+            $tree.add($p1.tree);
         }
       )*)?
     ;
@@ -646,7 +646,8 @@ multi_line_string returns[String text, Location location]
         }
     ;
 
-param
+param returns[AbstractDeclParam tree]
     : type ident {
+        $tree = new DeclParam($type.tree, $ident.tree);
         }
     ;

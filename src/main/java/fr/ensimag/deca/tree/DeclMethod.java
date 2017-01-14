@@ -18,13 +18,14 @@ public class DeclMethod extends AbstractDeclMethod {
     private AbstractMain body;
     private EnvironmentExp env_exp_body;
 
-    public DeclMethod(AbstractIdentifier type, AbstractIdentifier fieldName, AbstractMain body) {
+    public DeclMethod(AbstractIdentifier type, AbstractIdentifier fieldName, ListDeclParam param, AbstractMain body) {
         Validate.notNull(type);
         Validate.notNull(fieldName);
         Validate.notNull(body);
+        Validate.notNull(param);
         this.type = type;
         this.fieldName = fieldName;
-        this.params = new ListDeclParam();
+        this.params = param;
         this.body = body;
     }
 
@@ -44,10 +45,6 @@ public class DeclMethod extends AbstractDeclMethod {
         return this.body;
     }
 
-    public void addParam(AbstractDeclParam param) {
-        Validate.notNull(param);
-        this.params.add(param);
-    }
 
     @Override
     protected void verifyDeclMethodHeader(DecacCompiler compiler, ClassDefinition classDef)
