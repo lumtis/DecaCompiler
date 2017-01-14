@@ -253,7 +253,7 @@ public class Identifier extends AbstractIdentifier {
         // On récupère l'adresse de la variable
         DAddr addr = gc.getAddrVar(this);
 
-        compiler.addInstruction(new LOAD(addr, new GPRegister("R1", 1)));
+        compiler.addInstruction(new LOAD(addr, GPRegister.getR(1)));
 
         if(definition.getType().isFloat()) {
             compiler.addInstruction(new WFLOAT());
