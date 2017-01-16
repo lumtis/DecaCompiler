@@ -62,7 +62,9 @@ public class Program extends AbstractProgram {
         main.codeGenMain(compiler, gc);
 
         // On initialise les classes
+        gc.initClass(getClasses().getList());
 
+        // Fin du programme
         gc.terminateProgram();
         compiler.addInstruction(new HALT());
     }

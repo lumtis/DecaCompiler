@@ -54,6 +54,10 @@ public class DeclMethod extends AbstractDeclMethod {
         return this.body;
     }
 
+    public ListDeclParam getParams() {
+        return this.params;
+    }
+
 
     /*
     protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition classDef)

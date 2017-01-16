@@ -88,9 +88,12 @@ public class DeclClass extends AbstractDeclClass {
          }
 
 
-    // Permet d'obtenir la liste des methodes pour une variable
+    // Getter
     public ListDeclMethod getMethods() {
         return methods;
+    }
+    public ListDeclField getFields() {
+        return fields;
     }
     public Identifier getClassName() {
         return (Identifier)className;

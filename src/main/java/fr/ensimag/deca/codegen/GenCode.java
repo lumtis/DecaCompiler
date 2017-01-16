@@ -43,6 +43,9 @@ public class GenCode {
     private String getRegName(int n) {
         return "R" + String.valueOf(n);
     }
+    private GPRegister getReg(int n) {
+        return new GPRegister(getRegName(n), n);
+    }
 
 
     private GPRegister getR0() {
@@ -69,6 +72,8 @@ public class GenCode {
 
         exprFloat = false;
         indexGB = 1;
+
+        pileRegSave = new Stack<Integer>();
     }
 
 
@@ -109,12 +114,12 @@ public class GenCode {
             // On met dans la pile (du programme la valeur du dernier registre)
             comp.addInstruction(new PUSH(tmpReg.peek()));
 
-            r = new GPRegister(getRegName(maxReg-1), maxReg-1);
+            r = getReg(maxReg-1);
             comp.addInstruction(new LOAD(v, r));
             tmpReg.push(r);
         }
         else {
-            r = new GPRegister(getRegName(indexTmp), indexTmp);
+            r = getReg(indexTmp);
             comp.addInstruction(new LOAD(v, r));
             tmpReg.push(r);
         }
@@ -153,8 +158,6 @@ public class GenCode {
         return exprFloat;
     }
 
-    // Gestion des variables
-    ////////////////////////////////////////////////////////////////////
 
     // Initialise les variables locales
     public void initLocalVar(List<AbstractDeclVar> a) {
@@ -169,6 +172,10 @@ public class GenCode {
             declVar.getInitialization().codeGenInit(getAddrVar(var), comp, this);
         }
     }
+
+    // Gestion des variables
+    ////////////////////////////////////////////////////////////////////
+
 
 
     ////////////////////////////////////////////////////////////////////
@@ -202,9 +209,9 @@ public class GenCode {
 
     // Utilitaires
     public DAddr getParentAddr(DeclClass c) {
-        Identifier parent = c.getParent();
+        int parentOffset = c.getParent().getClassDefinition().getOffset();
 
-        return new RegisterOffset(1, Register.GB);
+        return new RegisterOffset(parentOffset, Register.GB);
     }
 
     public Label getMethodLabel(DeclClass c, DeclMethod m) {
@@ -238,8 +245,11 @@ public class GenCode {
         for (AbstractDeclClass ac:lc) {
             DeclClass c = (DeclClass)ac;
 
+            // On initialise l'offset de la classe dans la table
+            c.getClassName().getClassDefinition().setOffset(indexGB);
+
             // On place l'addresse de la table des methodes parentes
-            comp.addInstruction(new LOAD(getParentAddr(c), r0));
+            comp.addInstruction(new LEA(getParentAddr(c), r0));
             comp.addInstruction(new STORE(r0, new RegisterOffset(indexGB, Register.GB)));
             indexGB++;
 
@@ -259,11 +269,91 @@ public class GenCode {
         }
     }
 
-    public void initClass(List<DeclClass> l) {
+    public void initClass(List<AbstractDeclClass> lc) {
 
-        for (DeclClass c:l){
+        for (AbstractDeclClass ac:lc){
+            DeclClass c = (DeclClass)ac;
 
+            addSeparatorComment();
+            comp.addComment(c.getClassName().getName().getName());
+            addSeparatorComment();
+
+            // Methode init
+            addSeparatorComment();
+            comp.addComment(c.getClassName().getName().getName() + ".init");
+            // TODO: init
+
+            // Creation des methodes de la class
+            for (AbstractDeclMethod am:c.getMethods().getList()){
+                DeclMethod m = (DeclMethod)am;
+                generateMethod(c, m);
+            }
         }
+    }
+
+    public void generateMethod(DeclClass c, DeclMethod m) {
+        String className = c.getClassName().getName().getName();
+        String methodName = m.getFieldName().getName().getName();
+        List<AbstractDeclParam> lp = m.getParams().getList();
+
+        addSeparatorComment();
+        comp.addComment(className + "." + methodName);
+
+        // Verification pile
+        comp.addInstruction(new TSTO(lp.size() + 1));
+        comp.addInstruction(new BOV(pile_pleine));
+
+        // On genere le code de la methode
+        saveRegister();
+
+        m.getBody().codeGenMain(comp, this);
+
+        restoreRegister();
+        comp.addInstruction(new RTS());
+    }
+
+    // Pile permettant d'enregistrer les nombres de registre utilisé
+    Stack<Integer> pileRegSave;
+
+    // Sauvegarde les registres déjà utilisés et remet à 0 le gestionnaire
+    // de registre
+    public void saveRegister() {
+        int regToSave = indexTmp < maxReg ? indexTmp : maxReg;
+
+        int i = regToSave;
+        while(i > 3) {
+            i--;
+            comp.addInstruction(new PUSH(getReg(i)));
+        }
+
+        pileRegSave.push(regToSave);
+    }
+
+    // Restore les registres utilisés precedement
+    public void restoreRegister() {
+        int regToRestore = pileRegSave.pop();
+
+        int i = 3;
+        while(i < regToRestore) {
+            comp.addInstruction(new POP(getReg(i)));
+            i++;
+        }
+    }
+
+    // Création d'un objet
+    public void newObject(ClassDefinition cd) {
+        DAddr classAddr = new RegisterOffset(cd.getOffset(), Register.GB);
+
+        // On reserve l'espace memoire pour l'objet
+        comp.addInstruction(new NEW(1 + cd.getNumberOfFields(), getRetReg()));
+
+        // La première valeur contient le debut de la table des methodes
+        // de l'objet
+        comp.addInstruction(new LEA(classAddr, r0));
+        comp.addInstruction(new STORE(r0, new RegisterOffset(0, getRetReg())));
+
+        // TODO
+        // Initialisation de l'objet
     }
 
 
