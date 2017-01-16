@@ -1,0 +1,44 @@
+// Description:
+//    tests du Or
+//
+// Resultats:
+//    1
+
+{
+    
+    int a = 0;
+    int b= 1;
+    int s=1;
+    if (a || a == false){
+        s=s*1;
+    }
+    else {
+        s=s*0;
+    }
+
+    if (b || b == true){
+        s=s*1;
+    }
+    else {
+        s=s*0;
+    }
+
+if (b || a == true){
+        s=s*1;
+    }
+    else {
+        s=s*0;
+    }
+
+if (a || b == true){
+        s=s*1;
+    }
+    else {
+        s=s*0;
+    }
+
+if(s == 1) {
+       println("OK");
+   }
+  
+}

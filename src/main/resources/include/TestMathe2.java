@@ -21,35 +21,47 @@ public class TestMathe2 {
         float u1 = java.lang.Math.ulp((float) java.lang.Math.sin(0.00000000001));
         float u2 = Mathe.ulp((float) java.lang.Math.sin(0.00000000001));
         float testlimite=(float)0.000001;
-        FonctionsTest fon= new FonctionsTest(testlimite,false);
+        FonctionsTest fon= new FonctionsTest(testlimite,true);
         //FonctionsTest fon= new FonctionsTest(testlimite,true);
         //true pour utiliser la vraie limite
         
         //false pour definir une valeur comme limite (testlimite)
-        //float a=Mathe.sin(3*py/2);
-        //System.out.println(a);
+        float a=Mathe.cos2((float)23*py/48);
+        float b=Mathe.cordic_cos((float)23*py/48);
+        float c=(float) java.lang.Math.cos(23*py/48);
+        
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
+        
         
         
         System.out.println("TEST SIN");
-        for (float i=-py+py/24;i<=py;i=i+py/24){    
+        for (float i=-py;i<=py;i=i+py/48){    
             System.out.print(i);
-            System.out.print("  ");
+            System.out.print(" ");
+            //System.out.print("  LIM=");
+            //float lim=java.lang.Math.ulp((float) java.lang.Math.sin(i));
+            //System.out.print(lim);
+            
             fon.testSinus2(i);
         }
        
-        /*
+        
         System.out.println("TEST COS");
         for (float i=-py;i<=py;i=i+py/24){    
             System.out.print(i);
             System.out.print("  ");
-            
-            
-            fon.testCosinus(i);
-        }*/
+            //System.out.print("  LIM=");
+            //float lim=java.lang.Math.ulp((float) java.lang.Math.cos(i));
+            //System.out.print(lim);
+            //System.out.print(" ");
+            fon.testCosinus2(i);
+        }
        
         /*
         System.out.println("TEST TAN");
-        for (float i=-py;i<=py;i=i+py/12){    
+        for (float i=0;i<py/2;i=i+py/24){    
             System.out.print(i);
             System.out.print("  ");
             fon.testTan(i);

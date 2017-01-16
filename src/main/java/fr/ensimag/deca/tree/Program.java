@@ -46,11 +46,25 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
+        GenCode gc = new GenCode(compiler);
 
+        gc.addSeparatorComment();
         compiler.addComment("Main program");
-        main.codeGenMain(compiler);
-        compiler.addInstruction(new HALT());
+        gc.addSeparatorComment();
 
+        // On initialise le début du code
+        gc.initProgram();
+
+        // On creer la tables des méthodes
+        gc.initMethodTable(getClasses().getList());
+
+        // Code principal du programme
+        main.codeGenMain(compiler, gc);
+
+        // On initialise les classes
+
+        gc.terminateProgram();
+        compiler.addInstruction(new HALT());
     }
 
     @Override

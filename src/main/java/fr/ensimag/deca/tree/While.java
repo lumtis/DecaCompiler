@@ -40,9 +40,9 @@ public class While extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        Label debutWhile = gc.newLabel();
-        Label bloc = gc.newLabel();
-        Label finWhile = gc.newLabel();
+        Label debutWhile = gc.newLabel("WhileDebut");
+        Label bloc = gc.newLabel("WhileBloc");
+        Label finWhile = gc.newLabel("WhileFin");
 
         compiler.addLabel(debutWhile);
 

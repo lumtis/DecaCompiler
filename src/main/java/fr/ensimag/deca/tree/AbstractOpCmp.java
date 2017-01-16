@@ -28,6 +28,18 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         if (!(typeL.isInt() || typeL.isFloat()) || !(typeR.isInt() || typeR.isFloat())) {
             throw new ContextualError("Types non compatibles pour comparaison", this.getLocation());
         }
+        if (typeL.isFloat() && typeR.isInt()) {
+            ConvFloat conv = new ConvFloat(rightOp);
+            conv.verifyExpr(compiler, localEnv, currentClass);
+            conv.setLocation(rightOp.getLocation());
+            this.setRightOperand(conv);
+        }
+        else if (typeL.isInt() && typeR.isFloat()) {
+            ConvFloat conv = new ConvFloat(leftOp);
+            conv.verifyExpr(compiler, localEnv, currentClass);
+            conv.setLocation(leftOp.getLocation());
+            this.setLeftOperand(conv);
+        }
         Type t = compiler.getType("boolean");
         this.setType(t);
         return t;

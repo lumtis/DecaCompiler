@@ -44,7 +44,7 @@ public class CompilerOptions {
     }
 
     private int debug = 0;
-    private int registers=-1;
+    private int registers=16;
     private boolean parallel = false;
     private boolean printBanner = false;
     private boolean verifOnly = false;

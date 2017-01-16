@@ -1,14 +1,18 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import org.apache.commons.lang.Validate;
+
 import java.io.PrintStream;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
- * 
+ *
  * @author gl35
  * @date 01/01/2017
  */
@@ -20,6 +24,8 @@ public class DeclClass extends AbstractDeclClass {
     private ListDeclMethod methods;
 
     public DeclClass(AbstractIdentifier className, AbstractIdentifier superName) {
+        Validate.notNull(className);
+        Validate.notNull(superName);
         this.className = className;
         this.superName = superName;
         this.fields = new ListDeclField();
@@ -33,15 +39,23 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        if (compiler.getType(this.className.getName()) != null) {
+            throw new ContextualError("Classe déjà définie.", this.getLocation());
+        }
+        String errorMessage = superName.getName() + " n'est pas un type de classe.";
+        ClassType superType = compiler.getType(superName.getName()).asClassType(errorMessage, this.getLocation());
+        ClassType t = new ClassType(className.getName(), this.getLocation(), superType.getDefinition());
+        compiler.addType(className.getName(), t);
+        className.setDefinition(new ClassDefinition(t,this.getLocation(),superName.getClassDefinition()));
     }
 
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        this.fields.verifyListField(compiler, className.getClassDefinition());
+        this.methods.verifyListMethod(compiler, className.getClassDefinition());
     }
-    
+
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
@@ -58,4 +72,15 @@ public class DeclClass extends AbstractDeclClass {
         throw new UnsupportedOperationException("Not yet supported");
     }
 
+
+    // Permet d'obtenir la liste des methodes pour une variable
+    public ListDeclMethod getMethods() {
+        return methods;
+    }
+    public Identifier getClassName() {
+        return (Identifier)className;
+    }
+    public Identifier getParent() {
+        return (Identifier)superName;
+    }
 }
