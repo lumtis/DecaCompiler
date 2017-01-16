@@ -1,10 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.MethodDefinition;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -19,12 +16,17 @@ public class DeclMethod extends AbstractDeclMethod {
     private MethodDefinition definition;
     private ListDeclParam params;
     private AbstractMain body;
+    private EnvironmentExp env_exp_body;
 
-    public DeclMethod(AbstractIdentifier type, AbstractIdentifier fieldName) {
+    public DeclMethod(AbstractIdentifier type, AbstractIdentifier fieldName, ListDeclParam param, AbstractMain body) {
         Validate.notNull(type);
         Validate.notNull(fieldName);
+        Validate.notNull(body);
+        Validate.notNull(param);
         this.type = type;
         this.fieldName = fieldName;
+        this.params = param;
+        this.body = body;
     }
 
     public AbstractIdentifier getFieldName(){
@@ -43,11 +45,15 @@ public class DeclMethod extends AbstractDeclMethod {
         return this.body;
     }
 
+
     @Override
-    protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition classDef)
+    protected void verifyDeclMethodHeader(DecacCompiler compiler, ClassDefinition classDef)
             throws ContextualError {
-        params.verifyListParam(compiler, classDef);
-        throw new ContextualError("Pas encore fait", this.getLocation());
+        env_exp_body = new EnvironmentExp(classDef.getMembers());
+        Signature sign = params.verifyListParam(compiler, env_exp_body, classDef);
+        Type t = type.verifyType(compiler);
+        //TODO : Il faut tester si la méthode a déjà été définie (même nom, même type et même signature).
+        definition = new MethodDefinition(t, this.getLocation(), sign, classDef.incNumberOfMethods());
     }
 
 

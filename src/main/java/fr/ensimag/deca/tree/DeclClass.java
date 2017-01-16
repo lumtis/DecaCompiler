@@ -23,13 +23,16 @@ public class DeclClass extends AbstractDeclClass {
     private ListDeclField fields;
     private ListDeclMethod methods;
 
-    public DeclClass(AbstractIdentifier className, AbstractIdentifier superName) {
+    public DeclClass(AbstractIdentifier className, AbstractIdentifier superName, ListDeclMethod methods, ListDeclField fields) {
         Validate.notNull(className);
         Validate.notNull(superName);
+        Validate.notNull(methods);
+        Validate.notNull(fields);
         this.className = className;
         this.superName = superName;
-        this.fields = new ListDeclField();
-        this.methods = new ListDeclMethod();
+        this.methods = methods;
+        this.fields =  fields;
+
     }
 
     @Override
@@ -44,6 +47,7 @@ public class DeclClass extends AbstractDeclClass {
         }
         String errorMessage = superName.getName() + " n'est pas un type de classe.";
         ClassType superType = compiler.getType(superName.getName()).asClassType(errorMessage, this.getLocation());
+        Validate.notNull(superType, "Erreur : Le type de la super classe est nulle.");
         ClassType t = new ClassType(className.getName(), this.getLocation(), superType.getDefinition());
         compiler.addType(className.getName(), t);
         className.setDefinition(new ClassDefinition(t,this.getLocation(),superName.getClassDefinition()));
@@ -52,8 +56,8 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
-        this.fields.verifyListField(compiler, className.getClassDefinition());
-        this.methods.verifyListMethod(compiler, className.getClassDefinition());
+        this.fields.verifyListFieldHeader(compiler, className.getClassDefinition());
+        this.methods.verifyListMethodHeader(compiler, className.getClassDefinition());
     }
     
     @Override
@@ -64,12 +68,19 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("Not yet supported");
+        className.prettyPrint(s, prefix, false);
+        superName.prettyPrint(s, prefix, false);
+        fields.prettyPrint(s, prefix, true);
+        methods.prettyPrint(s, prefix, true);
+
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not yet supported");
-    }
+                className.iter(f);
+                superName.iter(f);
+                fields.iter(f);
+                methods.iter(f);
+         }
 
 }
