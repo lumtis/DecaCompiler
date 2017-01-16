@@ -42,6 +42,8 @@ public class EnvironmentType {
         Symbol objectSym = symbols.create("Object");
         ClassType objectType = new ClassType(objectSym,new Location(0,0,"Default"),null);
         env_type.put(objectSym, objectType);
+        //def_type.put(objectType, new TypeDefinition(objectType,new Location(0,0,"Default"))); ??
+
         //Création de la méthode equals
         EnvironmentExp env_exp = objectType.getDefinition().getMembers();
         Symbol equalsSym = symbols.create("equals");
