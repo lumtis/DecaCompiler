@@ -1,0 +1,8 @@
+{
+boolean a=true, b=false;
+int c=1,d;
+float e=1.2;
+while (c!=d || e>c && !(!a && c==d)) {
+    //On execute quelque chose
+    }
+}

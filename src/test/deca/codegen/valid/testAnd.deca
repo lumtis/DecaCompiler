@@ -5,40 +5,40 @@
 //    1
 
 {
-    
-    int a = 0;
-    int b= 1;
+
+    boolean a = false;
+    boolean b= true;
     int s=1;
-    if (a && a == false){
+    if ((a && a) == false){
         s=s*1;
     }
     else {
         s=s*0;
     }
 
-    if (b && b == true){
+    if (b && b){
         s=s*1;
     }
     else {
         s=s*0;
     }
 
-if (b && a == false){
+if ((b && a) == false){
         s=s*1;
     }
     else {
         s=s*0;
     }
 
-if (a && b == false){
+if (!(a && b)){
         s=s*1;
     }
     else {
         s=s*0;
     }
 
-if(s == 1) {
+    if(s == 1) {
        println("OK");
    }
-  
+
 }

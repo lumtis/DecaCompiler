@@ -1,0 +1,13 @@
+{
+    float pas=0.001, cour = 0;
+    ;
+    while (cour < 1) {
+        while (pas < 0.23456) {
+            pas = pas * 2;
+        }
+        cour = cour + pas - (-0.0001);
+    }
+    if (cour >=1 && cour <1.5) {
+        println("OK");
+    }
+}

@@ -1,0 +1,5 @@
+{
+    int a = 2;
+    float b = 4;
+    println(a, "Bonjour", b);
+}

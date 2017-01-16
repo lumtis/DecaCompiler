@@ -1,5 +1,5 @@
 //ERROR :4:
 {
 int x=4;
-String leo = -x;
+int leo = -"Yo";
 }

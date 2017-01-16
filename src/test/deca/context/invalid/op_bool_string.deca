@@ -1,7 +1,5 @@
-//ERROR :5:
+//ERROR :3:
 {
-String a="r";
-String b="klf";
-String c=a &&b;
+println("r" &&"klf");
 
 }

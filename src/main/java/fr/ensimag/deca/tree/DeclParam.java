@@ -1,12 +1,10 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
-
+import javax.naming.Context;
 import java.io.PrintStream;
 
 /**
@@ -31,10 +29,27 @@ public class DeclParam extends AbstractDeclParam {
         return this.type;
     }
 
-    @Override
+    /*
     protected void verifyDeclParam(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError {
         throw new ContextualError("Pas encore fait", this.getLocation());
+    */
+
+    @Override
+    protected Type verifyDeclParam(DecacCompiler compiler, EnvironmentExp env_exp, ClassDefinition currentClass)
+            throws ContextualError {
+        Type t = type.verifyType(compiler);
+        if (compiler.getType(name.getName()) != null) {
+            throw new ContextualError("Nom de field utilisé est un type.", this.getLocation());
+        }
+        name.setDefinition(new ParamDefinition(t, this.getLocation()));
+        try {
+            env_exp.declare(name.getName(), name.getExpDefinition());
+        }
+        catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError("Paramètre de même nom déjà existant.", this.getLocation());
+        }
+        return t;
     }
 
 

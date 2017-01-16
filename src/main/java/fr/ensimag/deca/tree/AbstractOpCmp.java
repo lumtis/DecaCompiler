@@ -20,7 +20,6 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        //A modifier pour les classes
         AbstractExpr leftOp = this.getLeftOperand();
         AbstractExpr rightOp = this.getRightOperand();
         Type typeL = leftOp.verifyExpr(compiler,localEnv,currentClass);

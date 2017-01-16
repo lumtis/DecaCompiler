@@ -96,6 +96,10 @@ public class CompilerOptions {
                         erreurIncompatible_pv();
                     }
                     break;
+                case "-P":
+                    needFiles = true;
+                    parallel = true;
+                    break;
                 default:
                     File f = new File(args[i]);
                     if (f == null) {

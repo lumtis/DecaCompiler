@@ -1,0 +1,6 @@
+{
+    int a = readInt();
+     float b, c;
+     b = readFloat();
+     c = readInt();
+}
