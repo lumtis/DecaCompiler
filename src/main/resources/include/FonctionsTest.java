@@ -20,6 +20,16 @@ public class FonctionsTest {
         this.b=b;
     }
     
+    public int Erreur(float a, float b,float c){
+        float d=abs(a-b);
+        int nb=0;
+        while(d>0){
+            d=d-c;
+            nb++;
+        }
+        return nb;
+    }
+    
     public void testSinus(float f){
         float s=Mathe.sin(f);
         float lim=Mathe.ulp((float) java.lang.Math.sin(f));
@@ -31,7 +41,7 @@ public class FonctionsTest {
             testsin=this.test;
         }
         System.out.print("Erreur ");
-        System.out.println((abs((float)java.lang.Math.sin(f)-s)/lim));
+        System.out.println(Erreur((float)java.lang.Math.sin(f),s,lim));
         if (abs((float)java.lang.Math.sin(f)-s)<=testsin){
             System.out.println("SIN PASS");
         }
@@ -43,7 +53,7 @@ public class FonctionsTest {
     
     public void testSinus2(float f){
         float s=Mathe.sin2(f);
-        float lim=10*(java.lang.Math.ulp((float) java.lang.Math.sin(f)));
+        float lim=(java.lang.Math.ulp((float) java.lang.Math.sin(f)));
         float testsin;
         if (b==true){
             testsin=lim;
@@ -51,8 +61,8 @@ public class FonctionsTest {
         else {
             testsin=test;
         }
-        //System.out.print("Erreur ");
-        //System.out.print((abs((float)java.lang.Math.sin(f)-s)));
+        System.out.print("Erreur ");
+        System.out.println(Erreur((float)java.lang.Math.sin(f),s,lim));
         if (abs(java.lang.Math.sin(f)-s)<=testsin){
             System.out.println(" SINSER PASS");
         }
@@ -72,6 +82,8 @@ public class FonctionsTest {
         else {
             testcos=test;
         }
+        System.out.print("Erreur ");
+        System.out.println(Erreur((float)java.lang.Math.cos(f),s,lim));
         if (abs((float)java.lang.Math.cos(f)-s)<=testcos){
             System.out.println("COS PASS");
         }
@@ -92,8 +104,8 @@ public class FonctionsTest {
         else {
             testcos=test;
         }
-        //System.out.print("Erreur ");
-        //System.out.print((abs((float)java.lang.Math.cos(f)-s)));
+        System.out.print("Erreur ");
+        System.out.println(Erreur((float)java.lang.Math.cos(f),s,lim));
         if (abs((float)java.lang.Math.cos(f)-s)<=testcos){
             System.out.println(" COSSER PASS");
         }

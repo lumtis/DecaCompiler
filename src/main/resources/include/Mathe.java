@@ -22,18 +22,18 @@ public class Mathe {
         int k=0;
         float solution=0;
         while (k < 6) {
-            solution+= Mathe.pow((float)-1,k)* Mathe.pow(f,2*k+1)/Mathe.factoriel(2*k+1);
+            solution+=Mathe.pow((float)-1,k)* Mathe.pow(f,2*k+1)/Mathe.factoriel(2*k+1);
             k+=1;
         }
         return solution;
     }
-    
+   
     // fonction cosinus première solution
     public static float cos_ser(float f) {
         int k=0;
         float solution=0;
         while (k < 6) {
-            solution+= Mathe.pow((float)-1,k)* Mathe.pow(f,2*k)/Mathe.factoriel(2*k);
+            solution+= Mathe.pow((float)-1,k)* (Mathe.pow(f,2*k))/(Mathe.factoriel(2*k));
             k+=1;
         }
         return solution;
@@ -102,6 +102,15 @@ public class Mathe {
 
     public static float pi (){
         return (float)3.141592653589793238462643383279;
+        /*float k=-4;
+        float i=0;
+        float s=0;
+        while (i<999999999){
+            k=-k;
+            s=s+k/(2*i+1); 
+            i=i+1;
+        }
+        return s;*/
     }
 
 

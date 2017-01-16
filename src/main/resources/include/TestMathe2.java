@@ -16,10 +16,14 @@ import java.util.LinkedList;
  */
 public class TestMathe2 {
     public static void main(String[] args) {
-        float  py;
-        py = (float)3.141592653589793238462643383279;
-        float u1 = java.lang.Math.ulp((float) java.lang.Math.sin(0.00000000001));
-        float u2 = Mathe.ulp((float) java.lang.Math.sin(0.00000000001));
+        
+        //float  py=Mathe.pi();
+        
+        System.out.println("Debut");
+        //System.out.println(py);
+        //System.out.println("3.1415926535897932");
+        float py = (float)3.141592653589793238462643383279;
+        
         float testlimite=(float)0.000001;
         FonctionsTest fon= new FonctionsTest(testlimite,true);
         //FonctionsTest fon= new FonctionsTest(testlimite,true);
@@ -27,15 +31,15 @@ public class TestMathe2 {
         
         //false pour definir une valeur comme limite (testlimite)
         float a=Mathe.cos2((float)23*py/48);
-        float b=Mathe.cordic_cos((float)23*py/48);
+        //float b=Mathe.cordic_cos((float)23*py/48);
         float c=(float) java.lang.Math.cos(23*py/48);
         
         System.out.println(a);
-        System.out.println(b);
+        //System.out.println(b);
         System.out.println(c);
         
         
-        
+        /*
         System.out.println("TEST SIN");
         for (float i=-py;i<=py;i=i+py/48){    
             System.out.print(i);
@@ -45,7 +49,7 @@ public class TestMathe2 {
             //System.out.print(lim);
             
             fon.testSinus2(i);
-        }
+        }*/
        
         
         System.out.println("TEST COS");
