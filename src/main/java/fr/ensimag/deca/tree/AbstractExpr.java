@@ -135,7 +135,7 @@ public abstract class AbstractExpr extends AbstractInst {
         this.codeGenInst(compiler, gc);
 
         // On met le retour de l'expression dans le registre r1
-        compiler.addInstruction(new LOAD(gc.getRetReg(), new GPRegister("R1", 1)));
+        compiler.addInstruction(new LOAD(gc.getRetReg(), GPRegister.getR(1)));
 
         // On affiche un float si l'expression evalue un float
         if(gc.isExprFloat())

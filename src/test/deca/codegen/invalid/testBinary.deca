@@ -1,0 +1,10 @@
+{
+    int a=1, b=2;
+    float c=1.0, d=2.0;
+    if (false || !true || (a<b && a != d && c<=b && c==a && b==d)) {
+        //print("OK");
+    }
+    else {
+        print("NOT OK");
+    }
+}

@@ -61,9 +61,9 @@ public class GenCode {
         this.comp = comp;
 
         // Le registre qui contient le retour d'une expression est le 2
-        retReg = new GPRegister("R2", 2);
-        r0 = new GPRegister("R0", 0);
-        r1 = new GPRegister("R1", 1);
+        retReg = new GPRegister.getR(2);
+        r0 = new GPRegister.getR(0);
+        r1 = new GPRegister.getR(1);
 
         // On commence l'enregistrement des registres à 3
         indexTmp = 3;
@@ -114,12 +114,12 @@ public class GenCode {
             // On met dans la pile (du programme la valeur du dernier registre)
             comp.addInstruction(new PUSH(tmpReg.peek()));
 
-            r = getReg(maxReg-1);
+            r = GPRegister.getR(maxReg-1);
             comp.addInstruction(new LOAD(v, r));
             tmpReg.push(r);
         }
         else {
-            r = getReg(indexTmp);
+            r = GPRegister.getR(indexTmp);
             comp.addInstruction(new LOAD(v, r));
             tmpReg.push(r);
         }
@@ -303,10 +303,11 @@ public class GenCode {
         comp.addInstruction(new TSTO(lp.size() + 1));
         comp.addInstruction(new BOV(pile_pleine));
 
-        // On genere le code de la methode
+        // On sauvegarde les registres actuellement utilisés
         saveRegister();
 
-        m.getBody().codeGenMain(comp, this);
+        // On genere le code de la methode
+        m.getBody().generateMethod(comp, this);
 
         restoreRegister();
         comp.addInstruction(new RTS());

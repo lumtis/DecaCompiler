@@ -15,19 +15,11 @@ public class DeclMethod extends AbstractDeclMethod {
     final private AbstractIdentifier fieldName;
     private MethodDefinition definition;
     private ListDeclParam params;
-    private AbstractMain body;
+    private AbstractBody body;
     private EnvironmentExp env_exp_body;
 
 
-    /*
-    public DeclMethod(AbstractIdentifier type, AbstractIdentifier fieldName) {
-        Validate.notNull(type);
-        Validate.notNull(fieldName);
-        this.type = type;
-        this.fieldName = fieldName;
-    */
-
-    public DeclMethod(AbstractIdentifier type, AbstractIdentifier fieldName, ListDeclParam param, AbstractMain body) {
+    public DeclMethod(AbstractIdentifier type, AbstractIdentifier fieldName, ListDeclParam param, AbstractBody body) {
         Validate.notNull(type);
         Validate.notNull(fieldName);
         Validate.notNull(body);
@@ -50,7 +42,7 @@ public class DeclMethod extends AbstractDeclMethod {
         return this.definition;
     }
 
-    public AbstractMain getBody() {
+    public AbstractBody getBody() {
         return this.body;
     }
 
@@ -71,9 +63,11 @@ public class DeclMethod extends AbstractDeclMethod {
             throws ContextualError {
         env_exp_body = new EnvironmentExp(classDef.getMembers());
         Signature sign = params.verifyListParam(compiler, env_exp_body, classDef);
-        Type t = type.verifyType(compiler);
-        //TODO : Il faut tester si la méthode a déjà été définie (même nom, même type et même signature).
-        definition = new MethodDefinition(t, this.getLocation(), sign, classDef.incNumberOfMethods());
+        Type returnType = type.verifyType(compiler);
+        //TODO : Il faut tester si la méthode a déjà été définie (même nom et même signature).
+        definition = new MethodDefinition(returnType, this.getLocation(), sign, classDef.incNumberOfMethods());
+        fieldName.setDefinition(definition);
+        body.verifyBody(compiler, env_exp_body, classDef, returnType);
     }
 
 

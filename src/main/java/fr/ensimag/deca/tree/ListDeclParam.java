@@ -31,7 +31,6 @@ public class ListDeclParam extends TreeList<AbstractDeclParam>{
         for (AbstractDeclParam p : getList()) {
             Type t = p.verifyDeclParam(compiler, env_exp, classDef);
             sign.add(t);
-            this.add(p);
         }
         return sign;
     }

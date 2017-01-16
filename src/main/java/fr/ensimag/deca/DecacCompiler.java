@@ -5,6 +5,7 @@ import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.deca.tree.AbstractIdentifier;
 import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.Location;
 import fr.ensimag.deca.tree.LocationException;
@@ -57,7 +58,11 @@ public class DecacCompiler {
         this.source = source;
         this.symbols = new SymbolTable();
         this.env_type = new EnvironmentType(this.symbols);
-        initDefaultEnvExp();
+        this.env_exp_predef = new EnvironmentExp(null);
+    }
+
+    public AbstractIdentifier getObject() {
+        return env_type.getObject();
     }
 
     public SymbolTable getSymbols() {
@@ -78,26 +83,6 @@ public class DecacCompiler {
 
     public void addType(Symbol sym, ClassType type) {
         env_type.addType(sym, type, type.getDefinition());
-    }
-
-    private void initDefaultEnvExp() {
-        this.env_exp_predef = new EnvironmentExp(null);
-        Symbol trueSym = symbols.create("true");
-        Type bool = this.getType("boolean");
-        ExpDefinition defTrue = new VariableDefinition(bool,new Location(0,0,"Default"));
-        Symbol falseSym = symbols.create("false");
-        ExpDefinition defFalse = new VariableDefinition(bool,new Location(0,0,"Default"));
-        Symbol nullSym = symbols.create("null");
-        Type nullType = new NullType(nullSym);
-        ExpDefinition defNull = new VariableDefinition(nullType,new Location(0,0,"Default"));
-        try {
-            this.env_exp_predef.declare(trueSym, defTrue);
-            this.env_exp_predef.declare(falseSym, defFalse);
-            this.env_exp_predef.declare(nullSym, defNull);
-        }
-        catch (EnvironmentExp.DoubleDefException e) {
-            throw new ExceptionInInitializerError("Erreur initialisation environnement par défaut.");
-        }
     }
 
     public EnvironmentExp getEnvExpPredef() {

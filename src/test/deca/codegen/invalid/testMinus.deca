@@ -1,0 +1,19 @@
+// Description:
+//    tests d'expressions entieres
+//
+// Resultats:
+//    85
+//    -80
+//    -5
+
+{
+    if(4-2 == 2) {
+         if(-5 < 0) {
+             if(2.5 - 0.5 == 2.0) {
+             }
+             else {
+                print("NOT OK");
+             }
+         }
+    }
+}
