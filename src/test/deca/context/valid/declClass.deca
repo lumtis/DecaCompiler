@@ -1,0 +1,16 @@
+//Déclaration d'une classe.
+
+class A {
+      void quelquechose(int a, float b) {
+             println("Bonjour");
+             b = a + b;
+      }
+      
+      float x = 0;
+}
+
+{
+        A var;
+        int b;
+        print("Okay");
+}

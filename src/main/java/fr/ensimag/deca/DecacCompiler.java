@@ -5,6 +5,7 @@ import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.deca.tree.AbstractIdentifier;
 import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.Location;
 import fr.ensimag.deca.tree.LocationException;
@@ -58,6 +59,10 @@ public class DecacCompiler {
         this.symbols = new SymbolTable();
         this.env_type = new EnvironmentType(this.symbols);
         this.env_exp_predef = new EnvironmentExp(null);
+    }
+
+    public AbstractIdentifier getObject() {
+        return env_type.getObject();
     }
 
     public SymbolTable getSymbols() {

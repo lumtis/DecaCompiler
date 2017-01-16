@@ -17,6 +17,8 @@ public class EnvironmentType {
 
     private HashMap<Type, Definition> def_type;
 
+    private AbstractIdentifier object;
+
     public EnvironmentType(SymbolTable symbols) {
         env_type = new HashMap<>();
         def_type = new HashMap<>();
@@ -42,7 +44,9 @@ public class EnvironmentType {
         Symbol objectSym = symbols.create("Object");
         ClassType objectType = new ClassType(objectSym,new Location(0,0,"Default"),null);
         env_type.put(objectSym, objectType);
-        //def_type.put(objectType, new TypeDefinition(objectType,new Location(0,0,"Default"))); ??
+        object = new Identifier(objectSym);
+        object.setDefinition(new ClassDefinition(objectType, new Location(0,0,"Default"), null));
+        def_type.put(objectType, object.getDefinition());
 
         //Création de la méthode equals
         EnvironmentExp env_exp = objectType.getDefinition().getMembers();
@@ -83,5 +87,9 @@ public class EnvironmentType {
         }
         env_type.put(sym, t);
         def_type.put(t, def);
+    }
+
+    public AbstractIdentifier getObject() {
+        return this.object;
     }
 }

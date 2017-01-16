@@ -546,7 +546,7 @@ class_extension returns[AbstractIdentifier tree]
         $tree = $ident.tree;
         }
     | /* epsilon */ {
-        $tree = new Identifier(super.getSymbols().create("Object"));
+        $tree = getDecacCompiler().getObject();
         }
     ;
 
@@ -614,8 +614,8 @@ decl_method returns[AbstractDeclMethod tree]
 @init {
 }
     : type ident OPARENT params=list_params CPARENT (block {
-            AbstractMain main_meth = new Main($block.decls, $block.insts);
-            $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, main_meth);
+            AbstractBody body_meth = new Body($block.decls, $block.insts);
+            $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, body_meth);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
         }
@@ -630,7 +630,7 @@ list_params returns[ListDeclParam tree]
     : (p1=param {
             $tree.add($p1.tree);
         } (COMMA p2=param {
-            $tree.add($p1.tree);
+            $tree.add($p2.tree);
         }
       )*)?
     ;
