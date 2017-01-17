@@ -38,7 +38,10 @@ public class Body extends AbstractBody{
         this.declVariables.verifyListDeclVariable(compiler,env_exp,currentClass);
         LOG.debug("verify ListDeclVar: end");
         LOG.debug("verify ListInst: start");
-        this.insts.verifyListInst(compiler,env_exp,currentClass, returnType);
+        boolean returnOk = this.insts.verifyListInst(compiler,env_exp,currentClass, returnType);
+        if (!returnOk && !returnType.isVoid()) {
+            throw new ContextualError("Aucun type de retour, "+returnType.getName()+" attendu.", this.getLocation());
+        }
         LOG.debug("verify ListInst: end");
         LOG.debug("verify Body: end");
     }
