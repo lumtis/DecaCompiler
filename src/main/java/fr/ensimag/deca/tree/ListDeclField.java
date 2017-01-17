@@ -28,4 +28,10 @@ public class ListDeclField extends TreeList<AbstractDeclField>{
             f.verifyDeclFieldHeader(compiler, classDef);
         }
     }
+
+    void verifyListFieldInit(DecacCompiler compiler, ClassDefinition classDef) throws ContextualError {
+        for (AbstractDeclField f : getList()) {
+            f.verifyDeclFieldInit(compiler, classDef);
+        }
+    }
 }

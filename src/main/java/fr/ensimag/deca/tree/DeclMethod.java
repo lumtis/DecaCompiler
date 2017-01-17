@@ -57,7 +57,13 @@ public class DeclMethod extends AbstractDeclMethod {
             throw new ContextualError("Une méthode de même nom a été déclarée 2 fois dans la classe.", this.getLocation());
         }
         fieldName.setDefinition(def);
-        body.verifyBody(compiler, env_exp_body, classDef, returnType);
+        fieldName.setType(returnType);
+    }
+
+    @Override
+    protected void verifyDeclMethodBody(DecacCompiler compiler, ClassDefinition classDef)
+            throws ContextualError {
+        body.verifyBody(compiler, env_exp_body, classDef, type.getType());
     }
 
 

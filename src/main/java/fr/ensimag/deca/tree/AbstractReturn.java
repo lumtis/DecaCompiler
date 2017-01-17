@@ -29,10 +29,11 @@ public abstract class AbstractReturn extends AbstractInst {
             throws ContextualError;
 
     @Override
-    protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
+    protected boolean verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
                               ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         this.verifyReturn(compiler,localEnv,currentClass, returnType);
+        return true;
     }
 
     protected void codeGenPrint(DecacCompiler compiler, GenCode gc) {

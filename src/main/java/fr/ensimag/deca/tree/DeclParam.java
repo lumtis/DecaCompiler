@@ -39,7 +39,6 @@ public class DeclParam extends AbstractDeclParam {
         }
         name.setDefinition(new ParamDefinition(t, this.getLocation()));
         try {
-            System.out.println(name.getExpDefinition());
             env_exp.declare(name.getName(), name.getExpDefinition());
         }
         catch (EnvironmentExp.DoubleDefException e) {
