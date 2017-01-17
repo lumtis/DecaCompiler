@@ -45,10 +45,6 @@ public class DeclVar extends AbstractDeclVar {
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
         Type t = this.type.verifyType(compiler);
-        //On vérifie si le nom de variable utilisé est le même que celui d'un type
-        if (compiler.getType(varName.getName()) != null) {
-            throw new ContextualError("Nom de variable utilisé est un type.", this.getLocation());
-        }
         varName.setDefinition(new VariableDefinition(t,this.getLocation()));
         try {
             localEnv.declare(varName.getName(), varName.getExpDefinition());
