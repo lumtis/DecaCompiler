@@ -15,10 +15,10 @@ import java.io.PrintStream;
  */
 public class New extends AbstractExpr {
 
-    AbstractIdentifier ident;
+    AbstractIdentifier class_ident;
     public New(AbstractIdentifier ident){
         Validate.notNull(ident);
-        this.ident = ident;
+        this.class_ident = ident;
     }
 
     @Override
@@ -28,21 +28,23 @@ public class New extends AbstractExpr {
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        ident.iter(f);
+        class_ident.iter(f);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        ident.prettyPrint(s,prefix, false);
+        class_ident.prettyPrint(s,prefix, true);
     }
 
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        Type type_cour = compiler.getType(this.ident.getName());
+        class_ident.verifyType(compiler);
+        Type type_cour = compiler.getType(this.class_ident.getName());
         if (type_cour== null || !type_cour.isClass()) {
             throw new ContextualError("Classe non reconnue", this.getLocation());
         }
+        this.setType(type_cour);
         return type_cour;
 
     }
