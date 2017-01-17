@@ -244,18 +244,15 @@ public class Identifier extends AbstractIdentifier {
 
         // S'il s'agit de la creation d'un objet alors on alloue
         // la mémoires requis
-        if(definition.isClass()) {
-            gc.newObject(getClassDefinition());
-        }
-        else if(definition.isMethod()) {
+        //if(definition.isMethod()) {
 
-        }
-        else {
+        //}
+        //else {
             // Il s'agit d'une simple variable alors on recupere son adresse
             // et on charqe sa valeur
             DAddr addr = gc.getAddrVar(this);
             compiler.addInstruction(new LOAD(addr, gc.getRetReg()));
-        }
+        //}
     }
 
 
