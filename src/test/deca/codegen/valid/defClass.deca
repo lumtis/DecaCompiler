@@ -16,7 +16,7 @@ class Lion extends Animal {
 
     void initParam(float newPoids, int NewNbPates) {
         poids = newPoids;
-        nbPates = newNbPates;
+        nbPates = NewNbPates;
     }
 
     void faireCrier() {
@@ -26,5 +26,7 @@ class Lion extends Animal {
 
 {
     Animal lion = new Lion();
+    float x;
     println("Un lion a été créé.");
+    x = lion.nourrir(12.5);
 }
