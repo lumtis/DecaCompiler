@@ -1,5 +1,6 @@
 package fr.ensimag.deca.tree;
 
+import com.sun.tools.javac.resources.compiler;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -23,6 +24,12 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
         void verifyListMethodHeader(DecacCompiler compiler, ClassDefinition classDef) throws ContextualError {
             for (AbstractDeclMethod m : getList()) {
                 m.verifyDeclMethodHeader(compiler, classDef);
+            }
+        }
+
+        void verifyListMethodBody(DecacCompiler compiler, ClassDefinition classDef) throws ContextualError {
+            for (AbstractDeclMethod m : getList()) {
+                m.verifyDeclMethodBody(compiler, classDef);
             }
         }
 }

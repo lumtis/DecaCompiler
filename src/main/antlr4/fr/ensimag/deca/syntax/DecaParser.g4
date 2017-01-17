@@ -164,7 +164,7 @@ inst returns[AbstractInst tree]
         }
     | RETURN expr SEMI {
             assert($expr.tree != null);
-            //$tree = new Return($expr.tree);
+            $tree = new Return($expr.tree);
             setLocation($tree, $RETURN);
         }
     ;
@@ -605,7 +605,6 @@ decl_field[Visibility v, AbstractIdentifier t] returns[AbstractDeclField tree]
                 }
 
                 $tree = new DeclField($v,$t, $i.tree, ini);
-
                 setLocation($tree, $i.start);
             }
         ;
@@ -615,7 +614,9 @@ decl_method returns[AbstractDeclMethod tree]
 }
     : type ident OPARENT params=list_params CPARENT (block {
             AbstractBody body_meth = new Body($block.decls, $block.insts);
+            setLocation(body_meth, $block.start);
             $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, body_meth);
+            setLocation($tree, $ident.start);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
         }

@@ -46,6 +46,7 @@ public class EnvironmentType {
         env_type.put(objectSym, objectType);
         object = new Identifier(objectSym);
         object.setDefinition(new ClassDefinition(objectType, new Location(0,0,"Default"), null));
+        object.setLocation(0,0,"Default");
         def_type.put(objectType, object.getDefinition());
 
         //Création de la méthode equals

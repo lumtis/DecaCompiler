@@ -18,10 +18,11 @@ import java.io.PrintStream;
 public class NoOperation extends AbstractInst {
 
     @Override
-    protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
+    protected boolean verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         //Apparemment rien à faire.
+        return false;
     }
 
     @Override
