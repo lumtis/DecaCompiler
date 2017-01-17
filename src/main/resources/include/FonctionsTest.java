@@ -32,7 +32,7 @@ public class FonctionsTest {
     
     public int testSinus(float f){
         int compt=0;
-        float s=Mathe.cordic_sin(f);
+        float s=Mathe.sin(f);
         float lim=Mathe.ulp((float) java.lang.Math.sin(f));
         float testsin;
         if (b==true){
@@ -80,7 +80,7 @@ public class FonctionsTest {
     }
     
     public int testCosinus(float f){
-        float s=Mathe.cordic_cos(f);
+        float s=Mathe.cos(f);
         int compt=0;
         float lim=java.lang.Math.ulp((float) java.lang.Math.cos(f));
         float testcos;
@@ -190,7 +190,7 @@ public class FonctionsTest {
     
     public void testAtan(float f){
         float s=Mathe.atan(f);
-        float lim=10*(java.lang.Math.ulp((float) java.lang.Math.atan(f)));
+        float lim=(java.lang.Math.ulp((float) java.lang.Math.atan(f)));
         float testatan;
         if (b==true){
             testatan=lim;
@@ -198,11 +198,13 @@ public class FonctionsTest {
         else {
             testatan=test;
         }
+        System.out.print("Erreur ");
+        System.out.print(Erreur((float)java.lang.Math.sin(f),s,lim));
         if ((float)abs(java.lang.Math.atan(f)-s)<=testatan){
-            System.out.println("ATAN PASS");
+            System.out.println(" ATAN PASS");
         }
         else {
-            System.out.println("ATAN NO");
+            System.out.println(" ATAN NO");
             
         }
     }
