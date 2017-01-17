@@ -1,16 +1,14 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.GenCode;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import java.io.PrintStream;
+
 import org.apache.commons.lang.Validate;
 import fr.ensimag.ima.pseudocode.*;
 import javax.naming.Context;
@@ -48,7 +46,6 @@ public abstract class AbstractExpr extends AbstractInst {
     @Override
     protected void checkDecoration() {
         if (getType() == null) {
-
             throw new DecacInternalError("Expression " + /*decompile() +*/ " has no Type decoration");
         }
     }
@@ -93,15 +90,20 @@ public abstract class AbstractExpr extends AbstractInst {
         if (expectedType.sameType(t)) {
             return this;
         }
-        if (expectedType.isFloat() && t.isInt()) {
+        else if (expectedType.isFloat() && t.isInt()) {
             AbstractExpr expr = new ConvFloat(this);
             expr.verifyExpr(compiler, localEnv, currentClass);
             expr.setLocation(this.getLocation());
             return expr;
         }
-        else {
-            throw new ContextualError("Affectation non valide.", this.getLocation());
+        else if (expectedType.isClass() && t.isClass()) {
+            ClassType typeClass = t.asClassType("Type n'est pas une classe.", this.getLocation());
+            ClassType expectedTypeClass = expectedType.asClassType("Type n'est pas une classe.", this.getLocation());
+            if (typeClass.isSubClassOf(expectedTypeClass)) {
+                return this;
+            }
         }
+        throw new ContextualError("Affectation non valide.", this.getLocation());
     }
 
 
