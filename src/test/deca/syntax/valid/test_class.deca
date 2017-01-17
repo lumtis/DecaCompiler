@@ -11,9 +11,9 @@ class FCBarcelone {
 
 }
 {
-
-    print("nous voilà maintenant dans le main");
-
+    FCBarcelone Neymar = new FCBarcelone();
+    print("Allez tout de suite chercher le pyjama!");
+    
 
 
 }
