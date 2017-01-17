@@ -7,14 +7,16 @@
 public class Mathe {
 
     public static float adapt(float f){
-        while (f<=-pi()){
-            f=f+2*pi();
+        
+        float a=f/pi();
+        while (a<=-1){
+            a=a+2;
             
         }
-        while (f>pi()){
-            f=f-2*pi();
+        while (a>1){
+            a=a-2;
         }
-        return f;
+        return a*pi();
     }
 
     // fonction sinus première solution série entière
@@ -85,6 +87,7 @@ public class Mathe {
     //fonction aux sin
 
     public static float aux_sin(float f, int n ){
+        
         if (n == 0) {
             return 0;
             }
@@ -101,7 +104,7 @@ public class Mathe {
 
 
     public static float pi (){
-        return (float)3.141592653589793238462643383279;
+        return (float)3.1415926;
         /*float k=-4;
         float i=0;
         float s=0;
@@ -321,6 +324,7 @@ public class Mathe {
     }
 
     public static float  cordic_sin(float f) {
+        
         int k = 0;
         float cos = 1;
         float sin = 0;
@@ -335,6 +339,7 @@ public class Mathe {
             cos = cos - signe(tmp1) * sin * pow(2, -k);
             sin = sin + signe(tmp1) * tmp2 * pow(2, -k);
             k += 1;
+            
 
         }
         return (float) 0.60725294*sin;

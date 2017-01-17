@@ -30,8 +30,9 @@ public class FonctionsTest {
         return nb;
     }
     
-    public void testSinus(float f){
-        float s=Mathe.sin(f);
+    public int testSinus(float f){
+        int compt=0;
+        float s=Mathe.cordic_sin(f);
         float lim=Mathe.ulp((float) java.lang.Math.sin(f));
         float testsin;
         if (b==true){
@@ -41,17 +42,21 @@ public class FonctionsTest {
             testsin=this.test;
         }
         System.out.print("Erreur ");
-        System.out.println(Erreur((float)java.lang.Math.sin(f),s,lim));
+        System.out.print(Erreur((float)java.lang.Math.sin(f),s,lim));
         if (abs((float)java.lang.Math.sin(f)-s)<=testsin){
-            System.out.println("SIN PASS");
+            System.out.println(" SIN PASS");
+            compt++;
         }
         else {
-            System.out.println("SIN NO");
+            System.out.println(" SIN NO");
             
         }
+        return compt;
+        
     }
     
-    public void testSinus2(float f){
+    public int testSinus2(float f){
+        int compt=0;
         float s=Mathe.sin2(f);
         float lim=(java.lang.Math.ulp((float) java.lang.Math.sin(f)));
         float testsin;
@@ -62,18 +67,21 @@ public class FonctionsTest {
             testsin=test;
         }
         System.out.print("Erreur ");
-        System.out.println(Erreur((float)java.lang.Math.sin(f),s,lim));
+        System.out.print(Erreur((float)java.lang.Math.sin(f),s,lim));
         if (abs(java.lang.Math.sin(f)-s)<=testsin){
             System.out.println(" SINSER PASS");
+            compt++;
         }
         else {
             System.out.println(" SINSER NO");
             
         }
+        return compt;
     }
     
-    public void testCosinus(float f){
-        float s=Mathe.cos(f);
+    public int testCosinus(float f){
+        float s=Mathe.cordic_cos(f);
+        int compt=0;
         float lim=java.lang.Math.ulp((float) java.lang.Math.cos(f));
         float testcos;
         if (b==true){
@@ -83,19 +91,22 @@ public class FonctionsTest {
             testcos=test;
         }
         System.out.print("Erreur ");
-        System.out.println(Erreur((float)java.lang.Math.cos(f),s,lim));
+        System.out.print(Erreur((float)java.lang.Math.cos(f),s,lim));
         if (abs((float)java.lang.Math.cos(f)-s)<=testcos){
-            System.out.println("COS PASS");
+            System.out.println(" COS PASS");
+            compt++;
         }
         else {
-            System.out.println("COS NO");
+            System.out.println(" COS NO");
             
         }
+        return compt;
     }
     
     
-    public void testCosinus2(float f){
+    public int testCosinus2(float f){
         float s=Mathe.cos2(f);
+        int compt=0;
         float lim=10*(java.lang.Math.ulp((float) java.lang.Math.cos(f)));
         float testcos;
         if (b==true){
@@ -105,14 +116,16 @@ public class FonctionsTest {
             testcos=test;
         }
         System.out.print("Erreur ");
-        System.out.println(Erreur((float)java.lang.Math.cos(f),s,lim));
+        System.out.print(Erreur((float)java.lang.Math.cos(f),s,lim));
         if (abs((float)java.lang.Math.cos(f)-s)<=testcos){
             System.out.println(" COSSER PASS");
+            compt++;
         }
         else {
             System.out.println(" COSSER NO");
             
         }
+        return compt;
     }
     
     
