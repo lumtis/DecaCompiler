@@ -247,6 +247,9 @@ public class Identifier extends AbstractIdentifier {
         if(definition.isClass()) {
             gc.newObject(getClassDefinition());
         }
+        else if(definition.isMethod()) {
+
+        }
         else {
             // Il s'agit d'une simple variable alors on recupere son adresse
             // et on charqe sa valeur

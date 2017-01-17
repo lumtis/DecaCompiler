@@ -43,9 +43,9 @@ public class GenCode {
     private String getRegName(int n) {
         return "R" + String.valueOf(n);
     }
-    private GPRegister getReg(int n) {
-        return new GPRegister(getRegName(n), n);
-    }
+    //private GPRegister getReg(int n) {
+    //    return new GPRegister(getRegName(n), n);
+    //}
 
 
     private GPRegister getR0() {
@@ -61,9 +61,9 @@ public class GenCode {
         this.comp = comp;
 
         // Le registre qui contient le retour d'une expression est le 2
-        retReg = new GPRegister.getR(2);
-        r0 = new GPRegister.getR(0);
-        r1 = new GPRegister.getR(1);
+        retReg = Register.getR(2);
+        r0 = Register.getR(0);
+        r1 = Register.getR(1);
 
         // On commence l'enregistrement des registres à 3
         indexTmp = 3;
@@ -278,10 +278,15 @@ public class GenCode {
             comp.addComment(c.getClassName().getName().getName());
             addSeparatorComment();
 
-            // Methode init
+            // On fixe l'operande des attributs et leur initialisation
             addSeparatorComment();
             comp.addComment(c.getClassName().getName().getName() + ".init");
-            // TODO: init
+
+            //for (AbstractDeclField af:c.getFields().getList()){
+            //    DeclField f = (DeclField)af;
+                //generateMethod(c, m);
+                // TODO: init
+            //}
 
             // Creation des methodes de la class
             for (AbstractDeclMethod am:c.getMethods().getList()){
@@ -324,7 +329,8 @@ public class GenCode {
         int i = regToSave;
         while(i > 3) {
             i--;
-            comp.addInstruction(new PUSH(getReg(i)));
+            //comp.addInstruction(new PUSH(getReg(i)));
+            comp.addInstruction(new PUSH(Register.getR(i)));
         }
 
         pileRegSave.push(regToSave);
@@ -336,7 +342,8 @@ public class GenCode {
 
         int i = 3;
         while(i < regToRestore) {
-            comp.addInstruction(new POP(getReg(i)));
+            //comp.addInstruction(new POP(getReg(i)));
+            comp.addInstruction(new POP(Register.getR(i)));
             i++;
         }
     }
@@ -344,14 +351,36 @@ public class GenCode {
     // Création d'un objet
     public void newObject(ClassDefinition cd) {
         DAddr classAddr = new RegisterOffset(cd.getOffset(), Register.GB);
+        int totalNumberField;
+        ClassDefinition tmpParent;
+        int offsetAttr = 1;
+
+        // On obtient le nombre total d'attribut avec les classes parentes
+        totalNumberField = cd.getNumberOfFields();
+        tmpParent = cd.getSuperClass();
+        while(tmpParent != null ) {
+            totalNumberField += tmpParent.getNumberOfFields();
+            tmpParent = tmpParent.getSuperClass();
+        }
 
         // On reserve l'espace memoire pour l'objet
-        comp.addInstruction(new NEW(1 + cd.getNumberOfFields(), getRetReg()));
+        comp.addInstruction(new NEW(1 + totalNumberField, getRetReg()));
 
         // La première valeur contient le debut de la table des methodes
         // de l'objet
         comp.addInstruction(new LEA(classAddr, r0));
         comp.addInstruction(new STORE(r0, new RegisterOffset(0, getRetReg())));
+
+        /*
+        // On fixe l'oprérande des attributs de la methode
+        for (ExpDefinition attr : cd.getMembers().getHashMap().values()) {
+            // Les attributs sont placés par rapport au registre
+            if(attr.isField()) {
+                attr.setOperand(new RegisterOffset(offsetAttr, getRetReg()));
+                offsetAttr++;
+            }
+        }
+        */
 
         // TODO
         // Initialisation de l'objet
