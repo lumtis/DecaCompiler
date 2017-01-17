@@ -22,8 +22,8 @@ class Francais extends FCBarcelone{
    Francais Digne = new Francais();
    FCBarcelone DigneBarcelonais;
    boolean beauJeu;
-   beauJeu= Digne instanceof Neymar;
-   DigneBarcelonais = (FCBarcelone)(Digne);	
+   beauJeu= Digne instanceof FCBarcelone;
+   Digne = (FCBarcelone)(Digne);	
    print("Allez tout de suite chercher le pyjama!");
     
     
