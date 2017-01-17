@@ -53,14 +53,25 @@ public class ClassType extends Type {
 
     @Override
     public boolean sameType(Type otherType) {
-        throw new UnsupportedOperationException("not yet implemented");
+        if (!otherType.isClass() || this.getName()!=otherType.getName()) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Return true if potentialSuperClass is a superclass of this class.
      */
     public boolean isSubClassOf(ClassType potentialSuperClass) {
-        throw new UnsupportedOperationException("not yet implemented"); 
+        ClassDefinition classCour = potentialSuperClass.getDefinition();
+        while (classCour != null) {
+            ClassType courType = classCour.getType();
+            if (this.sameType(courType)) {
+                return true;
+            }
+            classCour = classCour.getSuperClass();
+        }
+        return false;
     }
 
 

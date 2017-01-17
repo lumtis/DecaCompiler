@@ -101,6 +101,30 @@ public class GenCode {
         }
     }
 
+    // Initialise les variables locales par rapport au registre LB
+    public void initLocallVar(List<AbstractDeclVar> a) {
+
+        comp.addComment("Initialisation des variables Locales");
+
+        indexLB = 0;
+
+        for (AbstractDeclVar d:a){
+            DeclVar declVar=(DeclVar)d;
+            Identifier var = (Identifier)declVar.getVarName();
+            DAddr addr = new RegisterOffset(indexLB, Register.LB);
+
+            // On fixe l'adresse de la variable
+            var.getExpDefinition().setOperand(addr);
+            indexLB++;
+
+            // On initialise la variable
+            declVar.getInitialization().codeGenInit(getAddrVar(var), comp, this);
+        }
+
+        // On incremente la pile pour sauvegarder les registres plus tard
+        comp.addInstruction(new ADDSP(a.size()));
+    }
+
 
     public DAddr getAddrVar(Identifier i) {
           return i.getExpDefinition().getOperand();
@@ -259,7 +283,7 @@ public class GenCode {
                 DeclMethod m = (DeclMethod)am;
 
                 Label lab = getMethodLabel(c, m);
-                MethodDefinition def = m.getDefinition();
+                MethodDefinition def = m.getFieldName().getMethodDefinition();
 
                 def.setLabel(lab);
                 comp.addInstruction(new LOAD(new LabelOperand(lab), r0));
@@ -300,23 +324,23 @@ public class GenCode {
         String className = c.getClassName().getName().getName();
         String methodName = m.getFieldName().getName().getName();
         List<AbstractDeclParam> lp = m.getParams().getList();
+        Label lab = getMethodLabel(c, m);
 
         addSeparatorComment();
         comp.addComment(className + "." + methodName);
+        comp.addLabel(getMethodLabel(c, m));
 
         // Verification pile
         comp.addInstruction(new TSTO(lp.size() + 1));
         comp.addInstruction(new BOV(pile_pleine));
 
-        // On sauvegarde les registres actuellement utilisés
-        saveRegister();
-
         // On genere le code de la methode
         m.getBody().generateMethod(comp, this);
 
-        restoreRegister();
         comp.addInstruction(new RTS());
     }
+
+
 
     // Pile permettant d'enregistrer les nombres de registre utilisé
     Stack<Integer> pileRegSave;

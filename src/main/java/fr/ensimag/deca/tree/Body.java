@@ -44,10 +44,15 @@ public class Body extends AbstractBody{
     }
     @Override
     protected void codeGenBody(DecacCompiler compiler, GenCode gc) {
-        //gc.initLocalVar(this.declVariables.getList());
+        gc.initLocalVar(this.declVariables.getList());
 
+        // On sauvegarde les registres actuellement utilisés
+        compiler.addComment("Save used register:");
+        gc.saveRegister();
         compiler.addComment("Beginning of method:");
         insts.codeGenListInst(compiler, gc);
+        compiler.addComment("Restore register:");
+        gc.restoreRegister();
     }
 
     @Override
