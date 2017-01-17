@@ -5,18 +5,111 @@
 // Library for class Math of Deca, coded in Deca
 
 public class Mathe {
+    
+    public static float adapt2(float f){
+        //calcule f-pi/2
+        float c1=pow(2,-1);
+        float c2=pow(2,-4);
+        float c3=pow(2,-7);
+        float c4=pow(2,-12);
+        float c5=pow(2,-13);
+        float c6=pow(2,-14);
+        float c7=pow(2,-15);
+        float c8=pow(2,-16);
+        float c9=pow(2,-17);
+        float c10=pow(2,-15);
+        float c11=pow(2,-19);
+        float c12=pow(2,-20);
+        float c13=pow(2,-22);
+        float c14=pow(2,-23);
+        f=f-c1;
+        f=f-c2;
+        f=f-c3;
+        f=f-c4;
+        f=f-c5;
+        f=f-c6;
+        f=f-c7;
+        f=f-c8;
+        f=f-c9;
+        f=f-c10;
+        f=f-c11;
+        f=f-c12;
+        f=f-c13;
+        f=f-c14;
+        f=f-1;
+        return f;
+        
+        
+    }
 
     public static float adapt(float f){
-        
-        float a=f/pi();
-        while (a<=-1){
-            a=a+2;
+        float c1=pow(2,2);
+        float c2=pow(2,1);
+        float c3=pow(2,-2);
+        float c4=pow(2,-5);
+        float c5=pow(2,-10);
+        float c6=pow(2,-11);
+        float c7=pow(2,-12);
+        float c8=pow(2,-13);
+        float c9=pow(2,-14);
+        float c10=pow(2,-15);
+        float c11=pow(2,-17);
+        float c12=pow(2,-18);
+        float c13=pow(2,-20);
+        float c14=pow(2,-21);
+       
+        int k=0;
+        float f1=f;
+        while (f1<=-pi()){
+            f1=f1+2*pi();
+            k=k+1;
+            //f=f+2*c1+2*c2+2*c3+2*c4+2*c5+2*c6+2*c7+2*c8+2*c9+2*c10+2*c11+2*c12+2*c13+2*c14;
             
         }
-        while (a>1){
-            a=a-2;
+ 
+        while (f1>pi()){
+            f1=f1-2*pi();
+            k=k+1;
+            //f=f-2*c1-2*c2-2*c3-2*c4-2*c5-2*c6-2*c7-2*c8-2*c9-2*c10-2*c11-2*c12-2*c13-2*c14;
         }
-        return a*pi();
+        
+        if (f>pi()){
+            f=f-k*c1;
+            f=f-k*c2;
+            f=f-k*c3;
+            f=f-k*c4;
+            f=f-k*c5;
+            f=f-k*c6;
+            f=f-k*c7;
+            f=f-k*c8;
+            f=f-k*c9;
+            f=f-k*c10;
+            f=f-k*c11;
+            f=f-k*c12;
+            f=f-k*c13;
+            f=f-k*c14;
+           
+        }
+        
+        if (f<=-pi()){
+            f=f+k*c1;
+            f=f+k*c2;
+            f=f+k*c3;
+            f=f+k*c4;
+            f=f+k*c5;
+            f=f+k*c6;
+            f=f+k*c7;
+            f=f+k*c8;
+            f=f+k*c9;
+            f=f+k*c10;
+            f=f+k*c11;
+            f=f+k*c12;
+            f=f+k*c13;
+            f=f+k*c14;
+           
+        }
+        
+        return f;
     }
 
     // fonction sinus première solution série entière
@@ -49,11 +142,11 @@ public class Mathe {
         if (0<=f && f<=pi()/2) {
             float b;
             b = (float) 0.60725294;
-            return b * aux_sin(f, 23);
+            return b * cordic_sin(f);
         }
         // si non on ramène à cet interval
         if (f>pi()/2 && f<=pi()){
-            return cos(f-pi()/2);
+            return cos(adapt2(f));
         }
         if (-pi()<=f && f<0){
             return -sin(-f);
@@ -75,7 +168,7 @@ public class Mathe {
         }
 
         if (f>pi()/2 && f<=pi()){
-            return cos2(f-pi()/2);
+            return cos2(adapt2(f));
         }
         if (-pi()<=f && f<0){
             return -sin2(-f);
@@ -104,7 +197,7 @@ public class Mathe {
 
 
     public static float pi (){
-        return (float)3.1415926;
+        return (float)3.1415927;
         /*float k=-4;
         float i=0;
         float s=0;
@@ -161,10 +254,10 @@ public class Mathe {
         if (0<=f && f<=pi()/2) {
             float b;
             b = (float) 0.60725294;
-            return b*aux_cos(f,23);
+            return b*cordic_cos(f);
         }
         if (f>pi()/2 && f<=pi()){
-            return -sin(f-pi()/2);
+            return -sin(adapt2(f));
         }
         if (-pi()<=f && f<0){
             return cos(-f);
@@ -187,11 +280,11 @@ public class Mathe {
         }
         if (0<pi()/4 && f<=pi()/2) {
             
-            return sin2(pi()/2-f);
+            return sin2(-adapt2(f));
         }
         
         if (f>pi()/2 && f<=pi()){
-            return -sin2(f-pi()/2);
+            return -sin2(adapt2(f));
         }
         if (-pi()<=f && f<0){
             return cos2(-f);
