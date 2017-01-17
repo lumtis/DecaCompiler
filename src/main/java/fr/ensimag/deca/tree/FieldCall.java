@@ -28,16 +28,17 @@ public class FieldCall extends AbstractMemberCall {
 
     @Override
     public void decompile(IndentPrintStream s) {
-
+        throw new UnsupportedOperationException("Pas encore implémenté.");
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-
+        getObjectName().prettyPrint(s, prefix, false);
+        fieldName.prettyPrint(s,prefix,true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-
+        fieldName.iter(f);
     }
 }

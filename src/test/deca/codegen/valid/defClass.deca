@@ -28,5 +28,5 @@ class Lion extends Animal {
     Animal lion = new Lion();
     float x;
     println("Un lion a été créé.");
-    x = lion.nourrir(12.5);
+    x = lion.nourrir(12);
 }

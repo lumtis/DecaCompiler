@@ -16,6 +16,10 @@ public abstract class AbstractMemberCall extends AbstractExpr {
         this.objectName = objectName;
     }
 
+    public AbstractExpr getObjectName() {
+        return objectName;
+    }
+
     public abstract Type verifyMember(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass,
                                  ClassType typeObject) throws ContextualError ;
 
