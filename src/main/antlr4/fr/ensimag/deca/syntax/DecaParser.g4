@@ -338,7 +338,8 @@ inequality_expr returns[AbstractExpr tree]
     | e1=inequality_expr INSTANCEOF type {
             assert($e1.tree != null);
             assert($type.tree != null);
-            //TODO
+            $tree=new InstanceOf($type.tree,$e1.tree);
+            setLocation($tree, $INSTANCEOF);
         }
     ;
 
@@ -536,18 +537,19 @@ list_classes returns[ListDeclClass tree]
     ;
 
 class_decl returns[AbstractDeclClass tree]
-    : CLASS name=ident superclass=class_extension OBRACE class_body CBRACE {
+    : CLASS name=ident superclass=class_extension[$name.start] OBRACE class_body CBRACE {
             $tree= new DeclClass($name.tree,$superclass.tree,$class_body.listMethod,$class_body.listField);
             setLocation($tree,$CLASS);
         }
     ;
 
-class_extension returns[AbstractIdentifier tree]
+class_extension[Token loc] returns[AbstractIdentifier tree]
     : EXTENDS ident {
         $tree = $ident.tree;
         }
     | /* epsilon */ {
         $tree = getDecacCompiler().getObject();
+        setLocation($tree, $loc);
         }
     ;
 
