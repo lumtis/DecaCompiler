@@ -59,6 +59,10 @@ public class Cast extends AbstractExpr{
             return true;
         }
 
+        if(!typeA.isClass() || !typeB.isClass()){
+            throw new ContextualError("Cast impossible", this.getLocation());
+        }
+
         ClassType classTypeA= typeA.asClassType("Classe non reconnue",this.getLocation());
         ClassType classTypeB= typeB.asClassType("Classe non reconnue",this.getLocation());
         if(!classTypeB.isSubClassOf(classTypeA)){

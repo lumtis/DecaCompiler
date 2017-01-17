@@ -3,6 +3,6 @@
 int x = 8;
 float y = 4.0;
 
-x=(float)(x);
+y=(float)(x);
 
 }

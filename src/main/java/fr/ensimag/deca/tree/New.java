@@ -16,7 +16,7 @@ import java.io.PrintStream;
  */
 public class New extends AbstractExpr {
 
-    AbstractIdentifier class_ident;
+    private AbstractIdentifier class_ident;
     public New(AbstractIdentifier ident){
         Validate.notNull(ident);
         this.class_ident = ident;
@@ -40,14 +40,12 @@ public class New extends AbstractExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        class_ident.verifyType(compiler);
-        Type type_cour = compiler.getType(this.class_ident.getName());
+        Type type_cour = class_ident.verifyType(compiler);
         if (type_cour== null || !type_cour.isClass()) {
             throw new ContextualError("Classe non reconnue", this.getLocation());
         }
         this.setType(type_cour);
         return type_cour;
-
     }
 
     @Override
