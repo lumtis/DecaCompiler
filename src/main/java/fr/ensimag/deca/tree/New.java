@@ -50,7 +50,7 @@ public class New extends AbstractExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-          Indentifier c = (Indentifier)class_ident;
+          Identifier c = (Identifier)class_ident;
           gc.newObject(c.getClassDefinition());
     }
 }

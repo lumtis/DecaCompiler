@@ -102,11 +102,11 @@ public class GenCode {
     }
 
     // Initialise les variables locales par rapport au registre LB
-    public void initLocallVar(List<AbstractDeclVar> a) {
+    public void initLocalVar(List<AbstractDeclVar> a) {
 
         comp.addComment("Initialisation des variables Locales");
 
-        indexLB = 0;
+        indexLB = 1;
 
         for (AbstractDeclVar d:a){
             DeclVar declVar=(DeclVar)d;
@@ -180,21 +180,6 @@ public class GenCode {
 
     public boolean isExprFloat() {
         return exprFloat;
-    }
-
-
-    // Initialise les variables locales
-    public void initLocalVar(List<AbstractDeclVar> a) {
-
-        for (AbstractDeclVar d:a){
-            DeclVar declVar=(DeclVar)d;
-            Identifier var = (Identifier)declVar.getVarName();
-
-            //setMem(Register.GB, var);
-
-            // On initialise la variable
-            declVar.getInitialization().codeGenInit(getAddrVar(var), comp, this);
-        }
     }
 
     // Gestion des variables

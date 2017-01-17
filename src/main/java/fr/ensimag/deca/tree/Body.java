@@ -47,6 +47,7 @@ public class Body extends AbstractBody{
     }
     @Override
     protected void codeGenBody(DecacCompiler compiler, GenCode gc) {
+
         gc.initLocalVar(this.declVariables.getList());
 
         // On sauvegarde les registres actuellement utilisés
