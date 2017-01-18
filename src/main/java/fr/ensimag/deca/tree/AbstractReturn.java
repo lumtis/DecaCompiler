@@ -42,7 +42,8 @@ public abstract class AbstractReturn extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        throw new UnsupportedOperationException("Lucas le hmar se traine dessus, il n'a pas encore fait cette partie.");
+        returnExpr.codeGenInst(compiler, gc);
+        addInstruction(new BRA(getRetLabel()));
     }
 
     @Override

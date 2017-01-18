@@ -47,8 +47,8 @@ public class DeclClass extends AbstractDeclClass {
         }
         String errorMessage = superName.getName() + " n'est pas un type de classe.";
         ClassType superType = compiler.getType(superName.getName()).asClassType(errorMessage, this.getLocation());
-        superName.setDefinition(superType.getDefinition());
         Validate.notNull(superType, "Erreur : Le type de la super classe est nulle.");
+        superName.setDefinition(superType.getDefinition());
         ClassType t = new ClassType(className.getName(), this.getLocation(), superType.getDefinition());
         compiler.addType(className.getName(), t);
         className.setDefinition(t.getDefinition());
@@ -88,7 +88,6 @@ public class DeclClass extends AbstractDeclClass {
                 methods.iter(f);
          }
 
-
     // Getter
     public ListDeclMethod getMethods() {
         return methods;
@@ -101,5 +100,10 @@ public class DeclClass extends AbstractDeclClass {
     }
     public Identifier getParent() {
         return (Identifier)superName;
+    }
+
+
+    public int numberMethods() {
+        return className.getClassDefinition().getNumberOfMethods();
     }
 }

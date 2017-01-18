@@ -31,6 +31,10 @@ public class EnvironmentExp {
         variables = new HashMap<>();
     }
 
+    public HashMap<Symbol, ExpDefinition> getHashMap() {
+        return HashMap;
+    }
+
     public static class DoubleDefException extends Exception {
         private static final long serialVersionUID = -2733379901827316441L;
     }

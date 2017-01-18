@@ -207,6 +207,35 @@ public class GenCode {
         return l;
     }
 
+    public Label getMethodLabel(DeclClass c, DeclMethod m) {
+        String className = c.getClassName().getName().getName();
+        String methodName = m.getMethodName().getName().getName();
+
+        return new Label(className + "." + methodName);
+    }
+
+    public Label getMethodLabel(DeclClass c, String mName) {
+        String className = c.getClassName().getName().getName();
+
+        return new Label(className + "." + mName);
+    }
+
+
+    private DeclClass currClass = null;
+    private DeclMethod currMethod = null;
+
+    public void setCurrContext(DeclClass c, DeclMethod m) {
+        currClass = c;
+        currMethod = m;
+    }
+
+    public Label getRetLabel() {
+        String className = currClass.getClassName().getName().getName();
+        String methodName = currMethod.getMethodName().getName().getName();
+
+        return new Label(className + "." + methodName + "." + "end");
+    }
+
     // Gestion des labels
     ////////////////////////////////////////////////////////////////////
 
@@ -222,14 +251,6 @@ public class GenCode {
 
         return new RegisterOffset(parentOffset, Register.GB);
     }
-
-    public Label getMethodLabel(DeclClass c, DeclMethod m) {
-        String className = c.getClassName().getName().getName();
-        String methodName = m.getFieldName().getName().getName();
-
-        return new Label(className + "." + methodName);
-    }
-
 
     public void initMethodTable(List<AbstractDeclClass> lc) {
         int indexObject;
@@ -253,6 +274,13 @@ public class GenCode {
         // On parcourt les classes
         for (AbstractDeclClass ac:lc) {
             DeclClass c = (DeclClass)ac;
+            int pas = 1 + c.numberMethods();
+
+            // Tableau de booleens pour savoir si une méthode a été redéfinie
+            boolean[] redef = new boolean[pas + 1];
+            for(int i = 0; i<=pas1; i++) {
+                redef[i] = false;
+            }
 
             // On initialise l'offset de la classe dans la table
             c.getClassName().getClassDefinition().setOffset(indexGB);
@@ -260,25 +288,35 @@ public class GenCode {
             // On place l'addresse de la table des methodes parentes
             comp.addInstruction(new LEA(getParentAddr(c), r0));
             comp.addInstruction(new STORE(r0, new RegisterOffset(indexGB, Register.GB)));
-            indexGB++;
 
-            // Pour chacune des classes on parcourt toute les methodes
-            List<AbstractDeclMethod> lm = c.getMethods().getList();
-            for (AbstractDeclMethod am:lm) {
-                DeclMethod m = (DeclMethod)am;
+            // On obtient l'environnement ExpDefinition
+            EnvironmentExp env = c.getClassName().getClassDefinition().getMembers();
 
-                Label lab = getMethodLabel(c, m);
-                MethodDefinition def = m.getFieldName().getMethodDefinition();
+            // On parcourt les envirronements de l'arborescence des classes
+            while(env != null) {
+                for (Map.Entry<Symbol, ExpDefinition> entry : env.getHashMap().entrySet()) {
+                    String name = entry.getKey().getName();
+                    MethodDefinition method = (MethodDefinition)entry.getValue();
+                    Label lab = getMethodLabel(c, name);
 
-                def.setLabel(lab);
-                comp.addInstruction(new LOAD(new LabelOperand(lab), r0));
-                comp.addInstruction(new STORE(r0, new RegisterOffset(indexGB, Register.GB)));
-                indexGB++;
+                    if(redef[method.getIndex()] == true) {
+                        comp.addInstruction(new LOAD(new LabelOperand(lab), r0));
+                        comp.addInstruction(new STORE(r0, new RegisterOffset(indexGB + method.getIndex(), Register.GB)));
+                        redef[method.getIndex()] = true;
+                    }
+                }
+                env = getParent();
             }
+            indexGB += pas;
         }
     }
 
+
+    // Initialisation des classes à la fin du programme
     public void initClass(List<AbstractDeclClass> lc) {
+
+        // TODO: Méthode Object
+        //comp.getObject().getType()
 
         for (AbstractDeclClass ac:lc){
             DeclClass c = (DeclClass)ac;
@@ -307,9 +345,13 @@ public class GenCode {
 
     public void generateMethod(DeclClass c, DeclMethod m) {
         String className = c.getClassName().getName().getName();
-        String methodName = m.getFieldName().getName().getName();
+        String methodName = m.getMethodName().getName().getName();
         List<AbstractDeclParam> lp = m.getParams().getList();
         Label lab = getMethodLabel(c, m);
+
+        // On enregistre la classe et la methode courante pour le label
+        // de retour
+        setCurrContext(c, m);
 
         addSeparatorComment();
         comp.addComment(className + "." + methodName);
