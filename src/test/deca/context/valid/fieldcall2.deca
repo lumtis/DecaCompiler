@@ -13,5 +13,6 @@ class Animal {
 
 }
 {
-    print(Animal.poids);
+    Animal animal = new Animal();
+    print(animal.poids);
 }

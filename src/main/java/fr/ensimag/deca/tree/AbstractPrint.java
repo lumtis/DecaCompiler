@@ -37,7 +37,7 @@ public abstract class AbstractPrint extends AbstractInst {
     }
 
     @Override
-    protected boolean verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
+    protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         for (AbstractExpr a : getArguments().getList()) {
@@ -46,7 +46,6 @@ public abstract class AbstractPrint extends AbstractInst {
                 throw new ContextualError("Erreur de type.", this.getLocation());
             }
         }
-        return false;
     }
 
     @Override

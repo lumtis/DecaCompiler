@@ -33,10 +33,7 @@ public class Body extends AbstractBody{
                               Type returnType)
             throws ContextualError {
         this.declVariables.verifyListDeclVariable(compiler,env_exp,currentClass);
-        boolean returnOk = this.insts.verifyListInst(compiler,env_exp,currentClass, returnType);
-        if (!returnOk && !returnType.isVoid()) {
-            throw new ContextualError("Aucun type de retour, "+returnType.getName()+" attendu.", this.getLocation());
-        }
+        this.insts.verifyListInst(compiler,env_exp,currentClass, returnType);
     }
     @Override
     protected void codeGenMain(DecacCompiler compiler) {
