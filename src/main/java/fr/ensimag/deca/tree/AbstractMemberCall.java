@@ -12,9 +12,14 @@ public abstract class AbstractMemberCall extends AbstractLValue {
     private AbstractExpr objectName;
 
     public AbstractMemberCall(AbstractExpr objectName) {
-        Validate.notNull(objectName, "Object passé en argument est null.");
-        this.objectName = objectName;
+        if(objectName == null){
+            this.objectName = new This();
+        }
+        else {
+            this.objectName = objectName;
+        }
     }
+
 
     public AbstractExpr getObjectName() {
         return objectName;

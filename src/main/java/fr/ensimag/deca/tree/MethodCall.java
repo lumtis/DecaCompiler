@@ -21,6 +21,7 @@ public class MethodCall extends AbstractMemberCall {
         this.arguments = arguments;
     }
 
+
     @Override
     public Type verifyMember(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass,
                              ClassType typeObject) throws ContextualError {
