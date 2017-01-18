@@ -45,7 +45,8 @@ public class EnvironmentType {
         ClassType objectType = new ClassType(objectSym,new Location(0,0,"Default"),null);
         env_type.put(objectSym, objectType);
         object = new Identifier(objectSym);
-        object.setDefinition(new ClassDefinition(objectType, new Location(0,0,"Default"), null));
+        ClassDefinition classDef = objectType.getDefinition();
+        object.setDefinition(classDef);
         object.setLocation(0,0,"Default");
         def_type.put(objectType, object.getDefinition());
 
@@ -55,13 +56,14 @@ public class EnvironmentType {
         Signature sign = new Signature();
         sign.add(objectType);
         sign.add(objectType);
-        MethodDefinition eqDef = new MethodDefinition(t[3],new Location(0,0,"Default"),sign,0);
+        MethodDefinition eqDef = new MethodDefinition(t[2],new Location(0,0,"Default"),sign,1);
         try {
             env_exp.declare(equalsSym, eqDef);
         }
         catch (EnvironmentExp.DoubleDefException e) {
             throw new DecacInternalError("equals définit 2 fois.");
         }
+        classDef.incNumberOfMethods();
     }
 
     public Type getType(SymbolTable.Symbol sym) {

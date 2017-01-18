@@ -35,7 +35,7 @@ public class DeclParam extends AbstractDeclParam {
             throws ContextualError {
         Type t = type.verifyType(compiler);
         if (compiler.getType(name.getName()) != null) {
-            throw new ContextualError("Nom de field utilisé est un type.", this.getLocation());
+            throw new ContextualError("Nom de paramètre utilisé est un type.", this.getLocation());
         }
         name.setDefinition(new ParamDefinition(t, this.getLocation()));
         try {
@@ -64,6 +64,6 @@ public class DeclParam extends AbstractDeclParam {
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         type.prettyPrint(s, prefix, false);
-        name.prettyPrint(s, prefix, false);
+        name.prettyPrint(s, prefix, true);
     }
 }

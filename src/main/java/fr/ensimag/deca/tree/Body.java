@@ -16,7 +16,6 @@ import java.io.PrintStream;
  * Created by buthodgt on 1/16/17.
  */
 public class Body extends AbstractBody{
-    private static final Logger LOG = Logger.getLogger(Main.class);
 
     private ListDeclVar declVariables;
     private ListInst insts;
@@ -33,17 +32,11 @@ public class Body extends AbstractBody{
     protected void verifyBody(DecacCompiler compiler, EnvironmentExp env_exp, ClassDefinition currentClass,
                               Type returnType)
             throws ContextualError {
-        LOG.debug("verify Body: start");
-        LOG.debug("verify ListDeclVar: start");
         this.declVariables.verifyListDeclVariable(compiler,env_exp,currentClass);
-        LOG.debug("verify ListDeclVar: end");
-        LOG.debug("verify ListInst: start");
         boolean returnOk = this.insts.verifyListInst(compiler,env_exp,currentClass, returnType);
         if (!returnOk && !returnType.isVoid()) {
             throw new ContextualError("Aucun type de retour, "+returnType.getName()+" attendu.", this.getLocation());
         }
-        LOG.debug("verify ListInst: end");
-        LOG.debug("verify Body: end");
     }
     @Override
     protected void codeGenMain(DecacCompiler compiler) {

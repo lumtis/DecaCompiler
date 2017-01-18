@@ -658,5 +658,6 @@ multi_line_string returns[String text, Location location]
 param returns[AbstractDeclParam tree]
     : type ident {
         $tree = new DeclParam($type.tree, $ident.tree);
+        setLocation($tree, $ident.start);
         }
     ;

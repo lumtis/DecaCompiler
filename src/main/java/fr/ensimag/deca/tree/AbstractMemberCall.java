@@ -7,7 +7,7 @@ import org.apache.commons.lang.Validate;
 /**
  * Created by buthodgt on 1/17/17.
  */
-public abstract class AbstractMemberCall extends AbstractExpr {
+public abstract class AbstractMemberCall extends AbstractLValue {
 
     private AbstractExpr objectName;
 
@@ -28,10 +28,7 @@ public abstract class AbstractMemberCall extends AbstractExpr {
                            EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
         Type t = objectName.verifyExpr(compiler, localEnv, currentClass);
-        if (!t.isClass()) {
-            throw new ContextualError("Cet objet n'est pas un type.", this.getLocation());
-        }
-        ClassType typeClass = t.asClassType("Type n'est pas une classe.", this.getLocation());
+        ClassType typeClass = t.asClassType("Cet objet n'est pas un type.", this.getLocation());
         Type memberType = verifyMember(compiler, localEnv, currentClass, typeClass);
         this.setType(memberType);
         return memberType;
