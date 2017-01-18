@@ -23,6 +23,15 @@ public class FieldCall extends AbstractMemberCall {
                              ClassType typeObject) throws ContextualError {
         Type fieldType = fieldName.verifyExpr(compiler, typeObject.getDefinition().getMembers(),
                 typeObject.getDefinition());
+        if (!fieldName.getExpDefinition().isField()) {
+            throw new ContextualError("Un attribut est attendu.", fieldName.getLocation());
+        }
+        //Il faut vérifier si on peut accéder à l'attribut (dans le cas protected).
+        FieldDefinition fieldDef = fieldName.getFieldDefinition();
+        if (fieldDef.getVisibility() == Visibility.PROTECTED &&
+                !typeObject.isSubClassOf(currentClass.getType())) {
+            throw new ContextualError("L'attribut est de type protected.",fieldName.getLocation());
+        }
         return fieldType;
     }
 
