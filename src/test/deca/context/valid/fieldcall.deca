@@ -1,0 +1,14 @@
+class Animal {
+    protected float poids;
+    protected int nbPates;
+
+    void faireCrier() {
+        println("Grrrrrrrrrr");
+    }
+
+    float nourrir(float poidsNourriture) {
+        this.poids = this.poids + poidsNourriture;
+        return this.poids;
+    }
+
+}

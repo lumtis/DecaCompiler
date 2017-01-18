@@ -1,0 +1,87 @@
+class Testasm {
+
+void test() asm(
+     "label1:
+	LOAD 3(GB), R2
+	LOAD R2, R3
+	LOAD 1(GB), R2
+	CMP R2, R3
+	BLT label4
+	LOAD #0, R2
+	BRA label5
+label4:
+	LOAD #1, R2
+label5:
+	CMP #1, R2
+	BEQ label2
+	BRA label3
+label2:
+	LOAD 3(GB), R2
+	LOAD R2, R3
+	LOAD #1, R2
+	ADD R3, R2
+	STORE R2, 3(GB)
+	LOAD #2, R2
+	FLOAT R2, R2
+	LOAD R2, R3
+	LOAD 2(GB), R2
+	MUL R3, R2
+	LOAD R2, R3
+	LOAD 2(GB), R2
+	LOAD R2, R4
+	LOAD 3(GB), R2
+	FLOAT R2, R2
+	SUB R2, R4
+	LOAD R4, R2
+	SUB R2, R3
+	LOAD R3, R2
+	STORE R2, 2(GB)
+	BRA label1
+label3:
+	LOAD 2(GB), R2
+	LOAD R2, R3
+	LOAD #55, R2
+	FLOAT R2, R2
+	CMP R3, R2
+	BEQ label12
+	LOAD #0, R2
+	BRA label13
+label12:
+	LOAD #1, R2
+label13:
+	CMP #0, R2
+	BEQ label10
+	LOAD 2(GB), R2
+	LOAD R2, R3
+	LOAD #56, R2
+	FLOAT R2, R2
+	CMP R3, R2
+	BNE label14
+	LOAD #0, R2
+	BRA label15
+label14:
+	LOAD #1, R2
+label15:
+	CMP #0, R2
+	BEQ label10
+	LOAD #1, R2
+	BRA label11
+label10:
+	LOAD #0, R2
+label11:
+	CMP #0, R2
+	BEQ label8
+	LOAD #1, R2
+	CMP #0, R2
+	BEQ label8
+	LOAD #1, R2
+	BRA label9
+label8:
+	LOAD #0, R2
+label9:
+	CMP #0, R2
+	BEQ label6
+	WSTR 'OK'
+	WNL
+	BRA label7");
+}

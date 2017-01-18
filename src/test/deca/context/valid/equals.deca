@@ -1,0 +1,21 @@
+class Animal {
+    protected float poids;
+    protected int nbPates;
+
+    void faireCrier() {
+        println("Grrrrrrrrrr");
+    }
+
+    float nourrir(float poidsNourriture) {
+        poids = poids + poidsNourriture;
+        return poids;
+    }
+
+}
+{
+    Animal Zebre = new Animal();
+    Animal Cheval = new Animal();
+
+    boolean b = (Zebre.equals(Cheval));
+
+}

@@ -1,0 +1,7 @@
+{
+    print("main");
+}
+class Test{
+
+    protected int j;
+}

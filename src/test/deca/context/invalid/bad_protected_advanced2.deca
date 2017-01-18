@@ -1,3 +1,4 @@
+//ERROR :21
 class Animal {
     protected float poids;
     protected int nbPates;
@@ -16,16 +17,7 @@ class Animal {
 class Lion extends Animal {
 
     void initParam(float newPoids, int NewNbPates) {
-        poids = newPoids;
-        nbPates = NewNbPates;
+        Animal Tigre = new Animal();
+        print(Tigre.nbPates);
     }
-
-    void faireCrier() {
-        println("RRRrrhhhhhh");
-    }
-}
-
-{
-    Animal lion = new Lion();
-    println("Un lion a été créé.");
 }
