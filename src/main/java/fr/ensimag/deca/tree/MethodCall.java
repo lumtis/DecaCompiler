@@ -35,7 +35,12 @@ public class MethodCall extends AbstractMemberCall {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Pas encore implémenté.");
+        getObjectName().decompile(s);
+        s.print(".");
+        methodName.decompile(s);
+        s.print("(");
+        arguments.decompile(s);
+        s.print(")");
     }
 
     @Override

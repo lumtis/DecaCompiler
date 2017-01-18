@@ -28,7 +28,6 @@ public class FieldCall extends AbstractMemberCall {
         }
         //Il faut vérifier si on peut accéder à l'attribut (dans le cas protected).
         FieldDefinition fieldDef = fieldName.getFieldDefinition();
-        System.out.println((fieldDef.getVisibility() == Visibility.PROTECTED) + "/" + (!typeObject.isSubClassOf(currentClass.getType())));
         if (fieldDef.getVisibility() == Visibility.PROTECTED &&
                 !typeObject.isSubClassOf(currentClass.getType())) {
             throw new ContextualError("L'attribut est de type protected.",fieldName.getLocation());
@@ -38,7 +37,9 @@ public class FieldCall extends AbstractMemberCall {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Pas encore implémenté.");
+        getObjectName().decompile(s);
+        s.print(".");
+        fieldName.decompile(s);
     }
 
     @Override

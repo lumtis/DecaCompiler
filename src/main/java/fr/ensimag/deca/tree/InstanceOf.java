@@ -24,7 +24,9 @@ public class InstanceOf extends AbstractExpr {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        expr.decompile(s);
+        s.print(" instanceof ");
+        ident_type.decompile(s);
     }
 
     @Override
@@ -40,9 +42,9 @@ public class InstanceOf extends AbstractExpr {
     }
 
     @Override
-    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        ident_type.verifyType(compiler);
-        Type type_ref = compiler.getType(this.ident_type.getName());
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
+            throws ContextualError {
+        Type type_ref = ident_type.verifyType(compiler);
         Type type = expr.verifyExpr(compiler,localEnv,currentClass);
 
         if ((!type.isNull() && !type.isClass()) || !type_ref.isClass()) {
@@ -51,8 +53,6 @@ public class InstanceOf extends AbstractExpr {
         Type t = compiler.getType("boolean");
         this.setType(t);
         return t;
-
-
     }
 
 

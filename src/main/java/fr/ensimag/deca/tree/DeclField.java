@@ -17,7 +17,8 @@ public class DeclField extends AbstractDeclField {
     final private AbstractIdentifier fieldName;
     private AbstractInitialization initialization;
 
-    public DeclField(Visibility privacy, AbstractIdentifier type, AbstractIdentifier fieldName, AbstractInitialization initialization) {
+    public DeclField(Visibility privacy, AbstractIdentifier type, AbstractIdentifier fieldName,
+                     AbstractInitialization initialization) {
         Validate.notNull(type);
         Validate.notNull(fieldName);
         Validate.notNull(initialization);
@@ -25,10 +26,6 @@ public class DeclField extends AbstractDeclField {
         this.type = type;
         this.fieldName = fieldName;
         this.initialization = initialization;
-    }
-
-    public Visibility isPrivate() {
-        return this.privacy;
     }
 
     public AbstractIdentifier getFieldName(){
@@ -70,11 +67,14 @@ public class DeclField extends AbstractDeclField {
 
     @Override
     public void decompile(IndentPrintStream s) {
+        if (privacy == Visibility.PROTECTED) {
+            s.print("protected ");
+        }
         type.decompile(s);
         s.print(" ");
         fieldName.decompile(s);
         initialization.decompile(s);
-        s.println(";");
+        s.print(";");
     }
 
     @Override

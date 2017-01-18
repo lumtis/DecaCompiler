@@ -113,15 +113,15 @@ public class DeclMethod extends AbstractDeclMethod {
     public void decompile(IndentPrintStream s) {
 
         type.decompile(s);
+        s.print(" ");
         methodName.decompile(s);
+        params.decompile(s);
         if(isAsm){
             portionAssembleur.decompile(s);
         }
         else {
             body.decompile(s);
         }
-        s.println("");
-
     }
 
     @Override

@@ -47,7 +47,7 @@ public class Body extends AbstractBody{
         declVariables.decompile(s);
         insts.decompile(s);
         s.unindent();
-        s.println("}");
+        s.print("}");
     }
 
     @Override

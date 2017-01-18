@@ -19,11 +19,6 @@ test_decompile_valid() {
         echo "$1 : ERROR."
     fi
 }
-echo "-------Décompilation tests valides syntax---------";
-for cas_de_test in src/test/deca/syntax/valid/*.deca
-do
-    test_decompile_valid $cas_de_test;
-done
 echo "-------Décompilation tests valides context---------";
 for cas_de_test in src/test/deca/context/valid/*.deca
 do

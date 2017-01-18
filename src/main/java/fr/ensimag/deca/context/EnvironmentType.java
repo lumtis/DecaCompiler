@@ -60,7 +60,7 @@ public class EnvironmentType {
             env_exp.declare(equalsSym, eqDef);
         }
         catch (EnvironmentExp.DoubleDefException e) {
-            throw new DecacInternalError("equals définit 2 fois.");
+            throw new DecacInternalError("Méthode equals défini 2 fois.");
         }
         classDef.incNumberOfMethods();
     }
@@ -85,7 +85,7 @@ public class EnvironmentType {
 
     public void addType(Symbol sym, Type t, Definition def) {
         if (env_type.containsKey(sym) || def_type.containsKey(t)) {
-            throw new DecacInternalError("Insertion dun symbole ou vaiable déjà existante.");
+            throw new DecacInternalError("Définition d'un type déjà existant.");
         }
         env_type.put(sym, t);
         def_type.put(t, def);

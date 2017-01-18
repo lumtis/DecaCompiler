@@ -26,7 +26,12 @@ public class ListExpr extends TreeList<AbstractExpr> {
 
     @Override
     public void decompile(IndentPrintStream s) {
+        int i=0;
         for (AbstractExpr expr : getList()) {
+            if (i>0) {
+                s.print(", ");
+            }
+            i++;
             expr.decompile(s);
         }
     }
