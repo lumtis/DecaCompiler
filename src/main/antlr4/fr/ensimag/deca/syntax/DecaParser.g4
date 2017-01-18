@@ -438,7 +438,8 @@ primary_expr returns[AbstractExpr tree]
     | m=ident OPARENT args=list_expr CPARENT {
             assert($args.tree != null);
             assert($m.tree != null);
-            //TODO
+            $tree = new MethodCall(null, $m.tree, $args.tree);
+            setLocation($tree, $m.start);
         }
     | OPARENT expr CPARENT {
             assert($expr.tree != null);
@@ -627,6 +628,8 @@ decl_method returns[AbstractDeclMethod tree]
             setLocation($tree, $ident.start);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
+            $tree = new DeclMethod($type.tree, $ident.tree, $params.tree,$code.tree);
+            setLocation($tree, $ident.start);
         }
       ) {
         }
@@ -644,14 +647,23 @@ list_params returns[ListDeclParam tree]
       )*)?
     ;
     
-multi_line_string returns[String text, Location location]
+multi_line_string returns[StringLiteral tree]
     : s=STRING {
-            $text = $s.text;
-            $location = tokenLocation($s);
+        try {
+                $tree = new StringLiteral($s.text.substring(1,$s.text.length()-1));
+                setLocation($tree,$s);
+            } catch (NumberFormatException e) {
+                 $tree = null;
+            }
+
         }
     | s=MULTI_LINE_STRING {
-            $text = $s.text;
-            $location = tokenLocation($s);
+        try {
+                $tree = new StringLiteral($s.text.substring(1,$s.text.length()-1));
+                setLocation($tree,$s);
+             } catch (NumberFormatException e) {
+                   $tree = null;
+             }
         }
     ;
 
