@@ -42,6 +42,11 @@ public class Mathe {
         
     }
 
+    public static float fma( float a, float b, float c){
+        // ASM("  ");
+        return a+b*c;
+    }
+
     public static float adapt(float f){
         float c1=pow(2,2);
         float c2=pow(2,1);
@@ -454,7 +459,14 @@ public class Mathe {
             return 1;
     }
 
+
+
 }
+
+
+
+
+
 
 
 
