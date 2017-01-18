@@ -1,5 +1,6 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import org.apache.commons.lang.Validate;

@@ -1,0 +1,4 @@
+class Messi{
+      
+      int x = this;
+}

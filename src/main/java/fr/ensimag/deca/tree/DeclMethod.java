@@ -75,9 +75,13 @@ public class DeclMethod extends AbstractDeclMethod {
         env_exp_body = new EnvironmentExp(classDef.getMembers());
         Signature sign = params.verifyListParam(compiler, env_exp_body, classDef);
         Type returnType = type.verifyType(compiler);
-        MethodDefinition def;
+        //On regarde si le nom de la méthode est un type.
+        if (compiler.getType(methodName.getName()) != null) {
+            throw new ContextualError("Nom de la méthode utilisé est un type.", this.getLocation());
+        }
         //On vérifie si la méthode Override une autre.
         ExpDefinition existingDef = classDef.getSuperClass().getMembers().get(methodName.getName());
+        MethodDefinition def;
         if (existingDef != null) {
             //Il faut tester si c'est bien un Override, sinon on renvoie une erreur.
             String errorMessage = "Nom de méthode déjà utilisé pour autre chose.";
@@ -95,6 +99,7 @@ public class DeclMethod extends AbstractDeclMethod {
         else {
             def = new MethodDefinition(returnType, this.getLocation(), sign, classDef.incNumberOfMethods());
         }
+        //On déclare la méthode dans l'environnement local.
         try {
             classDef.getMembers().declare(methodName.getName(), def);
         }

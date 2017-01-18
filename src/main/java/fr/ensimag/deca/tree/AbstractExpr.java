@@ -108,11 +108,10 @@ public abstract class AbstractExpr extends AbstractInst {
 
 
     @Override
-    protected boolean verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
+    protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         this.verifyExpr(compiler,localEnv,currentClass);
-        return false;
     }
 
     /**

@@ -2,7 +2,10 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
+import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 import java.io.PrintStream;
 
@@ -23,6 +26,16 @@ public class FieldCall extends AbstractMemberCall {
                              ClassType typeObject) throws ContextualError {
         Type fieldType = fieldName.verifyExpr(compiler, typeObject.getDefinition().getMembers(),
                 typeObject.getDefinition());
+        if (!fieldName.getExpDefinition().isField()) {
+            throw new ContextualError("Un attribut est attendu.", fieldName.getLocation());
+        }
+        //Il faut vérifier si on peut accéder à l'attribut (dans le cas protected).
+        FieldDefinition fieldDef = fieldName.getFieldDefinition();
+        System.out.println((fieldDef.getVisibility() == Visibility.PROTECTED) + "/" + (!typeObject.isSubClassOf(currentClass.getType())));
+        if (fieldDef.getVisibility() == Visibility.PROTECTED &&
+                !typeObject.isSubClassOf(currentClass.getType())) {
+            throw new ContextualError("L'attribut est de type protected.",fieldName.getLocation());
+        }
         return fieldType;
     }
 
@@ -48,9 +61,9 @@ public class FieldCall extends AbstractMemberCall {
         int index = fieldName.getFieldDefinition().getIndex();
 
         // On réalise l'expression derrière le champ
-        objectName.codeGenInst(compiler, gc);
+        getObjectName().codeGenInst(compiler, gc);
 
         // On récupere la variable en fonction de son index
-        compiler.addInstruction(new LOAD(new RegisterOffset(index, gc.getRetReg()), getRetReg()));
+        compiler.addInstruction(new LOAD(new RegisterOffset(index, gc.getRetReg()), gc.getRetReg()));
     }
 }

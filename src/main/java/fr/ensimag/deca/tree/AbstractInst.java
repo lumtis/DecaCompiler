@@ -26,7 +26,7 @@ public abstract class AbstractInst extends Tree {
      * @param returnType
      *          corresponds to the "return" attribute (void in the main bloc).
      */    
-    protected abstract boolean verifyInst(DecacCompiler compiler,
+    protected abstract void verifyInst(DecacCompiler compiler,
             EnvironmentExp localEnv, ClassDefinition currentClass, Type returnType) throws ContextualError;
 
     /**

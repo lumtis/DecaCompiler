@@ -1,0 +1,14 @@
+//ERROR :12
+class Animal {
+    protected float poids;
+    protected int nbPates;
+
+}
+
+class Vegetal {
+
+    void initParam(float newPoids, int NewNbPates) {
+        Animal oiseau = new Animal();
+        print(oiseau.nbPates);
+    }
+}

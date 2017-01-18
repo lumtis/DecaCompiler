@@ -10,6 +10,7 @@ class Animal {
         poids = poids + poidsNourriture;
         return poids;
     }
+
 }
 
 class Lion extends Animal {

@@ -55,7 +55,6 @@ public class EnvironmentType {
         Symbol equalsSym = symbols.create("equals");
         Signature sign = new Signature();
         sign.add(objectType);
-        sign.add(objectType);
         MethodDefinition eqDef = new MethodDefinition(t[2],new Location(0,0,"Default"),sign,1);
         try {
             env_exp.declare(equalsSym, eqDef);

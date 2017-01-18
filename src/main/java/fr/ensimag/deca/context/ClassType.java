@@ -66,7 +66,7 @@ public class ClassType extends Type {
         ClassDefinition classCour = this.getDefinition();
         while (classCour != null) {
             ClassType courType = classCour.getType();
-            if (this.sameType(courType)) {
+            if (courType.sameType(potentialSuperClass)) {
                 return true;
             }
             classCour = classCour.getSuperClass();
