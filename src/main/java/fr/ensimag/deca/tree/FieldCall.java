@@ -58,6 +58,8 @@ public class FieldCall extends AbstractMemberCall {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        super.codeGenInst(compiler, gc);
+
         int index = fieldName.getFieldDefinition().getIndex();
 
         // On réalise l'expression derrière le champ

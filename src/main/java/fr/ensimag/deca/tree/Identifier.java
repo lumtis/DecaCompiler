@@ -85,6 +85,18 @@ public class Identifier extends AbstractIdentifier {
         }
     }
 
+    @Override
+    public ParamDefinition getParamDefinition() {
+        try {
+            return (ParamDefinition) definition;
+        } catch (ClassCastException e) {
+            throw new DecacInternalError(
+                    "Identifier "
+                            + getName()
+                            + " is not a param identifier, you can't call getParamDefinition on it");
+        }
+    }
+
     /**
      * Like {@link #getDefinition()}, but works only if the definition is a
      * FieldDefinition.
@@ -242,17 +254,17 @@ public class Identifier extends AbstractIdentifier {
             gc.setExprFloat(false);
         }
 
-        // S'il s'agit de la creation d'un objet alors on alloue
-        // la mémoires requis
-        //if(definition.isMethod()) {
-
-        //}
-        //else {
+        // S'il s'agit d'un parametre son emplacement dans la memoire est différent
+        if(definition.isParam()) {
+            DAddr addr = new RegisterOffset(getParamDefinition().getIndex(), Register.LB);
+            compiler.addInstruction(new LOAD(addr, gc.getRetReg()));
+        }
+        else {
             // Il s'agit d'une simple variable alors on recupere son adresse
             // et on charqe sa valeur
             DAddr addr = gc.getAddrVar(this);
             compiler.addInstruction(new LOAD(addr, gc.getRetReg()));
-        //}
+        }
     }
 
 

@@ -39,7 +39,7 @@ public class GenCode {
     private Label pile_pleine = newLabel("pile_pleine");
     private Label tas_plein = newLabel("tas_plein");
     private Label no_return = newLabel("no_return");
-
+    private Label dereferencement_nul  = newLabel("dereferencement_nul");
 
     // Fonction utilitaires pour obtenir le nom d'un registre en fonction de
     // son numero
@@ -358,6 +358,14 @@ public class GenCode {
         List<AbstractDeclParam> lp = m.getParams().getList();
         Label lab = getMethodLabel(c, m);
 
+        // On remplie d'abord la définition des param
+        int offset = -3;
+        for (AbstractDeclParam ap:m.getParams().getList()){
+            DeclParam p = (DeclParam)ap;
+            p.getName().getParamDefinition().setOffset(offset);
+            offset--;
+        }
+
         // On enregistre la classe et la methode courante pour le label
         // de retour
         setCurrContext(c, m);
@@ -480,10 +488,18 @@ public class GenCode {
         comp.addInstruction(new WSTR("Erreur : fonction sans retour"));
         comp.addInstruction(new WNL());
         comp.addInstruction(new ERROR());
+
+        comp.addLabel(dereferencement_nul);
+        comp.addInstruction(new WSTR("Erreur : deferencement nul"));
+        comp.addInstruction(new WNL());
+        comp.addInstruction(new ERROR());
     }
 
     public Label getLabelNoReturn() {
         return no_return;
+    }
+    public Label getLabelDereferencementNul() {
+        return dereferencement_nul;
     }
 
     public void addSeparatorComment() {

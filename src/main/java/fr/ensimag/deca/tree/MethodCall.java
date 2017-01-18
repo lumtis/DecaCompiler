@@ -57,23 +57,33 @@ public class MethodCall extends AbstractMemberCall {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        super.codeGenInst(compiler, gc);
+
         List<AbstractExpr> argList = arguments.getList();
+        index = methodName.getMethodDefinition().getIndex();
 
         // On reserve la memoire requise sur la pile
         compiler.addInstruction(new ADDSP(1 + argList.size()));
 
         // On place l'objet de la methode sur la pile
-        // TODO
+        compiler.addInstruction(new LOAD(gc.getRetReg(), new RegisterOffset(0, Register.SP)));
 
         // On ajoute les arguments sur la pile
         int i = -1;
         for(AbstractExpr e:argList) {
             e.codeGenInst(compiler, gc);
-            //compiler.addInstruction(new LOAD(gc.getRetReg(), new RegisterOffset(i, Register.SP)));
+            compiler.addInstruction(new LOAD(gc.getRetReg(), new RegisterOffset(i, Register.SP)));
             i--;
         }
 
+        // On verifie que le déférencement n'est pas nul
+        compiler.addInstruction(new CMP(0, new RegisterOffset(0, Register.SP)));
+        compiler.addInstruction(new BEQ(gc.getLabelDereferencementNul()));
+
         // On appelle la methode
-        // TODO
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), gc.getR0()));
+        compiler.addInstruction(new BSR(new RegisterOffset(index, gc.getR0())));
+
+        compiler.addInstruction(new SUBSP(1 + argList.size()));
     }
 }

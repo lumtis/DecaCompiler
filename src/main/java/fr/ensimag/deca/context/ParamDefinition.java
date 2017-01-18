@@ -14,6 +14,17 @@ public class ParamDefinition extends ExpDefinition {
         super(type, location);
     }
 
+    // Definie l'index par rapport au registre LB
+    private int offset = -3;
+
+    public void setOffset(int o) {
+        offset = o;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
     @Override
     public String getNature() {
         return "parameter";

@@ -42,6 +42,7 @@ public abstract class AbstractMemberCall extends AbstractLValue {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        throw new UnsupportedOperationException("not yet implemented");
+        // On réalise l'expression derrière le champ
+        objectName.codeGenInst(compiler, gc);
     }
 }
