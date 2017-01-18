@@ -26,6 +26,9 @@ public class MethodCall extends AbstractMemberCall {
     public Type verifyMember(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass,
                              ClassType typeObject) throws ContextualError {
         Type methType = methodName.verifyExpr(compiler, typeObject.getDefinition().getMembers(), typeObject.getDefinition());
+        if (!methodName.getExpDefinition().isMethod()) {
+            throw new ContextualError("Une méthode est attendue.", methodName.getLocation());
+        }
         this.arguments = arguments.verifyArgs(compiler, localEnv, currentClass, methodName.getMethodDefinition());
         return methType;
     }
