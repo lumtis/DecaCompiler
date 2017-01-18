@@ -15,6 +15,6 @@ class Animal {
 {
 
     Animal Zebre = new Animal();
-    float x = Zebre.nourrir; 
+    float x = Zebre.nourrir;
 
 }
