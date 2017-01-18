@@ -670,5 +670,6 @@ multi_line_string returns[StringLiteral tree]
 param returns[AbstractDeclParam tree]
     : type ident {
         $tree = new DeclParam($type.tree, $ident.tree);
+        setLocation($tree, $ident.start);
         }
     ;

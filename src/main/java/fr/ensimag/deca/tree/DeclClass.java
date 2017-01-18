@@ -1,10 +1,7 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ClassType;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -57,10 +54,10 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
-
-        // TODO: doivent ils être là ?
-        //this.fields.verifyListField(compiler, className.getClassDefinition());
-        //this.methods.verifyListMethod(compiler, className.getClassDefinition());
+        ClassDefinition defClass = className.getClassDefinition();
+        ClassDefinition defSuper = superName.getClassDefinition();
+        defClass.setNumberOfFields(defSuper.getNumberOfFields());
+        defClass.setNumberOfMethods(defSuper.getNumberOfMethods());
         this.fields.verifyListFieldHeader(compiler, className.getClassDefinition());
         this.methods.verifyListMethodHeader(compiler, className.getClassDefinition());
     }
@@ -75,18 +72,18 @@ public class DeclClass extends AbstractDeclClass {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         className.prettyPrint(s, prefix, false);
         superName.prettyPrint(s, prefix, false);
-        fields.prettyPrint(s, prefix, true);
+        fields.prettyPrint(s, prefix, false);
         methods.prettyPrint(s, prefix, true);
 
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-                className.iter(f);
-                superName.iter(f);
-                fields.iter(f);
-                methods.iter(f);
-         }
+            className.iter(f);
+            superName.iter(f);
+            fields.iter(f);
+            methods.iter(f);
+     }
 
     // Getter
     public ListDeclMethod getMethods() {

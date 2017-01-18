@@ -21,5 +21,5 @@ public abstract class AbstractBody extends Tree {
     protected abstract void verifyBody(DecacCompiler compiler, EnvironmentExp env_exp, ClassDefinition currentClass,
                                        Type returnType) throws ContextualError;
 
-    public abstract void generateMethod(DecacCompiler compiler, GenCode gc);
+    public abstract void generateMethod(DecacCompiler compiler, GenCode gc, boolean isVoid);
 }

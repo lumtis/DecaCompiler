@@ -14,7 +14,7 @@ public class ClassDefinition extends TypeDefinition {
 
     // Permet de connaitre l'index du début de la table des méthodes
     // de la classe par rapport à GB
-    private int offset = 0;
+    private int offset = 1;
 
     public void setOffset(int o) {
         offset = o;

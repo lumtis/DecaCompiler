@@ -1,0 +1,42 @@
+class Animal {
+    protected float poids;
+    protected int nbPates;
+
+    void faireCrier() {
+        println("Grrrrrrrrrr");
+    }
+
+    float nourrir(float poidsNourriture) {
+        poids = poids + poidsNourriture;
+        return poids;
+    }
+
+    Animal getCompagnon(float poids) {
+        Animal compagnon = new Animal();
+        compagnon.poids = poids;
+        return compagnon;
+    }
+}
+
+class Lion extends Animal {
+
+    void initParam(float newPoids, int NewNbPates) {
+        poids = newPoids;
+        nbPates = NewNbPates;
+    }
+
+    void faireCrier() {
+        println("RRRrrhhhhhh");
+    }
+
+    Lion getCompagnon(float poids) {
+        Lion compagnon = new Lion();
+        compagnon.poids = poids;
+        return compagnon;
+    }
+}
+
+{
+    Animal lion = new Lion();
+    println("Un lion a été créé.");
+}

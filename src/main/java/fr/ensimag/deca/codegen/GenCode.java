@@ -22,8 +22,6 @@ public class GenCode {
 
     private int labelIndex = 0;
     private final int  taillePile=1024;
-    private Label pile_pleine= newLabel("pile_pleine");
-    private Label tas_plein= newLabel("tas_plein");
 
     private Stack<GPRegister> tmpReg;
     private int indexTmp;
@@ -38,6 +36,9 @@ public class GenCode {
     private int indexGB;
     private int indexLB;
 
+    private Label pile_pleine = newLabel("pile_pleine");
+    private Label tas_plein = newLabel("tas_plein");
+    private Label no_return = newLabel("no_return");
 
 
     // Fonction utilitaires pour obtenir le nom d'un registre en fonction de
@@ -264,6 +265,8 @@ public class GenCode {
         // TODO: Definir ObjectEquals
         Label objectEquals = new Label("Object.equals");
 
+        comp.addComment("Table de Object");
+
         // Table des methodes de object
         indexObject = indexGB;
         comp.addInstruction(new LOAD(new NullOperand(), r0));
@@ -287,27 +290,31 @@ public class GenCode {
             // On initialise l'offset de la classe dans la table
             c.getClassName().getClassDefinition().setOffset(indexGB);
 
+            comp.addComment("Table de " + c.getClassName().getName().getName());
+
             // On place l'addresse de la table des methodes parentes
             comp.addInstruction(new LEA(getParentAddr(c), r0));
             comp.addInstruction(new STORE(r0, new RegisterOffset(indexGB, Register.GB)));
 
             // On obtient l'environnement ExpDefinition
-            EnvironmentExp env = c.getClassName().getClassDefinition().getMembers();
+            ClassDefinition cDef = c.getClassName().getClassDefinition();
+            EnvironmentExp env = cDef.getMembers();
 
             // On parcourt les envirronements de l'arborescence des classes
             while(env != null) {
                 for (Map.Entry<Symbol, ExpDefinition> entry : env.getHashMap().entrySet()) {
                     String name = entry.getKey().getName();
                     MethodDefinition method = (MethodDefinition)entry.getValue();
-                    Label lab = getMethodLabel(c, name);
+                    Label lab = new Label(cDef.getType().getName().getName() + "." + name); // nomClass.nomMethod
 
-                    if(redef[method.getIndex()] == true) {
+                    if(redef[method.getIndex()] == false) {
                         comp.addInstruction(new LOAD(new LabelOperand(lab), r0));
                         comp.addInstruction(new STORE(r0, new RegisterOffset(indexGB + method.getIndex(), Register.GB)));
                         redef[method.getIndex()] = true;
                     }
                 }
                 env = env.getParent();
+                cDef = cDef.getSuperClass();
             }
             indexGB += pas;
         }
@@ -364,7 +371,7 @@ public class GenCode {
         comp.addInstruction(new BOV(pile_pleine));
 
         // On genere le code de la methode
-        m.getBody().generateMethod(comp, this);
+        m.getBody().generateMethod(comp, this, m.getType().getMethodDefinition().getType().isVoid());
 
         comp.addInstruction(new RTS());
     }
@@ -405,16 +412,10 @@ public class GenCode {
     public void newObject(ClassDefinition cd) {
         DAddr classAddr = new RegisterOffset(cd.getOffset(), Register.GB);
         int totalNumberField;
-        ClassDefinition tmpParent;
         int offsetAttr = 1;
 
         // On obtient le nombre total d'attribut avec les classes parentes
         totalNumberField = cd.getNumberOfFields();
-        tmpParent = cd.getSuperClass();
-        while(tmpParent != null ) {
-            totalNumberField += tmpParent.getNumberOfFields();
-            tmpParent = tmpParent.getSuperClass();
-        }
 
         // On reserve l'espace memoire pour l'objet
         comp.addInstruction(new NEW(1 + totalNumberField, getRetReg()));
@@ -427,7 +428,7 @@ public class GenCode {
         /*
         // On fixe l'oprérande des attributs de la methode
         for (ExpDefinition attr : cd.getMembers().getHashMap().values()) {
-            // Les attributs sont placés par rapport au registre
+          // Les attributs sont placés par rapport au registre
             if(attr.isField()) {
                 attr.setOperand(new RegisterOffset(offsetAttr, getRetReg()));
                 offsetAttr++;
@@ -464,16 +465,25 @@ public class GenCode {
         comp.addComment("Code du programme principal");
         comp.addInstruction(new HALT());
         comp.addComment("Messages d’erreurs");
+
         comp.addLabel(pile_pleine);
         comp.addInstruction(new WSTR("Erreur: Pile pleine"));
         comp.addInstruction(new WNL());
         comp.addInstruction(new ERROR());
+
         comp.addLabel(tas_plein);
         comp.addInstruction(new WSTR("Erreur : allocation impossible, tas plein"));
         comp.addInstruction(new WNL());
         comp.addInstruction(new ERROR());
-        comp.addComment("Autres erreurs");
-        //à compléter les autres erreurs possibles à la fin
+
+        comp.addLabel(no_return);
+        comp.addInstruction(new WSTR("Erreur : fonction sans retour"));
+        comp.addInstruction(new WNL());
+        comp.addInstruction(new ERROR());
+    }
+
+    public Label getLabelNoReturn() {
+        return no_return;
     }
 
     public void addSeparatorComment() {

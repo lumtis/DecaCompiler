@@ -5,7 +5,9 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 
+import javax.naming.Context;
 import java.io.PrintStream;
+import java.lang.reflect.Method;
 
 /**
  * Created by buthodgt on 1/13/17.
@@ -73,9 +75,26 @@ public class DeclMethod extends AbstractDeclMethod {
         env_exp_body = new EnvironmentExp(classDef.getMembers());
         Signature sign = params.verifyListParam(compiler, env_exp_body, classDef);
         Type returnType = type.verifyType(compiler);
-        //On déclare la méthode dans env_exp
-        //A modifier s'il faut prendre en compte les fonctions de même nom mais signature différente.
-        MethodDefinition def = new MethodDefinition(returnType, this.getLocation(), sign, classDef.incNumberOfMethods());
+        MethodDefinition def;
+        //On vérifie si la méthode Override une autre.
+        ExpDefinition existingDef = classDef.getSuperClass().getMembers().get(methodName.getName());
+        if (existingDef != null) {
+            //Il faut tester si c'est bien un Override, sinon on renvoie une erreur.
+            String errorMessage = "Nom de méthode déjà utilisé pour autre chose.";
+            MethodDefinition existingMethod = existingDef.asMethodDefinition(errorMessage, this.getLocation());
+            if (!existingMethod.getSignature().sameSignature(sign)) {
+                throw new ContextualError("Signature différente de la méthode de même nom déjà déclarée.",
+                                            this.getLocation());
+            }
+            else if (!returnType.compatibleTo(existingMethod.getType())) {
+                throw new ContextualError("Type de retour incompatible pour override.",type.getLocation());
+            }
+            //L'override est possible, il faut lui donner l'index de la méthode override.
+            def = new MethodDefinition(returnType,this.getLocation(),sign,existingMethod.getIndex());
+        }
+        else {
+            def = new MethodDefinition(returnType, this.getLocation(), sign, classDef.incNumberOfMethods());
+        }
         try {
             classDef.getMembers().declare(methodName.getName(), def);
         }
@@ -116,6 +135,7 @@ public class DeclMethod extends AbstractDeclMethod {
     protected void iterChildren(TreeFunction f) {
         type.iter(f);
         methodName.iter(f);
+        params.iter(f);
         if(isAsm) {
             portionAssembleur.iter(f);
         }
@@ -128,6 +148,7 @@ public class DeclMethod extends AbstractDeclMethod {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         type.prettyPrint(s, prefix, false);
         methodName.prettyPrint(s, prefix, false);
+        params.prettyPrint(s, prefix, false);
         if(isAsm){
             portionAssembleur.prettyPrint(s,prefix,true);
         }

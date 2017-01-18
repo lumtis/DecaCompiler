@@ -41,4 +41,16 @@ public class FieldCall extends AbstractMemberCall {
     protected void iterChildren(TreeFunction f) {
         fieldName.iter(f);
     }
+
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        int index = fieldName.getFieldDefinition().getIndex();
+
+        // On réalise l'expression derrière le champ
+        objectName.codeGenInst(compiler, gc);
+
+        // On récupere la variable en fonction de son index
+        compiler.addInstruction(new LOAD(new RegisterOffset(index, gc.getRetReg()), getRetReg()));
+    }
 }
