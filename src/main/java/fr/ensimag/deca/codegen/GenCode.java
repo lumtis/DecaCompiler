@@ -6,6 +6,7 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import fr.ensimag.deca.*;
+import fr.ensimag.deca.tools.SymbolTable.Symbol;;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tree.*;
 import fr.ensimag.ima.pseudocode.*;
@@ -13,6 +14,7 @@ import static fr.ensimag.ima.pseudocode.Register.*;
 import java.util.Set;
 import java.util.Stack;
 import java.util.List;
+import java.util.Map;
 
 
 public class GenCode {
@@ -278,7 +280,7 @@ public class GenCode {
 
             // Tableau de booleens pour savoir si une méthode a été redéfinie
             boolean[] redef = new boolean[pas + 1];
-            for(int i = 0; i<=pas1; i++) {
+            for(int i = 0; i<=pas; i++) {
                 redef[i] = false;
             }
 
@@ -305,7 +307,7 @@ public class GenCode {
                         redef[method.getIndex()] = true;
                     }
                 }
-                env = getParent();
+                env = env.getParent();
             }
             indexGB += pas;
         }

@@ -43,7 +43,7 @@ public abstract class AbstractReturn extends AbstractInst {
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         returnExpr.codeGenInst(compiler, gc);
-        addInstruction(new BRA(getRetLabel()));
+        compiler.addInstruction(new BRA(gc.getRetLabel()));
     }
 
     @Override

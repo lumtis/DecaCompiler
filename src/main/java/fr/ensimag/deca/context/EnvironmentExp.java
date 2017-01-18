@@ -32,7 +32,7 @@ public class EnvironmentExp {
     }
 
     public HashMap<Symbol, ExpDefinition> getHashMap() {
-        return HashMap;
+        return variables;
     }
 
     public static class DoubleDefException extends Exception {

@@ -8,6 +8,7 @@ class Animal {
 
     float nourrir(float poidsNourriture) {
         poids = poids + poidsNourriture;
+        faireCrier();
         return poids;
     }
 }

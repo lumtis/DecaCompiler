@@ -2,9 +2,13 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
+import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 import java.io.PrintStream;
+import java.util.List;
 
 /**
  * Created by buthodgt on 1/17/17.
@@ -20,6 +24,7 @@ public class MethodCall extends AbstractMemberCall {
         this.methodName = methodName;
         this.arguments = arguments;
     }
+
 
     @Override
     public Type verifyMember(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass,
@@ -61,7 +66,7 @@ public class MethodCall extends AbstractMemberCall {
         int i = -1;
         for(AbstractExpr e:argList) {
             e.codeGenInst(compiler, gc);
-            compiler.addInstruction(new LOAD(gc.getRetReg(), new RegisterOffset(i, Register.SP)));
+            //compiler.addInstruction(new LOAD(gc.getRetReg(), new RegisterOffset(i, Register.SP)));
             i--;
         }
 

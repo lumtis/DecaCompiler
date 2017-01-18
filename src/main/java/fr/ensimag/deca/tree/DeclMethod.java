@@ -16,6 +16,8 @@ public class DeclMethod extends AbstractDeclMethod {
     private ListDeclParam params;
     private AbstractBody body;
     private EnvironmentExp env_exp_body;
+    private boolean isAsm;
+    private StringLiteral portionAssembleur;
 
 
     public DeclMethod(AbstractIdentifier type, AbstractIdentifier methodName, ListDeclParam params, AbstractBody body) {
@@ -23,10 +25,22 @@ public class DeclMethod extends AbstractDeclMethod {
         Validate.notNull(methodName);
         Validate.notNull(body);
         Validate.notNull(params);
+        this.isAsm = false;
         this.type = type;
         this.methodName = methodName;
         this.params = params;
         this.body = body;
+    }
+    public DeclMethod(AbstractIdentifier type, AbstractIdentifier methodName, ListDeclParam params, StringLiteral portionAssembleur) {
+        Validate.notNull(type);
+        Validate.notNull(methodName);
+        Validate.notNull(portionAssembleur);
+        Validate.notNull(params);
+        this.isAsm = true;
+        this.type = type;
+        this.methodName = methodName;
+        this.params = params;
+        this.portionAssembleur = portionAssembleur;
     }
 
     public AbstractIdentifier getMethodName(){
@@ -75,32 +89,50 @@ public class DeclMethod extends AbstractDeclMethod {
     @Override
     protected void verifyDeclMethodBody(DecacCompiler compiler, ClassDefinition classDef)
             throws ContextualError {
-        body.verifyBody(compiler, env_exp_body, classDef, type.getType());
+        if(!isAsm) {
+            body.verifyBody(compiler, env_exp_body, classDef, type.getType());
+        }else{
+            portionAssembleur.verifyExpr(compiler,env_exp_body,classDef);
+        }
     }
 
 
     @Override
     public void decompile(IndentPrintStream s) {
+
         type.decompile(s);
         methodName.decompile(s);
-        body.decompile(s);
+        if(isAsm){
+            portionAssembleur.decompile(s);
+        }
+        else {
+            body.decompile(s);
+        }
         s.println("");
-        throw new UnsupportedOperationException("Pas encore implémenté");
+
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
         type.iter(f);
         methodName.iter(f);
-        //Afficher la signature
-        body.iter(f);
+        if(isAsm) {
+            portionAssembleur.iter(f);
+        }
+        else {
+            body.iter(f);
+        }
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         type.prettyPrint(s, prefix, false);
         methodName.prettyPrint(s, prefix, false);
-        //Afficher la signature de la méthode
-        body.prettyPrint(s, prefix, false);
+        if(isAsm){
+            portionAssembleur.prettyPrint(s,prefix,true);
+        }
+        else {
+            body.prettyPrint(s, prefix, true);
+        }
     }
 }

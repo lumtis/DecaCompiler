@@ -55,7 +55,7 @@ public class Body extends AbstractBody{
         gc.saveRegister();
         compiler.addComment("Beginning of method:");
         insts.codeGenListInst(compiler, gc);
-        compiler.addLabel(getRetLabel());
+        compiler.addLabel(gc.getRetLabel());
         compiler.addComment("Restore register:");
         gc.restoreRegister();
     }
