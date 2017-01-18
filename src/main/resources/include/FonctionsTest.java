@@ -142,13 +142,13 @@ public class FonctionsTest {
         else {
             testtan=test;
         }
-        //System.out.print("Erreur ");
-        //System.out.print((abs((float)java.lang.Math.tan(f)-s)));
+        System.out.print("Erreur ");
+        System.out.print(Erreur((float)java.lang.Math.tan(f),s,lim));
         if ((float)abs((float)java.lang.Math.tan(f)-s)<=testtan){
-            System.out.println("TAN PASS");
+            System.out.println(" TAN PASS");
         }
         else {
-            System.out.println("TAN NO");
+            System.out.println(" TAN NO");
             
         }
     }

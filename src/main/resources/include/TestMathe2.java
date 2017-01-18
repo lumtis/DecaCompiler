@@ -94,13 +94,13 @@ public class TestMathe2 {
         //System.out.print("Nombre total de COSSER PASS : ");
         //System.out.println(c2);*/
        
-        /*
+        
         System.out.println("TEST TAN");
-        for (float i=0;i<py/2;i=i+py/24){    
+        for (float i=-py/2+py/48;i<py/2+py/48;i=i+py/24){    
             System.out.print(i);
             System.out.print("  ");
             fon.testTan(i);
-        }*/
+        }
         /*
         System.out.println("TEST ASIN");
         for (float i=-1;i<=1;i=i+(float)0.01){    
@@ -116,13 +116,13 @@ public class TestMathe2 {
             System.out.print(" ");
             fon.testAsin2(i);
         }*/
-        
+        /*
         System.out.println("TEST ACOS");
         for (float i=-1;i<=1;i=i+(float)0.01){    
             System.out.print(i);
             System.out.print("  ");
             fon.testAcos(i);
-        }
+        }*/
         
         /*
         System.out.println("TEST ATAN");
