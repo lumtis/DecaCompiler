@@ -1,0 +1,43 @@
+// Description:
+//    classe vecteur
+//
+// Resultats:
+//    
+
+{
+class Vector {
+	float a;
+	float b;
+	float c;
+		
+	float getX(){
+		return this.a;
+	}
+
+	float getY(){
+		return this.b;
+	}
+
+	float getZ(){
+		return this.c;
+	}
+
+	void toString(){
+		println(this.a);
+		println(this.b);
+		println(this.c);
+        }
+
+	void plusVect(Vector v){
+		this.a=this.a+v.a;
+		this.b=this.b+v.b;
+		this.c=this.c+v.c;
+	}
+	
+	void multVect(Vector v){
+		this.a=this.a*v.a;
+		this.b=this.b*v.b;
+		this.c=this.c*v.c;
+	}
+
+}

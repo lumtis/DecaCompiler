@@ -296,7 +296,7 @@ public class Mathe {
 
     // fonction arcsin première version série entière
     public static float asin(float f) {
-        if (f<1 && f>=-1 ) { //definie seulement sur -1..1
+        if (f<=1 && f>=-1 ) { //definie seulement sur -1..1
         int k=0;
         float solution=0;
         while (k < 7) {
@@ -308,7 +308,25 @@ public class Mathe {
         }
         return f;
     }
-
+    //arcsin(x)=arctan(x/sqrt(1-x²))) 
+    public static float asin2(float f) {
+        if (f<1 && f>-1 ) {
+            return atan(f/sqrt(1-pow(f,2)));
+        }
+        if (f==1){
+            return pi()/2;
+        }
+        if (f==-1){
+            return -pi()/2;
+        }
+        
+        return f;
+    }
+    
+    public static float acos(float f) {
+        return (float)1.570796327-asin2(f);
+    }
+        
 
     // fonction arctan première méthode série entière
     public static float atan(float f) {
@@ -335,7 +353,24 @@ public class Mathe {
         }
        return 0; 
     }
-
+    public static float atan3(float f) {
+        if (abs(f)>0.9 && abs(f)<1.1){
+            return atan2(f);
+        }
+        return atan(f);    
+        }
+    
+    public static float atan2(float f) {
+        float a=1/sqrt(1+f*f);
+        float b=1;
+        int i=1;
+        while (i<12){
+            a=(a+b)/2;
+            b=sqrt(a*b);
+            i++;
+        }
+        return f/(sqrt(1+f*f)*a);
+    }
 
 
     // calcul de l'ulp

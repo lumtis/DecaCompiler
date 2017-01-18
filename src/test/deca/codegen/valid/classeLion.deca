@@ -1,0 +1,28 @@
+// Description:
+//    tests du if
+//
+// Resultats:
+//    10
+
+{
+   class Lion  {
+	int longueurgriffe;
+	
+	int getLongueurgriffe(){
+		return this.longueurgriffe;
+	}
+	
+	void setLongueurgriffe(int l){
+		this.longueurgriffe=l;
+	}
+
+	void crier() {
+      		println("Roaar");
+      	}
+	
+	void toString(){
+		print("Le lion possède des griffes de longueur");
+		print(this.longueurgriffe);
+	}
+
+}

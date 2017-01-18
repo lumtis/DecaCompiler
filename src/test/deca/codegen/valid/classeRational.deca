@@ -1,0 +1,24 @@
+// Description:
+//   classe rational
+//
+// Resultats:
+//    
+
+{
+class Rational {
+	int num;
+	int denom;
+
+	int getNum(){
+		return this.num;
+	}
+	int getDenom(){
+		return this.denom;
+	}
+
+	void setNum(int i) {
+	this.num=i;
+	}
+
+  
+}

@@ -29,8 +29,9 @@ public class TestMathe2 {
         //System.out.println(Mathe.asin((float)0.5));
         
         //System.out.println((float)java.lang.Math.asin(0.52));
-        System.out.println(Mathe.sqrt((float)3));
-        System.out.println(java.lang.Math.sqrt((float)3));
+        System.out.println(Mathe.atan2((float)0.01));
+        System.out.println(Mathe.atan((float)0.01));
+        System.out.println(java.lang.Math.atan((float)0.01));
         
         //float a=Mathe.cos2((float)2.5);
         //float b=Mathe.cordic_cos((float)2.5);
@@ -102,28 +103,41 @@ public class TestMathe2 {
         }*/
         /*
         System.out.println("TEST ASIN");
-        for (float i=-py;i<=py;i=i+py/12){    
+        for (float i=-1;i<=1;i=i+(float)0.01){    
+            //System.out.print(i);
+            //System.out.print(" ");
+            
+            //System.out.println(Mathe.asin(i));
+            
+            //fon.testAsin(i);
+            
+            
             System.out.print(i);
-            System.out.print("  ");
-            fon.testAsinus(i);
+            System.out.print(" ");
+            fon.testAsin2(i);
         }*/
-        /*
+        
         System.out.println("TEST ACOS");
-        for (float i=-py;i<=py;i=i+py/12){    
+        for (float i=-1;i<=1;i=i+(float)0.01){    
             System.out.print(i);
             System.out.print("  ");
-            fon.testAcosinus(i);
-        }*/
+            fon.testAcos(i);
+        }
         
         /*
         System.out.println("TEST ATAN");
         for (float i=-10;i<=10;i=i+(float)0.1){    
-            //System.out.println(i);
+            //System.out.print(i);
             //System.out.print(" ");
             
-            System.out.println(Mathe.atan(i));
+            //System.out.println(Mathe.atan(i));
             
-            //fon.testAtan(i);
+            //fon.testAtan2(i);
+            
+            
+            System.out.print(i);
+            System.out.print(" ");
+            fon.testAtan3(i);
         }*/
         
         
