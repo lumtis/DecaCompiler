@@ -4,7 +4,6 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
-
 import javax.naming.Context;
 import java.io.PrintStream;
 
@@ -29,6 +28,12 @@ public class DeclParam extends AbstractDeclParam {
     public AbstractIdentifier getType(){
         return this.type;
     }
+
+    /*
+    protected void verifyDeclParam(DecacCompiler compiler, ClassDefinition currentClass)
+            throws ContextualError {
+        throw new ContextualError("Pas encore fait", this.getLocation());
+    */
 
     @Override
     protected Type verifyDeclParam(DecacCompiler compiler, EnvironmentExp env_exp, ClassDefinition currentClass)

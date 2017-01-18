@@ -1,5 +1,6 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import org.apache.commons.lang.Validate;
@@ -37,5 +38,10 @@ public abstract class AbstractMemberCall extends AbstractLValue {
         Type memberType = verifyMember(compiler, localEnv, currentClass, typeClass);
         this.setType(memberType);
         return memberType;
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        throw new UnsupportedOperationException("not yet implemented");
     }
 }

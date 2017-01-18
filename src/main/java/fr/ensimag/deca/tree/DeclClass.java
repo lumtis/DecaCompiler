@@ -9,7 +9,7 @@ import java.io.PrintStream;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
- * 
+ *
  * @author gl35
  * @date 01/01/2017
  */
@@ -70,7 +70,7 @@ public class DeclClass extends AbstractDeclClass {
         this.fields.verifyListFieldHeader(compiler, className.getClassDefinition());
         this.methods.verifyListMethodHeader(compiler, className.getClassDefinition());
     }
-    
+
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
         this.fields.verifyListFieldInit(compiler, className.getClassDefinition());
@@ -94,4 +94,22 @@ public class DeclClass extends AbstractDeclClass {
             methods.iter(f);
      }
 
+    // Getter
+    public ListDeclMethod getMethods() {
+        return methods;
+    }
+    public ListDeclField getFields() {
+        return fields;
+    }
+    public Identifier getClassName() {
+        return (Identifier)className;
+    }
+    public Identifier getParent() {
+        return (Identifier)superName;
+    }
+
+
+    public int numberMethods() {
+        return className.getClassDefinition().getNumberOfMethods();
+    }
 }

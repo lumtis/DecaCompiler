@@ -1,4 +1,4 @@
-package fr.ensimag.deca.context;
+ package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.tree.Location;
 import fr.ensimag.ima.pseudocode.Label;

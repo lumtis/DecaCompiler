@@ -41,8 +41,7 @@ public class DeclField extends AbstractDeclField {
     }
 
     @Override
-    protected void verifyDeclFieldHeader(DecacCompiler compiler, ClassDefinition currentClass)
-            throws ContextualError {
+    protected void verifyDeclFieldHeader(DecacCompiler compiler, ClassDefinition currentClass)            throws ContextualError {
         Type t = type.verifyType(compiler);
         if (compiler.getType(fieldName.getName()) != null) {
             throw new ContextualError("Nom d'attribut utilisé est un type.", this.getLocation());

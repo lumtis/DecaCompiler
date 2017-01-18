@@ -2,7 +2,10 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
+import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 import java.io.PrintStream;
 
@@ -51,5 +54,17 @@ public class FieldCall extends AbstractMemberCall {
     @Override
     protected void iterChildren(TreeFunction f) {
         fieldName.iter(f);
+    }
+
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        int index = fieldName.getFieldDefinition().getIndex();
+
+        // On réalise l'expression derrière le champ
+        getObjectName().codeGenInst(compiler, gc);
+
+        // On récupere la variable en fonction de son index
+        compiler.addInstruction(new LOAD(new RegisterOffset(index, gc.getRetReg()), gc.getRetReg()));
     }
 }

@@ -1,11 +1,11 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
+import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 import java.io.PrintStream;
 
@@ -41,5 +41,11 @@ public class This extends AbstractExpr {
     @Override
     String prettyPrintNode() {
         return "This";
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        // L'adresse de l'objet est toujours dans -2(LB)
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), gc.getRetReg()));
     }
 }

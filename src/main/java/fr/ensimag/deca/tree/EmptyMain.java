@@ -19,7 +19,7 @@ public class EmptyMain extends AbstractMain {
     }
 
     @Override
-    protected void codeGenMain(DecacCompiler compiler) {
+    protected void codeGenMain(DecacCompiler compiler, GenCode gc) {
         //Il n'y a rien à faire
     }
 
@@ -30,7 +30,7 @@ public class EmptyMain extends AbstractMain {
     protected void checkLocation() {
         // nothing
     }
-    
+
     @Override
     public void decompile(IndentPrintStream s) {
         // no main program => nothing

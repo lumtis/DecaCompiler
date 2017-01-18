@@ -234,17 +234,25 @@ public class Identifier extends AbstractIdentifier {
 
         // On regarde si la variable est un float
         if(definition.getType().isFloat()) {
+            // Permet de savoir que l'expression est flottante pour le print
+            // de l'expression
             gc.setExprFloat(true);
         }
         else {
             gc.setExprFloat(false);
         }
 
-        // On récupère l'adresse de la variable
-        DAddr addr = gc.getAddrVar(this);
+        // S'il s'agit de la creation d'un objet alors on alloue
+        // la mémoires requis
+        //if(definition.isMethod()) {
 
-        // On met la valeur de cette adresse dans le registre de retour
-        compiler.addInstruction(new LOAD(addr, gc.getRetReg()));
+        //}
+        //else {
+            // Il s'agit d'une simple variable alors on recupere son adresse
+            // et on charqe sa valeur
+            DAddr addr = gc.getAddrVar(this);
+            compiler.addInstruction(new LOAD(addr, gc.getRetReg()));
+        //}
     }
 
 

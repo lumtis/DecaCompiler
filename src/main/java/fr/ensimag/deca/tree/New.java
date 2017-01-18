@@ -5,6 +5,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -49,5 +50,9 @@ public class New extends AbstractExpr {
         return type_cour;
     }
 
-
+    @Override
+    protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+          Identifier c = (Identifier)class_ident;
+          gc.newObject(c.getClassDefinition());
+    }
 }

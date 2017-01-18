@@ -23,8 +23,8 @@ public class And extends AbstractOpBool {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        Label faux = gc.newLabel();  // Label lorsque l'expression est fausse
-        Label fin = gc.newLabel();   // Label de la fin de l'expression
+        Label faux = gc.newLabel("AndFaux");  // Label lorsque l'expression est fausse
+        Label fin = gc.newLabel("AndFin");   // Label de la fin de l'expression
 
         // On ajoute le code permettant de réaliser l'expression 1
         getLeftOperand().codeGenInst(compiler, gc);

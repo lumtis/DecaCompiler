@@ -21,6 +21,7 @@ public class DeclMethod extends AbstractDeclMethod {
     private boolean isAsm;
     private StringLiteral portionAssembleur;
 
+
     public DeclMethod(AbstractIdentifier type, AbstractIdentifier methodName, ListDeclParam params, AbstractBody body) {
         Validate.notNull(type);
         Validate.notNull(methodName);
@@ -56,6 +57,17 @@ public class DeclMethod extends AbstractDeclMethod {
         return this.body;
     }
 
+    public ListDeclParam getParams() {
+        return this.params;
+    }
+
+
+    /*
+    protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition classDef)
+            throws ContextualError {
+        params.verifyListParam(compiler, classDef);
+        throw new ContextualError("Pas encore fait", this.getLocation());
+    */
 
     @Override
     protected void verifyDeclMethodHeader(DecacCompiler compiler, ClassDefinition classDef)

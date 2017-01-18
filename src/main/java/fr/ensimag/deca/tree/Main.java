@@ -42,16 +42,14 @@ public class Main extends AbstractMain {
         LOG.debug("verify Main: end");
     }
     @Override
-    protected void codeGenMain(DecacCompiler compiler) {
-        GenCode gc = new GenCode(compiler);
-
-        // On initialise le début du code
-        gc.initProgram();
+    protected void codeGenMain(DecacCompiler compiler, GenCode gc) {
         gc.initGlobalVar(this.declVariables.getList());
 
+        gc.addSeparatorComment();
         compiler.addComment("Beginning of main instructions:");
+        gc.addSeparatorComment();
+
         insts.codeGenListInst(compiler, gc);
-        gc.terminateProgram();
     }
 
     @Override
