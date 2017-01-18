@@ -1,7 +1,7 @@
 
 class B {
     void test(boolean X, float Y, int Z) {
-        if(X && Y < 3.5 && X == -6) {
+        if(X && Y < 3.5 && Z == -6) {
             println("OK");
         }
     }
@@ -24,7 +24,7 @@ class A {
 {
     A test = new A();
 
-    A.initA();
+    test.initA();
 
-    A.getB().test(true, 3.0, -6);
+    test.getB().test(true, 3.0, -6);
 }
