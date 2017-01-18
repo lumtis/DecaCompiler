@@ -18,40 +18,37 @@ public class TestMathe2 {
     public static void main(String[] args) {
         
         //float  py=Mathe.pi();
-        
+        //System.out.print(FonctionsTest.Erreur((float)java.lang.Math.atan(0.99999),Mathe.atan((float)0.99999),java.lang.Math.ulp((float) java.lang.Math.atan((float)0.99999))));
         
         //System.out.println("3.1415926535897932");
-        //float py = (float)3.141592653589793238462643383279;
-        float py = Mathe.pi();
-        float py2=Mathe.adapt(15*py);
-        //System.out.println(py);
-        //System.out.println(py2);
-        float r=Mathe.adapt2(py);
-        //System.out.println(r);
+        float py = (float)3.141592653589793238462643383279;
+        
         
         float testlimite=(float)0.000001;
         FonctionsTest fon= new FonctionsTest(testlimite,true);
+        //System.out.println(Mathe.asin((float)0.5));
         
-       
+        //System.out.println((float)java.lang.Math.asin(0.52));
+        System.out.println(Mathe.sqrt((float)3));
+        System.out.println(java.lang.Math.sqrt((float)3));
         
-        
-        float a=Mathe.cos2((float)2.5);
-        float b=Mathe.cordic_cos((float)2.5);
-        float c=(float) java.lang.Math.cos(2.5);
+        //float a=Mathe.cos2((float)2.5);
+        //float b=Mathe.cordic_cos((float)2.5);
+        //float c=(float) java.lang.Math.cos(2.5);
         
         //System.out.println(a);
         //System.out.println(b);
         //System.out.println(c);
         
         
-        
+        /*
         System.out.println("TEST SIN");
         int c11=0;
         int c22=0;
-        for (float i=-py;i<=py;i=i+py/48){    
+        for (float i=-py+py/48;i<=py-py/48;i=i+py/48){    
             //System.out.println(i);
-            System.out.println(Mathe.sin(i));
-            //c11=c11+fon.testSinus(i);
+            //System.out.println(Mathe.sin(i));
+            c11=c11+fon.testSinus(i);
         
             //System.out.print(i);
             //System.out.print("  ");
@@ -63,27 +60,38 @@ public class TestMathe2 {
         
         //System.out.print("Nombre total de SINSER PASS : ");
         //System.out.println(c22);
-        
+        */
         /*
         System.out.println("TEST COS");
         int c1=0;
         int c2=0;
-        for (float i=-py;i<=py;i=i+py/24){    
-            //System.out.print(i);
+        for (float i=0;i<=py/2-py/24;i=i+py/24){    
+            //System.out.println(i);
             //System.out.print("  ");
             
-            //c1=c1+fon.testCosinus(i);
+            c1=c1+fon.testCosinus(i);
             
-            System.out.print(i);
-            System.out.print("  ");
-            c2=c2+fon.testCosinus2(i);
-            System.out.println("");
+            //System.out.print(i);
+            //System.out.print("  ");
+            //c2=c2+fon.testCosinus2(i);
+            //System.out.println("");
+        }
+        for (float i=py/2+py/24;i<=py;i=i+py/24){    
+            //System.out.println(i);
+            //System.out.print("  ");
+            
+            c1=c1+fon.testCosinus(i);
+            
+            //System.out.print(i);
+            //System.out.print("  ");
+            //c2=c2+fon.testCosinus2(i);
+            //System.out.println("");
         }
         //System.out.print("Nombre total de COS PASS : ");
         //System.out.println(c1);
         
-        System.out.print("Nombre total de COSSER PASS : ");
-        System.out.println(c2);*/
+        //System.out.print("Nombre total de COSSER PASS : ");
+        //System.out.println(c2);*/
        
         /*
         System.out.println("TEST TAN");
@@ -109,10 +117,13 @@ public class TestMathe2 {
         
         /*
         System.out.println("TEST ATAN");
-        for (float i=-py/4;i<=py/4;i=i+py/48){    
-            System.out.print(i);
-            System.out.print("  ");
-            fon.testAtan(i);
+        for (float i=-10;i<=10;i=i+(float)0.1){    
+            //System.out.println(i);
+            //System.out.print(" ");
+            
+            System.out.println(Mathe.atan(i));
+            
+            //fon.testAtan(i);
         }*/
         
         
