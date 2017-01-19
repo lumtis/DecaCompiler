@@ -34,8 +34,8 @@ public class FieldCall extends AbstractFieldCall {
         }
         //Il faut vérifier si on peut accéder à l'attribut (dans le cas protected).
         FieldDefinition fieldDef = fieldName.getFieldDefinition();
-        if (fieldDef.getVisibility() == Visibility.PROTECTED &&
-                !typeObject.isSubClassOf(currentClass.getType())) {
+        if (fieldDef.getVisibility() == Visibility.PROTECTED && (currentClass == null ||
+                !typeObject.isSubClassOf(currentClass.getType()))) {
             throw new ContextualError("L'attribut est de type protected.",fieldName.getLocation());
         }
         this.setType(fieldType);
