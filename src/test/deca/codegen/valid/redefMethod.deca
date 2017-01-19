@@ -1,12 +1,12 @@
 class Marocain extends Object {
-    protected float taille = 1.67;
+    float taille = 1.67;
 
     void setTaille(float taille) {
         this.taille = taille;
     }
 
-    float getTaille() {
-        return taille;
+    void ditBonjour() {
+        println("Salam alaikoum !");
     }
 }
 
@@ -23,7 +23,5 @@ class Thami extends Marocain {
 {
     Marocain thami = new Thami();
     thami.initTaille();
-    if (thami.getTaille() == 1.86) {
-        println("OK");
-    }
+    thami.ditBonjour();
 }
