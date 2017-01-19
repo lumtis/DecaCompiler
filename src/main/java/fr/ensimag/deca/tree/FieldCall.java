@@ -82,9 +82,6 @@ public class FieldCall extends AbstractFieldCall {
 
         int index = fieldName.getFieldDefinition().getIndex();
 
-        // On réalise l'expression derrière le champ
-        objectName.codeGenInst(compiler, gc);
-
         // On récupere la variable en fonction de son index
         compiler.addInstruction(new LEA(new RegisterOffset(index, gc.getRetReg()), gc.getRetReg()));
     }

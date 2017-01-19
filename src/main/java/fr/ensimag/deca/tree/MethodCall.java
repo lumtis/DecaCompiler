@@ -86,9 +86,7 @@ public class MethodCall extends AbstractMethodCall {
         }
         else {
             // L'objet est toujours dans -2(LB)
-            int indexMeth = methodName.getMethodDefinition().getIndex();
-            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), gc.getR0()));
-            compiler.addInstruction(new LOAD(new RegisterOffset(indexMeth, gc.getR0()), gc.getRetReg()));
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), gc.getRetReg()));
         }
 
         List<AbstractExpr> argList = arguments.getList();
