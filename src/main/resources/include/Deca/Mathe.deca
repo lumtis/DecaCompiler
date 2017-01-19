@@ -1,4 +1,4 @@
-{
+//#include GrandFloat.deca
 class Mathe {
 
     float pi (){
@@ -533,4 +533,4 @@ class Mathe {
         }
     
 }
-}
+
