@@ -1,0 +1,31 @@
+class FCBarcelone {
+
+   protected int iniesta = 8;
+   protected int messi = 10;
+   protected int busquets = 6;
+
+   int getMessi(){
+       print("Meeeessi");
+       return messi;
+   }
+
+}
+class Francais extends FCBarcelone{
+
+     int umtiti = 15;
+
+
+}
+{
+
+   FCBarcelone Neymar = new FCBarcelone();
+   Francais Digne = new Francais();
+   FCBarcelone DigneBarcelonais;
+   boolean beauJeu;
+   beauJeu= Digne instanceof FCBarcelone;
+   Digne = (FCBarcelone)(Digne);	
+   print("Allez tout de suite chercher le pyjama!");
+    
+    
+
+}

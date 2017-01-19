@@ -23,8 +23,8 @@ public class Or extends AbstractOpBool {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        Label vrai = gc.newLabel();  // Label lorsque l'expression est fausse
-        Label fin = gc.newLabel();   // Label de la fin de l'expression
+        Label vrai = gc.newLabel("OrVrai");  // Label lorsque l'expression est fausse
+        Label fin = gc.newLabel("OrFin");   // Label de la fin de l'expression
 
         // On ajoute le code permettant de réaliser l'expression 1
         getLeftOperand().codeGenInst(compiler, gc);

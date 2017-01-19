@@ -1,0 +1,20 @@
+//ERROR :18
+class Animal {
+    protected float poids;
+    protected int nbPates;
+
+    void faireCrier() {
+        println("Grrrrrrrrrr");
+    }
+
+    float nourrir(float poidsNourriture) {
+        poids = poids + poidsNourriture;
+        return poids;
+    }
+}
+{
+
+    Animal Zebre = new Animal();
+    int x = Zebre.nourrir(5.0);
+
+}

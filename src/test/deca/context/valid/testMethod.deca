@@ -1,0 +1,23 @@
+
+
+class A {
+    protected boolean test = false;
+
+    void setTest() {
+        test = true;
+    }
+
+    void makeTest() {
+        if(test) {
+            println("OK");
+        }
+    }
+}
+
+
+{
+    A test = new A();
+
+    test.setTest();
+    test.makeTest();
+}

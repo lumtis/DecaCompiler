@@ -1,8 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.log4j.Logger;
 
@@ -14,16 +13,24 @@ public class ListDeclParam extends TreeList<AbstractDeclParam>{
 
     @Override
     public void decompile(IndentPrintStream s) {
+        s.print("(");
+        int i = 0;
         for (AbstractDeclParam p : getList()) {
+            if (i>0) {
+                s.print(", ");
+            }
+            i++;
             p.decompile(s);
-            s.println();
         }
+        s.print(") ");
     }
 
-    void verifyListParam(DecacCompiler compiler, ClassDefinition classDef) throws ContextualError {
+    Signature verifyListParam(DecacCompiler compiler, EnvironmentExp env_exp, ClassDefinition classDef) throws ContextualError {
+        Signature sign = new Signature();
         for (AbstractDeclParam p : getList()) {
-            p.verifyDeclParam(compiler, classDef);
-            this.add(p);
+            Type t = p.verifyDeclParam(compiler, env_exp, classDef);
+            sign.add(t);
         }
+        return sign;
     }
 }

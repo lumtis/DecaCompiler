@@ -37,16 +37,6 @@ public class ManualTestDecompile {
             e.display(System.err);
             System.exit(1);
         }
-        System.out.println("---------Code source----------");
-        FileReader file = new FileReader(lex.getSourceName());
-        BufferedReader buff = new BufferedReader(file);
-        String str;
-        String output = "";
-        while ((str=buff.readLine())!=null) {
-            output += str+"\n";
-        }
-        System.out.println(output);
-        System.out.println("---------Code décompilé----------");
         System.out.println(prog.decompile());
     }
 }

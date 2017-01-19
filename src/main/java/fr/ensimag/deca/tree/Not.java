@@ -38,8 +38,8 @@ public class Not extends AbstractUnaryExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        Label vrai = gc.newLabel();  // Label lorsque l'expression est vrai
-        Label fin = gc.newLabel();   // Label de la fin de l'expression
+        Label vrai = gc.newLabel("NotVrai");  // Label lorsque l'expression est vrai
+        Label fin = gc.newLabel("NotVrai");   // Label de la fin de l'expression
 
         super.codeGenInst(compiler, gc);
 

@@ -1,0 +1,13 @@
+
+
+class A {
+    protected int X;
+    protected boolean Y;
+    protected float Z;
+}
+
+
+{
+    A test = new A();
+    println("OK");
+}

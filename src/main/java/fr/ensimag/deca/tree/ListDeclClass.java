@@ -36,18 +36,22 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
      * Pass 2 of [SyntaxeContextuelle]
      */
     public void verifyListClassMembers(DecacCompiler compiler) throws ContextualError {
+        LOG.debug("verify listClassMembers: start");
         for (AbstractDeclClass c : getList()) {
             c.verifyClassMembers(compiler);
         }
+        LOG.debug("verify listClassMembers: end");
     }
     
     /**
      * Pass 3 of [SyntaxeContextuelle]
      */
     public void verifyListClassBody(DecacCompiler compiler) throws ContextualError {
+        LOG.debug("verify listClassBody: start");
         for (AbstractDeclClass c : getList()) {
             c.verifyClassBody(compiler);
         }
+        LOG.debug("verify listClassBody: end");
     }
 
 

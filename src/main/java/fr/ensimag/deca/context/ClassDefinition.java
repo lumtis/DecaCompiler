@@ -12,6 +12,17 @@ import org.apache.commons.lang.Validate;
  */
 public class ClassDefinition extends TypeDefinition {
 
+    // Permet de connaitre l'index du début de la table des méthodes
+    // de la classe par rapport à GB
+    private int offset = 1;
+
+    public void setOffset(int o) {
+        offset = o;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
 
     public void setNumberOfFields(int numberOfFields) {
         this.numberOfFields = numberOfFields;
@@ -33,7 +44,7 @@ public class ClassDefinition extends TypeDefinition {
         Validate.isTrue(n >= 0);
         numberOfMethods = n;
     }
-    
+
     public int incNumberOfMethods() {
         numberOfMethods++;
         return numberOfMethods;
@@ -41,25 +52,25 @@ public class ClassDefinition extends TypeDefinition {
 
     private int numberOfFields = 0;
     private int numberOfMethods = 0;
-    
+
     @Override
     public boolean isClass() {
         return true;
     }
-    
+
     @Override
     public ClassType getType() {
         // Cast succeeds by construction because the type has been correctly set
         // in the constructor.
         return (ClassType) super.getType();
-    };
+    }
 
     public ClassDefinition getSuperClass() {
         return superClass;
     }
 
     private final EnvironmentExp members;
-    private final ClassDefinition superClass; 
+    private final ClassDefinition superClass;
 
     public EnvironmentExp getMembers() {
         return members;
@@ -76,5 +87,5 @@ public class ClassDefinition extends TypeDefinition {
         members = new EnvironmentExp(parent);
         this.superClass = superClass;
     }
-    
+
 }

@@ -10,7 +10,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 
 /**
- * 
+ *
  * @author gl35
  * @date 01/01/2017
  */
@@ -20,22 +20,22 @@ public class ListInst extends TreeList<AbstractInst> {
      * Implements non-terminal "list_inst" of [SyntaxeContextuelle] in pass 3
      * @param compiler contains "env_types" attribute
      * @param localEnv corresponds to "env_exp" attribute
-     * @param currentClass 
+     * @param currentClass
      *          corresponds to "class" attribute (null in the main bloc).
      * @param returnType
      *          corresponds to "return" attribute (void in the main bloc).
-     */    
+     */
     public void verifyListInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         for (AbstractInst i : getList()) {
             i.verifyInst(compiler,localEnv,currentClass,returnType);
         }
-        //TODO : Il faut vérifier que le return est correct.
     }
 
     public void codeGenListInst(DecacCompiler compiler, GenCode gc) {
         for (AbstractInst i : getList()) {
+            gc.setExprFloat(false);
             i.codeGenInst(compiler, gc);
         }
     }

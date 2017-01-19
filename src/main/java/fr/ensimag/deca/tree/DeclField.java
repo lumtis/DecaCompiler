@@ -12,12 +12,13 @@ import java.io.PrintStream;
  * Voir si on peut fusionner cette classe avec DeclVar
  */
 public class DeclField extends AbstractDeclField {
-    final private boolean privacy;
+    final private Visibility privacy;
     final private AbstractIdentifier type;
     final private AbstractIdentifier fieldName;
     private AbstractInitialization initialization;
 
-    public DeclField(boolean privacy, AbstractIdentifier type, AbstractIdentifier fieldName, AbstractInitialization initialization) {
+    public DeclField(Visibility privacy, AbstractIdentifier type, AbstractIdentifier fieldName,
+                     AbstractInitialization initialization) {
         Validate.notNull(type);
         Validate.notNull(fieldName);
         Validate.notNull(initialization);
@@ -25,10 +26,6 @@ public class DeclField extends AbstractDeclField {
         this.type = type;
         this.fieldName = fieldName;
         this.initialization = initialization;
-    }
-
-    public boolean isPrivate() {
-        return this.privacy;
     }
 
     public AbstractIdentifier getFieldName(){
@@ -44,19 +41,39 @@ public class DeclField extends AbstractDeclField {
     }
 
     @Override
-    protected void verifyDeclField(DecacCompiler compiler, ClassDefinition currentClass)
+    protected void verifyDeclFieldHeader(DecacCompiler compiler, ClassDefinition currentClass)            throws ContextualError {
+        Type t = type.verifyType(compiler);
+        if (compiler.getType(fieldName.getName()) != null) {
+            throw new ContextualError("Nom d'attribut utilisé est un type.", this.getLocation());
+        }
+        int index = currentClass.getNumberOfFields()+1;
+        fieldName.setDefinition(new FieldDefinition(t, this.getLocation(), privacy, currentClass, index));
+        try {
+            currentClass.getMembers().declare(fieldName.getName(), fieldName.getFieldDefinition());
+        }
+        catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError("Attribut définit 2 fois.", this.getLocation());
+        }
+        currentClass.incNumberOfFields();
+    }
+
+    @Override
+    protected void verifyDeclFieldInit(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError {
-        throw new ContextualError("Pas encore fait", this.getLocation());
+        initialization.verifyInitialization(compiler, type.getType(), currentClass.getMembers(), currentClass);
     }
 
 
     @Override
     public void decompile(IndentPrintStream s) {
+        if (privacy == Visibility.PROTECTED) {
+            s.print("protected ");
+        }
         type.decompile(s);
         s.print(" ");
         fieldName.decompile(s);
         initialization.decompile(s);
-        s.println(";");
+        s.print(";");
     }
 
     @Override

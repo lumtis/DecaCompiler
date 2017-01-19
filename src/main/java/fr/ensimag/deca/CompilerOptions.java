@@ -102,7 +102,7 @@ public class CompilerOptions {
                     break;
                 default:
                     File f = new File(args[i]);
-                    if (f == null) {
+                    if (f == null || !args[i].endsWith(".deca")) {
                         throw new IllegalArgumentException("Fichier non valide.");
                     }
                     sourceFiles.add(f);
