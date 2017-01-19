@@ -1,0 +1,11 @@
+//#include Mathe.deca
+{
+
+    println(cos(pi()/4));
+    println(sin(pi()/4));
+    println(tan(pi()/4));
+    println(acos(pi()/4));
+    println(asin(pi()/4));
+    println(atan(pi()/4));
+
+}

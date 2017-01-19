@@ -7,9 +7,12 @@ class Mathe {
 
         //calcul de puissance entière de flottants
     float pow(float f, int n) {
+        float tmp;
         if (n >= 0) {
-            if (n==0) return 1;
-            float tmp = pow(f,n/2);
+            if (n==0){
+             return 1.0;
+            }
+            tmp = pow(f,n/2);
             if ( n%2 == 0 ) {
                 return tmp*tmp;
             }
@@ -19,7 +22,7 @@ class Mathe {
             if (n == -1){
                 return 1/f;
             }
-            float tmp = pow(f,n/2);
+            tmp = pow(f,n/2);
             if ( n%2 == 0 ) {
                 return tmp*tmp;
             }
@@ -30,10 +33,11 @@ class Mathe {
     
     //fonction factoriel
     int factoriel(int n){
+        int a;
         if (n==0){
             return 1;
         }
-        int a = 1;
+        a = 1;
         while (n>1){
             a=a*n;
             n=n-1;
@@ -43,10 +47,12 @@ class Mathe {
     
     //fonction signe
     int signe(float f){
-        if (f<0)
+        if (f<0){
             return -1;
-        else
+        }
+        else{
             return 1;
+        }
     }
     
     //fonction max
@@ -93,7 +99,7 @@ class Mathe {
         }
     }	
     
-    public static float adapt2(float f){
+    float adapt2(float f){
         //calcule f-pi/2 avec plus de precision
         float c1=pow(2,-1);
         float c2=pow(2,-4);
@@ -206,15 +212,17 @@ class Mathe {
 
     // calcul l'exposant de la représentaion en binaire 32
     int exposant(float f){
+        int exp;
+        int f1;
         if (f < 0) {
             return exposant(-f);
         }
         if (f==0) {
             return 0;
         }
-        int exp = 0;
+        exp = 0;
         if (f > 1) {
-            int f1= (int)f;
+            //f1=(int)f;
             while (f1>1){
                 exp=exp+1;
                 f1=f1/2;
@@ -246,7 +254,7 @@ class Mathe {
     //sinus série entière amélioré
     float sin_ser2(float f) {
         if (f==pi()){
-            return 1;
+            return 1.0;
         }
              
         f=adapt(f);
@@ -256,13 +264,13 @@ class Mathe {
         }
 
         if (f>pi()/2 && f<=pi()){
-            return cos2(adapt2(f));
+            return cos_ser(adapt2(f));
         }
         if (-pi()<=f && f<0){
-            return -sin2(-f);
+            return -sin_ser(-f);
             
         }
-        return 0;
+        return 0.0;
     }
    
     // fonction cosinus première solution série entière
@@ -280,7 +288,7 @@ class Mathe {
     float cos_ser2(float f) {
         f=adapt(f);
         if (f==0){
-            return 1;
+            return 1.0;
         }
         if (0<=f && f<=pi()/4) {
             
@@ -288,29 +296,31 @@ class Mathe {
         }
         if (0<pi()/4 && f<=pi()/2) {
             
-            return sin2(-adapt2(f));
+            return sin_ser(-adapt2(f));
         }
         
         if (f>pi()/2 && f<=pi()){
-            return -sin2(adapt2(f));
+            return -sin_ser(adapt2(f));
         }
         if (-pi()<=f && f<0){
-            return cos2(-f);
+            return cos_ser(-f);
             
         }
-        return 0;
+        return 0.0;
        
     }
 
     // fonction arcsin première version série entière
     float asin_ser(float f) {
+        int k;
+        float solution;
         if (f<=1 && f>=-1 ) { //definie seulement sur -1..1
-        int k=0;
-        float solution=0;
+        k=0;
+        solution=0;
         while (k < 7) {
             
             solution=solution+(pow(f,2*k+1)*factoriel(2*k))/((2*k+1)*pow(factoriel(k)*pow(2,k),2));
-            k+=1;
+            k=k+1;
         }
         return solution;
         }
@@ -319,17 +329,18 @@ class Mathe {
 
     // fonction arctan première méthode série entière
     float atan_ser(float f) {
-        
+        int k;
+        float solution;
         if (f == 1) {
             return 0.78539816339;
         }
         
         if (f<1 && f>=0 ) {
-        int k=0;
-        float solution=0;
+        k=0;
+        solution=0;
         while (k < 1000) {
             solution=solution+pow(-1,k)*pow(f,2*k+1)/(2*k+1);
-            k+=1;
+            k=k+1;
         }
         return solution;
         }
@@ -339,7 +350,7 @@ class Mathe {
         if (f<0) {
             return -atan(-f);
         }
-       return 0; 
+       return 0.0; 
     }
 
     //////////////////////////////algo_cordic///////////////////////////////
@@ -411,11 +422,11 @@ class Mathe {
     //fonction aux sin recursive
 
     float aux_sin(float f, int n ){
-        
+        float prec;
         if (n == 0) {
-            return 0;
+            return 0.0;
             }
-        float prec = aux_trigo(f,n-1);
+        prec = aux_trigo(f,n-1);
         if (prec < 0) {
             return aux_sin(f,n-1)-aux_cos(f,n-1)*pow(2,-(n-1));
         }
@@ -428,11 +439,11 @@ class Mathe {
 
     //fonction aux cos recursive
     float aux_cos(float f, int n) {
-        
+        float prec ;
         if (n ==0) {
-            return 1;
+            return 1.0;
         }
-        float prec = aux_trigo(f,n-1);
+        prec = aux_trigo(f,n-1);
         if ( prec < 0){
             return aux_cos(f,n-1) + aux_sin(f,n-1)*pow(2,-(n-1));
         }
@@ -445,10 +456,11 @@ class Mathe {
 
 
     float aux_trigo(float f,int n) {
+        float prec;
         if (n ==0){
             return f;
         }
-        float prec =aux_trigo(f,n-1);
+        prec =aux_trigo(f,n-1);
         if (prec < 0){
             return prec+atan(pow(2,-(n-1)));
         }
@@ -462,7 +474,7 @@ class Mathe {
     float cos(float f) {
         f=adapt(f);
         if (f==0){
-            return 1;
+            return 1.0;
         }
         if (0<=f && f<=pi()/2) {
             
@@ -475,7 +487,7 @@ class Mathe {
             return cos(-f);
             
         }
-        return 0;
+        return 0.0;
         
     }
 

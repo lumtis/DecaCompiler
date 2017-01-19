@@ -1,5 +1,4 @@
 
-
 class GrandFloat {
     float f;
     float erreur;
@@ -16,7 +15,7 @@ class GrandFloat {
         
         this.setFloat1(f);
         this.setFloat2(e);
-        return gf;
+        return this;
     }
 
     
@@ -72,9 +71,12 @@ class GrandFloat {
     }
 
     float pow(float f, int n) {
+        float tmp;
         if (n >= 0) {
-            if (n==0) return 1;
-            float tmp = pow(f,n/2);
+            if (n==0){
+                return 1.0;
+             }
+            tmp=pow(f,n/2);
             if ( n%2 == 0 ) {
                 return tmp*tmp;
             }
@@ -84,7 +86,7 @@ class GrandFloat {
             if (n == -1){
                 return 1/f;
             }
-            float tmp = pow(f,n/2);
+            tmp = pow(f,n/2);
             if ( n%2 == 0 ) {
                 return tmp*tmp;
             }
@@ -121,10 +123,6 @@ class GrandFloat {
         return a.newGrandFloat(produit,erreur);
 
     }
-
-
-   
-
 
 }
 
