@@ -14,14 +14,10 @@ class Thami extends Marocain {
     void ditBonjour() {
         println("OK Fraté !");
     }
-
-    void initTaille() {
-        setTaille(1.86);
-    }
 }
 
 {
-    Thami thami = new Thami();
-    thami.initTaille();
+    Marocain thami = new Thami();
+    thami.setTaille(1.86);
     thami.ditBonjour();
 }

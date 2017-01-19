@@ -1,3 +1,4 @@
+
 class Animal {
     protected float poids;
     protected int nbPattes;

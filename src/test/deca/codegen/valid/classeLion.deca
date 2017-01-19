@@ -1,11 +1,5 @@
-// Description:
-//    tests du if
-//
-// Resultats:
-//    10
 
-{
-   class Lion  {
+class Lion  {
 	int longueurgriffe;
 	
 	int getLongueurgriffe(){
@@ -21,8 +15,15 @@
       	}
 	
 	void toString(){
-		print("Le lion possède des griffes de longueur");
-		print(this.longueurgriffe);
+		print("O");
 	}
+}
 
+{
+    Lion lion = new Lion();
+    lion.setLongueurgriffe(5);
+    lion.toString();
+    if (lion.getLongueurgriffe() == 5) {
+        print("K");
+    }
 }

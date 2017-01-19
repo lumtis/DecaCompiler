@@ -21,7 +21,7 @@ class Thami extends Marocain {
 }
 
 {
-    Marocain thami = new Thami();
+    Thami thami = new Thami();
     thami.initTaille();
     thami.ditBonjour();
 }
