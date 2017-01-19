@@ -59,4 +59,41 @@ public class InstanceOf extends AbstractExpr {
     }
 
 
+    @Override
+    public void codeGenExpr(DecacCompiler compiler, GenCode gc) {
+        Label debut = gc.newLabel("InstanceOfDebut");
+        Label bloc = gc.newLabel("InstanceOfBloc");
+        Label find = gc.newLabel("InstanceOfFind");
+        Label notFind = gc.newLabel("InstanceOfNotFind");
+        Label fin = gc.newLabel("InstanceOfFin");
+
+        // On obtient l'adresse de la classe à retrouver
+        int offset = ident_type.getClassDefinition().getOffset();
+        DAddr addrClass = new RegisterOffset(offset, Register.GB);
+
+        // On réalise l'expression
+        expr.codeGenInst(compiler, gc);
+
+        compiler.addLabel(debut);
+        compiler.addInstruction(new LOAD(new RegistreOffset(0, gc.getRetReg()), gc.getRetReg()));
+        compiler.addInstruction(new CMP(new NullOperand(), gc.getRetReg()));
+        compiler.addInstruction(new BNE(bloc));
+        compiler.addInstruction(new BRA(notFind));
+
+        // Bloc du while
+        compiler.addInstruction(new CMP(addr, gc.getRetReg()));
+        compiler.addInstruction(new BEQ(find));
+        compiler.addInstruction(new BRA(debut));
+
+        compiler.addLabel(find);
+        // Classe trouvée
+        compiler.addInstruction(new LOAD(1, gc.getRetReg()));
+        compiler.addInstruction(new BRA(fin));
+
+        compiler.addLabel(notFind);
+        // Classe non trouvée
+        compiler.addInstruction(new LOAD(0, gc.getRetReg()));
+
+        compiler.addLabel(fin);
+    }
 }
