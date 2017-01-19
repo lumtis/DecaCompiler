@@ -13,34 +13,51 @@ import java.util.List;
 /**
  * Created by buthodgt on 1/17/17.
  */
-public class MethodCall extends AbstractMemberCall {
+public class MethodCall extends AbstractMethodCall {
 
+    private AbstractExpr objectName;
     private AbstractIdentifier methodName;
     private ListExpr arguments;
 
     public MethodCall(AbstractExpr objectName, AbstractIdentifier methodName,
                       ListExpr arguments) {
-        super(objectName);
+        this.objectName = objectName;
         this.methodName = methodName;
         this.arguments = arguments;
     }
 
 
     @Override
-    public Type verifyMember(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass,
-                             ClassType typeObject) throws ContextualError {
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
+            throws ContextualError {
+        ClassType typeObject;
+        if (objectName != null) {
+            Type t = objectName.verifyExpr(compiler, localEnv, currentClass);
+            typeObject = t.asClassType("Cet objet n'est pas un type.", this.getLocation());
+        }
+        else {
+            if (currentClass != null) {
+                typeObject = currentClass.getType();
+            }
+            else {
+                throw new ContextualError("Identifieur non déclaré.", this.getLocation());
+            }
+        }
         Type methType = methodName.verifyExpr(compiler, typeObject.getDefinition().getMembers(), typeObject.getDefinition());
         if (!methodName.getExpDefinition().isMethod()) {
             throw new ContextualError("Une méthode est attendue.", methodName.getLocation());
         }
         this.arguments = arguments.verifyArgs(compiler, localEnv, currentClass, methodName.getMethodDefinition());
+        this.setType(methType);
         return methType;
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        getObjectName().decompile(s);
-        s.print(".");
+        if (objectName != null) {
+            objectName.decompile(s);
+            s.print(".");
+        }
         methodName.decompile(s);
         s.print("(");
         arguments.decompile(s);
@@ -49,7 +66,9 @@ public class MethodCall extends AbstractMemberCall {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        getObjectName().prettyPrint(s, prefix, false);
+        if (objectName != null) {
+            objectName.prettyPrint(s, prefix, false);
+        }
         methodName.prettyPrint(s,prefix,false);
         arguments.prettyPrint(s, prefix, true);
     }
@@ -62,7 +81,13 @@ public class MethodCall extends AbstractMemberCall {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        super.codeGenInst(compiler, gc);
+        if (objectName != null) {
+            objectName.codeGenInst(compiler, gc);
+        }
+        else {
+            // L'objet est toujours dans -2(LB)
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), gc.getRetReg()));
+        }
 
         List<AbstractExpr> argList = arguments.getList();
         int index = methodName.getMethodDefinition().getIndex();

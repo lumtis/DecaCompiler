@@ -32,7 +32,11 @@ public class This extends AbstractExpr {
     }
 
     @Override
-    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
+            throws ContextualError {
+        if (currentClass == null) {
+            throw new ContextualError("Appelle de \"this\" impossible dans le main.", this.getLocation());
+        }
         this.current_class = currentClass;
         Type type = currentClass.getType();
         this.setType(type);
