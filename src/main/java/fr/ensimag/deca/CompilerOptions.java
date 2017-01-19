@@ -37,6 +37,8 @@ public class CompilerOptions {
 
     public boolean getParse() { return parse;}
 
+    public boolean getNoCheck() {return noCheck;}
+
     public int getRegisters() {return registers;}
     
     public List<File> getSourceFiles() {
@@ -50,6 +52,8 @@ public class CompilerOptions {
     private boolean verifOnly = false;
     private boolean parse = false;
     private boolean needFiles = false;
+    private boolean noCheck = false;
+    private boolean sameFiles = false;
     private List<File> sourceFiles = new ArrayList<File>();
 
     
@@ -100,12 +104,29 @@ public class CompilerOptions {
                     needFiles = true;
                     parallel = true;
                     break;
+
+                case "-n":
+                    needFiles = true;
+                    noCheck = true;
+                    break;
+
                 default:
+                    sameFiles=false;
+
+
                     File f = new File(args[i]);
-                    if (f == null || !args[i].endsWith(".deca")) {
-                        throw new IllegalArgumentException("Fichier non valide.");
+                    for(File file: sourceFiles) {
+                        if (file.equals(f)) {
+                            sameFiles = true;
+                            break;
+                        }
                     }
-                    sourceFiles.add(f);
+                    if(!sameFiles) {
+                        if (f == null || !args[i].endsWith(".deca")) {
+                            throw new IllegalArgumentException("Fichier non valide.");
+                        }
+                        sourceFiles.add(f);
+                    }
             }
             i++;
         }
