@@ -12,18 +12,21 @@ import java.io.PrintStream;
 /**
  * Created by buthodgt on 1/17/17.
  */
-public class FieldCall extends AbstractMemberCall {
+public class FieldCall extends AbstractFieldCall {
 
+    private AbstractExpr objectName;
     private AbstractIdentifier fieldName;
 
     public FieldCall(AbstractExpr objectName, AbstractIdentifier fieldName) {
-        super(objectName);
+        this.objectName = objectName;
         this.fieldName = fieldName;
     }
 
     @Override
-    public Type verifyMember(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass,
-                             ClassType typeObject) throws ContextualError {
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
+            throws ContextualError {
+        Type t = objectName.verifyExpr(compiler, localEnv, currentClass);
+        ClassType typeObject = t.asClassType("Cet objet n'est pas un type.", this.getLocation());
         Type fieldType = fieldName.verifyExpr(compiler, typeObject.getDefinition().getMembers(),
                 typeObject.getDefinition());
         if (!fieldName.getExpDefinition().isField()) {
@@ -35,19 +38,20 @@ public class FieldCall extends AbstractMemberCall {
                 !typeObject.isSubClassOf(currentClass.getType())) {
             throw new ContextualError("L'attribut est de type protected.",fieldName.getLocation());
         }
+        this.setType(fieldType);
         return fieldType;
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        getObjectName().decompile(s);
+        objectName.decompile(s);
         s.print(".");
         fieldName.decompile(s);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        getObjectName().prettyPrint(s, prefix, false);
+        objectName.prettyPrint(s, prefix, false);
         fieldName.prettyPrint(s,prefix,true);
     }
 
@@ -63,7 +67,7 @@ public class FieldCall extends AbstractMemberCall {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        super.codeGenInst(compiler, gc);
+        objectName.codeGenInst(compiler, gc);
 
         int index = fieldName.getFieldDefinition().getIndex();
 
@@ -74,12 +78,12 @@ public class FieldCall extends AbstractMemberCall {
 
     // Permet d'obtenir dans le registre de retour, l'adresse du champ
     public void codeGenAddr(DecacCompiler compiler, GenCode gc) {
-        super.codeGenInst(compiler, gc);
+        objectName.codeGenInst(compiler, gc);
 
         int index = fieldName.getFieldDefinition().getIndex();
 
         // On réalise l'expression derrière le champ
-        getObjectName().codeGenInst(compiler, gc);
+        objectName.codeGenInst(compiler, gc);
 
         // On récupere la variable en fonction de son index
         compiler.addInstruction(new LEA(new RegisterOffset(index, gc.getRetReg()), gc.getRetReg()));
