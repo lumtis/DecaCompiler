@@ -1,0 +1,57 @@
+class A {
+    protected int a;
+
+    void setA(int a) {
+        this.a = a;
+    }
+
+    int getA() {
+        return a;
+    }
+}
+
+class B extends A {
+    int b;
+
+    boolean comparaison() {
+        return a==b;
+    }
+}
+
+class C extends Object {
+    B field1 = new B();
+    A field2 = new A();
+
+    void afficheConcat(A a) {
+        println("Concatenation :", a.getA(), field1.getA());
+    }
+
+    boolean affiche() {
+        afficheConcat(field2);
+        return this.field1.comparaison();
+    }
+}
+
+class D extends C {
+    boolean affiche() {
+        print("On fait une concaténation.");
+        afficheConcat(field2);
+        return !this.field1.comparaison();
+    }
+
+    float x = 5.0;
+}
+
+{
+    D d = new D();
+    C c = d;
+    d.field1.b = 7;
+    d.field1.setA(6);
+    if (d.affiche()) {
+        if (c.affiche()) {
+        }
+        else {
+            println("OK");
+        }
+    }
+}

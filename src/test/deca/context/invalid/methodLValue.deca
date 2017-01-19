@@ -1,0 +1,13 @@
+class A {
+    float x;
+
+    float getX() {
+        return x;
+    }
+}
+
+{
+    A a = new A();
+    a.getX() = 13.0;
+}
+//ERROR :11:
