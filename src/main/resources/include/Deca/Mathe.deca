@@ -408,7 +408,7 @@ class Mathe {
         }
         // si non on ramène à cet intervalle
         if (f>pi()/2 && f<=pi()){
-            return cos(adapt2(f));
+            return sin(pi()-f);
         }
         if (-pi()<=f && f<0){
             return -sin(-f);

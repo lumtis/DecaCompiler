@@ -1,11 +1,61 @@
-//#include Mathe.deca
-{
+#include "Mathe.deca"
+    {
+        Mathe m = new Mathe();
+        float py=m.pi();
+        float i;
 
-    println(cos(pi()/4));
-    println(sin(pi()/4));
-    println(tan(pi()/4));
-    println(acos(pi()/4));
-    println(asin(pi()/4));
-    println(atan(pi()/4));
+        println("TEST SIN");
+        i=-py;
+        while (i<=py){    
+            print(i);
+            print(" ");
+            println(m.sin(i));
+            i=i+py/48;
+        }
+
+        println("TEST COS");
+        i=-py;
+        while (i<=py){    
+            print(i);
+            print(" ");
+            println(m.cos(i));
+            i=i+py/48;
+        }
+        
+        println("TEST TAN");
+        i=-py/2+py/48;
+        while (i<=py/2-py/48){    
+            print(i);
+            print(" ");
+            println(m.tan(i));
+            i=i+py/48;
+        }
+
+        println("TEST ASIN");
+        i=-1;
+        while (i<=1){    
+            print(i);
+            print(" ");
+            println(m.asin(i));
+            i=i+0.1;
+        }
+       
+        println("TEST ACOS");
+        i=-1;
+        while (i<=1){    
+            print(i);
+            print(" ");
+            println(m.acos(i));
+            i=i+0.01;
+        }
+
+        println("TEST ATAN");
+        i=-10;
+        while (i<=10){    
+            print(i);
+            print(" ");
+            println(m.atan(i));
+            i=i+0.1;
+        }
 
 }

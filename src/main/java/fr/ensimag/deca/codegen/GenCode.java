@@ -239,6 +239,13 @@ public class GenCode {
         return new Label(className + "." + methodName + "." + "end");
     }
 
+    public Label getInitLabel(Identifier c) {
+        String className = c.getName().getName();
+
+        return new Label(className + "." + "init");
+    }
+
+
     // Gestion des labels
     ////////////////////////////////////////////////////////////////////
 
@@ -340,11 +347,43 @@ public class GenCode {
             addSeparatorComment();
             comp.addComment(c.getClassName().getName().getName() + ".init");
 
-            //for (AbstractDeclField af:c.getFields().getList()){
-            //    DeclField f = (DeclField)af;
-                //generateMethod(c, m);
-                // TODO: init
-            //}
+            comp.addLabel(getInitLabel(c.getClassName()));
+
+
+            // On obtient l'environnement ExpDefinition
+            ClassDefinition cDef = c.getClassName().getClassDefinition();
+            EnvironmentExp env = cDef.getMembers();
+
+            // On parcourt les envirronements de l'arborescence des classes
+            while(env != null) {
+                for (ExpDefinition attr : env.getHashMap().values()) {
+
+                    // On verifie que c'est un attribut
+                    if(attr.isField()) {
+                        FieldDefinition attrDef = (FieldDefinition)attr;
+                        DAddr tmpAddr = new RegisterOffset(attrDef.getIndex(), getRetReg());
+
+                        if(attrDef.getType().isInt()) {
+                            comp.addInstruction(new LOAD(new ImmediateInteger(0), getR0()));
+                            comp.addInstruction(new STORE(getR0(), tmpAddr));
+                        }
+                        else if(attrDef.getType().isFloat()) {
+                            comp.addInstruction(new LOAD(new ImmediateFloat(0), getR0()));
+                            comp.addInstruction(new STORE(getR0(), tmpAddr));
+                        }
+                        else if(attrDef.getType().isBoolean()) {
+                            comp.addInstruction(new LOAD(new ImmediateInteger(0), getR0()));
+                            comp.addInstruction(new STORE(getR0(), tmpAddr));
+                        }
+                        else if(attrDef.getType().isClass()) {
+                            comp.addInstruction(new LOAD(new NullOperand(), getR0()));
+                            comp.addInstruction(new STORE(getR0(), tmpAddr));
+                        }
+                    }
+                }
+                env = env.getParent();
+            }
+            comp.addInstruction(new RTS());
 
             // Creation des methodes de la class
             for (AbstractDeclMethod am:c.getMethods().getList()){
@@ -408,7 +447,8 @@ public class GenCode {
 
 
     // Création d'un objet
-    public void newObject(ClassDefinition cd) {
+    public void newObject(Identifier c) {
+        ClassDefinition cd = c.getClassDefinition();
         DAddr classAddr = new RegisterOffset(cd.getOffset(), Register.GB);
         int totalNumberField;
         int offsetAttr = 1;
@@ -424,19 +464,7 @@ public class GenCode {
         comp.addInstruction(new LEA(classAddr, r0));
         comp.addInstruction(new STORE(r0, new RegisterOffset(0, getRetReg())));
 
-        /*
-        // On fixe l'oprérande des attributs de la methode
-        for (ExpDefinition attr : cd.getMembers().getHashMap().values()) {
-          // Les attributs sont placés par rapport au registre
-            if(attr.isField()) {
-                attr.setOperand(new RegisterOffset(offsetAttr, getRetReg()));
-                offsetAttr++;
-            }
-        }
-        */
-
-        // TODO
-        // Initialisation de l'objet
+        comp.addInstruction(new BSR(getInitLabel(c)));
     }
 
 

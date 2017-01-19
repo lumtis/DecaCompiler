@@ -16,5 +16,8 @@ public class TestGrandFloat {
         //System.out.println( " 3*pi " + troispi);
         //float troispis = 3*Mathe.pi();
         //System.out.println("mauvais 3*pi = " + troispis);
+        GrandFloat r = GrandFloat.multiplicationSimple(2,(float)0.5);
+        System.out.println(r);
+
     }
 }

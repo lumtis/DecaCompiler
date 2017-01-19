@@ -1,5 +1,5 @@
 
-import static java.lang.Math.abs;
+import static java.lang.Math.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -41,16 +41,17 @@ public class FonctionsTest {
         else {
             testsin=this.test;
         }
-        //System.out.print("Erreur ");
-        System.out.println(Erreur((float)java.lang.Math.sin(f),s,lim));
-        /*if (abs((float)java.lang.Math.sin(f)-s)<=testsin){
+        System.out.print("Erreur ");
+        System.out.print(Erreur((float)java.lang.Math.sin(f),s,lim));
+       
+        if (abs((float)java.lang.Math.sin(f)-s)<=testsin){
             System.out.println(" SIN PASS");
             compt++;
         }
         else {
             System.out.println(" SIN NO");
             
-        }*/
+        }
         return compt;
         
     }
@@ -223,7 +224,7 @@ public class FonctionsTest {
     }
     
     public void testAtan(float f){
-        float s=Mathe.atan3(f);
+        float s=Mathe.atan(f);
         
         float lim=(java.lang.Math.ulp((float) java.lang.Math.atan(f)));
         //System.out.println(lim);
@@ -272,7 +273,7 @@ public class FonctionsTest {
     }
     
     public void testAtan3(float f){
-        float s=Mathe.atan3(f);
+        float s=Mathe.atan(f);
         
         float lim=(java.lang.Math.ulp((float) java.lang.Math.atan(f)));
         //System.out.println(lim);

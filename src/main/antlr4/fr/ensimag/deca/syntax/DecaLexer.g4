@@ -88,7 +88,7 @@ COMMENT_CLASSIC: '/*' .*? '*/'
                         skip();
                     };
 
-COMMENT_LINE :'//' (~'\n')* '\n'
+COMMENT_LINE :'//' (~'\n')* ('\n'|EOF)
                     {
                         skip();
                     };
