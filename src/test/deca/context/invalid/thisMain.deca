@@ -1,0 +1,10 @@
+class A {
+    float x;
+    float y;
+}
+
+{
+    A a = new A();
+    this.x = 2.9;
+}
+//ERROR :8:

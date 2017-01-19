@@ -16,7 +16,7 @@ import java.util.LinkedList;
  */
 public class TestMathe2 {
     public static void main(String[] args) {
-        
+        //System.out.println(Mathe.adapt((float)-3.1415927));
         //float  py=Mathe.pi();
         //System.out.print(FonctionsTest.Erreur((float)java.lang.Math.atan(0.99999),Mathe.atan((float)0.99999),java.lang.Math.ulp((float) java.lang.Math.atan((float)0.99999))));
         
@@ -26,6 +26,14 @@ public class TestMathe2 {
         
         float testlimite=(float)0.000001;
         FonctionsTest fon= new FonctionsTest(testlimite,true);
+        //fon.testSinus(py);
+        //System.out.println("sin(pi)=");
+        System.out.println(Mathe.sin2((float)3.141592653589793238462643383279));
+        System.out.println(java.lang.Math.sin((float)3.141592653589793238462643383279));
+        
+        
+        
+            
         //System.out.println(Mathe.asin((float)0.5));
         
         //System.out.println((float)java.lang.Math.asin(0.52));
@@ -42,12 +50,13 @@ public class TestMathe2 {
         //System.out.println(c);
         
         
-        /*
+        
         System.out.println("TEST SIN");
         int c11=0;
         int c22=0;
-        for (float i=-py+py/48;i<=py-py/48;i=i+py/48){    
-            //System.out.println(i);
+        for (float i=-py+(float)0.00001;i<=py;i=i+py/48){    
+            System.out.print(i);
+            System.out.print("  ");
             //System.out.println(Mathe.sin(i));
             c11=c11+fon.testSinus(i);
         
@@ -61,7 +70,7 @@ public class TestMathe2 {
         
         //System.out.print("Nombre total de SINSER PASS : ");
         //System.out.println(c22);
-        */
+        
         /*
         System.out.println("TEST COS");
         int c1=0;
@@ -74,7 +83,7 @@ public class TestMathe2 {
             
             //System.out.print(i);
             //System.out.print("  ");
-            //c2=c2+fon.testCosinus2(i);
+            c2=c2+fon.testCosinus2(i);
             //System.out.println("");
         }
         for (float i=py/2+py/24;i<=py;i=i+py/24){    
@@ -87,7 +96,7 @@ public class TestMathe2 {
             //System.out.print("  ");
             //c2=c2+fon.testCosinus2(i);
             //System.out.println("");
-        }
+        }*/
         //System.out.print("Nombre total de COS PASS : ");
         //System.out.println(c1);
         
@@ -120,7 +129,7 @@ public class TestMathe2 {
             fon.testAcos(i);
         }*/
         
-        
+        /*
         System.out.println("TEST ATAN");
         for (float i=-10;i<=10;i=i+(float)0.1){    
             //System.out.print(i);
@@ -134,7 +143,7 @@ public class TestMathe2 {
             //System.out.println(i);
             //System.out.print(" ");
             fon.testAtan(i);
-        }
+        }*/
         
         
         

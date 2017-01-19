@@ -1,0 +1,17 @@
+class Coord extends Object {
+    protected float x;
+    protected float y;
+    protected float z;
+
+    void setCoord(float x, float y, float z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+}
+
+{
+    Coord c = new Coord();
+    c.x = 7.5;
+}
+//ERROR :15:

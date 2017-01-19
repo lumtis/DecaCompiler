@@ -1,0 +1,11 @@
+class Animal{
+
+      protected int pattes=4;
+
+      void affichePattes(){
+      	   
+	   println("OK");
+      }
+
+
+}
