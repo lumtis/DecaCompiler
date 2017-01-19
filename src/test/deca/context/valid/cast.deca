@@ -12,5 +12,5 @@ class B extends A {
     B b = new B();
     A a = (A) (b);
     B bbis = (B) (a);
-    u = (float) (v + 1);
+    u = (int) (v + 1);
 }

@@ -1,0 +1,7 @@
+class A {
+
+}
+{
+    A a = null;
+    a = new A();
+}

@@ -6,7 +6,7 @@ class B extends A {
 
 }
 
-class C extends Objects {
+class C extends Object {
 
 }
 

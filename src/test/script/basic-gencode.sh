@@ -28,9 +28,7 @@ do
     fi
 
 done
-echo "";
-echo "----------Test des fichiers invalides---------";
-for cas_de_test in src/test/deca/codegen/invalid/*.deca
+for cas_de_test in src/test/deca/codegen/valid/NotOk/*.deca
 do
     nom_ass=${cas_de_test/.deca/.ass}
     rm -f $nom_ass 2>/dev/null;
@@ -45,6 +43,29 @@ do
             echo "$cas_de_test : ERROR."
         else
             echo "$cas_de_test : PASS.";
+
+        fi
+    fi
+
+done
+echo "";
+echo "----------Test des fichiers invalides---------";
+for cas_de_test in src/test/deca/codegen/invalid/*.deca
+do
+    line=$(cat "$cas_de_test" | grep -e "//ERROR .*" | tail -c +9);
+    nom_ass=${cas_de_test/.deca/.ass}
+    rm -f $nom_ass 2>/dev/null;
+    decac $cas_de_test || exit 1
+    if [ ! -f $nom_ass ]; then
+        echo "Fichier cond0.ass non généré."
+        exit 1
+     else
+        resultat=$(ima "$nom_ass")
+        if echo $resultat | grep -q -e "$line"
+        then
+            echo "$cas_de_test : PASS."
+        else
+            echo "$cas_de_test : ERROR.";
 
         fi
     fi

@@ -1,0 +1,19 @@
+class A {
+    float function() {
+        int i=0;
+        while (i<12) {
+            i = i+1;
+            if (i>10) {
+                return 1.0;
+            }
+        }
+    }
+}
+
+{
+    A a = new A();
+    float x = a.function();
+    if (x == 1.0) {
+        print("OK");
+    }
+}

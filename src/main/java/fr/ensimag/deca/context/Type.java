@@ -14,8 +14,7 @@ import fr.ensimag.deca.tree.Location;
 
 public abstract class Type {
 
-    /**True if this and otherType are the same type or if this is
-     * a subclass of otherType.
+    /**True if it's possible to assign this to the otherType, false otherwise.
      * @param otherType
      * @return
      */
@@ -23,7 +22,13 @@ public abstract class Type {
         if (this.sameType(otherType)) {
             return true;
         }
-        else if (this.isClass() && otherType.isClass()) {
+        else if (this.isInt() && otherType.isFloat()) {
+            return true;
+        }
+        else if (this.isClassOrNull() && otherType.isClass()) {
+            if (this.isNull()) {
+                return true;
+            }
             String errorMessage = "Erreur interne de conversion de type.";
             ClassType classType = this.asClassType(errorMessage, new Location(0,0,""));
             ClassType classOther = otherType.asClassType(errorMessage, new Location(0,0,""));
@@ -31,6 +36,16 @@ public abstract class Type {
         }
         return false;
     }
+
+    /**True if it is possible to cast the 2 types.
+     * @param otherType
+     * @return
+     * @throws ContextualError
+     */
+    public boolean castCompatibleTo(Type otherType) throws ContextualError {
+        return this.compatibleTo(otherType) || otherType.compatibleTo(this);
+    }
+
     /**
      * True if this and otherType represent the same type (in the case of
      * classes, this means they represent the same class).
