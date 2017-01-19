@@ -27,7 +27,9 @@ public class Cast extends AbstractExpr{
         s.print("(");
         ident_type.decompile(s);
         s.print(") ");
+        s.print("(");
         expr_cast.decompile(s);
+        s.print(")");
     }
 
     @Override

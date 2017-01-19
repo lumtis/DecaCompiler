@@ -6,7 +6,8 @@ class Lion extends Animal {
 
 {
     Lion lion = new Lion();
-    if (lion instanceof Animal && lion instanceof Lion) {
+    if (Lion instanceof Animal && lion instanceof Lion) {
         println("OK");
     }
 }
+//ERROR :9:

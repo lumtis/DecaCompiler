@@ -1,0 +1,29 @@
+class LinkedList {
+    int value;
+    LinkedList next;
+
+    void add(int value) {
+        LinkedList next = this.next;
+        this.next = new LinkedList();
+        this.next.value = value;
+        this.next.next = next;
+    }
+}
+
+{
+    LinkedList list = new LinkedList();
+    list.add(1);
+    list.add(2);
+    list.add(3);
+    list.add(4);
+    list.add(5);
+    list.add(6);
+    list.add(7);
+    list.add(8);
+    list.add(9);
+    list.add(10);
+    if (list.next.next.next.next.next.next.next.next.next.next.value == 1 &&
+                    list.next.next.next.next.next.value == 6) {
+        print("OK");
+    }
+}
