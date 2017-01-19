@@ -119,9 +119,35 @@ public class Mathe {
         while (k < 6) {
             solution+=Mathe.pow((float)-1,k)* Mathe.pow(f,2*k+1)/Mathe.factoriel(2*k+1);
             k+=1;
+            System.out.println(solution);
         }
         return solution;
     }
+
+
+
+    public static float sin_grandfloat(float f){
+        int k=0;
+        GrandFloat solution= new GrandFloat(0,0);
+        while (k<6){
+            float tmp = (float) 1.0/factoriel(2*k+1);
+            float tmp1= pow(f,2*k+1) * pow((float)-1,k);
+            GrandFloat r =GrandFloat.multiplicationSimple(tmp,tmp1);
+            solution= GrandFloat.additionGrandFloat(solution,r);
+            System.out.println(tmp);
+            System.out.println(tmp1);
+            System.out.println(r);
+            System.out.println(solution);
+            k+=1;
+        }
+        return solution.f + solution.erreur;
+    }
+
+
+
+
+
+
    
     // fonction cosinus première solution série entière
     public static float cos_ser(float f) {

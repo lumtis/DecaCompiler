@@ -1,3 +1,4 @@
+import java.lang.Math;
 public class TestMathe {
 
     public static void main(String[] args) {
@@ -183,14 +184,20 @@ public class TestMathe {
             System.out.println("artan not pass");
         }
 
-        float cos0 = Mathe.cordic_cos(0);
-        float cos1 = Mathe.cordic_cos((float)0.5);
-        float cos2= Mathe.cordic_cos(1);
-        float cos3= Mathe.cordic_cos((float)1.5);
-        System.out.println("cos0 = " + cos0);
-        System.out.println("cos 0.5 = " + cos1);
-        System.out.println("cos 1 = "+ cos2);
-        System.out.println(" cos 1.5 =" + cos3);
+        //float sin0 = Mathe.sin_grandfloat(0);
+        float sin1 = Mathe.sin_grandfloat((float)0.5);
+        float sinjava= (float) Math.sin((float)0.5);
+        float sinmook = Mathe.sin_ser((float)0.5);
+        System.out.println("il faut atteindre : " + sinjava);
+        System.out.println(" avec grand float on a "+ sin1);
+        System.out.println("sans grand float on a " + sinmook);
+
+        //sin2= Mathe.sin_grandfloat(1);
+        //float sin3= Mathe.sin_grandfloat((float)1.5);
+        //System.out.println("cos0 = " + sin0);
+        //System.out.println("cos 0.5 = " + sin1);
+        //System.out.println("cos 1 = "+ sin2);
+        //System.out.println(" cos 1.5 =" + sin3);
 
 
     }
