@@ -24,7 +24,10 @@ public class Cast extends AbstractExpr{
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        s.print("(");
+        ident_type.decompile(s);
+        s.print(") ");
+        expr_cast.decompile(s);
     }
 
     @Override
@@ -40,12 +43,13 @@ public class Cast extends AbstractExpr{
     }
 
     @Override
-    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
+            throws ContextualError {
         ident_type.verifyType(compiler);
         Type type_ref = compiler.getType(this.ident_type.getName());
         Type type_casted = expr_cast.verifyExpr(compiler,localEnv,currentClass);
 
-        if (type_casted.isVoid() || (!assign_compatible(type_casted,type_ref) && !assign_compatible(type_ref,type_casted))) {
+        if (type_casted.isVoid() || !cast_compatible(type_ref, type_casted)) {
             throw new ContextualError("Cast impossible", this.getLocation());
         }
         this.setType(type_ref);
@@ -53,19 +57,21 @@ public class Cast extends AbstractExpr{
 
     }
 
+    private boolean cast_compatible(Type typeA, Type typeB) throws ContextualError {
+        return (assign_compatible(typeA, typeB) || assign_compatible(typeB, typeA));
+    }
+
     private boolean assign_compatible(Type typeA, Type typeB) throws ContextualError {
 
         if(typeB.isFloat() && typeA.isInt() ) {
             return true;
         }
-
-        if(!typeA.isClass() || !typeB.isClass()){
-            throw new ContextualError("Cast impossible", this.getLocation());
+        if (!typeA.isClass() || !typeB.isClass()) {
+            return false;
         }
-
-        ClassType classTypeA= typeA.asClassType("Classe non reconnue",this.getLocation());
-        ClassType classTypeB= typeB.asClassType("Classe non reconnue",this.getLocation());
-        if(!classTypeB.isSubClassOf(classTypeA)){
+        ClassType classTypeA= typeA.asClassType("Cast impossible.",this.getLocation());
+        ClassType classTypeB= typeB.asClassType("Cast impossible.",this.getLocation());
+        if(!classTypeB.isSubClassOf(classTypeA)) {
             return false;
         }
         return true;

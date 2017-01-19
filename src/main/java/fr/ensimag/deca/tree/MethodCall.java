@@ -39,7 +39,12 @@ public class MethodCall extends AbstractMemberCall {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Pas encore implémenté.");
+        getObjectName().decompile(s);
+        s.print(".");
+        methodName.decompile(s);
+        s.print("(");
+        arguments.decompile(s);
+        s.print(")");
     }
 
     @Override
@@ -60,28 +65,29 @@ public class MethodCall extends AbstractMemberCall {
         super.codeGenInst(compiler, gc);
 
         List<AbstractExpr> argList = arguments.getList();
-        index = methodName.getMethodDefinition().getIndex();
+        int index = methodName.getMethodDefinition().getIndex();
 
         // On reserve la memoire requise sur la pile
         compiler.addInstruction(new ADDSP(1 + argList.size()));
 
         // On place l'objet de la methode sur la pile
-        compiler.addInstruction(new LOAD(gc.getRetReg(), new RegisterOffset(0, Register.SP)));
+        compiler.addInstruction(new STORE(gc.getRetReg(), new RegisterOffset(0, Register.SP)));
 
         // On ajoute les arguments sur la pile
         int i = -1;
         for(AbstractExpr e:argList) {
             e.codeGenInst(compiler, gc);
-            compiler.addInstruction(new LOAD(gc.getRetReg(), new RegisterOffset(i, Register.SP)));
+            compiler.addInstruction(new STORE(gc.getRetReg(), new RegisterOffset(i, Register.SP)));
             i--;
         }
 
         // On verifie que le déférencement n'est pas nul
-        compiler.addInstruction(new CMP(0, new RegisterOffset(0, Register.SP)));
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), gc.getR0()));
+        compiler.addInstruction(new CMP(new NullOperand(), gc.getR0()));
         compiler.addInstruction(new BEQ(gc.getLabelDereferencementNul()));
 
         // On appelle la methode
-        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), gc.getR0()));
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, gc.getR0()), gc.getR0()));
         compiler.addInstruction(new BSR(new RegisterOffset(index, gc.getR0())));
 
         compiler.addInstruction(new SUBSP(1 + argList.size()));

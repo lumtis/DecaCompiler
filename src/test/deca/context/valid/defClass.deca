@@ -1,6 +1,6 @@
 class Animal {
     protected float poids;
-    protected int nbPates;
+    protected int nbPattes;
 
     void faireCrier() {
         println("Grrrrrrrrrr");
@@ -8,16 +8,20 @@ class Animal {
 
     float nourrir(float poidsNourriture) {
         poids = poids + poidsNourriture;
+        faireCrier();
         return poids;
     }
 
+    void setPoids(float poids) {
+        this.poids = poids;
+    }
 }
 
 class Lion extends Animal {
 
-    void initParam(float newPoids, int NewNbPates) {
+    void initParam(float newPoids, int NewNbPattes) {
         poids = newPoids;
-        nbPates = NewNbPates;
+        nbPattes = NewNbPattes;
     }
 
     void faireCrier() {
@@ -27,5 +31,8 @@ class Lion extends Animal {
 
 {
     Animal lion = new Lion();
+    float x;
+    lion.setPoids(95.8);
     println("Un lion a été créé.");
+    x = lion.nourrir(5);
 }

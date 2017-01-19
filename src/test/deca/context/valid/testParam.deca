@@ -1,0 +1,16 @@
+
+
+class A {
+    void test(boolean X, float Y, int Z) {
+        if(X && Y < 3.5 && Z == -6) {
+            println("OK");
+        }
+    }
+}
+
+
+{
+    A test = new A();
+
+    test.test(true, 2.0, -6);
+}

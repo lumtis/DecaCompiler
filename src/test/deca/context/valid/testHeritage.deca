@@ -1,0 +1,28 @@
+
+class B {
+
+    boolean I, J, K;
+
+    void test() {
+        if(I && J && K) {
+            println("OK");
+        }
+    }
+}
+
+class A extends B {
+
+    void init() {
+        I = true;
+        J = true;
+        K = true;
+    }
+}
+
+
+{
+    A test = new A();
+
+    test.init();
+    test.test();
+}

@@ -69,7 +69,6 @@ public class Program extends AbstractProgram {
 
         // Fin du programme
         gc.terminateProgram();
-        compiler.addInstruction(new HALT());
     }
 
     @Override

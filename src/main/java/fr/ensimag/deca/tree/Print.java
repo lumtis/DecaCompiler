@@ -1,4 +1,7 @@
 package fr.ensimag.deca.tree;
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.GenCode;
+
 
 /**
  * @author gl35
@@ -16,5 +19,10 @@ public class Print extends AbstractPrint {
     @Override
     String getSuffix() {
         return "";
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        super.codeGenInst(compiler, gc);
     }
 }

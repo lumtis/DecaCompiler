@@ -31,7 +31,6 @@ public class FieldCall extends AbstractMemberCall {
         }
         //Il faut vérifier si on peut accéder à l'attribut (dans le cas protected).
         FieldDefinition fieldDef = fieldName.getFieldDefinition();
-        System.out.println((fieldDef.getVisibility() == Visibility.PROTECTED) + "/" + (!typeObject.isSubClassOf(currentClass.getType())));
         if (fieldDef.getVisibility() == Visibility.PROTECTED &&
                 !typeObject.isSubClassOf(currentClass.getType())) {
             throw new ContextualError("L'attribut est de type protected.",fieldName.getLocation());
@@ -41,7 +40,9 @@ public class FieldCall extends AbstractMemberCall {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Pas encore implémenté.");
+        getObjectName().decompile(s);
+        s.print(".");
+        fieldName.decompile(s);
     }
 
     @Override
@@ -55,9 +56,24 @@ public class FieldCall extends AbstractMemberCall {
         fieldName.iter(f);
     }
 
+    @Override
+    public boolean isFieldCall() {
+        return true;
+    }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+        super.codeGenInst(compiler, gc);
+
+        int index = fieldName.getFieldDefinition().getIndex();
+
+        // On récupere la variable en fonction de son index
+        compiler.addInstruction(new LOAD(new RegisterOffset(index, gc.getRetReg()), gc.getRetReg()));
+    }
+
+
+    // Permet d'obtenir dans le registre de retour, l'adresse du champ
+    public void codeGenAddr(DecacCompiler compiler, GenCode gc) {
         super.codeGenInst(compiler, gc);
 
         int index = fieldName.getFieldDefinition().getIndex();
@@ -66,6 +82,6 @@ public class FieldCall extends AbstractMemberCall {
         getObjectName().codeGenInst(compiler, gc);
 
         // On récupere la variable en fonction de son index
-        compiler.addInstruction(new LOAD(new RegisterOffset(index, gc.getRetReg()), gc.getRetReg()));
+        compiler.addInstruction(new LEA(new RegisterOffset(index, gc.getRetReg()), gc.getRetReg()));
     }
 }

@@ -4,14 +4,7 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.GenCode;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Definition;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.FieldDefinition;
-import fr.ensimag.deca.context.MethodDefinition;
-import fr.ensimag.deca.context.ExpDefinition;
-import fr.ensimag.deca.context.VariableDefinition;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
@@ -250,14 +243,16 @@ public class Identifier extends AbstractIdentifier {
             // de l'expression
             gc.setExprFloat(true);
         }
-        else {
-            gc.setExprFloat(false);
-        }
 
         // S'il s'agit d'un parametre son emplacement dans la memoire est différent
         if(definition.isParam()) {
-            DAddr addr = new RegisterOffset(getParamDefinition().getIndex(), Register.LB);
+            DAddr addr = new RegisterOffset(getParamDefinition().getOffset(), Register.LB);
             compiler.addInstruction(new LOAD(addr, gc.getRetReg()));
+        }
+        else if(definition.isField()) {
+            // L'objet est toujours dans -2(LB)
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), gc.getR0()));
+            compiler.addInstruction(new LOAD(new RegisterOffset(getFieldDefinition().getIndex(), gc.getR0()), gc.getRetReg()));
         }
         else {
             // Il s'agit d'une simple variable alors on recupere son adresse
@@ -273,7 +268,8 @@ public class Identifier extends AbstractIdentifier {
         // On récupère l'adresse de la variable
         DAddr addr = gc.getAddrVar(this);
 
-        compiler.addInstruction(new LOAD(addr, GPRegister.getR(1)));
+        codeGenInst(compiler, gc);
+        compiler.addInstruction(new LOAD(gc.getRetReg(), GPRegister.getR(1)));
 
         if(definition.getType().isFloat()) {
             compiler.addInstruction(new WFLOAT());

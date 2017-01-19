@@ -13,11 +13,16 @@ public class ListDeclParam extends TreeList<AbstractDeclParam>{
 
     @Override
     public void decompile(IndentPrintStream s) {
-//        s.print("(");
-//        for (AbstractDeclParam p : getList()) {
-//            p.decompile(s);
-//            s.print(",");
-//        }
+        s.print("(");
+        int i = 0;
+        for (AbstractDeclParam p : getList()) {
+            if (i>0) {
+                s.print(", ");
+            }
+            i++;
+            p.decompile(s);
+        }
+        s.print(") ");
     }
 
 /*

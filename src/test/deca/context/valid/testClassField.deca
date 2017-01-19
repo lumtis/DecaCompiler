@@ -1,0 +1,30 @@
+
+class B {
+    void test(boolean X, float Y, int Z) {
+        if(X && Y < 3.5 && Z == -6) {
+            println("OK");
+        }
+    }
+}
+
+class A {
+
+    protected B b;
+
+    void initA() {
+        b = new B();
+    }
+
+    B getB() {
+        return b;
+    }
+}
+
+
+{
+    A test = new A();
+
+    test.initA();
+
+    test.getB().test(true, 3.0, -6);
+}
