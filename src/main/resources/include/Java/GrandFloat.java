@@ -122,9 +122,11 @@ public class GrandFloat {
         GrandFloat tmp1 = split(g,12);
         // première erreur la différence
         float erreur1 = produit - (tmp.f * tmp1.f);
-        // deuxième erreur : le produit de la partie haute de tmp par l'erreur de tmp1
-        float erreur2 = erreur1;
-        return tmp;
+        // deuxième erreur : le produit de la partie haute de tmp par l'erreur de tmp1 et ainsi de suite
+        float erreur2 = erreur1 + (tmp.erreur * tmp1.f);
+        float erreur3 = erreur2 + (tmp.f *tmp1.erreur);
+        float erreur = tmp.erreur * tmp1.erreur + erreur3;
+        return new GrandFloat(produit,erreur);
 
     }
 
