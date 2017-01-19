@@ -1,0 +1,13 @@
+
+{
+    int a=0
+    while (a<10){
+	if (a%2==0){
+		print("Paire");
+	}
+	else {
+		print("Impaire");
+	}
+	a=a+1;
+    }			
+}

@@ -1,0 +1,536 @@
+{
+class Mathe {
+
+    float pi (){
+        return 3.1415927;    
+    }
+
+        //calcul de puissance entière de flottants
+    float pow(float f, int n) {
+        if (n >= 0) {
+            if (n==0) return 1;
+            float tmp = pow(f,n/2);
+            if ( n%2 == 0 ) {
+                return tmp*tmp;
+            }
+            return f*tmp*tmp;
+        }
+        else {
+            if (n == -1){
+                return 1/f;
+            }
+            float tmp = pow(f,n/2);
+            if ( n%2 == 0 ) {
+                return tmp*tmp;
+            }
+            return tmp*tmp/f;
+        }
+
+    }
+    
+    //fonction factoriel
+    int factoriel(int n){
+        if (n==0){
+            return 1;
+        }
+        int a = 1;
+        while (n>1){
+            a=a*n;
+            n=n-1;
+        }
+        return a;
+    }
+    
+    //fonction signe
+    int signe(float f){
+        if (f<0)
+            return -1;
+        else
+            return 1;
+    }
+    
+    //fonction max
+    float max(float a,float b){
+        if (a>=b){
+            return a;
+        }
+        else {
+            return b;
+        }
+        
+    }
+    //fonction min
+    float min(float a,float b){
+        if (a>=b){
+            return b;
+        }
+        else {
+            return a;
+        }
+        
+    }
+    
+    //fonction racine carrée
+    float sqrt(float f){
+        float pred=f/2;
+        int k=0;
+        float succ=0;
+        while (k<100){
+            succ=0.5*(pred+f/pred);
+            pred=succ;
+            k=k+1;
+        }
+        return succ;
+    }
+    
+   //fonction valeur absolue
+    float abs(float f){
+        if (f>=0){
+            return f;
+        }
+        else {
+            return -f;
+        }
+    }	
+    
+    public static float adapt2(float f){
+        //calcule f-pi/2 avec plus de precision
+        float c1=pow(2,-1);
+        float c2=pow(2,-4);
+        float c3=pow(2,-7);
+        float c4=pow(2,-12);
+        float c5=pow(2,-13);
+        float c6=pow(2,-14);
+        float c7=pow(2,-15);
+        float c8=pow(2,-16);
+        float c9=pow(2,-17);
+        float c10=pow(2,-15);
+        float c11=pow(2,-19);
+        float c12=pow(2,-20);
+        float c13=pow(2,-22);
+        float c14=pow(2,-23);
+        f=f-c1;
+        f=f-c2;
+        f=f-c3;
+        f=f-c4;
+        f=f-c5;
+        f=f-c6;
+        f=f-c7;
+        f=f-c8;
+        f=f-c9;
+        f=f-c10;
+        f=f-c11;
+        f=f-c12;
+        f=f-c13;
+        f=f-c14;
+        f=f-1;
+        return f;
+       
+    }
+
+    float fma(float a, float b, float c){
+        // ASM("  ");
+        return a+b*c;
+    }
+
+    float adapt(float f){
+        float c1=pow(2,2);
+        float c2=pow(2,1);
+        float c3=pow(2,-2);
+        float c4=pow(2,-5);
+        float c5=pow(2,-10);
+        float c6=pow(2,-11);
+        float c7=pow(2,-12);
+        float c8=pow(2,-13);
+        float c9=pow(2,-14);
+        float c10=pow(2,-15);
+        float c11=pow(2,-17);
+        float c12=pow(2,-18);
+        float c13=pow(2,-20);
+        float c14=pow(2,-21);
+       
+        int k=0;
+        float f1=f;
+        while (f1<=-pi()){
+            f1=f1+2*pi();
+            k=k+1;  
+        }
+ 
+        while (f1>pi()){
+            f1=f1-2*pi();
+            k=k+1; 
+        }
+        
+        if (f>pi()){
+            f=f-k*c1;
+            f=f-k*c2;
+            f=f-k*c3;
+            f=f-k*c4;
+            f=f-k*c5;
+            f=f-k*c6;
+            f=f-k*c7;
+            f=f-k*c8;
+            f=f-k*c9;
+            f=f-k*c10;
+            f=f-k*c11;
+            f=f-k*c12;
+            f=f-k*c13;
+            f=f-k*c14; 
+        }
+        
+        if (f<=-pi()){
+            f=f+k*c1;
+            f=f+k*c2;
+            f=f+k*c3;
+            f=f+k*c4;
+            f=f+k*c5;
+            f=f+k*c6;
+            f=f+k*c7;
+            f=f+k*c8;
+            f=f+k*c9;
+            f=f+k*c10;
+            f=f+k*c11;
+            f=f+k*c12;
+            f=f+k*c13;
+            f=f+k*c14; 
+        }
+        
+        return f;
+    }
+
+    // calcul de l'ulp
+    float ulp(float f) {
+        return pow(2,exposant(f))*pow(2,-23);
+    }
+
+
+    // calcul l'exposant de la représentaion en binaire 32
+    int exposant(float f){
+        if (f < 0) {
+            return exposant(-f);
+        }
+        if (f==0) {
+            return 0;
+        }
+        int exp = 0;
+        if (f > 1) {
+            int f1= (int)f;
+            while (f1>1){
+                exp=exp+1;
+                f1=f1/2;
+            }
+            return exp;
+        }
+        if (f<1){
+            while(f<1){
+                exp=exp-1;
+                f=f*2;
+            }
+            return exp;
+        }
+        return exp;
+    }
+    ////////////////////////série_entière////////////////////////
+
+    // fonction sinus première solution série entière
+    float sin_ser(float f) {
+        int k=0;
+        float solution=0;
+        while (k < 6) {
+            solution=solution+pow(-1,k)* pow(f,2*k+1)/factoriel(2*k+1);
+            k=k+1;
+        }
+        return solution;
+    }
+
+    //sinus série entière amélioré
+    float sin_ser2(float f) {
+        if (f==pi()){
+            return 1;
+        }
+             
+        f=adapt(f);
+        if (0<=f && f<=pi()/2) {
+            
+            return sin_ser(f);
+        }
+
+        if (f>pi()/2 && f<=pi()){
+            return cos2(adapt2(f));
+        }
+        if (-pi()<=f && f<0){
+            return -sin2(-f);
+            
+        }
+        return 0;
+    }
+   
+    // fonction cosinus première solution série entière
+    float cos_ser(float f) {
+        int k=0;
+        float solution=0;
+        while (k < 6) {
+            solution=solution+pow(-1,k)* (pow(f,2*k))/(factoriel(2*k));
+            k=k+1;
+        }
+        return solution;
+    }
+
+    //cosinus série entière amélioré
+    float cos_ser2(float f) {
+        f=adapt(f);
+        if (f==0){
+            return 1;
+        }
+        if (0<=f && f<=pi()/4) {
+            
+            return cos_ser(f);
+        }
+        if (0<pi()/4 && f<=pi()/2) {
+            
+            return sin2(-adapt2(f));
+        }
+        
+        if (f>pi()/2 && f<=pi()){
+            return -sin2(adapt2(f));
+        }
+        if (-pi()<=f && f<0){
+            return cos2(-f);
+            
+        }
+        return 0;
+       
+    }
+
+    // fonction arcsin première version série entière
+    float asin_ser(float f) {
+        if (f<=1 && f>=-1 ) { //definie seulement sur -1..1
+        int k=0;
+        float solution=0;
+        while (k < 7) {
+            
+            solution=solution+(pow(f,2*k+1)*factoriel(2*k))/((2*k+1)*pow(factoriel(k)*pow(2,k),2));
+            k+=1;
+        }
+        return solution;
+        }
+        return f;
+    }
+
+    // fonction arctan première méthode série entière
+    float atan_ser(float f) {
+        
+        if (f == 1) {
+            return 0.78539816339;
+        }
+        
+        if (f<1 && f>=0 ) {
+        int k=0;
+        float solution=0;
+        while (k < 1000) {
+            solution=solution+pow(-1,k)*pow(f,2*k+1)/(2*k+1);
+            k+=1;
+        }
+        return solution;
+        }
+        if (f>1) {
+            return (pi()/2)-atan(1/f); //pi/2-atan(1/f)
+        }
+        if (f<0) {
+            return -atan(-f);
+        }
+       return 0; 
+    }
+
+    //////////////////////////////algo_cordic///////////////////////////////
+    //cosinus cordic iteratif
+    float  cordic_cos(float f){
+        int k =0;
+        float cos =1;
+        float sin =0;
+        float z=f;
+        float tmp1;
+        float tmp2;
+
+        while( k <100){
+            tmp1=z;
+            z=tmp1-signe(tmp1)*atan(pow(2,-k));
+            tmp2=cos;
+            cos=cos-signe(tmp1)*sin*pow(2,-k);
+            sin=sin+signe(tmp1)*tmp2*pow(2,-k);
+            k=k+1;
+
+        }
+        return 0.60725294*cos;
+    }
+    //sinus cordic iteratif
+    float  cordic_sin(float f) {
+        
+        int k=0;
+        float cos=1;
+        float sin=0;
+        float z=f;
+        float tmp1;
+        float tmp2;
+
+        while(k < 100) {
+            tmp1=z;
+            z=tmp1-signe(tmp1)*atan(pow(2,-k));
+            tmp2 =cos;
+            cos = cos-signe(tmp1)*sin*pow(2, -k);
+            sin=sin+signe(tmp1)*tmp2*pow(2, -k);
+            k=k+1;
+            
+
+        }
+        return 0.60725294*sin;
+    }
+    
+    // fonction sinus cordic finale
+    float sin(float f) {
+        
+        // Si l'angle est entre 0 et pi/2 on applique l'algorithme
+        f=adapt(f);
+        if (0<=f && f<=pi()/2) {
+            
+            return cordic_sin(f);
+        }
+        // si non on ramène à cet intervalle
+        if (f>pi()/2 && f<=pi()){
+            return cos(adapt2(f));
+        }
+        if (-pi()<=f && f<0){
+            return -sin(-f);
+            
+        }
+        return f;
+    }
+    
+    
+
+    //fonction aux sin recursive
+
+    float aux_sin(float f, int n ){
+        
+        if (n == 0) {
+            return 0;
+            }
+        float prec = aux_trigo(f,n-1);
+        if (prec < 0) {
+            return aux_sin(f,n-1)-aux_cos(f,n-1)*pow(2,-(n-1));
+        }
+        if (prec == 0) {
+            return aux_sin(f,n-1);
+        }
+        return aux_sin(f,n-1)+ aux_cos(f,n-1)*pow(2,-(n-1));
+
+    }
+
+    //fonction aux cos recursive
+    float aux_cos(float f, int n) {
+        
+        if (n ==0) {
+            return 1;
+        }
+        float prec = aux_trigo(f,n-1);
+        if ( prec < 0){
+            return aux_cos(f,n-1) + aux_sin(f,n-1)*pow(2,-(n-1));
+        }
+        if ( prec ==0){
+            return aux_cos(f,n-1);
+        }
+        return aux_cos(f,n-1) - aux_sin(f,n-1)*pow(2,-(n-1));
+    }
+
+
+
+    float aux_trigo(float f,int n) {
+        if (n ==0){
+            return f;
+        }
+        float prec =aux_trigo(f,n-1);
+        if (prec < 0){
+            return prec+atan(pow(2,-(n-1)));
+        }
+        if (prec==0) {
+            return prec;
+        }
+        return prec-atan(pow(2,-(n-1)));
+    }
+
+    // fonction cosinus cordic finale
+    float cos(float f) {
+        f=adapt(f);
+        if (f==0){
+            return 1;
+        }
+        if (0<=f && f<=pi()/2) {
+            
+            return cordic_cos(f);
+        }
+        if (f>pi()/2 && f<=pi()){
+            return -sin(adapt2(f));
+        }
+        if (-pi()<=f && f<0){
+            return cos(-f);
+            
+        }
+        return 0;
+        
+    }
+
+    
+    
+    //////////////////////autres_algos///////////////////////////////////////
+
+    //tan(x)=sin(x)/cos(x)
+    float tan(float f){
+         return sin(f)/cos(f);
+    }
+
+    //autre algo trouvé pour arctan
+    float atan_algo(float f) {
+        float a=1/sqrt(1+f*f);
+        float b=1;
+        int i=1;
+        while (i<12){
+            a=(a+b)/2;
+            b=sqrt(a*b);
+            i=i+1;
+        }
+        return f/(sqrt(1+f*f)*a);
+    }
+
+
+    
+    //arcsin(x)=arctan(x/sqrt(1-x²))) version finale 
+    float asin(float f) {
+        if (f<1 && f>-1 ) {
+            return atan(f/sqrt(1-pow(f,2)));
+        }
+        if (f==1){
+            return pi()/2;
+        }
+        if (f==-1){
+            return -pi()/2;
+        }
+        
+        return f;
+    }
+
+    //acos(x)=pi/2 - asin(x) version finale
+    float acos(float f) {
+        return 1.570796327-asin(f);
+    }
+        
+
+    //fonction arctan finale qui utilise les deux algos
+    float atan(float f) {
+        if (abs(f)>0.9 && abs(f)<1.1){
+            return atan_algo(f);
+        }
+        return atan_ser(f);    
+        }
+    
+}
+}

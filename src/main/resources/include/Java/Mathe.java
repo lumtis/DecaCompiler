@@ -67,15 +67,12 @@ public class Mathe {
         float f1=f;
         while (f1<=-pi()){
             f1=f1+2*pi();
-            k=k+1;
-            //f=f+2*c1+2*c2+2*c3+2*c4+2*c5+2*c6+2*c7+2*c8+2*c9+2*c10+2*c11+2*c12+2*c13+2*c14;
-            
+            k=k+1;  
         }
  
         while (f1>pi()){
             f1=f1-2*pi();
-            k=k+1;
-            //f=f-2*c1-2*c2-2*c3-2*c4-2*c5-2*c6-2*c7-2*c8-2*c9-2*c10-2*c11-2*c12-2*c13-2*c14;
+            k=k+1; 
         }
         
         if (f>pi()){
@@ -92,8 +89,7 @@ public class Mathe {
             f=f-k*c11;
             f=f-k*c12;
             f=f-k*c13;
-            f=f-k*c14;
-           
+            f=f-k*c14; 
         }
         
         if (f<=-pi()){
@@ -110,8 +106,7 @@ public class Mathe {
             f=f+k*c11;
             f=f+k*c12;
             f=f+k*c13;
-            f=f+k*c14;
-           
+            f=f+k*c14; 
         }
         
         return f;
@@ -128,7 +123,7 @@ public class Mathe {
         return solution;
     }
    
-    // fonction cosinus première solution
+    // fonction cosinus première solution série entière
     public static float cos_ser(float f) {
         int k=0;
         float solution=0;
@@ -145,9 +140,8 @@ public class Mathe {
         // Si l'angle est entre 0 et pi/2 on applique l'algorithme
         f=adapt(f);
         if (0<=f && f<=pi()/2) {
-            float b;
-            b = (float) 0.60725294;
-            return b * cordic_sin(f);
+            
+            return cordic_sin(f);
         }
         // si non on ramène à cet interval
         if (f>pi()/2 && f<=pi()){
@@ -203,15 +197,7 @@ public class Mathe {
 
     public static float pi (){
         return (float)3.1415927;
-        /*float k=-4;
-        float i=0;
-        float s=0;
-        while (i<999999999){
-            k=-k;
-            s=s+k/(2*i+1); 
-            i=i+1;
-        }
-        return s;*/
+        
     }
 
 
@@ -250,16 +236,15 @@ public class Mathe {
 
 
 
-    // fonction cosinus
+    // fonction cosinus cordic
     public static float cos(float f) {
         f=adapt(f);
         if (f==0){
             return 1;
         }
         if (0<=f && f<=pi()/2) {
-            float b;
-            b = (float) 0.60725294;
-            return b*cordic_cos(f);
+            
+            return cordic_cos(f);
         }
         if (f>pi()/2 && f<=pi()){
             return -sin(adapt2(f));
@@ -305,28 +290,53 @@ public class Mathe {
         if (f==pi()/2){
             throw new IllegalArgumentException();
         }
-        return sin2(f)/cos2(f);
+        return sin(f)/cos(f);
     }
 
 
-    // fonction arcsin
-    public float asin(float f) {
-        System.out.println("asin(f) not yet implemented");
+    // fonction arcsin première version série entière
+    public static float asin(float f) {
+        if (f<=1 && f>=-1 ) { //definie seulement sur -1..1
+        int k=0;
+        float solution=0;
+        while (k < 7) {
+            
+            solution+=(pow(f,2*k+1)*factoriel(2*k))/((2*k+1)*pow(factoriel(k)*pow(2,k),2));
+            k+=1;
+        }
+        return solution;
+        }
         return f;
     }
-
-
-    // fonction arctan
-    public static float atan(float f) {
-        if (f>1 || f<-1 ) {
-            throw new IllegalArgumentException("hmar c'est arctan là quesque tu me fais même lucas est meilleur que toi");
+    //arcsin(x)=arctan(x/sqrt(1-x²))) 
+    public static float asin2(float f) {
+        if (f<1 && f>-1 ) {
+            return atan(f/sqrt(1-pow(f,2)));
         }
+        if (f==1){
+            return pi()/2;
+        }
+        if (f==-1){
+            return -pi()/2;
+        }
+        
+        return f;
+    }
+    
+    public static float acos(float f) {
+        return (float)1.570796327-asin2(f);
+    }
+        
+
+    // fonction arctan première méthode série entière
+    public static float atan(float f) {
+        
+        
         if (f == 1) {
             return (float)0.78539816339;
         }
-        if(f==-1){
-            return (float)-0.78539816339;
-        }
+        
+        if (f<1 && f>=0 ) {
         int k=0;
         float solution=0;
         while (k < 1000) {
@@ -334,18 +344,40 @@ public class Mathe {
             k+=1;
         }
         return solution;
+        }
+        if (f>1) {
+            return pi()/2-atan(1/f);//pi/2-atan(1/f)
+        }
+        if (f<0) {
+            return -atan(-f);
+        }
+       return 0; 
+    }
+    public static float atan3(float f) {
+        if (abs(f)>0.9 && abs(f)<1.1){
+            return atan2(f);
+        }
+        return atan(f);    
+        }
+    
+    public static float atan2(float f) {
+        float a=1/sqrt(1+f*f);
+        float b=1;
+        int i=1;
+        while (i<12){
+            a=(a+b)/2;
+            b=sqrt(a*b);
+            i++;
+        }
+        return f/(sqrt(1+f*f)*a);
     }
 
 
-
-    // calcul d
+    // calcul de l'ulp
         public static float ulp(float f) {
 
         return Mathe.pow((float)2,Mathe.exposant(f)) * Mathe.pow((float)2,-23);
     }
-
-
-
 
 
     // calcul l'exposant de la représentaion en binaire 32
@@ -375,31 +407,6 @@ public class Mathe {
         return exp;
     }
 
-
-
-
-    // calcul des puissance entière de floatants
-    public static float pow(float f, int n) {
-        if (n >= 0) {
-            if (n==0) return (float)1;
-            float tmp = pow(f,n/2);
-            if ( n%2 == 0 ) {
-                return tmp*tmp;
-            }
-            return f*tmp*tmp;
-        }
-        else {
-            if (n == -1){
-                return (float)1/f;
-            }
-            float tmp = pow(f,n/2);
-            if ( n%2 == 0 ) {
-                return tmp*tmp;
-            }
-            return tmp*tmp/f;
-        }
-
-    }
 
     public static float  cordic_cos(float f){
         int k =0;
@@ -442,9 +449,35 @@ public class Mathe {
         }
         return (float) 0.60725294*sin;
     }
+    
+    // calcul des puissance entière de floatants
+    public static float pow(float f, int n) {
+        if (n >= 0) {
+            if (n==0) return (float)1;
+            float tmp = pow(f,n/2);
+            if ( n%2 == 0 ) {
+                return tmp*tmp;
+            }
+            return f*tmp*tmp;
+        }
+        else {
+            if (n == -1){
+                return (float)1/f;
+            }
+            float tmp = pow(f,n/2);
+            if ( n%2 == 0 ) {
+                return tmp*tmp;
+            }
+            return tmp*tmp/f;
+        }
 
+    }
+    
     // fonction factoriel
     public static int factoriel(int n){
+        if (n==0){
+            return 1;
+        }
         int a = 1;
         while (n>1){
             a*=n;
@@ -452,11 +485,57 @@ public class Mathe {
         }
         return a;
     }
+    
+    //fonction signe
     public static int signe( float f){
         if (f<0)
             return -1;
         else
             return 1;
+    }
+    
+    //fonction max
+    public static float max(float a,float b){
+        if (a>=b){
+            return a;
+        }
+        else {
+            return b;
+        }
+        
+    }
+    //fonction min
+    public static float min(float a,float b){
+        if (a>=b){
+            return b;
+        }
+        else {
+            return a;
+        }
+        
+    }
+    
+    //fonction racine carrée
+    public static float sqrt(float f){
+        float pred=f/2;
+        int k=0;
+        float succ=0;
+        while (k<100){
+            succ=(float)0.5*(pred+f/pred);
+            pred=succ;
+            k=k+1;
+        }
+        return succ;
+    }
+    
+   //fonction valeur absolue
+    public static float abs(float f){
+        if (f>=0){
+            return f;
+        }
+        else {
+            return -f;
+        }
     }
 
 
