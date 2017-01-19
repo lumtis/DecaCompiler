@@ -167,9 +167,6 @@ public class DecacCompiler {
      */
     public boolean compile() {
         String sourceFile = source.getAbsolutePath();
-        if(!sourceFile.endsWith(".deca")){
-            throw new IllegalArgumentException();
-        }
 
         String destFile=sourceFile.substring(0,sourceFile.length()-5);
         destFile=destFile.concat(".ass");
