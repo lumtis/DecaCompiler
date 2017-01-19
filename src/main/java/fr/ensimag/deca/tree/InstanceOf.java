@@ -2,7 +2,10 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
+import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.*;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -75,13 +78,13 @@ public class InstanceOf extends AbstractExpr {
         expr.codeGenInst(compiler, gc);
 
         compiler.addLabel(debut);
-        compiler.addInstruction(new LOAD(new RegistreOffset(0, gc.getRetReg()), gc.getRetReg()));
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, gc.getRetReg()), gc.getRetReg()));
         compiler.addInstruction(new CMP(new NullOperand(), gc.getRetReg()));
         compiler.addInstruction(new BNE(bloc));
         compiler.addInstruction(new BRA(notFind));
 
         // Bloc du while
-        compiler.addInstruction(new CMP(addr, gc.getRetReg()));
+        compiler.addInstruction(new CMP(addrClass, gc.getRetReg()));
         compiler.addInstruction(new BEQ(find));
         compiler.addInstruction(new BRA(debut));
 
