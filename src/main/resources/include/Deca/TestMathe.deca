@@ -1,0 +1,28 @@
+#include "Mathe.deca"
+{
+    Mathe m = new Mathe();
+    float a;
+    float py=m.pi();
+    println("Début test");
+    println(py/2.0);
+    
+    a=m.acos(0.5);
+    println(a);
+    
+    /*println(m.cos(py/4.0));
+    println(m.sin(py/4.0));
+    println(m.tan(py/4.0));
+    println(m.acos(py/4.0));
+    println(m.asin(py/4.0));
+    println(m.atan(py/4.0));
+
+    println(m.pow(2.0,3));
+    println(m.sqrt(3.0));
+    println(m.max(2.0,3.0));
+    println(m.min(2.0,3.0));
+    println(m.abs(-9.0));
+    println(m.signe(2.0));
+    println(m.factoriel(5));*/
+
+
+}

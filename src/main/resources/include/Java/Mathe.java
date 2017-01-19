@@ -135,7 +135,7 @@ public class Mathe {
     }
 
     // fonction sinus cordic
-    public static float sin(float f) {
+    public static float sin2(float f) {
         
         // Si l'angle est entre 0 et pi/2 on applique l'algorithme
         f=adapt(f);
@@ -155,22 +155,22 @@ public class Mathe {
         throw new IllegalArgumentException(" ça n'arrivera jamais");
     }
     
-    public static float sin2(float f) {
-        if (f==pi()){
-            return 1;
-        }
+    public static float sin(float f) {
+        
              
         f=adapt(f);
+        
         if (0<=f && f<=pi()/2) {
             
             return sin_ser(f);
         }
 
         if (f>pi()/2 && f<=pi()){
-            return cos2(adapt2(f));
+            
+            return sin(pi()-f);
         }
         if (-pi()<=f && f<0){
-            return -sin2(-f);
+            return -sin(-f);
             
         }
         return 0;
@@ -196,7 +196,7 @@ public class Mathe {
 
 
     public static float pi (){
-        return (float)3.1415927;
+        return (float)3.141592653589793238462643383279;
         
     }
 
@@ -247,7 +247,7 @@ public class Mathe {
             return cordic_cos(f);
         }
         if (f>pi()/2 && f<=pi()){
-            return -sin(adapt2(f));
+            return -sin(pi()/2-f);
         }
         if (-pi()<=f && f<0){
             return cos(-f);
@@ -295,7 +295,7 @@ public class Mathe {
 
 
     // fonction arcsin première version série entière
-    public static float asin(float f) {
+    public static float asin2(float f) {
         if (f<=1 && f>=-1 ) { //definie seulement sur -1..1
         int k=0;
         float solution=0;
@@ -309,7 +309,7 @@ public class Mathe {
         return f;
     }
     //arcsin(x)=arctan(x/sqrt(1-x²))) 
-    public static float asin2(float f) {
+    public static float asin(float f) {
         if (f<1 && f>-1 ) {
             return atan(f/sqrt(1-pow(f,2)));
         }
@@ -324,12 +324,12 @@ public class Mathe {
     }
     
     public static float acos(float f) {
-        return (float)1.570796327-asin2(f);
+        return (float)1.570796327-asin(f);
     }
         
 
     // fonction arctan première méthode série entière
-    public static float atan(float f) {
+    public static float atan1(float f) {
         
         
         if (f == 1) {
@@ -353,11 +353,11 @@ public class Mathe {
         }
        return 0; 
     }
-    public static float atan3(float f) {
+    public static float atan(float f) {
         if (abs(f)>0.9 && abs(f)<1.1){
             return atan2(f);
         }
-        return atan(f);    
+        return atan1(f);    
         }
     
     public static float atan2(float f) {
