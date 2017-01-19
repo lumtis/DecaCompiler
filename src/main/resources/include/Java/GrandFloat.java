@@ -153,6 +153,26 @@ public class GrandFloat {
         return Produit;
     }
 
+    public boolean estPlusGrandque(GrandFloat ff){
+        return ( this.f+this.erreur > ff.f+this.erreur );
+    }
+
+    public static GrandFloat GrandPi(){
+        GrandFloat pi = new GrandFloat((float)3.141592,(float)0.000000653589793);
+        return pi;
+    }
+
+    public GrandFloat adaptGrandFloat(){
+        if (this.estPlusGrandque(GrandPi()) ){
+            GrandFloat f =this;
+            while ( f.estPlusGrandque(GrandPi())){
+                f= additionGrandFloat(f,GrandPi());
+            }
+            return f;
+        }
+        return additionGrandFloat(this,this);
+    }
+
 
 
 
