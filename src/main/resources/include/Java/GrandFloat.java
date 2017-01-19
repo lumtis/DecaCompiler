@@ -76,6 +76,13 @@ public class GrandFloat {
 	  return tmp1tmp1 ;
     }
 
+    public static GrandFloat monAddition(GrandFloat ff, GrandFloat gg){
+        GrandFloat resultat = new GrandFloat(ff.f+gg.f, ff.erreur + gg.erreur);
+        return  resultat;
+
+
+    }
+
 
     public static float pow(float f, int n) {
         if (n >= 0) {
@@ -123,12 +130,29 @@ public class GrandFloat {
         // première erreur la différence
         float erreur1 = produit - (tmp.f * tmp1.f);
         // deuxième erreur : le produit de la partie haute de tmp par l'erreur de tmp1 et ainsi de suite
-        float erreur2 = erreur1 + (tmp.erreur * tmp1.f);
-        float erreur3 = erreur2 + (tmp.f *tmp1.erreur);
-        float erreur = tmp.erreur * tmp1.erreur + erreur3;
+        float erreur2 = erreur1 - (tmp.erreur * tmp1.f);
+        float erreur3 = erreur2 - (tmp.f *tmp1.erreur);
+        float erreur = tmp.erreur * tmp1.erreur - erreur3;
         return new GrandFloat(produit,erreur);
 
     }
+
+
+
+
+
+
+    // multiplication de grands float
+    public static GrandFloat multiplicationGrandFloat(GrandFloat ff, GrandFloat gg){
+        GrandFloat Produit = multiplicationSimple(ff.f,gg.f);
+        // on ajoute les erreurs de multiplication par les erreurs
+        Produit.erreur += ff.f* gg.erreur;
+        Produit.erreur += ff.erreur + gg.f;
+        // on récupère les erreurs significatifs
+        Produit= additionSimple(Produit.f,Produit.erreur);
+        return Produit;
+    }
+
 
 
 

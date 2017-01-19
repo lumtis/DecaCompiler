@@ -25,10 +25,12 @@ options {
 // which packages should be imported?
 @header {
     import fr.ensimag.deca.tree.*;
+    import fr.ensimag.deca.syntax.*;
     import java.io.PrintStream;
     import fr.ensimag.deca.tools.*;
     import java.util.LinkedList;
     import java.util.ListIterator;
+    import java.lang.ArithmeticException;
 }
 
 @members {
@@ -481,18 +483,23 @@ type returns[AbstractIdentifier tree]
 literal returns[AbstractExpr tree]
     : INT {
             try {
-                $tree = new IntLiteral(Integer.parseInt($INT.text));
-                setLocation($tree,$INT);
+               $tree = new IntLiteral(Integer.parseInt($INT.text));
+               setLocation($tree,$INT);
             } catch (NumberFormatException e) {
-                $tree = null;
+                throw new OverflowError(this, $ctx);
             }
         }
     | fd=FLOAT {
             try {
-                  $tree = new FloatLiteral(Float.parseFloat($fd.text));
+                  float newFloat = Float.parseFloat($fd.text);
+                  double newDouble = Double.parseDouble($fd.text);
+                  if(Float.isInfinite(newFloat) || (newFloat==0.0 && newDouble!=0.0)){
+                    throw new OverflowError(this, $ctx);
+                  }
+                  $tree = new FloatLiteral(newFloat);
                   setLocation($tree,$fd);
             } catch (NumberFormatException e) {
-                  $tree = null;
+                  throw new OverflowError(this, $ctx);
             }
         }
     | STRING {
