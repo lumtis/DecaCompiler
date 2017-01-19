@@ -1,10 +1,4 @@
-// Description:
-//    classe vecteur
-//
-// Resultats:
-//    
 
-{
 class Vector {
 	float a;
 	float b;

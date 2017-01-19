@@ -3,12 +3,11 @@ class Animal {
     protected int nbPattes;
 
     void faireCrier() {
-        println("Grrrrrrrrrr");
+        println("GrrrrrrrrrrOK");
     }
 
     float nourrir(float poidsNourriture) {
         poids = poids + poidsNourriture;
-        faireCrier();
         return poids;
     }
 }
@@ -26,8 +25,8 @@ class Lion extends Animal {
 }
 
 {
-    Animal lion = new Lion();
+    Lion lion = new Lion();
     float x;
-    println("Un lion a été créé.");
     lion.nourrir(7.2);
+    lion.faireCrier();
 }
