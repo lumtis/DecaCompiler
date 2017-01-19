@@ -47,13 +47,37 @@ public class Assign extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        DAddr addrVar = gc.getAddrVar((Identifier)getLeftOperand());
+        DAddr addrVar;
 
         // On réalise l'expression
         getRightOperand().codeGenInst(compiler, gc);
 
-        // Si l'instruction est fausse on saute directement au else
-        compiler.addInstruction(new STORE(gc.getRetReg(), addrVar));
-    }
+        // On verifie s'il s'agit du champ d'une classe (adresse dynamique)
+        if(getLeftOperand().isFieldCall()) {
+            // On sauvegarde l'expression precedante
+            compiler.addInstruction(new PUSH(gc.getRetReg()));
+            ((FieldCall)getLeftOperand()).codeGenAddr(compiler, gc);
+            compiler.addInstruction(new POP(gc.getR0()));
 
+            compiler.addInstruction(new STORE(gc.getR0(), new RegisterOffset(0, gc.getRetReg())));
+        }
+        else {
+            Identifier res = (Identifier)getLeftOperand();
+
+            if(res.getDefinition().isParam()) {
+                addrVar = new RegisterOffset(res.getParamDefinition().getOffset(), Register.LB);
+                compiler.addInstruction(new STORE(gc.getRetReg(), addrVar));
+            }
+            else if(res.getDefinition().isField()) {
+                // L'objet est toujours dans -2(LB)
+                compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), gc.getR0()));
+                compiler.addInstruction(new STORE(gc.getRetReg(), new RegisterOffset(res.getFieldDefinition().getIndex(), gc.getR0())));
+            }
+            else {
+                // S'il s'agit d'une simple variable on recupere directement son adresse
+                addrVar = gc.getAddrVar(res);
+                compiler.addInstruction(new STORE(gc.getRetReg(), addrVar));
+            }
+        }
+    }
 }

@@ -4,14 +4,7 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.GenCode;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Definition;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.FieldDefinition;
-import fr.ensimag.deca.context.MethodDefinition;
-import fr.ensimag.deca.context.ExpDefinition;
-import fr.ensimag.deca.context.VariableDefinition;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
@@ -82,6 +75,18 @@ public class Identifier extends AbstractIdentifier {
                     "Identifier "
                             + getName()
                             + " is not a method identifier, you can't call getMethodDefinition on it");
+        }
+    }
+
+    @Override
+    public ParamDefinition getParamDefinition() {
+        try {
+            return (ParamDefinition) definition;
+        } catch (ClassCastException e) {
+            throw new DecacInternalError(
+                    "Identifier "
+                            + getName()
+                            + " is not a param identifier, you can't call getParamDefinition on it");
         }
     }
 
@@ -172,7 +177,7 @@ public class Identifier extends AbstractIdentifier {
             ClassDefinition currentClass) throws ContextualError {
         ExpDefinition def = localEnv.get(this.name);
         if (def == null) {
-            throw new ContextualError("Variable non déclarée.", this.getLocation());
+            throw new ContextualError("Identifieur non déclaré.", this.getLocation());
         }
         this.setDefinition(def);
         this.setType(def.getType());
@@ -238,21 +243,23 @@ public class Identifier extends AbstractIdentifier {
             // de l'expression
             gc.setExprFloat(true);
         }
-        else {
-            gc.setExprFloat(false);
+
+        // S'il s'agit d'un parametre son emplacement dans la memoire est différent
+        if(definition.isParam()) {
+            DAddr addr = new RegisterOffset(getParamDefinition().getOffset(), Register.LB);
+            compiler.addInstruction(new LOAD(addr, gc.getRetReg()));
         }
-
-        // S'il s'agit de la creation d'un objet alors on alloue
-        // la mémoires requis
-        //if(definition.isMethod()) {
-
-        //}
-        //else {
+        else if(definition.isField()) {
+            // L'objet est toujours dans -2(LB)
+            compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), gc.getR0()));
+            compiler.addInstruction(new LOAD(new RegisterOffset(getFieldDefinition().getIndex(), gc.getR0()), gc.getRetReg()));
+        }
+        else {
             // Il s'agit d'une simple variable alors on recupere son adresse
             // et on charqe sa valeur
             DAddr addr = gc.getAddrVar(this);
             compiler.addInstruction(new LOAD(addr, gc.getRetReg()));
-        //}
+        }
     }
 
 
@@ -261,7 +268,8 @@ public class Identifier extends AbstractIdentifier {
         // On récupère l'adresse de la variable
         DAddr addr = gc.getAddrVar(this);
 
-        compiler.addInstruction(new LOAD(addr, GPRegister.getR(1)));
+        codeGenInst(compiler, gc);
+        compiler.addInstruction(new LOAD(gc.getRetReg(), GPRegister.getR(1)));
 
         if(definition.getType().isFloat()) {
             compiler.addInstruction(new WFLOAT());

@@ -36,9 +36,11 @@ public class GenCode {
     private int indexGB;
     private int indexLB;
 
-    private Label pile_pleine = newLabel("pile_pleine");
-    private Label tas_plein = newLabel("tas_plein");
-    private Label no_return = newLabel("no_return");
+    private Label pile_pleine = new Label("pile_pleine");
+    private Label tas_plein = new Label("tas_plein");
+    private Label no_return = new Label("no_return");
+    private Label dereferencement_nul  = new Label("dereferencement_nul");
+    private Label objectEquals = new Label("Object.equals");
 
 
     // Fonction utilitaires pour obtenir le nom d'un registre en fonction de
@@ -51,11 +53,11 @@ public class GenCode {
     //}
 
 
-    private GPRegister getR0() {
+    public GPRegister getR0() {
         return r0;
     }
 
-    private GPRegister getR1() {
+    public GPRegister getR1() {
         return r1;
     }
 
@@ -75,8 +77,6 @@ public class GenCode {
 
         exprFloat = false;
         indexGB = 1;
-
-        pileRegSave = new Stack<Integer>();
     }
 
 
@@ -262,9 +262,6 @@ public class GenCode {
         comp.addComment("Code de la table des methodes");
         addSeparatorComment();
 
-        // TODO: Definir ObjectEquals
-        Label objectEquals = new Label("Object.equals");
-
         comp.addComment("Table de Object");
 
         // Table des methodes de object
@@ -303,14 +300,19 @@ public class GenCode {
             // On parcourt les envirronements de l'arborescence des classes
             while(env != null) {
                 for (Map.Entry<Symbol, ExpDefinition> entry : env.getHashMap().entrySet()) {
-                    String name = entry.getKey().getName();
-                    MethodDefinition method = (MethodDefinition)entry.getValue();
-                    Label lab = new Label(cDef.getType().getName().getName() + "." + name); // nomClass.nomMethod
 
-                    if(redef[method.getIndex()] == false) {
-                        comp.addInstruction(new LOAD(new LabelOperand(lab), r0));
-                        comp.addInstruction(new STORE(r0, new RegisterOffset(indexGB + method.getIndex(), Register.GB)));
-                        redef[method.getIndex()] = true;
+                    // Si c'est une méthode, on tente de l'inserer dans la table des méthodes
+                    if(entry.getValue().isMethod()) {
+                        String name = entry.getKey().getName();
+                        MethodDefinition method = (MethodDefinition)entry.getValue();
+                        Label lab = new Label(cDef.getType().getName().getName() + "." + name); // nomClass.nomMethod
+
+                        // On vérifie que la méthode n'a pas déjà été redéfinie
+                        if(redef[method.getIndex()] == false) {
+                            comp.addInstruction(new LOAD(new LabelOperand(lab), r0));
+                            comp.addInstruction(new STORE(r0, new RegisterOffset(indexGB + method.getIndex(), Register.GB)));
+                            redef[method.getIndex()] = true;
+                        }
                     }
                 }
                 env = env.getParent();
@@ -358,6 +360,14 @@ public class GenCode {
         List<AbstractDeclParam> lp = m.getParams().getList();
         Label lab = getMethodLabel(c, m);
 
+        // On remplie d'abord la définition des param
+        int offset = -3;
+        for (AbstractDeclParam ap:m.getParams().getList()){
+            DeclParam p = (DeclParam)ap;
+            p.getName().getParamDefinition().setOffset(offset);
+            offset--;
+        }
+
         // On enregistre la classe et la methode courante pour le label
         // de retour
         setCurrContext(c, m);
@@ -371,42 +381,31 @@ public class GenCode {
         comp.addInstruction(new BOV(pile_pleine));
 
         // On genere le code de la methode
-        m.getBody().generateMethod(comp, this, m.getType().getMethodDefinition().getType().isVoid());
+        m.getBody().generateMethod(comp, this, m.getMethodName().getMethodDefinition().getType().isVoid());
 
         comp.addInstruction(new RTS());
     }
 
 
-
-    // Pile permettant d'enregistrer les nombres de registre utilisé
-    Stack<Integer> pileRegSave;
-
     // Sauvegarde les registres déjà utilisés et remet à 0 le gestionnaire
     // de registre
     public void saveRegister() {
-        int regToSave = indexTmp < maxReg ? indexTmp : maxReg;
-
-        int i = regToSave;
-        while(i > 3) {
-            i--;
-            //comp.addInstruction(new PUSH(getReg(i)));
+        int i = 3;
+        while(i < maxReg) {
             comp.addInstruction(new PUSH(Register.getR(i)));
+            i++;
         }
-
-        pileRegSave.push(regToSave);
     }
 
     // Restore les registres utilisés precedement
     public void restoreRegister() {
-        int regToRestore = pileRegSave.pop();
-
-        int i = 3;
-        while(i < regToRestore) {
-            //comp.addInstruction(new POP(getReg(i)));
+        int i = maxReg - 1;
+        while(i >= 3) {
             comp.addInstruction(new POP(Register.getR(i)));
-            i++;
+            i--;
         }
     }
+
 
     // Création d'un objet
     public void newObject(ClassDefinition cd) {
@@ -446,8 +445,6 @@ public class GenCode {
 
 
 
-
-
     ////////////////////////////////////////////////////////////////////
     // Fonctions generales
 
@@ -466,24 +463,37 @@ public class GenCode {
         comp.addInstruction(new HALT());
         comp.addComment("Messages d’erreurs");
 
+        addSeparatorComment();
         comp.addLabel(pile_pleine);
         comp.addInstruction(new WSTR("Erreur: Pile pleine"));
         comp.addInstruction(new WNL());
         comp.addInstruction(new ERROR());
 
+        addSeparatorComment();
         comp.addLabel(tas_plein);
         comp.addInstruction(new WSTR("Erreur : allocation impossible, tas plein"));
         comp.addInstruction(new WNL());
         comp.addInstruction(new ERROR());
 
+        addSeparatorComment();
         comp.addLabel(no_return);
+        comp.addLabel(objectEquals);
         comp.addInstruction(new WSTR("Erreur : fonction sans retour"));
+        comp.addInstruction(new WNL());
+        comp.addInstruction(new ERROR());
+
+        addSeparatorComment();
+        comp.addLabel(dereferencement_nul);
+        comp.addInstruction(new WSTR("Erreur : deferencement nul"));
         comp.addInstruction(new WNL());
         comp.addInstruction(new ERROR());
     }
 
     public Label getLabelNoReturn() {
         return no_return;
+    }
+    public Label getLabelDereferencementNul() {
+        return dereferencement_nul;
     }
 
     public void addSeparatorComment() {

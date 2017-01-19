@@ -5,6 +5,7 @@ import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
 import java.util.HashSet;
 import java.util.List;
@@ -50,6 +51,7 @@ public class Main extends AbstractMain {
         gc.addSeparatorComment();
 
         insts.codeGenListInst(compiler, gc);
+        compiler.addInstruction(new HALT());
     }
 
     @Override

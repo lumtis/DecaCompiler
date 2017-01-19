@@ -1,0 +1,5 @@
+//Un int ne peut pas commencer par un 0
+
+{
+    int x = 0487;
+}
