@@ -11,8 +11,8 @@ class Animal {
         return poids;
     }
 
-    void setPoids(float poids) {
-        this.poids = poids;
+    void setPoids(float poides) {
+        poids = poides+poids;
     }
 }
 
