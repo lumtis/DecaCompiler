@@ -5,6 +5,7 @@ import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
 import java.util.HashSet;
 import java.util.List;
@@ -42,16 +43,15 @@ public class Main extends AbstractMain {
         LOG.debug("verify Main: end");
     }
     @Override
-    protected void codeGenMain(DecacCompiler compiler) {
-        GenCode gc = new GenCode(compiler);
-
-        // On initialise le début du code
-        gc.initProgram();
+    protected void codeGenMain(DecacCompiler compiler, GenCode gc) {
         gc.initGlobalVar(this.declVariables.getList());
 
+        gc.addSeparatorComment();
         compiler.addComment("Beginning of main instructions:");
+        gc.addSeparatorComment();
+
         insts.codeGenListInst(compiler, gc);
-        gc.terminateProgram();
+        compiler.addInstruction(new HALT());
     }
 
     @Override

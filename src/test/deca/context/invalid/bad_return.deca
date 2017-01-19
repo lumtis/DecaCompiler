@@ -1,0 +1,16 @@
+//ERROR :13
+class Animal {
+    protected float poids;
+    protected int nbPates;
+
+    void faireCrier() {
+        println("Grrrrrrrrrr");
+    }
+
+    float nourrir(float poidsNourriture) {
+        int x = 8;
+        poids = poids + poidsNourriture;
+        return "lollol";
+    }
+
+}

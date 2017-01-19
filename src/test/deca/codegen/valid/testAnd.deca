@@ -5,7 +5,7 @@
 //    1
 
 {
-    
+
     boolean a = false;
     boolean b= true;
     int s=1;
@@ -40,5 +40,5 @@ if (!(a && b)){
     if(s == 1) {
        println("OK");
    }
-  
+
 }

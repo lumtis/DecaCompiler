@@ -26,8 +26,8 @@ public class GreaterOrEqual extends AbstractOpIneq {
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         GPRegister tmp;
-        Label vrai = gc.newLabel();  // Label lorsque l'expression est vrai
-        Label fin = gc.newLabel();   // Label de la fin de l'expression
+        Label vrai = gc.newLabel("GreaterEqualsVrai");  // Label lorsque l'expression est vrai
+        Label fin = gc.newLabel("GreaterEqualsFin");   // Label de la fin de l'expression
 
         super.codeGenInst(compiler, gc);
         tmp = gc.popTmpReg();

@@ -40,17 +40,35 @@ public class Program extends AbstractProgram {
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify program: start");
+        classes.verifyListClass(compiler);
+        classes.verifyListClassMembers(compiler);
+        classes.verifyListClassBody(compiler);
         main.verifyMain(compiler);
         LOG.debug("verify program: end");
     }
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
+        GenCode gc = new GenCode(compiler);
 
+        gc.addSeparatorComment();
         compiler.addComment("Main program");
-        main.codeGenMain(compiler);
-        compiler.addInstruction(new HALT());
+        gc.addSeparatorComment();
 
+        // On initialise le début du code
+        gc.initProgram();
+
+        // On creer la tables des méthodes
+        gc.initMethodTable(getClasses().getList());
+
+        // Code principal du programme
+        main.codeGenMain(compiler, gc);
+
+        // On initialise les classes
+        gc.initClass(getClasses().getList());
+
+        // Fin du programme
+        gc.terminateProgram();
     }
 
     @Override

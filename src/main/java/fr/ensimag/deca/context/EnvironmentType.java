@@ -17,6 +17,8 @@ public class EnvironmentType {
 
     private HashMap<Type, Definition> def_type;
 
+    private AbstractIdentifier object;
+
     public EnvironmentType(SymbolTable symbols) {
         env_type = new HashMap<>();
         def_type = new HashMap<>();
@@ -42,19 +44,25 @@ public class EnvironmentType {
         Symbol objectSym = symbols.create("Object");
         ClassType objectType = new ClassType(objectSym,new Location(0,0,"Default"),null);
         env_type.put(objectSym, objectType);
+        object = new Identifier(objectSym);
+        ClassDefinition classDef = objectType.getDefinition();
+        object.setDefinition(classDef);
+        object.setLocation(0,0,"Default");
+        def_type.put(objectType, object.getDefinition());
+
         //Création de la méthode equals
         EnvironmentExp env_exp = objectType.getDefinition().getMembers();
         Symbol equalsSym = symbols.create("equals");
         Signature sign = new Signature();
         sign.add(objectType);
-        sign.add(objectType);
-        MethodDefinition eqDef = new MethodDefinition(t[3],new Location(0,0,"Default"),sign,0);
+        MethodDefinition eqDef = new MethodDefinition(t[2],new Location(0,0,"Default"),sign,1);
         try {
             env_exp.declare(equalsSym, eqDef);
         }
         catch (EnvironmentExp.DoubleDefException e) {
-            throw new DecacInternalError("equals définit 2 fois.");
+            throw new DecacInternalError("Méthode equals défini 2 fois.");
         }
+        classDef.incNumberOfMethods();
     }
 
     public Type getType(SymbolTable.Symbol sym) {
@@ -77,9 +85,13 @@ public class EnvironmentType {
 
     public void addType(Symbol sym, Type t, Definition def) {
         if (env_type.containsKey(sym) || def_type.containsKey(t)) {
-            throw new DecacInternalError("Insertion dun symbole ou vaiable déjà existante.");
+            throw new DecacInternalError("Définition d'un type déjà existant.");
         }
         env_type.put(sym, t);
         def_type.put(t, def);
+    }
+
+    public AbstractIdentifier getObject() {
+        return this.object;
     }
 }

@@ -1,0 +1,4 @@
+class Kaamelott{
+
+    int protected xD = 4;
+}

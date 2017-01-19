@@ -24,4 +24,17 @@ public class Signature {
         return args.size();
     }
 
+    public boolean sameSignature(Signature sign) {
+        if (this.size() != sign.size()) {
+            return false;
+        }
+        for (int i=0; i<size(); i++) {
+            Type t1 = this.paramNumber(i);
+            Type t2 = sign.paramNumber(i);
+            if (!t1.sameType(t2)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

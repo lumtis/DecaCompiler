@@ -1,13 +1,8 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.context.FloatType;
-import fr.ensimag.deca.context.IntType;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.GenCode;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import java.io.PrintStream;
@@ -41,7 +36,6 @@ public abstract class AbstractPrint extends AbstractInst {
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         for (AbstractExpr a : getArguments().getList()) {
-            a.verifyInst(compiler,localEnv,currentClass,returnType);
             Type t = a.verifyExpr(compiler,localEnv,currentClass);
             if (!t.isString() && !t.isInt() && !t.isFloat()) {
                 throw new ContextualError("Erreur de type.", this.getLocation());
@@ -52,6 +46,7 @@ public abstract class AbstractPrint extends AbstractInst {
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         for (AbstractExpr a : getArguments().getList()) {
+            gc.setExprFloat(false);
             a.codeGenPrint(compiler, gc);
         }
     }
@@ -63,14 +58,7 @@ public abstract class AbstractPrint extends AbstractInst {
     @Override
     public void decompile(IndentPrintStream s) {
         s.print("print"+this.getSuffix()+((printHex)?"x":"")+"(");
-        int nbArg = 0;
-        for (AbstractInst i : arguments.getList()) {
-            nbArg++;
-            if (nbArg>1) {
-                s.print(", ");
-            }
-            i.decompile(s);
-        }
+        arguments.decompile(s);
         s.print(");");
     }
 

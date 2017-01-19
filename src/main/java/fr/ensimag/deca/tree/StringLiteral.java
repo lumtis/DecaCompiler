@@ -64,7 +64,7 @@ public class StringLiteral extends AbstractStringLiteral {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        gc.setExprFloat(false);
+        //gc.setExprFloat(false);
     }
 
 }

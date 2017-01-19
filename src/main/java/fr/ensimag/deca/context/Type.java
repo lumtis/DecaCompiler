@@ -14,7 +14,23 @@ import fr.ensimag.deca.tree.Location;
 
 public abstract class Type {
 
-
+    /**True if this and otherType are the same type or if this is
+     * a subclass of otherType.
+     * @param otherType
+     * @return
+     */
+    public boolean compatibleTo(Type otherType) throws ContextualError {
+        if (this.sameType(otherType)) {
+            return true;
+        }
+        else if (this.isClass() && otherType.isClass()) {
+            String errorMessage = "Erreur interne de conversion de type.";
+            ClassType classType = this.asClassType(errorMessage, new Location(0,0,""));
+            ClassType classOther = otherType.asClassType(errorMessage, new Location(0,0,""));
+            return classType.isSubClassOf(classOther);
+        }
+        return false;
+    }
     /**
      * True if this and otherType represent the same type (in the case of
      * classes, this means they represent the same class).

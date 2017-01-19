@@ -29,7 +29,7 @@ test_context_invalid() {
 }
 
 test_context_valid() {
-    if test_context "$1" 2>&1 | grep -q -e "\($1:[0-9][0-9]*:[0-9][0-9]*\|no location set\|no Type decoration\)"
+    if test_context "$1" 2>&1 | grep -q -e "\($1:[0-9][0-9]*:[0-9][0-9]*\|no location set\|no Type decoration\|Exception in thread\)"
     then
         echo "$1 : ERROR."
         test_context "$1" 2>&1;

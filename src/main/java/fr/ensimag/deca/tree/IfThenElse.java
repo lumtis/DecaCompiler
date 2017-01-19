@@ -48,8 +48,8 @@ public class IfThenElse extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        Label sinon = gc.newLabel();
-        Label fin = gc.newLabel();
+        Label sinon = gc.newLabel("IfSinon");
+        Label fin = gc.newLabel("IfFin");
 
         // On réalise l'expression
         condition.codeGenInst(compiler, gc);
@@ -77,6 +77,7 @@ public class IfThenElse extends AbstractInst {
         s.indent();
         this.thenBranch.decompile(s);
         s.unindent();
+        s.println("}");
         s.println("else {");
         s.indent();
         this.elseBranch.decompile(s);
