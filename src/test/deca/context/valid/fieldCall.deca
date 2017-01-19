@@ -1,0 +1,17 @@
+class Arbre {
+    float taille;
+
+    void setTaille(float taille) {
+        this.taille = taille;
+    }
+
+    void afficheAge(float coef) {
+        println(coef * taille);
+    }
+}
+
+{
+    Arbre epicea = new Arbre();
+    epicea.setTaille(12.8);
+    epicea.afficheAge(3);
+}

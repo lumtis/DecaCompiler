@@ -29,12 +29,6 @@ public class DeclParam extends AbstractDeclParam {
         return this.type;
     }
 
-    /*
-    protected void verifyDeclParam(DecacCompiler compiler, ClassDefinition currentClass)
-            throws ContextualError {
-        throw new ContextualError("Pas encore fait", this.getLocation());
-    */
-
     @Override
     protected Type verifyDeclParam(DecacCompiler compiler, EnvironmentExp env_exp, ClassDefinition currentClass)
             throws ContextualError {

@@ -172,7 +172,7 @@ public class Identifier extends AbstractIdentifier {
             ClassDefinition currentClass) throws ContextualError {
         ExpDefinition def = localEnv.get(this.name);
         if (def == null) {
-            throw new ContextualError("Variable non déclarée.", this.getLocation());
+            throw new ContextualError("Identifieur non déclaré.", this.getLocation());
         }
         this.setDefinition(def);
         this.setType(def.getType());

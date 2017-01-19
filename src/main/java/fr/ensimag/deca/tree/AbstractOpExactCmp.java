@@ -26,7 +26,8 @@ public abstract class AbstractOpExactCmp extends AbstractOpCmp {
         AbstractExpr rightOp = this.getRightOperand();
         Type typeL = leftOp.verifyExpr(compiler,localEnv,currentClass);
         Type typeR = rightOp.verifyExpr(compiler, localEnv, currentClass);
-        if (typeL.sameType(typeR)) {
+        if (typeL.sameType(typeR) || (typeL.isClassOrNull() && typeR.isClassOrNull())) {
+            //On autorise la comparaison de 2 classes quelconques.
         }
         else if (typeL.isFloat() && typeR.isInt()) {
             ConvFloat conv = new ConvFloat(rightOp);

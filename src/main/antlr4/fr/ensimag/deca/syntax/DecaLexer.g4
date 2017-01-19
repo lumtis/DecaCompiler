@@ -21,6 +21,7 @@ fragment STRING_CAR : ~('"' | '\n' | '\\') ;
 fragment SIGN : '+' | '-' | ;
 fragment NUM : DIGIT+;
 fragment DEC:NUM DOT NUM;
+fragment EXP : ('E' | 'e' ) SIGN NUM;
 fragment FLOATDEC: (DEC | DEC EXP)('F' | 'f' | );
 fragment DIGITHEX : DIGIT | ('A' .. 'F') | ('a' .. 'f' );
 fragment NUMHEX : DIGITHEX+;
@@ -71,18 +72,16 @@ EXTENDS : 'extends' ;
 PROTECTED : 'protected';
 ASM: 'asm' ;
 
-EXP : ('E' | 'e' ) SIGN NUM;
-INT : '0' | POSITIVE_DIGIT DIGIT*;
-FLOAT :FLOATDEC | FLOATHEX;
-STRING : '"' (STRING_CAR | '\"' | '\\')*? '"' ;
-MULTI_LINE_STRING:'"' (STRING_CAR | '\n' | '\"' | '\\')*? '"' ;
+FLOAT : FLOATDEC | FLOATHEX;
+INT : '0' | (POSITIVE_DIGIT DIGIT*);
+STRING : '"' (STRING_CAR | '\\"' | '\\\\')*? '"' ;
+MULTI_LINE_STRING:'"' (STRING_CAR | '\n' | '\\"' | '\\\\')*? '"' ;
 IDENT:(LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')* ;
 
 INCLUDE : '#include' (' ')* '"' FILENAME '"' {
     doInclude(getText());
 
 };
-CLE: ASM | PROTECTED | EXTENDS | CLASS | NULL | THIS| FALSE | TRUE | NEW | READFLOAT | READINT ;
 
 COMMENT_CLASSIC: '/*' .*? '*/'
                     {
