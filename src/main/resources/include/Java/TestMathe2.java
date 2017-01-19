@@ -29,9 +29,9 @@ public class TestMathe2 {
         //System.out.println(Mathe.asin((float)0.5));
         
         //System.out.println((float)java.lang.Math.asin(0.52));
-        System.out.println(Mathe.atan2((float)0.01));
-        System.out.println(Mathe.atan((float)0.01));
-        System.out.println(java.lang.Math.atan((float)0.01));
+        //System.out.println(Mathe.atan2((float)0.01));
+        //System.out.println(Mathe.atan((float)0.01));
+        //System.out.println(java.lang.Math.atan((float)0.01));
         
         //float a=Mathe.cos2((float)2.5);
         //float b=Mathe.cordic_cos((float)2.5);
@@ -94,37 +94,33 @@ public class TestMathe2 {
         //System.out.print("Nombre total de COSSER PASS : ");
         //System.out.println(c2);*/
        
-        
+        /*
         System.out.println("TEST TAN");
         for (float i=-py/2+py/48;i<py/2+py/48;i=i+py/24){    
             System.out.print(i);
-            System.out.print("  ");
+            System.out.println("  ");
             fon.testTan(i);
-        }
+        }*/
         /*
         System.out.println("TEST ASIN");
         for (float i=-1;i<=1;i=i+(float)0.01){    
             //System.out.print(i);
-            //System.out.print(" ");
+            //System.out.println(" ");
             
-            //System.out.println(Mathe.asin(i));
+            
             
             //fon.testAsin(i);
-            
-            
-            System.out.print(i);
-            System.out.print(" ");
             fon.testAsin2(i);
         }*/
         /*
         System.out.println("TEST ACOS");
         for (float i=-1;i<=1;i=i+(float)0.01){    
-            System.out.print(i);
-            System.out.print("  ");
+            //System.out.print(i);
+            //System.out.print("  ");
             fon.testAcos(i);
         }*/
         
-        /*
+        
         System.out.println("TEST ATAN");
         for (float i=-10;i<=10;i=i+(float)0.1){    
             //System.out.print(i);
@@ -135,10 +131,10 @@ public class TestMathe2 {
             //fon.testAtan2(i);
             
             
-            System.out.print(i);
-            System.out.print(" ");
-            fon.testAtan3(i);
-        }*/
+            //System.out.println(i);
+            //System.out.print(" ");
+            fon.testAtan(i);
+        }
         
         
         

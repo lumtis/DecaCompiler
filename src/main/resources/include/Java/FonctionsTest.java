@@ -142,15 +142,16 @@ public class FonctionsTest {
         else {
             testtan=test;
         }
-        System.out.print("Erreur ");
-        System.out.print(Erreur((float)java.lang.Math.tan(f),s,lim));
+        //System.out.print("Erreur ");
+        System.out.println(Erreur((float)java.lang.Math.tan(f),s,lim));
+        /*
         if ((float)abs((float)java.lang.Math.tan(f)-s)<=testtan){
             System.out.println(" TAN PASS");
         }
         else {
             System.out.println(" TAN NO");
             
-        }
+        }*/
     }
     
     
@@ -164,15 +165,16 @@ public class FonctionsTest {
         else {
             testasin=test;
         }
-        System.out.print("Erreur ");
-        System.out.print(Erreur((float)java.lang.Math.asin(f),s,lim));
+        //System.out.print("Erreur ");
+        System.out.println(Erreur((float)java.lang.Math.asin(f),s,lim));
+        /*
         if ((float)abs((float)java.lang.Math.asin(f)-s)<=testasin){
             System.out.println(" ASIN PASS");
         }
         else {
             System.out.println(" ASIN NO");
             
-        }
+        }*/
     }
     
     public void testAsin2(float f){
@@ -185,15 +187,16 @@ public class FonctionsTest {
         else {
             testasin=test;
         }
-        System.out.print("Erreur ");
-        System.out.print(Erreur((float)java.lang.Math.asin(f),s,lim));
+        //System.out.print("Erreur ");
+        System.out.println(Erreur((float)java.lang.Math.asin(f),s,lim));
+        /*
         if ((float)abs((float)java.lang.Math.asin(f)-s)<=testasin){
             System.out.println(" ASIN2 PASS");
         }
         else {
             System.out.println(" ASIN2 NO");
             
-        }
+        }*/
     }
     
     
@@ -207,19 +210,20 @@ public class FonctionsTest {
         else {
             testcos=test;
         }
-        System.out.print("Erreur ");
-        System.out.print(Erreur((float)java.lang.Math.acos(f),s,lim));
+        //System.out.print("Erreur ");
+        System.out.println(Erreur((float)java.lang.Math.acos(f),s,lim));
+        /*
         if ((float)abs(java.lang.Math.acos(f)-Mathe.acos(f))<=testcos){
             System.out.println(" ACOS PASS");
         }
         else {
             System.out.println(" ACOS NO");
             
-        }
+        }*/
     }
     
     public void testAtan(float f){
-        float s=Mathe.atan(f);
+        float s=Mathe.atan3(f);
         
         float lim=(java.lang.Math.ulp((float) java.lang.Math.atan(f)));
         //System.out.println(lim);
@@ -230,16 +234,17 @@ public class FonctionsTest {
         else {
             testatan=test;
         }
-        System.out.print("Erreur ");
-        System.out.print(Erreur((float)java.lang.Math.atan(f),s,lim));
+        //System.out.print("Erreur ");
+        System.out.println(Erreur((float)java.lang.Math.atan(f),s,lim));
         //System.out.println((float)java.lang.Math.atan(f)-s);
+        /*
         if ((float)abs(java.lang.Math.atan(f)-s)<=testatan){
             System.out.println(" ATAN PASS");
         }
         else {
             System.out.println(" ATAN NO");
             
-        }
+        }*/
     }
     
     public void testAtan2(float f){
