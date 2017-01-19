@@ -1,0 +1,12 @@
+class Animal {
+}
+
+class Lion extends Animal {
+}
+
+{
+    Lion lion = new Lion();
+    float x;
+    lion.nourrir(7.2);
+    lion.faireCrier();
+}
