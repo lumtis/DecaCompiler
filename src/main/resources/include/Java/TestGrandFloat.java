@@ -29,5 +29,9 @@ public class TestGrandFloat {
         float g = GrandFloat.pimoinsf((float)3.141592);
         System.out.println(g);
 
+
+
+
+
     }
 }

@@ -202,6 +202,23 @@ public class Mathe {
         }
         return solution;
     }
+
+
+
+    public static float cos_GrandFloat( float f){
+        int k=0;
+        GrandFloat solution= new GrandFloat(0,0);
+        while (k<6){
+            float tmp= (float)1.0/factoriel(2*k);
+            float tmp1 = pow(f,2*k) * pow((float)-1,k);
+            GrandFloat r= GrandFloat.multiplicationSimple(tmp,tmp1);
+            solution= GrandFloat.additionGrandFloat(solution,r);
+            k+=1;
+        }
+        return solution.f + solution.erreur;
+    }
+
+
     /*
     // fonction sinus cordic
     public static float sin2(float f) {
