@@ -78,7 +78,7 @@ public class GrandFloat {
 
     public static GrandFloat monAddition(GrandFloat ff, GrandFloat gg){
         GrandFloat resultat = new GrandFloat(ff.f+gg.f, ff.erreur + gg.erreur);
-        
+
         return  resultat;
 
 
@@ -177,7 +177,7 @@ public class GrandFloat {
         if (f > (float) 3.14159265359){
             GrandFloat MoinsGrand2pi= additionSimple((float)-6.283185,(float)-0.00000030718);
             GrandFloat resultat = additionSimple(f,-(float)6.28318530718);
-            System.out.println(MoinsGrand2pi);
+            System.out.println(" t'étais pas censé etre la retourne chez toi lucas le zeb");
             while (resultat.estPlusGrandque(GrandPi())){
 
                 resultat =additionGrandFloat(resultat,MoinsGrand2pi);
@@ -185,7 +185,7 @@ public class GrandFloat {
             }
             return resultat.f + resultat.erreur;
         }
-        if (f < (float)3.1415926539){
+        if (f < (float)-3.1415926539){
             GrandFloat Grand2pi=additionSimple((float)6.253185,(float)0.00000030718);
             GrandFloat resultat = additionSimple(f,(float)6.28318530718);
             while (moinsGrandpi().estPlusGrandque(resultat)){
@@ -193,6 +193,7 @@ public class GrandFloat {
             }
             return resultat.f + resultat.erreur;
         }
+        System.out.println(" tla normalement lucas de zeb");
         return f;
     }
 
