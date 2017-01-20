@@ -157,15 +157,44 @@ public class GrandFloat {
         return pi;
     }
 
-    public GrandFloat adaptGrandFloat(){
-        if (this.estPlusGrandque(GrandPi()) ){
-            GrandFloat f =this;
-            while ( f.estPlusGrandque(GrandPi())){
-                f= additionGrandFloat(f,GrandPi());
+    public void ajouter_erreur(float f){
+        this.erreur+=f;
+
+    }
+    public void ajouter_float(float f){
+        this.f+=f;
+    }
+
+
+
+    public static float adaptGranfloat( float f){
+
+        if (f > (float) 3.14159265359){
+            GrandFloat MoinsGrand2pi= additionSimple((float)-6.283185,(float)-0.00000030718);
+            GrandFloat resultat = additionSimple(f,-(float)6.28318530718);
+            System.out.println(MoinsGrand2pi);
+            while (resultat.estPlusGrandque(GrandPi())){
+
+                resultat =additionGrandFloat(resultat,MoinsGrand2pi);
+
             }
-            return f;
+            return resultat.f + resultat.erreur;
         }
-        return additionGrandFloat(this,this);
+        if (f < (float)3.1415926){
+            GrandFloat resultat = additionSimple(f,(float)6.28318530718);
+            while (multiplicationGrandFloat(GrandPi(),new GrandFloat(-1,0)).estPlusGrandque(resultat)){
+                resultat =additionGrandFloat(resultat,GrandPi());
+                resultat= additionGrandFloat(resultat,GrandPi());
+            }
+            return resultat.f + resultat.erreur;
+        }
+        return f;
+    }
+
+    public static float pimoinsf( float f){
+       GrandFloat r = additionSimple(-f,0);
+       r= additionGrandFloat(r,GrandPi());
+       return r.f+ r.erreur;
     }
 
 
