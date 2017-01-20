@@ -191,7 +191,7 @@ public class GrandFloat {
             return resultat.f + resultat.erreur;
         }
         if (f < (float)-3.1415926539){
-            GrandFloat Grand2pi=additionSimple((float)6.253185,(float)0.00000030718);
+            GrandFloat Grand2pi=additionSimple((float)6.283185,(float)0.00000030718);
             GrandFloat resultat = additionSimple(f,(float)6.28318530718);
             while (moinsGrandpi().estPlusGrandque(resultat)){
                 resultat =additionGrandFloat(resultat,Grand2pi);
