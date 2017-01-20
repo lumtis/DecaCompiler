@@ -2,7 +2,10 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
+import fr.ensimag.deca.codegen.GenCode;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.instructions.*;
+import fr.ensimag.ima.pseudocode.*;
 import org.apache.commons.lang.Validate;
 
 import java.io.PrintStream;
@@ -55,6 +58,46 @@ public class Cast extends AbstractExpr{
         }
         this.setType(type_ref);
         return type_ref;
+    }
 
+    @Override
+    protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
+
+        // On réalise l'expression
+        expr_cast.codeGenInst(compiler, gc);
+
+        if(ident_type.getDefinition().getType().isInt()) {
+            compiler.addInstruction(new INT(gc.getRetReg(), gc.getRetReg()));
+        }
+        else if(ident_type.getDefinition().getType().isFloat()) {
+            compiler.addInstruction(new FLOAT(gc.getRetReg(), gc.getRetReg()));
+        }
+        else if(ident_type.getDefinition().getType().isClass()) {
+            Label debut = gc.newLabel("CastDebut");
+            Label bloc = gc.newLabel("CastBloc");
+            Label find = gc.newLabel("CastFind");
+
+            // On obtient l'adresse de la classe à retrouver
+            int offset = ident_type.getClassDefinition().getOffset();
+            DAddr addrClass = new RegisterOffset(offset, Register.GB);
+
+            compiler.addInstruction(new PUSH(gc.getRetReg()));
+
+            compiler.addLabel(debut);
+            compiler.addInstruction(new LOAD(new RegisterOffset(0, gc.getRetReg()), gc.getRetReg()));
+            compiler.addInstruction(new CMP(new NullOperand(), gc.getRetReg()));
+            compiler.addInstruction(new BNE(bloc));
+            compiler.addInstruction(new POP(gc.getRetReg()));
+            compiler.addInstruction(new BRA(gc.getLabelConversion_mauvaise()));
+
+            compiler.addLabel(bloc);
+            compiler.addInstruction(new LEA(addrClass, gc.getR0()));
+            compiler.addInstruction(new CMP(gc.getR0(), gc.getRetReg()));
+            compiler.addInstruction(new BEQ(find));
+            compiler.addInstruction(new BRA(debut));
+
+            compiler.addLabel(find);
+            compiler.addInstruction(new POP(gc.getRetReg()));
+        }
     }
 }
