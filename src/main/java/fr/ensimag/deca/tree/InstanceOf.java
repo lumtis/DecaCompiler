@@ -53,10 +53,10 @@ public class InstanceOf extends AbstractExpr {
         Type type = expr.verifyExpr(compiler,localEnv,currentClass);
 
         if (!type.isNull() && !type.isClass()) {
-            throw new ContextualError("Instanceof impossible, type de l'expression incompatible.", expr.getLocation());
+            throw new ContextualError("Impossible InstanceOf, type of expression is not compatible", expr.getLocation());
         }
         if (!type_ref.isClass()) {
-            throw new ContextualError("InstanceOf impossible, le type n'est pas une classe.", ident_type.getLocation());
+            throw new ContextualError("Impossible InstanceOf, type is not a class", ident_type.getLocation());
         }
         Type t = compiler.getType("boolean");
         this.setType(t);

@@ -49,15 +49,14 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
         if (compiler.getType(this.className.getName()) != null) {
-            throw new ContextualError("Classe déjà définie.", this.getLocation());
+            throw new ContextualError("Class already defined", this.getLocation());
         }
         Type superType = compiler.getType(superName.getName());
         if (superType == null) {
-            throw new ContextualError("Super classe non définie.", this.getLocation());
+            throw new ContextualError("Super class is not defined", this.getLocation());
         }
-        String errorMessage = superName.getName() + " n'est pas un type de classe.";
+        String errorMessage = superName.getName() + " is not type of class";
         ClassType superTypeClass = superType.asClassType(errorMessage, this.getLocation());
-        Validate.notNull(superType, "Erreur : Le type de la super classe est nulle.");
         superName.setDefinition(superTypeClass.getDefinition());
         ClassType t = new ClassType(className.getName(), this.getLocation(), superTypeClass.getDefinition());
         compiler.addType(className.getName(), t);
