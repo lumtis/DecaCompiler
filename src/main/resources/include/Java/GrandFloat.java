@@ -137,11 +137,6 @@ public class GrandFloat {
 
     }
 
-
-
-
-
-
     // multiplication de grands float
     public static GrandFloat multiplicationGrandFloat(GrandFloat ff, GrandFloat gg){
         GrandFloat Produit = multiplicationSimple(ff.f,gg.f);

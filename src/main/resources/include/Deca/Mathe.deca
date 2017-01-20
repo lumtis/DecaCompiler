@@ -477,7 +477,6 @@ class Mathe {
             return 1.0;
         }
         if (0<=f && f<=pi()/2) {
-            
             return cordic_cos(f);
         }
         if (f>pi()/2 && f<=pi()){
