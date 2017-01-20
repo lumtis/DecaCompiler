@@ -1,0 +1,11 @@
+class A {
+
+}
+
+{
+    int x = 6;
+    if (x instanceof A) {
+        print("Erreur.");
+    }
+}
+//ERROR :7:
