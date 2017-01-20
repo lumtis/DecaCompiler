@@ -40,6 +40,7 @@ public class GenCode {
     private Label tas_plein = new Label("tas_plein");
     private Label no_return = new Label("no_return");
     private Label dereferencement_nul  = new Label("dereferencement_nul");
+    private Label divided_zero = new Label("divided_zero");
     private Label objectEquals = new Label("Object.equals");
 
 
@@ -523,25 +524,31 @@ public class GenCode {
 
         addSeparatorComment();
         comp.addLabel(pile_pleine);
-        comp.addInstruction(new WSTR("Erreur: Pile pleine"));
+        comp.addInstruction(new WSTR("Error: full stack."));
         comp.addInstruction(new WNL());
         comp.addInstruction(new ERROR());
 
         addSeparatorComment();
         comp.addLabel(tas_plein);
-        comp.addInstruction(new WSTR("Erreur : allocation impossible, tas plein"));
+        comp.addInstruction(new WSTR("Error : impossible allocation, full heap."));
         comp.addInstruction(new WNL());
         comp.addInstruction(new ERROR());
 
         addSeparatorComment();
         comp.addLabel(no_return);
-        comp.addInstruction(new WSTR("Erreur : fonction sans retour"));
+        comp.addInstruction(new WSTR("Error : function without return."));
         comp.addInstruction(new WNL());
         comp.addInstruction(new ERROR());
 
         addSeparatorComment();
         comp.addLabel(dereferencement_nul);
-        comp.addInstruction(new WSTR("Erreur : deferencement nul"));
+        comp.addInstruction(new WSTR("Error : null dereferencing."));
+        comp.addInstruction(new WNL());
+        comp.addInstruction(new ERROR());
+
+        addSeparatorComment();
+        comp.addLabel(divided_zero);
+        comp.addInstruction(new WSTR("Error : divided by zero."));
         comp.addInstruction(new WNL());
         comp.addInstruction(new ERROR());
     }
@@ -551,6 +558,9 @@ public class GenCode {
     }
     public Label getLabelDereferencementNul() {
         return dereferencement_nul;
+    }
+    public Label getDividedZero() {
+        return divided_zero;
     }
 
     public void addSeparatorComment() {

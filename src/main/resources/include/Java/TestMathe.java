@@ -2,6 +2,7 @@ import java.lang.Math;
 public class TestMathe {
 
     public static void main(String[] args) {
+        /*
         // premier test, vérification de la bonne compréhenstion de la représentation binaire
         float f= (float) 2.25;
         float g= (float) 5.25;
@@ -182,16 +183,21 @@ public class TestMathe {
         }
         else {
             System.out.println("artan not pass");
-        }
+        }*/
 
         //float sin0 = Mathe.sin_grandfloat(0);
-        float sin1 = Mathe.sin_grandfloat((float)0.5);
-        float sinjava= (float) Math.sin((float)0.5);
-        float sinmook = Mathe.sin_ser((float)0.5);
-        System.out.println("il faut atteindre : " + sinjava);
-        System.out.println(" avec grand float on a "+ sin1);
-        System.out.println("sans grand float on a " + sinmook);
-
+        float singl = Mathe.atan((float)2);
+        double sinjava = Math.atan((float)2);
+        //float sin3=  Mathe.sin(GrandFloat.pimoinsf((float)3.141592));
+        //double sin4=  Math.sin(Math.PI-3.141592);
+        //double sinjava2=  Math.cos(6.535898E-7);
+        //float sinmook = Mathe.sin_ser((float)3.141592);
+        //System.out.println((float)3.141592);
+        System.out.println("notre atan : " + singl);
+        System.out.println("atan java : " + sinjava);
+        //System.out.println(" avec grand float on a "+ sin3);
+        //System.out.println("sans grand float on a " + sin4);
+        //System.out.println(GrandFloat.pisur2moinsf((float)1.57079));
         //sin2= Mathe.sin_grandfloat(1);
         //float sin3= Mathe.sin_grandfloat((float)1.5);
         //System.out.println("cos0 = " + sin0);

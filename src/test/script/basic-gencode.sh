@@ -38,7 +38,7 @@ do
         exit 1
      else
         resultat=$(ima "$nom_ass")
-        if echo $resultat | grep -q -e "OK"
+        if echo $resultat | grep -q -e "[OK|ERREUR]"
         then
             echo "$cas_de_test : ERROR."
         else

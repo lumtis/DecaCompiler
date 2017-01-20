@@ -28,6 +28,15 @@ public class Divide extends AbstractOpArith {
 
         tmp = gc.popTmpReg();
 
+        // On verifie que le déférencement n'est pas nul
+        if (gc.isExprFloat()) {
+            compiler.addInstruction(new CMP(new ImmediateFloat(0), gc.getRetReg()));
+        }
+        else {
+            compiler.addInstruction(new CMP(0, gc.getRetReg()));
+        }
+        compiler.addInstruction(new BEQ(gc.getDividedZero()));
+
         if(gc.isExprFloat()) {
             compiler.addInstruction(new DIV(gc.getRetReg(), tmp));
             compiler.addInstruction(new LOAD(tmp, gc.getRetReg()));

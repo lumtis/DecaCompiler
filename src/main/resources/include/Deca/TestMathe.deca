@@ -14,7 +14,7 @@
     println(m.tan(py/4.0));
     println(m.acos(py/4.0));
     println(m.asin(py/4.0));
-    println(m.atan(py/4.0));
+    println(m.atan(2));
 
     println(m.pow(2.0,3));
     println(m.sqrt(3.0));

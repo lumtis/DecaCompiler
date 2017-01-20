@@ -107,7 +107,7 @@ public class MethodCall extends AbstractMethodCall {
             i--;
         }
 
-        // On verifie que le déférencement n'est pas nul
+        // On verifie que le déréférencement n'est pas nul
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), gc.getR0()));
         compiler.addInstruction(new CMP(new NullOperand(), gc.getR0()));
         compiler.addInstruction(new BEQ(gc.getLabelDereferencementNul()));
@@ -119,6 +119,7 @@ public class MethodCall extends AbstractMethodCall {
         compiler.addInstruction(new SUBSP(1 + argList.size()));
 
         // S'il la fonction retourne un float on met la variable à true
+        gc.setExprFloat(false);
         if(methodName.getDefinition().getType().isFloat()) {
             gc.setExprFloat(true);
         }

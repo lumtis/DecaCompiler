@@ -1,0 +1,17 @@
+class A {
+
+    float calcule(float x, int n) {
+        if (n==1) {
+            return 1.0;
+        }
+        else {
+            return x*calcule(x, n/2);
+        }
+    }
+}
+
+{
+    A a = new A();
+    float x = a.calcule(5.0, 4);
+    print(x);
+}

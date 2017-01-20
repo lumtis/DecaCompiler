@@ -1,6 +1,6 @@
 class A {
     float function() {
-        if (3>4) {
+        if (5>4) {
             return 1.0;
         }
         else if (6!=6) {
@@ -15,5 +15,7 @@ class A {
 {
     A a = new A();
     float x = a.function();
+    if (x==1.0) {
+        print("OK");
+    }
 }
-//ERROR Error : function without return.
