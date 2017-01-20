@@ -58,7 +58,7 @@ public class FonctionsTest {
     
     public int testSinus2(float f){
         int compt=0;
-        float s=Mathe.sin2(f);
+        float s=Mathe.sin(f);
         float lim=(java.lang.Math.ulp((float) java.lang.Math.sin(f)));
         float testsin;
         if (b==true){
