@@ -156,6 +156,11 @@ public class GrandFloat {
         GrandFloat pi = new GrandFloat((float)3.141592,(float)0.000000653589793);
         return pi;
     }
+    
+    public static GrandFloat GrandPiSur2(){
+        GrandFloat pisur2 = new GrandFloat((float)1.570796,(float)0.00000032679489651);
+        return pisur2;
+    }
 
     public void ajouter_erreur(float f){
         this.erreur+=f;
@@ -194,6 +199,12 @@ public class GrandFloat {
     public static float pimoinsf( float f){
        GrandFloat r = additionSimple(-f,0);
        r= additionGrandFloat(r,GrandPi());
+       return r.f+ r.erreur;
+    }
+    
+    public static float pisur2moinsf( float f){
+       GrandFloat r = additionSimple(-f,0);
+       r= additionGrandFloat(r,GrandPiSur2());
        return r.f+ r.erreur;
     }
 

@@ -244,7 +244,8 @@ public class Mathe {
     public static float sin(float f) {
         
              
-        f=adapt(f);
+        //f=GrandFloat.adaptGranfloat(f);
+        System.out.println(f);
         
         if (0<=f && f<=pisur2()) {
             
@@ -292,8 +293,8 @@ public class Mathe {
     
     public static GrandFloat GrandPiSur2(){
         
-        return GrandFloat.multiplicationGrandFloat(GrandPi(),new GrandFloat((float)0.5,0));
-    }
+        return GrandFloat.GrandPiSur2();
+    }    
     
     public static float pi(){
         //return (float)3.141592653589793238462643383279;
@@ -343,16 +344,19 @@ public class Mathe {
 
     // fonction cosinus cordic
     public static float cos(float f) {
-        f=adapt(f);
+        //f=GrandFloat.adaptGranfloat(f);
         if (f==0){
             return 1;
         }
         if (0<=f && f<=pi()/2) {
-            
-            return cordic_cos(f);
+            System.out.println("dddd");
+            return sin(GrandFloat.pisur2moinsf(f));
+            //return cos_GrandFloat(f);
         }
         if (f>pi()/2 && f<=pi()){
-            return -sin(pi()/2-f);
+            f=GrandFloat.pisur2moinsf(f);
+               System.out.println("eeeeeeeeeeeeeee");
+            return sin(f);
         }
         if (-pi()<=f && f<0){
             return cos(-f);
