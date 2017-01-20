@@ -1,0 +1,7 @@
+{
+    float x = 5.6;
+    int a = (int) (x);
+    if (a==5) {
+        print("OK");
+    }
+}
