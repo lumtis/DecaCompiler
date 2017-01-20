@@ -447,7 +447,14 @@ public class Mathe {
         }
         
         if (f<1 && f>=0 ) {
-        return atanGrandFloat(f);
+          int k =0;
+          float solution =0;
+          while( k <1000){
+              solution+=pow(-1,k)*pow(f,2*k+1)/(2*k+1);
+              k+=1;
+          }
+          return solution;
+
         }
 
         if (f>1) {
