@@ -15,6 +15,6 @@ public class OverflowError extends DecaRecognitionException {
 
     @Override
     public String getMessage() {
-        return "Erreur de débordement";
+        return "Overflow error";
     }
 }

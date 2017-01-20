@@ -29,7 +29,7 @@ public class Modulo extends AbstractOpArith {
         Type typeL = leftOp.verifyExpr(compiler,localEnv,currentClass);
         Type typeR = rightOp.verifyExpr(compiler, localEnv, currentClass);
         if (!typeL.isInt() || !typeR.isInt()) {
-            throw new ContextualError("Le modulo s'applique qu'à des int.", this.getLocation());
+            throw new ContextualError("Modulo applies only on int.", this.getLocation());
         }
         this.setType(typeL);
         return typeL;

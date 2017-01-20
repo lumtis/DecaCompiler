@@ -26,11 +26,11 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         Type typeL = leftOp.verifyExpr(compiler,localEnv,currentClass);
         Type typeR = rightOp.verifyExpr(compiler, localEnv, currentClass);
         if (!(typeL.isInt() || typeL.isFloat())) {
-            throw new ContextualError("Type non compatible avec opérateur arithmétique.",
+            throw new ContextualError("Type not compatible with arithmetic operator",
                         leftOp.getLocation());
         }
         if (!(typeR.isInt() || typeR.isFloat())) {
-            throw new ContextualError("Type non compatible avec opérateur arithmétique.",
+            throw new ContextualError("Type not compatible with arithmetic operator",
                     rightOp.getLocation());
         }
         //A partir d'ici, les deux types sont soit des int, soit des float
