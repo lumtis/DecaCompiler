@@ -22,14 +22,14 @@ public class Return extends AbstractReturn {
             throws ContextualError{
         Type t = this.getReturnExpr().verifyExpr(compiler, localEnv, currentClass);
         if (t.isClass() && returnType.isClass()) {
-            ClassType typeClass = t.asClassType("Type n'est pas une classe.",this.getLocation());
-            ClassType typeClassReturn = returnType.asClassType("Type n'est pas une classe.",this.getLocation());
+            ClassType typeClass = t.asClassType("Type is not a class",this.getLocation());
+            ClassType typeClassReturn = returnType.asClassType("Type is not a class",this.getLocation());
             if (!typeClass.isSubClassOf(typeClassReturn)) {
-                throw new ContextualError("Type de retour non compatible.", this.getLocation());
+                throw new ContextualError("Return type not compatible", this.getLocation());
             }
         }
         else if (!t.sameType(returnType)) {
-            throw new ContextualError("Le type de retour n'est pas bon.", this.getLocation());
+            throw new ContextualError("Return type not compatible", this.getLocation());
         }
     }
 }

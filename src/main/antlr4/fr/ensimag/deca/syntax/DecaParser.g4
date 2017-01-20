@@ -133,22 +133,22 @@ inst returns[AbstractInst tree]
         $tree = new NoOperation();
         setLocation($tree, $SEMI);
         }
-    | PRINT OPARENT list_expr CPARENT SEMI {
+    | PRINT OPARENT list_expr[$OPARENT] CPARENT SEMI {
             assert($list_expr.tree != null);
             $tree = new Print(false,$list_expr.tree);
             setLocation($tree, $PRINT);
         }
-    | PRINTLN OPARENT list_expr CPARENT SEMI {
+    | PRINTLN OPARENT list_expr[$OPARENT] CPARENT SEMI {
             assert($list_expr.tree != null);
             $tree = new Println(false,$list_expr.tree);
             setLocation($tree, $PRINTLN);
         }
-    | PRINTX OPARENT list_expr CPARENT SEMI {
+    | PRINTX OPARENT list_expr[$OPARENT] CPARENT SEMI {
             assert($list_expr.tree != null);
             $tree = new Print(true,$list_expr.tree);
             setLocation($tree, $PRINTX);
         }
-    | PRINTLNX OPARENT list_expr CPARENT SEMI {
+    | PRINTLNX OPARENT list_expr[$OPARENT] CPARENT SEMI {
             assert($list_expr.tree != null);
             $tree = new Println(true,$list_expr.tree);
             setLocation($tree, $PRINTLNX);
@@ -173,14 +173,20 @@ inst returns[AbstractInst tree]
 
 if_then_else returns[IfThenElse tree]
 @init {
-   List<ListInst> li = new LinkedList<>();
-   List<AbstractExpr> le = new LinkedList<>();
-   List<Token>lt = new LinkedList<>();
+   /* Pour gérer les if_then_else successifs on crée des listes grâce aux collections java
+   pour garder en mémoire les informations */
+
+   List<ListInst> li = new LinkedList<>(); /* Liste des listes d'instanciations */
+
+   List<AbstractExpr> le = new LinkedList<>(); /* Listes des conditions */
+
+   List<Token>lt = new LinkedList<>(); /* Liste des positions */
    boolean elseExist=false;
 
 
 }
     : if1=IF OPARENT condition=expr CPARENT OBRACE li_if=list_inst CBRACE {
+
             le.add($condition.tree);
             li.add($li_if.tree);
             lt.add($if1);
@@ -188,6 +194,7 @@ if_then_else returns[IfThenElse tree]
 
         }
       (ELSE elsif=IF OPARENT elsif_cond=expr CPARENT OBRACE elsif_li=list_inst CBRACE {
+
            le.add($elsif_cond.tree);
            li.add($elsif_li.tree);
            lt.add($elsif);
@@ -202,6 +209,10 @@ if_then_else returns[IfThenElse tree]
          if (!elseExist) {
             li.add(new ListInst());
          }
+
+         /* Une fois les 3 listes mis à jours, on les déroule dans l'autre sens pour
+         créer les ifthenelse les uns après les autres */
+
          ListIterator<ListInst> it_li = li.listIterator(li.size());
          ListIterator<AbstractExpr> it_le = le.listIterator(le.size());
          ListIterator<Token> it_lt = lt.listIterator(lt.size());
@@ -221,12 +232,15 @@ if_then_else returns[IfThenElse tree]
       }
     ;
 
-list_expr returns[ListExpr tree]
+list_expr[Token loc] returns[ListExpr tree]
 @init   {
             $tree = new ListExpr();
+            setLocation($tree,$loc);
         }
     : (e1=expr {
             $tree.add($e1.tree);
+            setLocation($tree,$e1.start);
+
         }
        (COMMA e2=expr {
             $tree.add($e2.tree);
@@ -418,7 +432,7 @@ select_expr returns[AbstractExpr tree]
             assert($e1.tree != null);
             assert($i.tree != null);
         }
-        (o=OPARENT args=list_expr CPARENT {
+        (o=OPARENT args=list_expr[$o] CPARENT {
             // we matched "e1.i(args)"
             assert($args.tree != null);
             $tree = new MethodCall($e1.tree, $i.tree, $args.tree);
@@ -437,7 +451,7 @@ primary_expr returns[AbstractExpr tree]
             assert($ident.tree != null);
             $tree=$ident.tree;
         }
-    | m=ident OPARENT args=list_expr CPARENT {
+    | m=ident OPARENT args=list_expr[$OPARENT] CPARENT {
             assert($args.tree != null);
             assert($m.tree != null);
             $tree = new MethodCall(null, $m.tree, $args.tree);
@@ -491,6 +505,8 @@ literal returns[AbstractExpr tree]
         }
     | fd=FLOAT {
             try {
+                  /* On test si le float n'est pas trop grand ou trop proche de 0 */
+
                   float newFloat = Float.parseFloat($fd.text);
                   double newDouble = Double.parseDouble($fd.text);
                   if(Float.isInfinite(newFloat) || (newFloat==0.0 && newDouble!=0.0)){
@@ -572,9 +588,10 @@ class_body returns[ListDeclMethod listMethod, ListDeclField listField]
         $listField = new ListDeclField();
     }: (m=decl_method {
             $listMethod.add($m.tree);
+            setLocation($listMethod, $m.start);
         }
       | f=decl_field_set[$listField]{
-        setLocation($listField, $f.start);
+
       }
       )*
     ;
@@ -596,9 +613,11 @@ visibility returns[Visibility tree]
 list_decl_field[ListDeclField l, Visibility v, AbstractIdentifier t]
     : dv1=decl_field[$v, $t]{
         $l.add($dv1.tree);
+        setLocation($l, $dv1.start);
     }
         (COMMA dv2=decl_field[$v,$t] {
             $l.add($dv2.tree);
+
         }
       )*
     ;
@@ -628,7 +647,7 @@ decl_field[Visibility v, AbstractIdentifier t] returns[AbstractDeclField tree]
 decl_method returns[AbstractDeclMethod tree]
 @init {
 }
-    : type ident OPARENT params=list_params CPARENT (block {
+    : type ident OPARENT params=list_params[$OPARENT] CPARENT (block {
             AbstractBody body_meth = new Body($block.decls, $block.insts);
             setLocation(body_meth, $block.start);
             $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, body_meth);
@@ -642,14 +661,17 @@ decl_method returns[AbstractDeclMethod tree]
         }
     ;
 
-list_params returns[ListDeclParam tree]
+list_params[Token loc] returns[ListDeclParam tree]
 @init{
         $tree = new ListDeclParam();
+        setLocation($tree,$loc);
 }
     : (p1=param {
             $tree.add($p1.tree);
+            setLocation($tree,$p1.start);
         } (COMMA p2=param {
             $tree.add($p2.tree);
+            setLocation($tree,$p2.start);
         }
       )*)?
     ;

@@ -6,4 +6,4 @@ class A {
     A a = null;
     int b = a.x;
 }
-//ERROR message_error
+//ERROR Error : null dereferencing.

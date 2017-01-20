@@ -26,17 +26,17 @@ public class FieldCall extends AbstractFieldCall {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
         Type t = objectName.verifyExpr(compiler, localEnv, currentClass);
-        ClassType typeObject = t.asClassType("Cet objet n'est pas un type.", this.getLocation());
+        ClassType typeObject = t.asClassType("This object is not a type", this.getLocation());
         Type fieldType = fieldName.verifyExpr(compiler, typeObject.getDefinition().getMembers(),
                 typeObject.getDefinition());
         if (!fieldName.getExpDefinition().isField()) {
-            throw new ContextualError("Un attribut est attendu.", fieldName.getLocation());
+            throw new ContextualError("Field expected", fieldName.getLocation());
         }
         //Il faut vérifier si on peut accéder à l'attribut (dans le cas protected).
         FieldDefinition fieldDef = fieldName.getFieldDefinition();
         if (fieldDef.getVisibility() == Visibility.PROTECTED && (currentClass == null ||
                 !typeObject.isSubClassOf(currentClass.getType()))) {
-            throw new ContextualError("L'attribut est de type protected.",fieldName.getLocation());
+            throw new ContextualError("The field is protected",fieldName.getLocation());
         }
         this.setType(fieldType);
         return fieldType;

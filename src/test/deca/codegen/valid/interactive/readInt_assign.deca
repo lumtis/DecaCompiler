@@ -1,0 +1,8 @@
+//INPUT 5
+{
+    int a;
+    if(((a=4)+(a=readInt()))==9){
+        print("OK");
+    }
+
+}

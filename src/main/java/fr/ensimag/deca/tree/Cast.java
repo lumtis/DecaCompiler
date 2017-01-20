@@ -54,7 +54,7 @@ public class Cast extends AbstractExpr{
         Type type_casted = expr_cast.verifyExpr(compiler,localEnv,currentClass);
 
         if (type_casted.isVoid() || !type_ref.castCompatibleTo(type_casted)) {
-            throw new ContextualError("Cast impossible.", this.getLocation());
+            throw new ContextualError("Impossible cast", this.getLocation());
         }
         this.setType(type_ref);
         return type_ref;

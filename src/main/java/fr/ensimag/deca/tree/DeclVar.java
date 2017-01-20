@@ -46,13 +46,13 @@ public class DeclVar extends AbstractDeclVar {
             throws ContextualError {
         Type t = this.type.verifyType(compiler);
         if (compiler.getType(varName.getName()) != null) {
-            throw new ContextualError("Nom de paramètre utilisé est un type.", this.getLocation());
+            throw new ContextualError("Parameter name used is a type", this.getLocation());
         }
         varName.setDefinition(new VariableDefinition(t,this.getLocation()));
         try {
             localEnv.declare(varName.getName(), varName.getExpDefinition());
         } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Variable déjà définie dans l'environnement courant.", this.getLocation());
+            throw new ContextualError("Variable already defined in the current environment", this.getLocation());
         }
         initialization.verifyInitialization(compiler, t, localEnv, currentClass);
     }

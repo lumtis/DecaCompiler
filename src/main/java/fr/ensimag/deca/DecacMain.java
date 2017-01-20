@@ -31,7 +31,7 @@ public class DecacMain {
             System.exit(0);
         }
         if (options.getSourceFiles().isEmpty()) {
-            options.affiche_commande();
+            options.displayUsage();
         }
         if (options.getParallel()) {
             options.getSourceFiles().parallelStream().forEach(e -> compilation(e, options));

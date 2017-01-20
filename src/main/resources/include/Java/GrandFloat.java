@@ -78,6 +78,7 @@ public class GrandFloat {
 
     public static GrandFloat monAddition(GrandFloat ff, GrandFloat gg){
         GrandFloat resultat = new GrandFloat(ff.f+gg.f, ff.erreur + gg.erreur);
+
         return  resultat;
 
 
@@ -156,16 +157,61 @@ public class GrandFloat {
         GrandFloat pi = new GrandFloat((float)3.141592,(float)0.000000653589793);
         return pi;
     }
+    
+    public static GrandFloat GrandPiSur2(){
+        GrandFloat pisur2 = new GrandFloat((float)1.570796,(float)0.00000032679489651);
+        return pisur2;
+    }
 
-    public GrandFloat adaptGrandFloat(){
-        if (this.estPlusGrandque(GrandPi()) ){
-            GrandFloat f =this;
-            while ( f.estPlusGrandque(GrandPi())){
-                f= additionGrandFloat(f,GrandPi());
+    public void ajouter_erreur(float f){
+        this.erreur+=f;
+
+    }
+    public void ajouter_float(float f){
+        this.f+=f;
+    }
+    public static GrandFloat moinsGrandpi(){
+        GrandFloat moinspi= new GrandFloat((float)-3.141592,(float)-0.000000653589793);
+        return moinspi;
+    }
+
+
+
+    public static float adaptGranfloat( float f){
+
+        if (f > (float) 3.14159265359){
+            GrandFloat MoinsGrand2pi= additionSimple((float)-6.283185,(float)-0.00000030718);
+            GrandFloat resultat = additionSimple(f,-(float)6.28318530718);
+            System.out.println(" t'étais pas censé etre la retourne chez toi lucas le zeb");
+            while (resultat.estPlusGrandque(GrandPi())){
+
+                resultat =additionGrandFloat(resultat,MoinsGrand2pi);
+
             }
-            return f;
+            return resultat.f + resultat.erreur;
         }
-        return additionGrandFloat(this,this);
+        if (f < (float)-3.1415926539){
+            GrandFloat Grand2pi=additionSimple((float)6.283185,(float)0.00000030718);
+            GrandFloat resultat = additionSimple(f,(float)6.28318530718);
+            while (moinsGrandpi().estPlusGrandque(resultat)){
+                resultat =additionGrandFloat(resultat,Grand2pi);
+            }
+            return resultat.f + resultat.erreur;
+        }
+        System.out.println(" tla normalement lucas de zeb");
+        return f;
+    }
+
+    public static float pimoinsf( float f){
+       GrandFloat r = additionSimple(-f,0);
+       r= additionGrandFloat(r,GrandPi());
+       return r.f+ r.erreur;
+    }
+    
+    public static float pisur2moinsf( float f){
+       GrandFloat r = additionSimple(-f,0);
+       r= additionGrandFloat(r,GrandPiSur2());
+       return r.f+ r.erreur;
     }
 
 
