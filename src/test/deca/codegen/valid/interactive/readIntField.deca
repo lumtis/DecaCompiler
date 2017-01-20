@@ -1,0 +1,14 @@
+//INPUT 7
+class A {
+    protected int a = readInt();
+
+    int getA() {
+        return a;
+    }
+}
+ {
+    A obj = new A();
+    if (obj.getA() == 7) {
+        println("OK");
+    }
+ }

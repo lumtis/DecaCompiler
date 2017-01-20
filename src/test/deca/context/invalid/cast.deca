@@ -1,0 +1,17 @@
+class A {
+
+}
+
+class B {
+
+}
+
+class C extends B {
+
+}
+
+{
+    C c = new C();
+    A a = (A) (c);
+}
+//ERROR :15:

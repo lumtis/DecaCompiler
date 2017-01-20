@@ -48,7 +48,7 @@ class D extends C {
     d.field1.b = 7;
     d.field1.setA(6);
     if (d.affiche()) {
-        if (c.affiche()) {
+        if (!c.affiche()) {
         }
         else {
             println("OK");

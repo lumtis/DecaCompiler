@@ -1,0 +1,19 @@
+class A {
+    float function() {
+        if (5>4) {
+            return 1.0;
+        }
+        else if (6!=6) {
+            return 2.0;
+        }
+        else {
+            //On ne renvoit rien
+         }
+    }
+}
+
+{
+    A a = new A();
+    float x = a.function();
+}
+//ERROR message_erreur

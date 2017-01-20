@@ -1,0 +1,10 @@
+class A {
+    float function() {
+    }
+}
+
+{
+    A a = new A();
+    float x = a.function();
+}
+//ERROR message_erreur

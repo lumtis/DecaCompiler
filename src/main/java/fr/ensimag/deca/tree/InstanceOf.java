@@ -63,7 +63,7 @@ public class InstanceOf extends AbstractExpr {
 
 
     @Override
-    public void codeGenExpr(DecacCompiler compiler, GenCode gc) {
+    public void codeGenInst(DecacCompiler compiler, GenCode gc) {
         Label debut = gc.newLabel("InstanceOfDebut");
         Label bloc = gc.newLabel("InstanceOfBloc");
         Label find = gc.newLabel("InstanceOfFind");
@@ -83,7 +83,7 @@ public class InstanceOf extends AbstractExpr {
         compiler.addInstruction(new BNE(bloc));
         compiler.addInstruction(new BRA(notFind));
 
-        // Bloc du while
+        compiler.addLabel(bloc);
         compiler.addInstruction(new CMP(addrClass, gc.getRetReg()));
         compiler.addInstruction(new BEQ(find));
         compiler.addInstruction(new BRA(debut));

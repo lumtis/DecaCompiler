@@ -49,7 +49,7 @@ public class DecacMain {
         if (compiler.compile()) {
             error = true;
         }
-        error=false;
+
     }
 
 }
