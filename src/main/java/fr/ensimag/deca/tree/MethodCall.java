@@ -119,6 +119,7 @@ public class MethodCall extends AbstractMethodCall {
         compiler.addInstruction(new SUBSP(1 + argList.size()));
 
         // S'il la fonction retourne un float on met la variable à true
+        gc.setExprFloat(false);
         if(methodName.getDefinition().getType().isFloat()) {
             gc.setExprFloat(true);
         }
