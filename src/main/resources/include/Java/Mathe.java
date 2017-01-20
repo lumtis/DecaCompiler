@@ -451,21 +451,22 @@ public class Mathe {
         }
 
         if (f>1) {
-            return pi()/2-atan(1/f);//pi/2-atan(1/f)
+            return pi()/2-atan1(1/f);//pi/2-atan(1/f)
         }
         if (f<0) {
-            return -atan(-f);
+            return -atan1(-f);
         }
        return 0; 
     }
     public static float atanGrandFloat( float f){
         int k=0;
         GrandFloat solution = new GrandFloat(0,0);
-        while ( k< 50) {
+        while ( k< 1000) {
             float tmp = 1/(2*k+1);
             float tmp1= pow((float)-1,k)*pow(f,2*k+1);
             GrandFloat r = GrandFloat.multiplicationSimple(tmp,tmp1);
             solution = GrandFloat.additionGrandFloat(solution,r);
+            k=k+1;
         }
         return solution.f +solution.erreur;
     }
