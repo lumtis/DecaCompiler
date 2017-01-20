@@ -25,7 +25,7 @@ do
     test_decompile_valid $cas_de_test;
 done
 echo "-------Décompilation tests valides codegen---------";
-for cas_de_test in src/test/deca/codegen/valid/*.deca
+for cas_de_test in src/test/deca/codegen/valid/Ok/*.deca
 do
     test_decompile_valid $cas_de_test;
 done
