@@ -13,3 +13,4 @@ class A {
     A a = new A();
     a.aprint();
 }
+//ERROR :14:
