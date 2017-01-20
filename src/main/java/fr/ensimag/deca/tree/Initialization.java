@@ -68,8 +68,19 @@ public class Initialization extends AbstractInitialization {
     }
 
     @Override
+    public boolean hasInitialization() {
+        return true;
+    }
+
+    @Override
     public void codeGenInit(DAddr addr, DecacCompiler comp, GenCode gc){
         getExpression().codeGenExpr(comp, gc);
         comp.addInstruction(new STORE(gc.getRetReg() ,addr));
     }
+
+    @Override
+    public void codeGenInit(DecacCompiler comp, GenCode gc){
+        getExpression().codeGenExpr(comp, gc);
+    }    
+
 }

@@ -1,0 +1,16 @@
+class A {
+    int x;
+}
+
+class B extends A {
+    int y;
+}
+
+{
+    int u;
+    float v = 8.0;
+    B b = new B();
+    A a = (A) (b);
+    B bbis = (B) (a);
+    u = (int) (v + 1);
+}

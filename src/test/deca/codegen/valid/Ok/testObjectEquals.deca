@@ -1,0 +1,16 @@
+class A {
+}
+
+{
+    A a = new A();
+    A b = new A();
+    A c;
+    A d;
+
+    c = a;
+    d = b;
+
+    if ( c.equals(a) && !(a.equals(b)) && !(a.equals(d)) && b.equals(d)) {
+        print("OK");
+    }
+}

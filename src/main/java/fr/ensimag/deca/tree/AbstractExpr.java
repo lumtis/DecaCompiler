@@ -87,21 +87,15 @@ public abstract class AbstractExpr extends AbstractInst {
             Type expectedType)
             throws ContextualError {
         Type t = this.verifyExpr(compiler, localEnv, currentClass);
-        if (expectedType.sameType(t)) {
-            return this;
-        }
-        else if (expectedType.isFloat() && t.isInt()) {
+        if (expectedType.isFloat() && t.isInt()) {
+            //On fait un cas particulier pour ajouter un ConvFloat dans ce cas
             AbstractExpr expr = new ConvFloat(this);
             expr.verifyExpr(compiler, localEnv, currentClass);
             expr.setLocation(this.getLocation());
             return expr;
         }
-        else if (expectedType.isClass() && t.isClass()) {
-            ClassType typeClass = t.asClassType("Type n'est pas une classe.", this.getLocation());
-            ClassType expectedTypeClass = expectedType.asClassType("Type n'est pas une classe.", this.getLocation());
-            if (typeClass.isSubClassOf(expectedTypeClass)) {
+        else if (t.compatibleTo(expectedType)) {
                 return this;
-            }
         }
         throw new ContextualError("Affectation non valide.", this.getLocation());
     }

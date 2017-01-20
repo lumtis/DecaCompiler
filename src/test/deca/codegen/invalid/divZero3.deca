@@ -1,0 +1,6 @@
+{
+    float a = 0;
+    float b = 6;
+    float c = b/a;
+}
+//ERROR message_erreur

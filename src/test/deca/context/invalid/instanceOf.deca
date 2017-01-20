@@ -1,0 +1,13 @@
+class Animal {
+}
+
+class Lion extends Animal {
+}
+
+{
+    Lion lion = new Lion();
+    if (Lion instanceof Animal && lion instanceof Lion) {
+        println("OK");
+    }
+}
+//ERROR :9:
