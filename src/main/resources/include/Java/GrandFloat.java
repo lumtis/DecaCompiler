@@ -78,6 +78,7 @@ public class GrandFloat {
 
     public static GrandFloat monAddition(GrandFloat ff, GrandFloat gg){
         GrandFloat resultat = new GrandFloat(ff.f+gg.f, ff.erreur + gg.erreur);
+        
         return  resultat;
 
 
@@ -164,6 +165,10 @@ public class GrandFloat {
     public void ajouter_float(float f){
         this.f+=f;
     }
+    public static GrandFloat moinsGrandpi(){
+        GrandFloat moinspi= new GrandFloat((float)-3.141592,(float)-0.000000653589793);
+        return moinspi;
+    }
 
 
 
@@ -180,11 +185,11 @@ public class GrandFloat {
             }
             return resultat.f + resultat.erreur;
         }
-        if (f < (float)3.1415926){
+        if (f < (float)3.1415926539){
+            GrandFloat Grand2pi=additionSimple((float)6.253185,(float)0.00000030718);
             GrandFloat resultat = additionSimple(f,(float)6.28318530718);
-            while (multiplicationGrandFloat(GrandPi(),new GrandFloat(-1,0)).estPlusGrandque(resultat)){
-                resultat =additionGrandFloat(resultat,GrandPi());
-                resultat= additionGrandFloat(resultat,GrandPi());
+            while (moinsGrandpi().estPlusGrandque(resultat)){
+                resultat =additionGrandFloat(resultat,Grand2pi);
             }
             return resultat.f + resultat.erreur;
         }
