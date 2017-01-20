@@ -1,0 +1,20 @@
+class GrandFloat {
+
+}
+
+class A {
+
+    float sin_grandfloat(float f){
+        int k=0;
+        GrandFloat r=new GrandFloat();
+        while (k < 6){
+            k=k+1;
+        }
+        return 1.5;
+    }
+}
+
+{
+    A a = new A();
+    float x = a.sin_grandfloat(12.5);
+}
