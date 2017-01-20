@@ -1,0 +1,50 @@
+class Animal {
+    protected float poids;
+    protected int nbPattes = 4;
+
+    void faireCrier() {
+        println("Grrrrrrrrrr");
+    }
+
+    float nourrir(float poidsNourriture) {
+        poids = poids + poidsNourriture;
+        return poids;
+    }
+
+    void setPoids(float poides) {
+        poids = poides+poids;
+    }
+}
+
+
+class Lion extends Animal {
+
+    int nbDent = 2 * 32;
+    int nbPoil;
+    boolean isDangerous = (false || false || (2<3));
+
+    int getPattes() {
+        return nbPattes;
+    }
+
+    void initParam(float newPoids, int NewNbPattes) {
+        poids = newPoids;
+        nbPattes = NewNbPattes;
+    }
+
+    void faireCrier() {
+        println("RRRrrhhhhhh");
+    }
+}
+
+
+{
+    Lion lion = new Lion();
+    float x;
+    lion.setPoids(95.8);
+    println("Un lion a été créé.");
+    x = lion.nourrir(5);
+    if (x == 100.8 && lion.getPattes() == 4 && lion.nbDent == 64 && lion.isDangerous) {
+        println("OK");
+    }
+}

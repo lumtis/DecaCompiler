@@ -124,5 +124,46 @@ class GrandFloat {
 
     }
 
+    // multiplication de grands float
+    GrandFloat multiplicationGrandFloat(GrandFloat ff, GrandFloat gg){
+        GrandFloat Produit = multiplicationSimple(ff.f,gg.f);
+        // on ajoute les erreurs de multiplication par les erreurs
+        Produit.erreur =Produit.erreur+ ff.f* gg.erreur;
+        Produit.erreur =Produit.erreur+ ff.erreur + gg.f;
+        // on récupère les erreurs significatifs
+        Produit= additionSimple(Produit.f,Produit.erreur);
+        return Produit;
+    }
+
+       GrandFloat monAddition(GrandFloat ff, GrandFloat gg){
+        GrandFloat resultat = new GrandFloat();
+        resultat = newGrandFloat(ff.f+gg.f, ff.erreur + gg.erreur);
+        return  resultat;
+
+
+    }
+    
+    boolean estPlusGrandque(GrandFloat ff){
+        return ( this.f+this.erreur > ff.f+this.erreur );
+    }
+
+    GrandFloat GrandPi(){
+        GrandFloat pi = new GrandFloat();
+        pi = newGrandFloat(3.141592,0.000000653589793);
+        return pi;
+    }
+
+    GrandFloat adaptGrandFloat(){
+        GrandFloat f;
+        if (this.estPlusGrandque(GrandPi()) ){
+            f =this;
+            while ( f.estPlusGrandque(GrandPi())){
+                f= additionGrandFloat(f,GrandPi());
+            }
+            return f;
+        }
+        return additionGrandFloat(this,this);
+    }
+
 }
 
