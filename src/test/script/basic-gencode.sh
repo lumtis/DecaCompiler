@@ -8,7 +8,7 @@ cd "$(dirname "$0")"/../../.. || exit 1
 
 PATH=./src/test/script/launchers:./src/main/bin:"$PATH"
 echo "-----Test des fichiers valides------";
-for cas_de_test in src/test/deca/codegen/valid/*.deca
+for cas_de_test in src/test/deca/codegen/valid/Ok/*.deca
 do
     nom_ass=${cas_de_test/.deca/.ass}
     rm -f $nom_ass 2>/dev/null;

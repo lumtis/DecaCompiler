@@ -1,0 +1,11 @@
+{
+    float a = 6;
+    float b = 144.868;
+    float c = a/b;
+    int d = 133;
+    float e = 45;
+    println(c);
+    println(e/d);
+    println(d/b);
+    println(e);
+}
