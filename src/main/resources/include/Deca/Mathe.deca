@@ -1,10 +1,6 @@
-//#include GrandFloat.deca
+#include "GrandFloat.deca"
 class Mathe {
-
-    float pi (){
-        return 3.1415927;    
-    }
-
+    GrandFloat g=new GrandFloat();
     //Calcule de puissance entière de flottants
     float pow(float f, int n) {
         float tmp;
@@ -137,10 +133,7 @@ class Mathe {
        
     }
 
-    float fma(float a, float b, float c){
-        // ASM("  ");
-        return a+b*c;
-    }
+    
 
     float adapt(float f){
         float c1=pow(2,2);
@@ -400,24 +393,32 @@ class Mathe {
         return 0.60725294*sin;
     }
     
-    // fonction sinus cordic finale
+
+    
     float sin(float f) {
         
-        // Si l'angle est entre 0 et pi/2 on applique l'algorithme
-        f=adapt(f);
-        if (0<=f && f<=pi()/2) {
+        f=g.adaptGranfloat(f);
+        
+        
+        if (0<=f && f<=pisur2()) {
             
-            return cordic_sin(f);
+            return sin_grandfloat(f);
         }
-        // si non on ramène à cet intervalle
-        if (f>pi()/2 && f<=pi()){
-            return sin(pi()-f);
+
+        if (f>pisur2() && f<=pi()){
+             
+            //sin(pi-f)
+            
+            f=g.pimoinsf(f);
+            
+            return sin_grandfloat(f);
         }
         if (-pi()<=f && f<0){
             return -sin(-f);
             
         }
-        return f;
+        
+        return 0.0;
     }
     
     
@@ -473,22 +474,27 @@ class Mathe {
         return prec-atan(pow(2,-(n-1)));
     }
 
-    // fonction cosinus cordic finale
+   
     float cos(float f) {
-        f=adapt(f);
+        
+        f=g.adaptGranfloat(f);
+        
         if (f==0){
             return 1.0;
         }
         if (0<=f && f<=pi()/2) {
-            return cordic_cos(f);
+            return sin(g.pisur2moinsf(f));
+            
         }
         if (f>pi()/2 && f<=pi()){
-            return -sin(adapt2(f));
+            f=g.pisur2moinsf(f);
+            return sin(f);
         }
         if (-pi()<=f && f<0){
             return cos(-f);
             
         }
+        
         return 0.0;
         
     }
@@ -545,6 +551,45 @@ class Mathe {
         }
         return atan_ser(f);    
         }
+
+    float sin_grandfloat(float f){
+        GrandFloat solution= new GrandFloat();
+        float tmp;
+        float tmp1;
+        int k=0;
+        GrandFloat r=new GrandFloat();
+        
+        solution=g.newGrandFloat(0,0);
+        while (k<6){
+            tmp = 1.0/factoriel(2*k+1);
+            tmp1= pow(f,2*k+1) * pow(-1,k);
+            r =g.multiplicationSimple(tmp,tmp1);
+            solution= g.additionGrandFloat(solution,r);
+            k=k+1;
+        }
+        return solution.f + solution.erreur;
+    }
+    
+    
+    GrandFloat GrandPi(){
+        
+        return g.GrandPi();
+    }
+    
+    GrandFloat GrandPiSur2(){
+        
+        return g.GrandPiSur2();
+    }   
+  
+    float pi(){
+        
+        return GrandPi().getFLoatt();
+    }
+    
+    float pisur2(){
+        
+        return GrandPiSur2().getFLoatt();
+    }    
     
 }
 
