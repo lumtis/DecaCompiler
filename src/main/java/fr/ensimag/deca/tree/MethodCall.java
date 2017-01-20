@@ -101,6 +101,7 @@ public class MethodCall extends AbstractMethodCall {
         // On ajoute les arguments sur la pile
         int i = -1;
         for(AbstractExpr e:argList) {
+            gc.setExprFloat(false);
             e.codeGenInst(compiler, gc);
             compiler.addInstruction(new STORE(gc.getRetReg(), new RegisterOffset(i, Register.SP)));
             i--;
@@ -116,5 +117,10 @@ public class MethodCall extends AbstractMethodCall {
         compiler.addInstruction(new BSR(new RegisterOffset(index, gc.getR0())));
 
         compiler.addInstruction(new SUBSP(1 + argList.size()));
+
+        // S'il la fonction retourne un float on met la variable à true
+        if(methodName.getDefinition().getType().isFloat()) {
+            gc.setExprFloat(true);
+        }
     }
 }
