@@ -333,9 +333,6 @@ public class GenCode {
     // Initialisation des classes à la fin du programme
     public void initClass(List<AbstractDeclClass> lc) {
 
-        // TODO: Méthode Object
-        //comp.getObject().getType()
-
         // Pour la methode object il n'y a rien a initialiser
         addSeparatorComment();
         comp.addComment(((Identifier)comp.getObject()).getName().getName() + ".init");
@@ -343,7 +340,7 @@ public class GenCode {
         comp.addInstruction(new RTS());
 
         // On initialise la methode Object.equals
-
+        generateObjectEquals();
 
         for (AbstractDeclClass ac:lc){
             DeclClass c = (DeclClass)ac;
@@ -392,43 +389,6 @@ public class GenCode {
 
             // On apelle l'initialisation parente pour initialiser les attributs hérités
             comp.addInstruction(new BSR(getInitLabel(c.getParent())));
-
-            /*
-            // On obtient l'environnement ExpDefinition
-            ClassDefinition cDef = c.getClassName().getClassDefinition();
-            EnvironmentExp env = cDef.getMembers();
-
-            // On parcourt les envirronements de l'arborescence des classes
-            while(env != null) {
-                for (ExpDefinition attr : env.getHashMap().values()) {
-
-                    // On verifie que c'est un attribut
-                    if(attr.isField()) {
-                        FieldDefinition attrDef = (FieldDefinition)attr;
-                        DAddr tmpAddr = new RegisterOffset(attrDef.getIndex(), getRetReg());
-
-                        if(attrDef.getType().isInt()) {
-                            comp.addInstruction(new LOAD(new ImmediateInteger(0), getR0()));
-                            comp.addInstruction(new STORE(getR0(), tmpAddr));
-                        }
-                        else if(attrDef.getType().isFloat()) {
-                            comp.addInstruction(new LOAD(new ImmediateFloat(0), getR0()));
-                            comp.addInstruction(new STORE(getR0(), tmpAddr));
-                        }
-                        else if(attrDef.getType().isBoolean()) {
-                            comp.addInstruction(new LOAD(new ImmediateInteger(0), getR0()));
-                            comp.addInstruction(new STORE(getR0(), tmpAddr));
-                        }
-                        else if(attrDef.getType().isClass()) {
-                            comp.addInstruction(new LOAD(new NullOperand(), getR0()));
-                            comp.addInstruction(new STORE(getR0(), tmpAddr));
-                        }
-                    }
-                }
-                env = env.getParent();
-            }
-            */
-
             comp.addInstruction(new RTS());
 
             // Creation des methodes de la class
@@ -439,6 +399,29 @@ public class GenCode {
         }
     }
 
+    public void generateObjectEquals() {
+        Label equal = newLabel("objEquals");
+        Label end = newLabel("objEnd");
+
+        comp.addLabel(objectEquals);
+
+        // On compare l'objet et le premier argument
+        comp.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), getR0()));
+        comp.addInstruction(new LOAD(new RegisterOffset(-3, Register.LB), getR1()));
+        comp.addInstruction(new CMP(getR0(), getR1()));
+        comp.addInstruction(new BEQ(equal));
+
+        // Pas egal
+        comp.addInstruction(new LOAD(0, getRetReg()));
+        comp.addInstruction(new BRA(end));
+
+        // egal
+        comp.addLabel(equal);
+        comp.addInstruction(new LOAD(1, getRetReg()));
+
+        comp.addLabel(end);
+        comp.addInstruction(new RTS());
+    }
 
     public void generateMethod(DeclClass c, DeclMethod m) {
         String className = c.getClassName().getName().getName();
@@ -552,7 +535,6 @@ public class GenCode {
 
         addSeparatorComment();
         comp.addLabel(no_return);
-        comp.addLabel(objectEquals);
         comp.addInstruction(new WSTR("Erreur : fonction sans retour"));
         comp.addInstruction(new WNL());
         comp.addInstruction(new ERROR());
