@@ -243,9 +243,8 @@ public class Mathe {
     
     public static float sin(float f) {
         
-             
-        //f=GrandFloat.adaptGranfloat(f);
-        System.out.println(f);
+        f=GrandFloat.adaptGranfloat(f);
+        
         
         if (0<=f && f<=pisur2()) {
             
@@ -264,6 +263,7 @@ public class Mathe {
             return -sin(-f);
             
         }
+        
         return 0;
     }
 
@@ -344,7 +344,9 @@ public class Mathe {
 
     // fonction cosinus cordic
     public static float cos(float f) {
-        //f=GrandFloat.adaptGranfloat(f);
+        
+        f=GrandFloat.adaptGranfloat(f);
+        
         if (f==0){
             return 1;
         }
@@ -360,6 +362,7 @@ public class Mathe {
             return cos(-f);
             
         }
+        
         return 0;
         
         
