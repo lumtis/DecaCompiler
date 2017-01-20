@@ -21,15 +21,15 @@ public class TestMathe2 {
         //System.out.print(FonctionsTest.Erreur((float)java.lang.Math.atan(0.99999),Mathe.atan((float)0.99999),java.lang.Math.ulp((float) java.lang.Math.atan((float)0.99999))));
         
         //System.out.println("3.1415926535897932");
-        float py = (float)3.141592653589793238462643383279;
+        float py = Mathe.pi();
         
         
         float testlimite=(float)0.000001;
         FonctionsTest fon= new FonctionsTest(testlimite,true);
         //fon.testSinus(py);
         //System.out.println("sin(pi)=");
-        System.out.println(Mathe.sin2((float)3.141592653589793238462643383279));
-        System.out.println(java.lang.Math.sin((float)3.141592653589793238462643383279));
+        //System.out.println(Mathe.sin2((float)3.141592653589793238462643383279));
+        //System.out.println(java.lang.Math.sin((float)3.141592653589793238462643383279));
         
         
         
@@ -54,7 +54,7 @@ public class TestMathe2 {
         System.out.println("TEST SIN");
         int c11=0;
         int c22=0;
-        for (float i=-py+(float)0.00001;i<=py;i=i+py/48){    
+        for (float i=-py;i<=py;i=i+py/48){    
             System.out.print(i);
             System.out.print("  ");
             //System.out.println(Mathe.sin(i));
