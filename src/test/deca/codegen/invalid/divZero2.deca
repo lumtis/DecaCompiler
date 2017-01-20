@@ -3,4 +3,4 @@
     int b = 6;
     float c = b/a;
 }
-//ERROR message_erreur
+//ERROR Error : divided by zero.
