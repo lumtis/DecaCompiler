@@ -84,7 +84,8 @@ public class InstanceOf extends AbstractExpr {
         compiler.addInstruction(new BRA(notFind));
 
         compiler.addLabel(bloc);
-        compiler.addInstruction(new CMP(addrClass, gc.getRetReg()));
+        compiler.addInstruction(new LEA(addrClass, gc.getR0()));
+        compiler.addInstruction(new CMP(gc.getR0(), gc.getRetReg()));
         compiler.addInstruction(new BEQ(find));
         compiler.addInstruction(new BRA(debut));
 
