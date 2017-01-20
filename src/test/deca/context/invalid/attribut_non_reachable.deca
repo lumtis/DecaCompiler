@@ -16,6 +16,6 @@ class Animal {
 {
 
     Animal Zebre = new Animal();
-    float x = Animal.poids;
+    float x = Zebre.poids;
 
 }

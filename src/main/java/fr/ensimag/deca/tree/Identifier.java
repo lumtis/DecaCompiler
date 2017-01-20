@@ -177,7 +177,7 @@ public class Identifier extends AbstractIdentifier {
             ClassDefinition currentClass) throws ContextualError {
         ExpDefinition def = localEnv.get(this.name);
         if (def == null) {
-            throw new ContextualError("Identifieur non déclaré.", this.getLocation());
+            throw new ContextualError("Identifier has no attached Definition", this.getLocation());
         }
         this.setDefinition(def);
         this.setType(def.getType());
@@ -192,7 +192,7 @@ public class Identifier extends AbstractIdentifier {
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
         Type t = compiler.getType(name);
         if (t == null) {
-            throw new ContextualError("Type non déclaré.",this.getLocation());
+            throw new ContextualError("Type undeclared",this.getLocation());
         }
         this.setType(t);
         this.setDefinition(compiler.getDefinition(t));

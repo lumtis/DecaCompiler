@@ -97,7 +97,7 @@ public abstract class AbstractExpr extends AbstractInst {
         else if (t.compatibleTo(expectedType)) {
                 return this;
         }
-        throw new ContextualError("Affectation non valide.", this.getLocation());
+        throw new ContextualError("Invalid assignement", this.getLocation());
     }
 
 
@@ -122,7 +122,7 @@ public abstract class AbstractExpr extends AbstractInst {
             ClassDefinition currentClass) throws ContextualError {
         Type t = this.verifyExpr(compiler,localEnv, currentClass);
         if (!t.isBoolean()) {
-            throw new ContextualError("L'expression n'est pas une condition.", this.getLocation());
+            throw new ContextualError("The expression is not a condition", this.getLocation());
         }
     }
 
@@ -142,7 +142,7 @@ public abstract class AbstractExpr extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
     }
 
     @Override

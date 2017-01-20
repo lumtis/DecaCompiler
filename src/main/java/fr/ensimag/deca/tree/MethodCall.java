@@ -33,19 +33,19 @@ public class MethodCall extends AbstractMethodCall {
         ClassType typeObject;
         if (objectName != null) {
             Type t = objectName.verifyExpr(compiler, localEnv, currentClass);
-            typeObject = t.asClassType("Cet objet n'est pas un type.", this.getLocation());
+            typeObject = t.asClassType("This object is not a type", this.getLocation());
         }
         else {
             if (currentClass != null) {
                 typeObject = currentClass.getType();
             }
             else {
-                throw new ContextualError("Identifieur non déclaré.", this.getLocation());
+                throw new ContextualError("Identifier has no attached Definition", this.getLocation());
             }
         }
         Type methType = methodName.verifyExpr(compiler, typeObject.getDefinition().getMembers(), typeObject.getDefinition());
         if (!methodName.getExpDefinition().isMethod()) {
-            throw new ContextualError("Une méthode est attendue.", methodName.getLocation());
+            throw new ContextualError("Method expecting", methodName.getLocation());
         }
         this.arguments = arguments.verifyArgs(compiler, localEnv, currentClass, methodName.getMethodDefinition());
         this.setType(methType);
@@ -107,7 +107,7 @@ public class MethodCall extends AbstractMethodCall {
             i--;
         }
 
-        // On verifie que le déférencement n'est pas nul
+        // On verifie que le déréférencement n'est pas nul
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), gc.getR0()));
         compiler.addInstruction(new CMP(new NullOperand(), gc.getR0()));
         compiler.addInstruction(new BEQ(gc.getLabelDereferencementNul()));

@@ -42,7 +42,7 @@ public abstract class AbstractOpExactCmp extends AbstractOpCmp {
             this.setLeftOperand(conv);
         }
         else {
-            throw new ContextualError("Types non compatibles pour exacte comparaison", this.getLocation());
+            throw new ContextualError("Types not compatible for exact comparison", this.getLocation());
         }
         Type t = compiler.getType("boolean");
         this.setType(t);

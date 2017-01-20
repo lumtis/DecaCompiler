@@ -24,7 +24,7 @@ public class UnaryMinus extends AbstractUnaryExpr {
         AbstractExpr expr = this.getOperand();
         Type t = expr.verifyExpr(compiler, localEnv, currentClass);
         if (!t.isFloat() && !t.isInt()) {
-            throw new ContextualError("Type non valide pour MinusUnaire", expr.getLocation());
+            throw new ContextualError("Invalid type for unary minus", expr.getLocation());
         }
         this.setType(t);
         return t;

@@ -49,6 +49,8 @@ public class DeclMethod extends AbstractDeclMethod {
         return this.methodName;
     }
 
+    public boolean getIsAsm(){ return this.isAsm;}
+
     public AbstractIdentifier getType(){
         return this.type;
     }
@@ -69,21 +71,21 @@ public class DeclMethod extends AbstractDeclMethod {
         Type returnType = type.verifyType(compiler);
         //On regarde si le nom de la méthode est un type.
         if (compiler.getType(methodName.getName()) != null) {
-            throw new ContextualError("Nom de la méthode utilisé est un type.", this.getLocation());
+            throw new ContextualError("Name of the method used is a type", this.getLocation());
         }
         //On vérifie si la méthode Override une autre.
         ExpDefinition existingDef = classDef.getSuperClass().getMembers().get(methodName.getName());
         MethodDefinition def;
         if (existingDef != null) {
             //Il faut tester si c'est bien un Override, sinon on renvoie une erreur.
-            String errorMessage = "Nom de méthode déjà utilisé pour autre chose.";
+            String errorMessage = "Name of the method already used for an other thing";
             MethodDefinition existingMethod = existingDef.asMethodDefinition(errorMessage, this.getLocation());
             if (!existingMethod.getSignature().sameSignature(sign)) {
-                throw new ContextualError("Signature différente de la méthode de même nom déjà déclarée.",
+                throw new ContextualError("Method with different signature already declared",
                                             this.getLocation());
             }
             else if (!returnType.compatibleTo(existingMethod.getType())) {
-                throw new ContextualError("Type de retour incompatible pour override.",type.getLocation());
+                throw new ContextualError("Return type is not compatible for override",type.getLocation());
             }
             //L'override est possible, il faut lui donner l'index de la méthode override.
             def = new MethodDefinition(returnType,this.getLocation(),sign,existingMethod.getIndex());
@@ -96,7 +98,7 @@ public class DeclMethod extends AbstractDeclMethod {
             classDef.getMembers().declare(methodName.getName(), def);
         }
         catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Une méthode de même nom a été déclarée 2 fois dans la classe.", this.getLocation());
+            throw new ContextualError("A method with the same name has already been declared in the class", this.getLocation());
         }
         methodName.setDefinition(def);
         methodName.setType(returnType);

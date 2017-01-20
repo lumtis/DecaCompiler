@@ -15,4 +15,4 @@ class A {
     float x = a.function();
 }
 
-//ERROR message_erreur
+//ERROR Error : function without return.

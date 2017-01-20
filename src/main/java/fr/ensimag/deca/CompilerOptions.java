@@ -178,7 +178,9 @@ public class CompilerOptions {
 
 
     }
-    public void affiche_commande(){
+
+
+    protected void displayUsage() {
         System.out.println("usage : decac [[-p | -v] [-n] [-r X] <fichier deca>...] | [-b]");
         System.out.println("\n -b  (banner) : affiche une bannière indiquant le nom de l’équipe");
         System.out.println("\n -p  (parse) : arrête decac après l’étape de construction de\n" +
@@ -202,10 +204,5 @@ public class CompilerOptions {
                 "parallèle (pour accélérer la compilation)");
         System.out.println("\n -w (warning) autorise l’affichage de messages d’avertissement (« warnings »)\n" +
                 "en cours de compilation.");
-
-    }
-
-    protected void displayUsage() {
-        throw new UnsupportedOperationException("not yet implemented");
     }
 }
