@@ -162,7 +162,6 @@ public class Mathe {
         while (k < 6) {
             solution+=Mathe.pow((float)-1,k)* Mathe.pow(f,2*k+1)/Mathe.factoriel(2*k+1);
             k+=1;
-            System.out.println(solution);
         }
         return solution;
     }
@@ -177,10 +176,6 @@ public class Mathe {
             float tmp1= pow(f,2*k+1) * pow((float)-1,k);
             GrandFloat r =GrandFloat.multiplicationSimple(tmp,tmp1);
             solution= GrandFloat.additionGrandFloat(solution,r);
-            //System.out.println(tmp);
-            //System.out.println(tmp1);
-            //System.out.println(r);
-            //System.out.println(solution);
             k+=1;
         }
         return solution.f + solution.erreur;
@@ -466,16 +461,30 @@ public class Mathe {
        return 0; 
     }
     public static float atanGrandFloat( float f){
-        int k=0;
-        GrandFloat solution = new GrandFloat(0,0);
-        while ( k< 1000) {
-            float tmp = 1/(2*k+1);
-            float tmp1= pow((float)-1,k)*pow(f,2*k+1);
-            GrandFloat r = GrandFloat.multiplicationSimple(tmp,tmp1);
-            solution = GrandFloat.additionGrandFloat(solution,r);
-            k=k+1;
+
+        
+        
+
+        if (f <1 && f>=0){
+            int k=0;
+            GrandFloat solution = new GrandFloat(0,0);
+            while ( k< 1000) {
+                float tmp = 1/(2*k+1)*pow(-1,k);
+                float tmp1= pow(f,2*k+1);
+                GrandFloat r = GrandFloat.multiplicationSimple(tmp,tmp1);
+                solution = GrandFloat.additionGrandFloat(solution,r);
+                k+=1;
+            }
+            return solution.f +solution.erreur;
         }
-        return solution.f +solution.erreur;
+        if (f>1){
+            return GrandFloat.pisur2moinsf(atanGrandFloat(1/f));
+        }
+        if (f<0){
+            return -atanGrandFloat(-f);
+        }
+        return (float)0.78539816339;
+
     }
     public static float atan(float f) {
         if (abs(f)>0.9 && abs(f)<1.1){

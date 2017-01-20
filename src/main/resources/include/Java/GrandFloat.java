@@ -182,7 +182,7 @@ public class GrandFloat {
         if (f > (float) 3.14159265359){
             GrandFloat MoinsGrand2pi= additionSimple((float)-6.283185,(float)-0.00000030718);
             GrandFloat resultat = additionSimple(f,-(float)6.28318530718);
-            
+            System.out.println(" t'étais pas censé etre la retourne chez toi lucas le zeb");
             while (resultat.estPlusGrandque(GrandPi())){
 
                 resultat =additionGrandFloat(resultat,MoinsGrand2pi);
@@ -198,7 +198,7 @@ public class GrandFloat {
             }
             return resultat.f + resultat.erreur;
         }
-       
+        System.out.println(" tla normalement lucas de zeb");
         return f;
     }
 

@@ -29,8 +29,13 @@ public class TestGrandFloat {
         //float g = GrandFloat.pimoinsf((float)3.141592);
         //System.out.println(g);
 
-        float f= GrandFloat.adaptGranfloat((float)-0.53096515);
-        System.out.println(f);
+        //float f= GrandFloat.adaptGranfloat((float)-0.53096515);
+        //System.out.println(f);
+        //float moi = Mathe.atanGrandFloat((float)2);
+        //float nizar = Mathe.atan(2);
+        //System.out.println("nizar :" + nizar);
+        //System.out.println("moi +" +moi);
+        
 
 
 
