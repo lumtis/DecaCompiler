@@ -162,7 +162,6 @@ public class Mathe {
         while (k < 6) {
             solution+=Mathe.pow((float)-1,k)* Mathe.pow(f,2*k+1)/Mathe.factoriel(2*k+1);
             k+=1;
-            System.out.println(solution);
         }
         return solution;
     }
@@ -177,10 +176,6 @@ public class Mathe {
             float tmp1= pow(f,2*k+1) * pow((float)-1,k);
             GrandFloat r =GrandFloat.multiplicationSimple(tmp,tmp1);
             solution= GrandFloat.additionGrandFloat(solution,r);
-            //System.out.println(tmp);
-            //System.out.println(tmp1);
-            //System.out.println(r);
-            //System.out.println(solution);
             k+=1;
         }
         return solution.f + solution.erreur;
@@ -243,8 +238,8 @@ public class Mathe {
     
     public static float sin(float f) {
         
-             
-        f=adapt(f);
+        f=GrandFloat.adaptGranfloat(f);
+        
         
         if (0<=f && f<=pisur2()) {
             
@@ -263,6 +258,7 @@ public class Mathe {
             return -sin(-f);
             
         }
+        
         return 0;
     }
 
@@ -292,8 +288,8 @@ public class Mathe {
     
     public static GrandFloat GrandPiSur2(){
         
-        return GrandFloat.multiplicationGrandFloat(GrandPi(),new GrandFloat((float)0.5,0));
-    }
+        return GrandFloat.GrandPiSur2();
+    }    
     
     public static float pi(){
         //return (float)3.141592653589793238462643383279;
@@ -343,21 +339,25 @@ public class Mathe {
 
     // fonction cosinus cordic
     public static float cos(float f) {
-        f=adapt(f);
+        
+        f=GrandFloat.adaptGranfloat(f);
+        
         if (f==0){
             return 1;
         }
         if (0<=f && f<=pi()/2) {
-            
-            return cordic_cos(f);
+            return sin(GrandFloat.pisur2moinsf(f));
+            //return cos_GrandFloat(f);
         }
         if (f>pi()/2 && f<=pi()){
-            return -sin(pi()/2-f);
+            f=GrandFloat.pisur2moinsf(f);
+            return sin(f);
         }
         if (-pi()<=f && f<0){
             return cos(-f);
             
         }
+        
         return 0;
         
         
@@ -429,7 +429,7 @@ public class Mathe {
     }
     
     public static float acos(float f) {
-        return (float)1.570796327-asin(f);
+        return GrandFloat.pisur2moinsf(asin(f));
     }
         
 
@@ -442,21 +442,49 @@ public class Mathe {
         }
         
         if (f<1 && f>=0 ) {
-        int k=0;
-        float solution=0;
-        while (k < 1000) {
-            solution+= Mathe.pow((float)-1,k)* Mathe.pow(f,2*k+1)/(2*k+1);
-            k+=1;
+          int k =0;
+          float solution =0;
+          while( k <1000){
+              solution+=pow(-1,k)*pow(f,2*k+1)/(2*k+1);
+              k+=1;
+          }
+          return solution;
+
         }
-        return solution;
-        }
+
         if (f>1) {
-            return pi()/2-atan(1/f);//pi/2-atan(1/f)
+            return pi()/2-atan1(1/f);//pi/2-atan(1/f)
         }
         if (f<0) {
-            return -atan(-f);
+            return -atan1(-f);
         }
        return 0; 
+    }
+    public static float atanGrandFloat( float f){
+
+        
+        
+
+        if (f <1 && f>=0){
+            int k=0;
+            GrandFloat solution = new GrandFloat(0,0);
+            while ( k< 1000) {
+                float tmp = 1/(2*k+1)*pow(-1,k);
+                float tmp1= pow(f,2*k+1);
+                GrandFloat r = GrandFloat.multiplicationSimple(tmp,tmp1);
+                solution = GrandFloat.additionGrandFloat(solution,r);
+                k+=1;
+            }
+            return solution.f +solution.erreur;
+        }
+        if (f>1){
+            return GrandFloat.pisur2moinsf(atanGrandFloat(1/f));
+        }
+        if (f<0){
+            return -atanGrandFloat(-f);
+        }
+        return (float)0.78539816339;
+
     }
     public static float atan(float f) {
         if (abs(f)>0.9 && abs(f)<1.1){
