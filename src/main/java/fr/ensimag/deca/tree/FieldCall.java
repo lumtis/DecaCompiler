@@ -69,9 +69,12 @@ public class FieldCall extends AbstractFieldCall {
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         objectName.codeGenInst(compiler, gc);
 
-        int index = fieldName.getFieldDefinition().getIndex();
+        // On verifie que le déréférencement n'est pas nul
+        compiler.addInstruction(new CMP(new NullOperand(), gc.getRetReg()));
+        compiler.addInstruction(new BEQ(gc.getLabelDereferencementNul()));
 
         // On récupere la variable en fonction de son index
+        int index = fieldName.getFieldDefinition().getIndex();
         compiler.addInstruction(new LOAD(new RegisterOffset(index, gc.getRetReg()), gc.getRetReg()));
     }
 
