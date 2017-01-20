@@ -28,9 +28,16 @@ public abstract class AbstractInitialization extends Tree {
             Type t, EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError;
 
+    public boolean hasInitialization() {
+        return false;
+    }
 
     // Permet de generer le code d'initialisation
     public void codeGenInit(DAddr addr, DecacCompiler comp, GenCode gc){
+    }
+
+    // Permet de generer le code d'initialisation sans le stockage
+    public void codeGenInit(DecacCompiler comp, GenCode gc){
     }
 
 }

@@ -242,7 +242,7 @@ public class GenCode {
     public Label getInitLabel(Identifier c) {
         String className = c.getName().getName();
 
-        return new Label(className + "." + "init");
+        return new Label(className + ".init.init");
     }
 
 
@@ -336,6 +336,15 @@ public class GenCode {
         // TODO: Méthode Object
         //comp.getObject().getType()
 
+        // Pour la methode object il n'y a rien a initialiser
+        addSeparatorComment();
+        comp.addComment(((Identifier)comp.getObject()).getName().getName() + ".init");
+        comp.addLabel(getInitLabel((Identifier)comp.getObject()));
+        comp.addInstruction(new RTS());
+
+        // On initialise la methode Object.equals
+
+
         for (AbstractDeclClass ac:lc){
             DeclClass c = (DeclClass)ac;
 
@@ -346,10 +355,45 @@ public class GenCode {
             // On fixe l'operande des attributs et leur initialisation
             addSeparatorComment();
             comp.addComment(c.getClassName().getName().getName() + ".init");
-
             comp.addLabel(getInitLabel(c.getClassName()));
 
+            for(AbstractDeclField af : c.getFields().getList()) {
+                DeclField f = (DeclField)af;
+                DAddr addr = new RegisterOffset(f.getFieldName().getFieldDefinition().getIndex(), getRetReg());
 
+                // Si l'attribut a une initalisation, on la realise
+                if(f.getInitialization().hasInitialization()) {
+                    comp.addInstruction(new PUSH(getRetReg()));
+                    f.getInitialization().codeGenInit(comp, this);
+                    comp.addInstruction(new LOAD(getRetReg(), getR0()));
+                    comp.addInstruction(new POP(getRetReg()));
+                    comp.addInstruction(new STORE(getR0(), addr));
+                }
+                else {
+                    // Sinon on met une valeur par defaut dans l'attributs
+                    if(f.getFieldName().getFieldDefinition().getType().isInt()) {
+                        comp.addInstruction(new LOAD(new ImmediateInteger(0), getR0()));
+                        comp.addInstruction(new STORE(getR0(), addr));
+                    }
+                    else if(f.getFieldName().getFieldDefinition().getType().isFloat()) {
+                        comp.addInstruction(new LOAD(new ImmediateFloat(0), getR0()));
+                        comp.addInstruction(new STORE(getR0(), addr));
+                    }
+                    else if(f.getFieldName().getFieldDefinition().getType().isBoolean()) {
+                        comp.addInstruction(new LOAD(new ImmediateInteger(0), getR0()));
+                        comp.addInstruction(new STORE(getR0(), addr));
+                    }
+                    else if(f.getFieldName().getFieldDefinition().getType().isClass()) {
+                        comp.addInstruction(new LOAD(new NullOperand(), getR0()));
+                        comp.addInstruction(new STORE(getR0(), addr));
+                    }
+                }
+            }
+
+            // On apelle l'initialisation parente pour initialiser les attributs hérités
+            comp.addInstruction(new BSR(getInitLabel(c.getParent())));
+
+            /*
             // On obtient l'environnement ExpDefinition
             ClassDefinition cDef = c.getClassName().getClassDefinition();
             EnvironmentExp env = cDef.getMembers();
@@ -383,6 +427,8 @@ public class GenCode {
                 }
                 env = env.getParent();
             }
+            */
+
             comp.addInstruction(new RTS());
 
             // Creation des methodes de la class
@@ -392,6 +438,7 @@ public class GenCode {
             }
         }
     }
+
 
     public void generateMethod(DeclClass c, DeclMethod m) {
         String className = c.getClassName().getName().getName();
