@@ -1,0 +1,11 @@
+class A {
+
+}
+
+{
+    A a = new A();
+    if (a instanceof float) {
+        print("Erreur.");
+    }
+}
+//ERROR :7:

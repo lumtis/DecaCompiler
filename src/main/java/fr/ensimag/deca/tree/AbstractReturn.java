@@ -35,10 +35,6 @@ public abstract class AbstractReturn extends AbstractInst {
         this.verifyReturn(compiler,localEnv,currentClass, returnType);
     }
 
-    protected void codeGenPrint(DecacCompiler compiler, GenCode gc) {
-        throw new UnsupportedOperationException("Lucas le hmar se traine dessus, il n'a pas encore fait cette partie.");
-    }
-
     @Override
     protected void codeGenInst(DecacCompiler compiler, GenCode gc) {
         returnExpr.codeGenInst(compiler, gc);

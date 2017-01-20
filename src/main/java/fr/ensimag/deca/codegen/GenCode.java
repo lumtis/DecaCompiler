@@ -42,6 +42,7 @@ public class GenCode {
     private Label dereferencement_nul  = new Label("dereferencement_nul");
     private Label divided_zero = new Label("divided_zero");
     private Label objectEquals = new Label("Object.equals");
+    private Label conversion_mauvaise = new Label("conversion_mauvaise");
 
 
     // Fonction utilitaires pour obtenir le nom d'un registre en fonction de
@@ -551,6 +552,12 @@ public class GenCode {
         comp.addInstruction(new WSTR("Error : divided by zero."));
         comp.addInstruction(new WNL());
         comp.addInstruction(new ERROR());
+
+        addSeparatorComment();
+        comp.addLabel(conversion_mauvaise);
+        comp.addInstruction(new WSTR("Error : error from class conversion"));
+        comp.addInstruction(new WNL());
+        comp.addInstruction(new ERROR());
     }
 
     public Label getLabelNoReturn() {
@@ -558,6 +565,9 @@ public class GenCode {
     }
     public Label getLabelDereferencementNul() {
         return dereferencement_nul;
+    }
+    public Label getLabelConversion_mauvaise() {
+        return conversion_mauvaise;
     }
     public Label getDividedZero() {
         return divided_zero;
