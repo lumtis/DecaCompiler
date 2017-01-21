@@ -186,13 +186,14 @@ public class TestMathe {
         }*/
 
         //float sin0 = Mathe.sin_grandfloat(0);
-        float singl = Mathe.cos((float)0.5);
-        double sinjava = Math.cos((float)0.5);
+        float singl = Mathe.sin((float)3.141592);
+        float sinjava = Mathe.sin_ser((float)3.141592);
         //float sin3=  Mathe.sin(GrandFloat.pimoinsf((float)3.141592));
         //double sin4=  Math.sin(Math.PI-3.141592);
         //double sinjava2=  Math.cos(6.535898E-7);
         //float sinmook = Mathe.sin_ser((float)3.141592);
         //System.out.println((float)3.141592);
+        System.out.println(GrandFloat.pisur2moinsf((float)0.5));
         System.out.println("notre atan : " + singl);
         System.out.println("atan java : " + sinjava);
         //System.out.println(" avec grand float on a "+ sin3);

@@ -1,22 +1,25 @@
 #include "Mathe.deca"
 {
     Mathe m = new Mathe();
+    GrandFloat g=new GrandFloat();
     //float a;
-    //float py=m.pi();
+    float b;
+    float py=m.pi();
     println("Début test");
     //println(py/2.0);
     //println(m.pow(2.0,5));
     //a=m.cos(0);
     //println(a);
-    
-    println(m.sin(0.5));
-    //println(m.sin(py/4.0));
+    //b=g.pisur2moinsf(0.5);
+    //println(b);
+    println(m.sin(3.141592));
+    println(m.sin_ser(3.141592));
     //println(m.tan(py/4.0));
     //println(m.acos(py/4.0));
     //println(m.asin(py/4.0));
-    //println(m.atan(2));
+    //println(m.atan(1000));
 
-    println(m.pow2(2.0,-3));
+    //println(m.pow(2.0,5));
     //println(m.sqrt(3.0));
     //println(m.max(2.0,3.0));
     //println(m.min(2.0,3.0));

@@ -34,14 +34,14 @@ public class DeclParam extends AbstractDeclParam {
             throws ContextualError {
         Type t = type.verifyType(compiler);
         if (compiler.getType(name.getName()) != null) {
-            throw new ContextualError("Nom de paramètre utilisé est un type.", this.getLocation());
+                throw new ContextualError("Parameter name used is a type", this.getLocation());
         }
         name.setDefinition(new ParamDefinition(t, this.getLocation()));
         try {
             env_exp.declare(name.getName(), name.getExpDefinition());
         }
         catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Paramètre de même nom déjà existant.", this.getLocation());
+            throw new ContextualError("Parameter with same name already defined", this.getLocation());
         }
         return t;
     }

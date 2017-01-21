@@ -3,9 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.GenCode;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.ima.pseudocode.*;
 
 /**
@@ -28,16 +26,13 @@ public abstract class AbstractInitialization extends Tree {
             Type t, EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError;
 
-    public boolean hasInitialization() {
-        return false;
-    }
 
     // Permet de generer le code d'initialisation
-    public void codeGenInit(DAddr addr, DecacCompiler comp, GenCode gc){
+    public void codeGenInit(DAddr addr, DecacCompiler comp, GenCode gc, Type t){
     }
 
     // Permet de generer le code d'initialisation sans le stockage
-    public void codeGenInit(DecacCompiler comp, GenCode gc){
+    public void codeGenInit(DecacCompiler comp, GenCode gc, Type t){
     }
 
 }
