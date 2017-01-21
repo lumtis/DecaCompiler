@@ -1,0 +1,4 @@
+//ERROR :3
+{
+Animal A = new Animal();
+}
