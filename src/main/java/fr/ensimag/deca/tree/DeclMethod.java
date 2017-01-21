@@ -123,7 +123,9 @@ public class DeclMethod extends AbstractDeclMethod {
         methodName.decompile(s);
         params.decompile(s);
         if(isAsm){
+            s.println(" asm (");
             portionAssembleur.decompile(s);
+            s.println(" );");
         }
         else {
             body.decompile(s);

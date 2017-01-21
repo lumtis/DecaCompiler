@@ -9,7 +9,7 @@ class C extends B {
 
 }
 
-class D {
+class D extends Object {
 
 }
 
@@ -19,7 +19,7 @@ class D {
     C c = new C();
     D d = new D();
 
-    if (c instanceof A && !(d instanceof C) && !(d instanceof A) && b instanceof Object) {
+    if (c instanceof A && !(d instanceof C) && !(d instanceof A) && b instanceof Object && d instanceof Object) {
         print("OK");
     }
 }

@@ -24,6 +24,10 @@ public abstract class AbstractReturn extends AbstractInst {
         return this.returnExpr;
     }
 
+    public void setReturnExpr(AbstractExpr returnExpr) {
+        this.returnExpr = returnExpr;
+    }
+
     public abstract void verifyReturn(DecacCompiler compiler, EnvironmentExp localEnv,
                                       ClassDefinition currentClass, Type returnType)
             throws ContextualError;

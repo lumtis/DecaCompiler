@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import jdk.internal.dynalink.linker.ConversionComparator;
 import jdk.nashorn.internal.runtime.Context;
 
 import java.io.PrintStream;
@@ -27,6 +28,12 @@ public class Return extends AbstractReturn {
             if (!typeClass.isSubClassOf(typeClassReturn)) {
                 throw new ContextualError("Return type not compatible", this.getLocation());
             }
+        }
+        else if (t.isInt() && returnType.isFloat()) {
+            ConvFloat conv = new ConvFloat(getReturnExpr());
+            conv.verifyExpr(compiler, localEnv, currentClass);
+            getReturnExpr().setLocation(getReturnExpr().getLocation());
+            setReturnExpr(conv);
         }
         else if (!t.sameType(returnType)) {
             throw new ContextualError("Return type not compatible", this.getLocation());
