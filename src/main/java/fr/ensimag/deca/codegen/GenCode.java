@@ -111,6 +111,9 @@ public class GenCode {
 
         comp.addComment("Initialisation des variables Locales");
 
+        // On incremente la pile pour sauvegarder les registres plus tard
+        comp.addInstruction(new ADDSP(a.size()+1));
+
         indexLB = 1;
 
         for (AbstractDeclVar d:a){
@@ -125,9 +128,6 @@ public class GenCode {
             // On initialise la variable
             declVar.getInitialization().codeGenInit(getAddrVar(var), comp, this);
         }
-
-        // On incremente la pile pour sauvegarder les registres plus tard
-        comp.addInstruction(new ADDSP(a.size()));
     }
 
 

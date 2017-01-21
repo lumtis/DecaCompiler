@@ -1,0 +1,4 @@
+//ERROR :3
+class A{
+int int x;
+}

@@ -1,0 +1,8 @@
+//ERROR :4
+class A{
+
+int int(int a){
+    return a+a;
+}
+
+}

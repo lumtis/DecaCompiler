@@ -1,0 +1,10 @@
+//ERROR :7
+class A{
+
+}
+class B{
+
+int A(){
+    return 5;
+}
+}

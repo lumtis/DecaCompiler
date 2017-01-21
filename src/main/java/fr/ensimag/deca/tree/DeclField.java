@@ -44,7 +44,7 @@ public class DeclField extends AbstractDeclField {
     protected void verifyDeclFieldHeader(DecacCompiler compiler, ClassDefinition currentClass)            throws ContextualError {
         Type t = type.verifyType(compiler);
         if (compiler.getType(fieldName.getName()) != null) {
-            throw new ContextualError("Nom d'attribut utilisé est un type.", this.getLocation());
+            throw new ContextualError("Field name used is a type", this.getLocation());
         }
         int index = currentClass.getNumberOfFields()+1;
         fieldName.setDefinition(new FieldDefinition(t, this.getLocation(), privacy, currentClass, index));
@@ -52,7 +52,7 @@ public class DeclField extends AbstractDeclField {
             currentClass.getMembers().declare(fieldName.getName(), fieldName.getFieldDefinition());
         }
         catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Attribut définit 2 fois.", this.getLocation());
+            throw new ContextualError("Field already defined", this.getLocation());
         }
         currentClass.incNumberOfFields();
     }
