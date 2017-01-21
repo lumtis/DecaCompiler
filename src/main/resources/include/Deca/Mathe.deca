@@ -97,6 +97,31 @@ class Mathe {
             return -f;
         }
     }	
+
+    float pow2(float f, int n) {
+        float tmp;
+        if (n >= 0) {
+            if (n==0){
+                return 1.0;
+             }
+            tmp=pow(f,n/2);
+            if ( n%2 == 0 ) {
+                return tmp*tmp;
+            }
+            return f*tmp*tmp;
+        }
+        else {
+            if (n == -1){
+                return 1/f;
+            }
+            tmp = pow(f,n/2);
+            if ( n%2 == 0 ) {
+                return tmp*tmp;
+            }
+            return tmp*tmp/f;
+        }
+
+    }
     
     float adapt2(float f){
         //calcule f-pi/2 avec plus de precision
@@ -239,9 +264,9 @@ class Mathe {
     // fonction sinus première solution série entière
     float sin_ser(float f) {
         int k=0;
-        float solution=0;
+        float solution=0.0;
         while (k < 6) {
-            solution=solution+pow(-1,k)* pow(f,2*k+1)/factoriel(2*k+1);
+            solution=solution+pow2(-1,k)* pow2(f,2*k+1)/factoriel(2*k+1);
             k=k+1;
         }
         return solution;
@@ -562,7 +587,7 @@ class Mathe {
         solution=g.newGrandFloat(0,0);
         while (k<6){
             tmp = 1.0/factoriel(2*k+1);
-            tmp1= pow(f,2*k+1) * pow(-1,k);
+            tmp1= pow2(f,2*k+1) * pow2(-1,k);
             r =g.multiplicationSimple(tmp,tmp1);
             solution= g.additionGrandFloat(solution,r);
             k=k+1;
