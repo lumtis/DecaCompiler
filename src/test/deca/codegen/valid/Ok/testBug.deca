@@ -9,12 +9,16 @@ class A {
         GrandFloat r =new GrandFloat();
         while (k < 6){
             k=k+1;
+            f = f+0.5;
         }
-        return 1.5;
+        return f;
     }
 }
 
 {
     A a = new A();
     float x = a.sin_grandfloat(12.5);
+    if (x==15.5) {
+        print("OK");
+    }
 }
