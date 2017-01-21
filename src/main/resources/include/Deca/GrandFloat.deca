@@ -8,7 +8,7 @@ class GrandFloat {
         this.f=f;
     }
     void setFloat2(float e){
-        this.erreur=f;
+        this.erreur=e;
     }
 
     GrandFloat newGrandFloat(float f,float e){
@@ -48,8 +48,8 @@ class GrandFloat {
         float erreur_g = g-gprime;
         //on somme les erreurs
         float erreur = erreur_f + erreur_g;
-           GrandFloat a=new GrandFloat();
-        GrandFloat r= a.newGrandFloat(somme,erreur);
+           GrandFloat r=new GrandFloat();
+           r.newGrandFloat(somme,erreur);
         return r;
     }
 
@@ -71,6 +71,34 @@ class GrandFloat {
     }
 
     float pow(float f, int n) {
+        float tmp;
+        if (n==0) {
+            tmp = 1.0;
+        }
+        else if (n>0) {
+            tmp = f;
+            while (n > 1) {
+                tmp = tmp*tmp;
+                if (n%2==1) {
+                    tmp=tmp*f;
+                }
+                n = n/2;
+            }
+        }
+        else {
+            tmp = 1/f;
+            while (n < -1) {
+                tmp = tmp*tmp;
+                if (n%2==1) {
+                    tmp=tmp/f;
+                }
+                n = n/2;
+            }
+        }
+        return tmp;
+    }
+
+    float pow2(float f, int n) {
         float tmp;
         if (n >= 0) {
             if (n==0){
@@ -104,7 +132,8 @@ class GrandFloat {
         float f=split-tmp;
         float erreur=g-f;
         GrandFloat a=new GrandFloat();
-        return a.newGrandFloat(f,erreur);
+        a.newGrandFloat(f,erreur);
+        return a;
 
     }
 
@@ -120,7 +149,8 @@ class GrandFloat {
         float erreur3=erreur2+(tmp.f*tmp1.erreur);
         float erreur=tmp.erreur*tmp1.erreur+erreur3;
         GrandFloat a=new GrandFloat();
-        return a.newGrandFloat(produit,erreur);
+        a.newGrandFloat(produit,erreur);
+        return a;
 
     }
 

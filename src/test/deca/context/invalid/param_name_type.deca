@@ -1,0 +1,5 @@
+//ERROR :3
+class A{
+void affiche(int int){
+}
+}

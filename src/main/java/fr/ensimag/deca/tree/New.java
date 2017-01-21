@@ -44,7 +44,7 @@ public class New extends AbstractExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         Type type_cour = class_ident.verifyType(compiler);
         if (type_cour== null || !type_cour.isClass()) {
-            throw new ContextualError("Classe non reconnue", this.getLocation());
+            throw new ContextualError("Class not found", this.getLocation());
         }
         this.setType(type_cour);
         return type_cour;

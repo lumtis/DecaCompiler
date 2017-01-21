@@ -37,6 +37,7 @@ public class ConvFloat extends AbstractUnaryExpr {
         super.codeGenInst(compiler, gc);
 
         compiler.addInstruction(new FLOAT(gc.getRetReg(), gc.getRetReg()));
+        gc.setExprFloat(true);
     }
 
 }

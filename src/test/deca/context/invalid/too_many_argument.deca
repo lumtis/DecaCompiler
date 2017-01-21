@@ -1,0 +1,10 @@
+//ERROR :9
+class A{
+void meth(int b){
+    print(a+b);
+    }
+}
+{
+A barce = new A();
+A.meth(3,4);
+}

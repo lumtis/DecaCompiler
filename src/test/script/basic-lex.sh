@@ -9,9 +9,9 @@ test_lex_invalide () {
     # $1 = premier argument.
     if test_lex "$1" 2>&1 | grep -q -e "$1:[0-9][0-9]*:"
     then
-        echo "$1 : PASS."
+        echo -e "\033[32m$1 : PASS.\033[0m"
     else
-        echo "$1 : ERROR."
+        echo -e "\033[31m$1 : ERROR.\033[0m"
         test_lex "$1";
         exit 1
     fi
@@ -22,17 +22,17 @@ test_lex_valid() {
 
 if test_lex "$1" 2>&1 | grep -q -e ':[0-9][0-9]*:'
 then
-    echo "$1 : ERROR."
+    echo -e "\033[31m$1 : ERROR.\033[0m"
     test_lex "$1" 2>&1;
     exit 1
 else
     if test_lex "$1" 2>&1 | grep -q -e 'Exception in thread'
     then
-        echo "$1 : ERROR."
+        echo -e "\033[31m$1 : ERROR.\033[0m"
         test_lex "$1" 2>&1;
         exit 1
     else
-        echo "$1 : PASS."
+        echo -e "\033[32m$1 : PASS.\033[0m"
     fi
 fi
 }

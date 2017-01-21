@@ -18,9 +18,9 @@ test_context_invalid() {
     fi
     if test_context "$1" 2>&1 | grep -q -e "$1$line"
     then
-        echo "$1 : PASS."
+        echo -e "\033[32m$1 : PASS.\033[0m"
     else
-        echo "$1 : ERROR."
+        echo -e "\033[31m$1 : ERROR.\033[0m"
         echo "Expected error at line $line";
         echo "Error raised :";
         test_context "$1" 2>&1;
@@ -31,11 +31,11 @@ test_context_invalid() {
 test_context_valid() {
     if test_context "$1" 2>&1 | grep -q -e "\($1:[0-9][0-9]*:[0-9][0-9]*\|no location set\|no Type decoration\|Exception in thread\)"
     then
-        echo "$1 : ERROR."
+        echo -e "\033[31m$1 : ERROR.\033[0m"
         test_context "$1" 2>&1;
         exit 1
     else
-        echo "$1 : PASS."
+        echo -e "\033[32m$1 : PASS.\033[0m"
     fi
 }
 

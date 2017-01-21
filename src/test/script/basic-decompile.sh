@@ -14,9 +14,9 @@ test_decompile_valid() {
     res2=$(test_decompile "fichier_decompile_temporaire~");
     rm "fichier_decompile_temporaire~";
     if [ "$res" == "$res2" ]; then
-        echo "$1 : PASS."
+        echo -e "\033[32m$1 : PASS.\033[0m"
     else
-        echo "$1 : ERROR."
+        echo -e "\033[31m$1 : ERROR.\033[0m"
     fi
 }
 echo "-------Décompilation tests valides context---------";
