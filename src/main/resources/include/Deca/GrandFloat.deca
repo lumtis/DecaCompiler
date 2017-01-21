@@ -245,7 +245,5 @@ class GrandFloat {
        r= additionGrandFloat(r,GrandPiSur2());
        return r.f+ r.erreur;
     }
-
-
 }
 

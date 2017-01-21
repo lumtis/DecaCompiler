@@ -186,8 +186,8 @@ public class TestMathe {
         }*/
 
         //float sin0 = Mathe.sin_grandfloat(0);
-        float singl = Mathe.sin((float)3.141592);
-        float sinjava = Mathe.sin_ser((float)3.141592);
+        float singl = Mathe.asin((float)-0.5);
+        float sinjava = Mathe.asin((float)-0.5);
         //float sin3=  Mathe.sin(GrandFloat.pimoinsf((float)3.141592));
         //double sin4=  Math.sin(Math.PI-3.141592);
         //double sinjava2=  Math.cos(6.535898E-7);

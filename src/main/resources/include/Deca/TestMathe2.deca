@@ -3,7 +3,7 @@
         Mathe m = new Mathe();
         float py=m.pi();
         float i;
-
+        
         println("TEST SIN");
         i=-py;
         while (i<=py){ 
@@ -51,7 +51,7 @@
             print(i);
             print(")= ");
             println(m.acos(i));
-            i=i+0.01;
+            i=i+0.1;
         }
 
         println("TEST ATAN");
