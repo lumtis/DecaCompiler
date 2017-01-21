@@ -1,0 +1,78 @@
+#include "GrandFloat.deca"
+
+class Math {
+    GrandFloat g = new GrandFloat();
+
+    float sin(float f) {
+        f = g.adaptGranfloat(f);
+        if (0<=f && f<=pisur2()) {
+            return sin_grandfloat(f);
+        }
+        if (f>pisur2() && f<=pi()){
+            //sin(pi-f)
+            //return sin(GrandFloat.additionGrandFloat(GrandPi(), new GrandFloat(-f,0)).getFLoatt());
+            f=g.pimoinsf(f);
+            return sin_grandfloat(f);
+        }
+        if (-pi()<=f && f<0){
+            return -sin(-f);
+        }
+        return 0.0;
+    }
+
+    float cos(float f) {
+        f = g.adaptGranfloat(f);
+        if (f==0){
+            return 1;
+        }
+        else if (0<=f && f<=pi()) {
+            return sin(g.pisur2moinsf(f));
+        }
+        else if (-pi()<=f && f<0){
+            return cos(-f);
+        }
+        return 0;
+    }
+
+    /*------------- Fonctions annexes ---------------*/
+    float pisur2(){
+        return g.GrandPiSur2().f;
+    }
+
+    float pi(){
+        return g.GrandPi().f;
+    }
+
+    // fonction factoriel
+    int factoriel(int n){
+        int a = 1;
+        if (n==0){
+            return 1;
+        }
+        while (n>1){
+            a=a*n;
+            n=n-1;
+        }
+        return a;
+    }
+
+    float sin_grandfloat(float f){
+        int k=0;
+        GrandFloat solution= new GrandFloat();
+        GrandFloat r;
+        float tmp, tmp1;
+        solution.f = 0.0;
+        solution.erreur = 0.0;
+        while (k<6){
+            tmp = 1.0/factoriel(2*k+1);
+            tmp1= g.pow(f,2*k+1);
+            if (k%2==1) {
+                tmp1 = (-1)*tmp1;
+            }
+            r = g.multiplicationSimple(tmp,tmp1);
+            solution = g.additionGrandFloat(solution,r);
+            k = k+1;
+        }
+        return solution.f + solution.erreur;
+    }
+}

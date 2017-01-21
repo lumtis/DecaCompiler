@@ -1,0 +1,188 @@
+class GrandFloat {
+    float f;
+    float erreur;
+
+    // Somme deux float et garde l'erreur dans notre structure
+    GrandFloat additionSimple(float f, float g){
+        float somme = f+g;
+        // on récupère le f erroné
+        float fprime = somme - g;
+        // on récupère le g erroné
+        float gprime = somme - fprime;
+        //on calcul l'erreur sur f
+        float erreur_f = f - fprime;
+        // on calcul l'erreur sur g
+        float erreur_g = g - gprime;
+        //on somme les erreurs
+        float erreur = erreur_f + erreur_g;
+        GrandFloat r = new GrandFloat();
+        r.f = somme;
+        r.erreur = erreur;
+        return r;
+    }
+
+    //Addition de deux grand float
+    GrandFloat additionGrandFloat(GrandFloat ff , GrandFloat gg){
+        GrandFloat tmp1tmp1,tmp2tmp2 ;
+        tmp1tmp1 = additionSimple(ff.f,gg.f);
+        tmp2tmp2 = additionSimple(ff.erreur,gg.erreur);
+        // on ajoute la somme des erreurs à l'erreur de la somme
+        tmp1tmp1.erreur = tmp1tmp1.erreur + tmp2tmp2.f;
+        // on affine
+        tmp1tmp1 = additionSimple(tmp1tmp1.f,tmp1tmp1.erreur);
+        // on ajoute la plus petite des erreurs
+        tmp1tmp1.erreur = tmp1tmp1.erreur + tmp2tmp2.erreur;
+        tmp1tmp1 = additionSimple(tmp1tmp1.f,tmp1tmp1.erreur);
+        return tmp1tmp1;
+    }
+
+    GrandFloat monAddition(GrandFloat ff, GrandFloat gg){
+        GrandFloat resultat = new GrandFloat();
+        resultat.f = ff.f + gg.f;
+        resultat.erreur = ff.erreur + gg.erreur;
+        return  resultat;
+    }
+
+
+    // calcul des puissance entière de floatants
+    float pow(float f, int n) {
+        int k = n;
+        float tmp;
+        float multEnd = 1.0;
+        if (n == 0) {
+            return 1.0;
+        }
+        else if (n > 0) {
+            tmp = f;
+            while (k > 1) {
+                if (k%2 == 1) {
+                    multEnd = multEnd*tmp;
+                }
+                tmp = tmp*tmp;
+                k = k/2;
+            }
+        }
+        else {
+            tmp = 1/f;
+            while (k < -1) {
+                if ((-k)%2 == 1) {
+                    multEnd = multEnd*tmp;
+                }
+                tmp = tmp*tmp;
+                k = k/2;
+            }
+        }
+        return tmp*multEnd;
+    }
+
+
+    // transforme un float en Grand float, sans gain de précision( fonction donc auxiliaire ) mais aussi sans perte
+    GrandFloat split(float g, int n){
+        float split = (pow(2,n)+1) * g;
+        float tmp = split - g;
+        float f = split - tmp;
+        float erreur = g-f;
+        GrandFloat res = new GrandFloat();
+        res.f = f;
+        res.erreur = erreur;
+        return res;
+    }
+
+
+    // multiplie deux float et garde l'erreur dans notre structure
+    GrandFloat multiplicationSimple(float f, float g){
+        float produit = f*g;
+        GrandFloat tmp = split(f,12);
+        GrandFloat tmp1 = split(g,12);
+        // première erreur la différence
+        float erreur1 = produit - (tmp.f * tmp1.f);
+        // deuxième erreur : le produit de la partie haute de tmp par l'erreur de tmp1 et ainsi de suite
+        float erreur2 = erreur1 - (tmp.erreur * tmp1.f);
+        float erreur3 = erreur2 - (tmp.f *tmp1.erreur);
+        float erreur = tmp.erreur * tmp1.erreur - erreur3;
+        GrandFloat res = new GrandFloat();
+        res.f = produit;
+        res.erreur = erreur;
+        return res;
+    }
+
+    // multiplication de grands float
+    GrandFloat multiplicationGrandFloat(GrandFloat ff, GrandFloat gg){
+        GrandFloat Produit = multiplicationSimple(ff.f,gg.f);
+        // on ajoute les erreurs de multiplication par les erreurs
+        Produit.erreur = Produit.erreur + ff.f*gg.erreur;
+        Produit.erreur = Produit.erreur + ff.erreur + gg.f;
+        // on récupère les erreurs significatifs
+        Produit= additionSimple(Produit.f,Produit.erreur);
+        return Produit;
+    }
+
+    boolean estPlusGrandque(GrandFloat ff){
+        return ( this.f+this.erreur > ff.f+this.erreur );
+    }
+
+    GrandFloat GrandPi(){
+        GrandFloat pi = new GrandFloat();
+        pi.f = 3.141592;
+        pi.erreur = 0.000000653589793;
+        return pi;
+    }
+
+    GrandFloat GrandPiSur2(){
+        GrandFloat pisur2 = new GrandFloat();
+        pisur2.f = 1.570796;
+        pisur2.erreur = 0.00000032679489651;
+        return pisur2;
+    }
+
+    void ajouter_erreur(float f){
+        this.erreur = this.erreur + f;
+    }
+
+    void ajouter_float(float f){
+        this.f = this.f + f;
+    }
+
+    GrandFloat moinsGrandpi(){
+        GrandFloat moinspi= new GrandFloat();
+        moinspi.f = -3.141592;
+        moinspi.erreur = -0.000000653589793;
+        return moinspi;
+    }
+
+
+
+    float adaptGranfloat(float f){
+        GrandFloat MoinsGrand2pi, Grand2pi;
+        GrandFloat resultat;
+        if (f > 3.14159265359){
+            MoinsGrand2pi= additionSimple(-6.283185,-0.00000030718);
+            resultat = additionSimple(f,-6.28318530718);
+            while (resultat.estPlusGrandque(GrandPi())){
+                resultat = additionGrandFloat(resultat,MoinsGrand2pi);
+            }
+            return resultat.f + resultat.erreur;
+        }
+        if (f < -3.1415926539){
+            Grand2pi = additionSimple(6.283185,0.00000030718);
+            resultat = additionSimple(f,6.28318530718);
+            while (moinsGrandpi().estPlusGrandque(resultat)){
+                resultat = additionGrandFloat(resultat,Grand2pi);
+            }
+            return resultat.f + resultat.erreur;
+        }
+        return f;
+    }
+
+    float pimoinsf( float f){
+        GrandFloat r = additionSimple(-f,0.0);
+        r = additionGrandFloat(r, GrandPi());
+        return r.f + r.erreur;
+    }
+
+    float pisur2moinsf(float f){
+        GrandFloat r = additionSimple(-f,0.0);
+        r = additionGrandFloat(r,GrandPiSur2());
+        return r.f + r.erreur;
+    }
+}
