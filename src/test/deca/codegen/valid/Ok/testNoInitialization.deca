@@ -1,0 +1,25 @@
+class A {
+    boolean toast1 = true;
+    boolean toast2;
+
+    void testLocalVar() {
+        int zeb;
+        int tham = 3;
+        boolean zam;
+
+        if(zeb == 0 && tham == 3 && !zam) {
+            println("OK");
+        }
+    }
+}
+
+{
+    int a;
+    float b;
+    int c = 5;
+    A tony = new A();
+
+    if(a == 0 && b == 0.0 && c == 5 && tony.toast1 && !(tony.toast2)) {
+        tony.testLocalVar();
+    }
+}

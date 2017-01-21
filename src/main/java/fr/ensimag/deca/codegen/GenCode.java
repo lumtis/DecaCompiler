@@ -102,7 +102,7 @@ public class GenCode {
             indexGB++;
 
             // On initialise la variable
-            declVar.getInitialization().codeGenInit(getAddrVar(var), comp, this);
+            declVar.getInitialization().codeGenInit(getAddrVar(var), comp, this, var.getDefinition().getType());
         }
     }
 
@@ -126,7 +126,7 @@ public class GenCode {
             indexLB++;
 
             // On initialise la variable
-            declVar.getInitialization().codeGenInit(getAddrVar(var), comp, this);
+            declVar.getInitialization().codeGenInit(getAddrVar(var), comp, this, var.getDefinition().getType());
         }
     }
 
@@ -361,32 +361,11 @@ public class GenCode {
                 DAddr addr = new RegisterOffset(f.getFieldName().getFieldDefinition().getIndex(), getRetReg());
 
                 // Si l'attribut a une initalisation, on la realise
-                if(f.getInitialization().hasInitialization()) {
-                    comp.addInstruction(new PUSH(getRetReg()));
-                    f.getInitialization().codeGenInit(comp, this);
-                    comp.addInstruction(new LOAD(getRetReg(), getR0()));
-                    comp.addInstruction(new POP(getRetReg()));
-                    comp.addInstruction(new STORE(getR0(), addr));
-                }
-                else {
-                    // Sinon on met une valeur par defaut dans l'attributs
-                    if(f.getFieldName().getFieldDefinition().getType().isInt()) {
-                        comp.addInstruction(new LOAD(new ImmediateInteger(0), getR0()));
-                        comp.addInstruction(new STORE(getR0(), addr));
-                    }
-                    else if(f.getFieldName().getFieldDefinition().getType().isFloat()) {
-                        comp.addInstruction(new LOAD(new ImmediateFloat(0), getR0()));
-                        comp.addInstruction(new STORE(getR0(), addr));
-                    }
-                    else if(f.getFieldName().getFieldDefinition().getType().isBoolean()) {
-                        comp.addInstruction(new LOAD(new ImmediateInteger(0), getR0()));
-                        comp.addInstruction(new STORE(getR0(), addr));
-                    }
-                    else if(f.getFieldName().getFieldDefinition().getType().isClass()) {
-                        comp.addInstruction(new LOAD(new NullOperand(), getR0()));
-                        comp.addInstruction(new STORE(getR0(), addr));
-                    }
-                }
+                comp.addInstruction(new PUSH(getRetReg()));
+                f.getInitialization().codeGenInit(comp, this, f.getFieldName().getFieldDefinition().getType());
+                comp.addInstruction(new LOAD(getRetReg(), getR0()));
+                comp.addInstruction(new POP(getRetReg()));
+                comp.addInstruction(new STORE(getR0(), addr));
             }
 
             // On apelle l'initialisation parente pour initialiser les attributs hérités
