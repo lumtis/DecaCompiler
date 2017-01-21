@@ -1,0 +1,20 @@
+class A {
+    int factoriel(int n) {
+        int res = 1;
+        int k = 1;
+        while (k<n) {
+            k = k+1;
+            res = res*k;
+        }
+        return res;
+    }
+}
+
+{
+    A a = new A();
+    float coef;
+     coef = 1.0/a.factoriel(4);
+    if (coef == 1.0/24.0) {
+        print("OK");
+    }
+}

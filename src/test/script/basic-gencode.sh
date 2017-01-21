@@ -7,6 +7,7 @@
 cd "$(dirname "$0")"/../../.. || exit 1
 
 PATH=./src/test/script/launchers:./src/main/bin:"$PATH"
+
 echo "-----Test des fichiers valides------";
 for cas_de_test in src/test/deca/codegen/valid/Ok/*.deca
 do
@@ -20,10 +21,9 @@ do
         resultat=$(ima "$nom_ass")
         if echo $resultat | grep -q -e "OK"
         then
-            echo "$cas_de_test : PASS."
+            echo -e "\033[32m$cas_de_test : PASS.\033[0m"
         else
-            echo "$cas_de_test : ERROR.";
-
+            echo -e "\033[31m$cas_de_test : ERROR.\033[0m";
         fi
     fi
 
@@ -40,10 +40,10 @@ do
         resultat=$(ima "$nom_ass")
         if echo $resultat | grep -q -e "[OK|ERREUR]"
         then
-            echo "$cas_de_test : ERROR."
-        else
-            echo "$cas_de_test : PASS.";
+            echo -e "\033[31m$cas_de_test : ERROR.\033[0m"
 
+        else
+            echo -e "\033[32m$cas_de_test : PASS.\033[0m";
         fi
     fi
 
@@ -63,9 +63,9 @@ do
         resultat=$(ima "$nom_ass")
         if echo $resultat | grep -q -e "$line"
         then
-            echo "$cas_de_test : PASS."
+            echo -e "\033[32m$cas_de_test : PASS.\033[0m"
         else
-            echo "$cas_de_test : ERROR.";
+            echo -e "\033[31m$cas_de_test : ERROR.\033[0m";
 
         fi
     fi
@@ -91,12 +91,11 @@ do
         resultat=$(echo "$input" | ima "$nom_ass");
         if echo $resultat | grep -q -e "OK"
         then
-            echo "$cas_de_test : PASS."
+            echo -e "\033[32m$cas_de_test : PASS.\033[0m"
         else
-            echo "$cas_de_test : ERROR.";
+            echo -e "\033[31m$cas_de_test : ERROR.\033[0m";
 
         fi
     fi
 
 done
-

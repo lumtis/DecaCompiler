@@ -1,0 +1,12 @@
+class A {
+    int x = 1;
+    void func() {
+        x = x+1;
+    }
+}
+
+{
+    A a = null;
+    a.func();
+}
+//ERROR Error : null dereferencing.

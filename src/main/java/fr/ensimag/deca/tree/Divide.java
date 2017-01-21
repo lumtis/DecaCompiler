@@ -28,7 +28,7 @@ public class Divide extends AbstractOpArith {
 
         tmp = gc.popTmpReg();
 
-        // On verifie que le déférencement n'est pas nul
+        // On verifie que le dénominateur n'est pas nul
         if (gc.isExprFloat()) {
             compiler.addInstruction(new CMP(new ImmediateFloat(0), gc.getRetReg()));
         }
