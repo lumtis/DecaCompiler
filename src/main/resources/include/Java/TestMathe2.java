@@ -54,11 +54,11 @@ public class TestMathe2 {
         System.out.println("TEST SIN");
         int c11=0;
         int c22=0;
-        for (float i=-py;i<=py;i=i+py/48){    
-            System.out.print(i);
-            System.out.print("  ");
+        for (float i=-py+py/48;i<=py;i=i+py/48){    
+            System.out.println(i);
+            //System.out.print("  ");
             //System.out.println(Mathe.sin(i));
-            c11=c11+fon.testSinus(i);
+            //c11=c11+fon.testSinus(i);
         
             //System.out.print(i);
             //System.out.print("  ");
@@ -75,18 +75,7 @@ public class TestMathe2 {
         System.out.println("TEST COS");
         int c1=0;
         int c2=0;
-        for (float i=0;i<=py/2-py/24;i=i+py/24){    
-            //System.out.println(i);
-            //System.out.print("  ");
-            
-            c1=c1+fon.testCosinus(i);
-            
-            //System.out.print(i);
-            //System.out.print("  ");
-            c2=c2+fon.testCosinus2(i);
-            //System.out.println("");
-        }
-        for (float i=py/2+py/24;i<=py;i=i+py/24){    
+        for (float i=0;i<=py;i=i+py/24){    
             //System.out.println(i);
             //System.out.print("  ");
             
@@ -97,6 +86,17 @@ public class TestMathe2 {
             //c2=c2+fon.testCosinus2(i);
             //System.out.println("");
         }*/
+        //for (float i=py/2+py/24;i<=py;i=i+py/24){    
+            //System.out.println(i);
+            //System.out.print("  ");
+            
+            //c1=c1+fon.testCosinus(i);
+            
+            //System.out.print(i);
+            //System.out.print("  ");
+            //c2=c2+fon.testCosinus2(i);
+            //System.out.println("");
+        //}
         //System.out.print("Nombre total de COS PASS : ");
         //System.out.println(c1);
         
