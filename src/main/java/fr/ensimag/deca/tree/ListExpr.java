@@ -16,10 +16,10 @@ public class ListExpr extends TreeList<AbstractExpr> {
                            MethodDefinition methDef) throws ContextualError{
         Signature sign = methDef.getSignature();
         if (sign.size() > size()) {
-            throw new ContextualError("Pas assez d'arguments pour cette méthode.", this.getLocation());
+            throw new ContextualError("Not enough arguments for this method", this.getLocation());
         }
         else if (sign.size() < size()) {
-            throw new ContextualError("Trop d'arguments pour cette méthode.", this.getLocation());
+            throw new ContextualError("Too many arguments for this method", this.getLocation());
         }
         int i = 0;
         ListExpr le = new ListExpr();
