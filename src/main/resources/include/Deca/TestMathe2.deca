@@ -6,54 +6,60 @@
 
         println("TEST SIN");
         i=-py;
-        while (i<=py){    
+        while (i<=py){ 
+            print("sin(");   
             print(i);
-            print(" ");
+            print(")= ");
             println(m.sin(i));
-            i=i+py/48;
+            i=i+py/6;
         }
 
         println("TEST COS");
         i=-py;
-        while (i<=py){    
+        while (i<=py){ 
+            print("cos(");   
             print(i);
-            print(" ");
+            print(")= ");
             println(m.cos(i));
-            i=i+py/48;
+            i=i+py/6;
         }
         
         println("TEST TAN");
         i=-py/2+py/48;
-        while (i<=py/2-py/48){    
+        while (i<=py/2-py/48){
+            print("tan(");   
             print(i);
-            print(" ");
+            print(")= ");
             println(m.tan(i));
-            i=i+py/48;
+            i=i+py/6;
         }
 
         println("TEST ASIN");
         i=-1;
-        while (i<=1){    
+        while (i<=1){
+            print("asin(");   
             print(i);
-            print(" ");
+            print(")= ");
             println(m.asin(i));
             i=i+0.1;
         }
        
         println("TEST ACOS");
         i=-1;
-        while (i<=1){    
+        while (i<=1){
+            print("acos(");   
             print(i);
-            print(" ");
+            print(")= ");
             println(m.acos(i));
             i=i+0.01;
         }
 
         println("TEST ATAN");
         i=-10;
-        while (i<=10){    
+        while (i<=10){ 
+            print("atan(");   
             print(i);
-            print(" ");
+            print(")= ");
             println(m.atan(i));
             i=i+0.1;
         }
