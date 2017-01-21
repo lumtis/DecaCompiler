@@ -577,7 +577,7 @@ class Mathe {
         if (f<0) {
             return -atan_GrandFloat(-f);
         }
-       return 0.0; 
+        return 0.0;
     }
 
     //fonction sinus dernière en GrandFloat version finale 

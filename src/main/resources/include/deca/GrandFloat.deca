@@ -152,7 +152,7 @@ class GrandFloat {
 
 
 
-    float adaptGranfloat(float f){
+    float adaptGrandFloat(float f){
         GrandFloat MoinsGrand2pi, Grand2pi;
         GrandFloat resultat;
         if (f > 3.14159265359){
