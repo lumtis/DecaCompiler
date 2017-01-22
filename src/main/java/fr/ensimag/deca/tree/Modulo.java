@@ -48,6 +48,10 @@ public class Modulo extends AbstractOpArith {
 
         tmp = gc.popTmpReg();
 
+        // On verifie que le dénominateur n'est pas nul
+        compiler.addInstruction(new CMP(0, gc.getRetReg()));
+        compiler.addInstruction(new BEQ(gc.getDividedZero()));
+
         compiler.addInstruction(new REM(gc.getRetReg(), tmp));
         compiler.addInstruction(new LOAD(tmp, gc.getRetReg()));
     }

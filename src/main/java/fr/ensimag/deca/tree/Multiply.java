@@ -28,5 +28,12 @@ public class Multiply extends AbstractOpArith {
         tmp = gc.popTmpReg();
 
         compiler.addInstruction(new MUL(tmp, gc.getRetReg()));
+
+        // Vérification du débordement arithmetique
+        if(gc.isExprFloat()) {
+            if(!(compiler.getCompilerOptions().getNoCheck())) {
+                compiler.addInstruction(new BOV(gc.getDebordementArith()));
+            }
+        }
     }
 }

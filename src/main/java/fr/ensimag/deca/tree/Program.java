@@ -56,7 +56,7 @@ public class Program extends AbstractProgram {
         gc.addSeparatorComment();
 
         // On initialise le début du code
-        gc.initProgram();
+        //gc.initProgram();
 
         // On creer la tables des méthodes
         gc.initMethodTable(getClasses().getList());

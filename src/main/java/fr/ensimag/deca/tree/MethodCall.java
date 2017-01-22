@@ -109,8 +109,10 @@ public class MethodCall extends AbstractMethodCall {
 
         // On verifie que le déréférencement n'est pas nul
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), gc.getR0()));
-        compiler.addInstruction(new CMP(new NullOperand(), gc.getR0()));
-        compiler.addInstruction(new BEQ(gc.getLabelDereferencementNul()));
+        if(!(compiler.getCompilerOptions().getNoCheck())) {
+            compiler.addInstruction(new CMP(new NullOperand(), gc.getR0()));
+            compiler.addInstruction(new BEQ(gc.getLabelDereferencementNul()));
+        }
 
         // On appelle la methode
         compiler.addInstruction(new LOAD(new RegisterOffset(0, gc.getR0()), gc.getR0()));

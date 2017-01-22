@@ -39,6 +39,12 @@ public class Divide extends AbstractOpArith {
 
         if(gc.isExprFloat()) {
             compiler.addInstruction(new DIV(gc.getRetReg(), tmp));
+
+            // Vérification du débordement arithmetique
+            if(!(compiler.getCompilerOptions().getNoCheck())) {
+                compiler.addInstruction(new BOV(gc.getDebordementArith()));
+            }
+
             compiler.addInstruction(new LOAD(tmp, gc.getRetReg()));
         }
         else {

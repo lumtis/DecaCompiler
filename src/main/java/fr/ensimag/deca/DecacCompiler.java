@@ -144,6 +144,10 @@ public class DecacCompiler {
         program.addInstruction(instruction, comment);
     }
 
+    public void addFirst(Instruction i) {
+        program.addFirst(i);
+    }
+
     /**
      * @see
      * fr.ensimag.ima.pseudocode.IMAProgram#display()
@@ -231,15 +235,12 @@ public class DecacCompiler {
         prog.verifyProgram(this);
 
         assert(prog.checkAllDecorations());
-        addComment("start main program");
 
         if(compilerOptions.getVerifOnly()){
             return false;
         }
 
         // Partie C
-        addComment("start main program");
-
         prog.codeGenProgram(this);
 
         addComment("end main program");
