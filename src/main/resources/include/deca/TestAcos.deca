@@ -1,0 +1,22 @@
+#include "Math.deca"
+
+{
+    Math m = new Math();
+    float v1 = 0.1415;
+    float v2 = 0.45485;
+    float v3 = 0.00006748;
+    float v4 = 0.8708;
+    println("------------Début du test de arccos---------");
+    println("Valeur testée :",v1);
+    println("Notre résultat :",m.acos(v1));
+    println("Résultat attendu : 1.42881983");
+    println("Valeur testée :",v2);
+    println("Notre résultat :",m.acos(v2));
+    println("Résultat attendu : 1.098592552");
+    println("Valeur testée :",v3);
+    println("Notre résultat :",m.acos(v3));
+    println("Résultat attendu : 1.570728847");
+    println("Valeur testée :",v4);
+    println("Notre résultat :",m.acos(v4));
+    println("Résultat attendu : 0.5139691283");
+}

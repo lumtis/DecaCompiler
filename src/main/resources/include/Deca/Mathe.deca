@@ -1,7 +1,29 @@
 #include "GrandFloat.deca"
 class Mathe {
+
     GrandFloat g=new GrandFloat();
-    //Calcule de puissance entière de flottants
+
+    GrandFloat GrandPi(){
+            return g.GrandPi();
+    }
+    
+    
+    GrandFloat GrandPiSur2(){
+        return g.GrandPiSur2();
+    }    
+       
+  
+    float pi(){
+        return GrandPi().getFLoatt();
+    }    
+    
+    
+    float pisur2(){
+        return GrandPiSur2().getFLoatt();
+    }     
+       
+
+    //fonction puissance version itérative
     float pow(float f, int n) {
         float tmp;
         if (n==0) {
@@ -9,22 +31,17 @@ class Mathe {
         }
         else if (n>0) {
             tmp = f;
-            while (n > 1) {
-                tmp = tmp*tmp;
-                if (n%2==1) {
-                    tmp=tmp*f;
-                }
-                n = n/2;
+            while (n>1){
+                tmp=tmp*f;
+                n=n-1;
             }
+            
         }
         else {
             tmp = 1/f;
-            while (n < -1) {
-                tmp = tmp*tmp;
-                if (n%2==1) {
-                    tmp=tmp/f;
-                }
-                n = n/2;
+             while (n<-1){
+                tmp=tmp/f;
+                n=n+1;
             }
         }
         return tmp;
@@ -97,7 +114,7 @@ class Mathe {
             return -f;
         }
     }	
-
+    //fonction puissance versuin récursive
     float pow2(float f, int n) {
         float tmp;
         if (n >= 0) {
@@ -353,7 +370,6 @@ class Mathe {
         int k;
         float solution;
         if (f == 1) {
-            return 0.78539816339;
         }
         
         if (f<1 && f>=0 ) {
@@ -419,35 +435,6 @@ class Mathe {
     }
     
 
-    
-    float sin(float f) {
-        
-        f=g.adaptGranfloat(f);
-        
-        
-        if (0<=f && f<=pisur2()) {
-            
-            return sin_grandfloat(f);
-        }
-
-        if (f>pisur2() && f<=pi()){
-             
-            //sin(pi-f)
-            
-            f=g.pimoinsf(f);
-            
-            return sin_grandfloat(f);
-        }
-        if (-pi()<=f && f<0){
-            return -sin(-f);
-            
-        }
-        
-        return 0.0;
-    }
-    
-    
-
     //fonction aux sin recursive
 
     float aux_sin(float f, int n ){
@@ -500,6 +487,127 @@ class Mathe {
     }
 
    
+    
+    //////////////////////Grands floats///////////////////////////////////////
+
+    float sin_grandfloat(float f){
+        GrandFloat solution= new GrandFloat();
+        float tmp;
+        float tmp1;
+        int k=0;
+        GrandFloat r=new GrandFloat();
+        
+        solution=g.newGrandFloat(0,0);
+        while (k<6){
+            tmp = 1.0/factoriel(2*k+1);
+            tmp1= pow(f,2*k+1) * pow(-1,k);
+            r =g.multiplicationSimple(tmp,tmp1);
+            solution= g.additionGrandFloat(solution,r);
+            k=k+1;
+        }
+        return solution.f + solution.erreur;
+    }
+    
+    float cos_GrandFloat( float f){
+        
+        GrandFloat solution= new GrandFloat();
+        float tmp;
+        float tmp1;
+        int k=0;
+        GrandFloat r=new GrandFloat();
+        
+        solution=g.newGrandFloat(0,0);
+        while (k<6){
+            tmp=1.0/factoriel(2*k);
+            tmp1 = pow(f,2*k) * pow(-1,k);
+            r=g.multiplicationSimple(tmp,tmp1);
+            solution=g.additionGrandFloat(solution,r);
+            k=k+1;
+        }
+        return solution.f + solution.erreur;
+    }
+    
+    float asin_GrandFloat(float f) {
+        GrandFloat solution= new GrandFloat();
+        float tmp;
+        float tmp1;
+        int k=0;
+        GrandFloat r=new GrandFloat();
+        if (f<=1 && f>=-1 ) { //definie seulement sur -1..1
+        solution=g.newGrandFloat(0,0);
+        
+        while (k < 7) {
+            tmp=1.0/((2*k+1)*pow(factoriel(k)*pow(2,k),2));
+            tmp1=pow(f,2*k+1)*factoriel(2*k);
+            r=g.multiplicationSimple(tmp,tmp1);
+            solution=g.additionGrandFloat(solution,r);
+            k=k+1;
+        }
+        return solution.f + solution.erreur;
+        }
+    }
+        
+
+    float atan_GrandFloat(float f) {
+        
+        GrandFloat solution= new GrandFloat();
+        float tmp;
+        float tmp1;
+        int k=0;
+        GrandFloat r=new GrandFloat();
+        if (f == 1) {
+            return 0.78539816;
+        }
+        
+        if (f<1 && f>=0 ) {
+        
+        while (k < 50) {
+            tmp=1.0/(2*k+1);
+            tmp1=pow(-1,k)*pow(f,2*k+1);
+            r=g.multiplicationSimple(tmp,tmp1);
+            solution=g.additionGrandFloat(solution,r);
+            
+            k=k+1;
+        }
+        return solution.f + solution.erreur;
+        }
+        if (f>1) {
+            return (pi()/2)-atan_GrandFloat(1/f); //pi/2-atan(1/f)
+        }
+        if (f<0) {
+            return -atan_GrandFloat(-f);
+        }
+        return 0.0;
+    }
+
+    //fonction sinus dernière en GrandFloat version finale 
+    float sin(float f) {
+        
+        f=g.adaptGranfloat(f);
+        
+        
+        if (0<=f && f<=pisur2()) {
+            
+            return sin_grandfloat(f);
+        }
+
+        if (f>pisur2() && f<=pi()){
+             
+            //sin(pi-f)
+            
+            f=g.pimoinsf(f);
+            
+            return sin_grandfloat(f);
+        }
+        if (-pi()<=f && f<0){
+            return -sin(-f);
+            
+        }
+        
+        return 0.0;
+    }
+
+    //fonction cosinus en GrandFloat version finale
     float cos(float f) {
         
         f=g.adaptGranfloat(f);
@@ -508,7 +616,8 @@ class Mathe {
             return 1.0;
         }
         if (0<=f && f<=pi()/2) {
-            return sin(g.pisur2moinsf(f));
+            //return sin(g.pisur2moinsf(f));
+            return cos_GrandFloat(f);
             
         }
         if (f>pi()/2 && f<=pi()){
@@ -523,12 +632,9 @@ class Mathe {
         return 0.0;
         
     }
+    //////////////////////autres algos et formules///////////////////////////
 
-    
-    
-    //////////////////////autres_algos///////////////////////////////////////
-
-    //tan(x)=sin(x)/cos(x)
+    //tan(x)=sin(x)/cos(x) version finale
     float tan(float f){
          return sin(f)/cos(f);
     }
@@ -551,7 +657,8 @@ class Mathe {
     //arcsin(x)=arctan(x/sqrt(1-x²))) version finale 
     float asin(float f) {
         if (f<1 && f>-1 ) {
-            return atan(f/sqrt(1-pow(f,2)));
+            //return atan(f/sqrt(1-pow(f,2))); //plus précis en Java
+            return asin_GrandFloat(f);
         }
         if (f==1){
             return pi()/2;
@@ -559,7 +666,7 @@ class Mathe {
         if (f==-1){
             return -pi()/2;
         }
-        
+        println("Impossible de faire le calcul en dehors de l'intervalle (-1,1) , la valeur retournée est fausse");
         return f;
     }
 
@@ -569,52 +676,15 @@ class Mathe {
     }
         
 
-    //fonction arctan finale qui utilise les deux algos
+    //fonction arctan version finale qui utilise les deux algos
     float atan(float f) {
         if (abs(f)>0.9 && abs(f)<1.1){
-            return atan_algo(f);
+            //return atan_algo(f); //plus précis en Java
+            return atan_GrandFloat(f); 
         }
-        return atan_ser(f);    
-        }
+        return atan_GrandFloat(f);    
+    }
 
-    float sin_grandfloat(float f){
-        GrandFloat solution= new GrandFloat();
-        float tmp;
-        float tmp1;
-        int k=0;
-        GrandFloat r=new GrandFloat();
-        
-        solution=g.newGrandFloat(0,0);
-        while (k<6){
-            tmp = 1.0/factoriel(2*k+1);
-            tmp1= pow2(f,2*k+1) * pow2(-1,k);
-            r =g.multiplicationSimple(tmp,tmp1);
-            solution= g.additionGrandFloat(solution,r);
-            k=k+1;
-        }
-        return solution.f + solution.erreur;
-    }
-    
-    
-    GrandFloat GrandPi(){
-        
-        return g.GrandPi();
-    }
-    
-    GrandFloat GrandPiSur2(){
-        
-        return g.GrandPiSur2();
-    }   
-  
-    float pi(){
-        
-        return GrandPi().getFLoatt();
-    }
-    
-    float pisur2(){
-        
-        return GrandPiSur2().getFLoatt();
-    }    
-    
 }
+
 

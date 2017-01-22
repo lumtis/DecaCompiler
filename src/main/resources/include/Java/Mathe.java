@@ -173,7 +173,10 @@ public class Mathe {
         GrandFloat solution= new GrandFloat(0,0);
         while (k<6){
             float tmp = (float) 1.0/factoriel(2*k+1);
-            float tmp1= pow(f,2*k+1) * pow((float)-1,k);
+            float tmp1= pow(f,2*k+1);
+            if (k%2==1) {
+                tmp1 = (-1)*tmp1;
+            }
             GrandFloat r =GrandFloat.multiplicationSimple(tmp,tmp1);
             solution= GrandFloat.additionGrandFloat(solution,r);
             k+=1;
@@ -237,28 +240,19 @@ public class Mathe {
     }*/
     
     public static float sin(float f) {
-        
         f=GrandFloat.adaptGranfloat(f);
-        
-        
         if (0<=f && f<=pisur2()) {
-            
             return sin_grandfloat(f);
         }
-
         if (f>pisur2() && f<=pi()){
-             
             //sin(pi-f)
             //return sin(GrandFloat.additionGrandFloat(GrandPi(), new GrandFloat(-f,0)).getFLoatt());
             f=GrandFloat.pimoinsf(f);
-            
             return sin_grandfloat(f);
         }
         if (-pi()<=f && f<0){
             return -sin(-f);
-            
         }
-        
         return 0;
     }
 
@@ -292,7 +286,6 @@ public class Mathe {
     }    
     
     public static float pi(){
-        //return (float)3.141592653589793238462643383279;
         return GrandPi().getFLoatt();
     }
     
@@ -585,25 +578,33 @@ public class Mathe {
     
     // calcul des puissance entière de floatants
     public static float pow(float f, int n) {
-        if (n >= 0) {
-            if (n==0) return (float)1;
-            float tmp = pow(f,n/2);
-            if ( n%2 == 0 ) {
-                return tmp*tmp;
+        int k = n;
+        float tmp;
+        float multEnd = (float) 1.0;
+        if (n == 0) {
+            return (float) 1.0;
+        }
+        else if (n > 0) {
+            tmp = f;
+            while (k > 1) {
+                if (k%2 == 1) {
+                    multEnd = multEnd*tmp;
+                }
+                tmp = tmp*tmp;
+                k = k/2;
             }
-            return f*tmp*tmp;
         }
         else {
-            if (n == -1){
-                return (float)1/f;
+            tmp = 1/f;
+            while (k < -1) {
+                if ((-k)%2 == 1) {
+                    multEnd = multEnd*tmp;
+                }
+                tmp = tmp*tmp;
+                k = k/2;
             }
-            float tmp = pow(f,n/2);
-            if ( n%2 == 0 ) {
-                return tmp*tmp;
-            }
-            return tmp*tmp/f;
         }
-
+        return tmp*multEnd;
     }
     
     // fonction factoriel
@@ -613,8 +614,8 @@ public class Mathe {
         }
         int a = 1;
         while (n>1){
-            a*=n;
-            n-=1;
+            a=a*n;
+            n=n-1;
         }
         return a;
     }

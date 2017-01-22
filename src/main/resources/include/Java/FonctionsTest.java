@@ -41,9 +41,9 @@ public class FonctionsTest {
         else {
             testsin=this.test;
         }
-        System.out.print("Erreur ");
-        System.out.print(Erreur((float)java.lang.Math.sin(f),s,lim));
-       
+        //System.out.print("Erreur ");
+        System.out.println(Erreur((float)java.lang.Math.sin(f),s,lim));
+       /*
         if (abs((float)java.lang.Math.sin(f)-s)<=testsin){
             System.out.println(" SIN PASS");
             compt++;
@@ -51,7 +51,7 @@ public class FonctionsTest {
         else {
             System.out.println(" SIN NO");
             
-        }
+        }*/
         return compt;
         
     }
