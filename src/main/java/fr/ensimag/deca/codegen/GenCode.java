@@ -589,7 +589,7 @@ public class GenCode {
 
         addSeparatorComment();
         comp.addLabel(conversion_mauvaise);
-        comp.addInstruction(new WSTR("Error : error from class conversion"));
+        comp.addInstruction(new WSTR("Error : error from class conversion."));
         comp.addInstruction(new WNL());
         comp.addInstruction(new ERROR());
     }

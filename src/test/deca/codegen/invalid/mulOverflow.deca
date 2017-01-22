@@ -1,0 +1,10 @@
+{
+    float a= 1000000000; //10^9
+    float b= 1000000000;
+    float c= 1000000000;
+    float d= 1000000000;
+    float e= 1000000000;
+
+    float f = a*b*c*d*e;
+}
+//ERROR Error : arithmetic overflow.
