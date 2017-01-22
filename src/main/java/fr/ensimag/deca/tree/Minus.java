@@ -28,6 +28,14 @@ public class Minus extends AbstractOpArith {
         tmp = gc.popTmpReg();
 
         compiler.addInstruction(new SUB(gc.getRetReg(), tmp));
+
+        // Vérification du débordement arithmetique
+        if(gc.isExprFloat()) {
+            if(!(compiler.getCompilerOptions().getNoCheck())) {
+                compiler.addInstruction(new BOV(gc.getDebordementArith()));
+            }
+        }
+
         compiler.addInstruction(new LOAD(tmp, gc.getRetReg()));
     }
 

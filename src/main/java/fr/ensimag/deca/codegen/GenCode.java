@@ -42,7 +42,7 @@ public class GenCode {
     private Label divided_zero = new Label("divided_zero");
     private Label objectEquals = new Label("Object.equals");
     private Label conversion_mauvaise = new Label("conversion_mauvaise");
-
+    private Label debordement_arith = new Label("arithmetic_overflow");
 
     // Fonction utilitaires pour obtenir le nom d'un registre en fonction de
     // son numero
@@ -582,6 +582,12 @@ public class GenCode {
         comp.addInstruction(new ERROR());
 
         addSeparatorComment();
+        comp.addLabel(debordement_arith);
+        comp.addInstruction(new WSTR("Error : arithmetic overflow."));
+        comp.addInstruction(new WNL());
+        comp.addInstruction(new ERROR());
+
+        addSeparatorComment();
         comp.addLabel(conversion_mauvaise);
         comp.addInstruction(new WSTR("Error : error from class conversion"));
         comp.addInstruction(new WNL());
@@ -599,6 +605,9 @@ public class GenCode {
     }
     public Label getDividedZero() {
         return divided_zero;
+    }
+    public Label getDebordementArith() {
+        return debordement_arith;
     }
 
     public void addSeparatorComment() {
