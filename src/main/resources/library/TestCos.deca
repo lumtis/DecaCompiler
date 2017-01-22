@@ -1,0 +1,22 @@
+#include "Math.deca"
+
+{
+    Math m = new Math();
+    float v1 = 3.1415;
+    float v2 = 0.45485;
+    float v3 = 0.00006748;
+    float v4 = 1.5708;
+    println("------------Début du test de cosinus---------");
+    println("Valeur testée :",v1);
+    println("Notre résultat :",m.cos(v1));
+    println("Résultat attendu : -0.9999999957");
+    println("Valeur testée :",v2);
+    println("Notre résultat :",m.cos(v2));
+    println("Résultat attendu : 0.8983269374");
+    println("Valeur testée :",v3);
+    println("Notre résultat :",m.cos(v3));
+    println("Résultat attendu : 0.9999999977");
+    println("Valeur testée :",v4);
+    println("Notre résultat :",m.cos(v4));
+    println("Résultat attendu : -3.6732051e-6");
+}

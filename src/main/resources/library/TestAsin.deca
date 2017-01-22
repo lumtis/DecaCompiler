@@ -1,0 +1,22 @@
+#include "Math.deca"
+
+{
+    Math m = new Math();
+    float v1 = 0.1415;
+    float v2 = 0.45485;
+    float v3 = 0.00006748;
+    float v4 = 0.8708;
+    println("------------Début du test de arcsin---------");
+    println("Valeur testée :",v1);
+    println("Notre résultat :",m.asin(v1));
+    println("Résultat attendu : 0.1419764973");
+    println("Valeur testée :",v2);
+    println("Notre résultat :",m.asin(v2));
+    println("Résultat attendu : 0.4722037751");
+    println("Valeur testée :",v3);
+    println("Notre résultat :",m.asin(v3));
+    println("Résultat attendu : 6.748000005e-5");
+    println("Valeur testée :",v4);
+    println("Notre résultat :",m.asin(v4));
+    println("Résultat attendu : 1.056827198");
+}
