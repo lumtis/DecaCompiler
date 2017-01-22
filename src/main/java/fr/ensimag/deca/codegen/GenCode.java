@@ -21,7 +21,6 @@ public class GenCode {
     private DecacCompiler comp;
 
     private int labelIndex = 0;
-    private final int  taillePile=1024;
 
     private Stack<GPRegister> tmpReg;
     private int indexTmp;
@@ -103,6 +102,8 @@ public class GenCode {
 
             // On initialise la variable
             declVar.getInitialization().codeGenInit(getAddrVar(var), comp, this, var.getDefinition().getType());
+
+            debutPile++;
         }
     }
 
@@ -113,6 +114,10 @@ public class GenCode {
 
         // On incremente la pile pour sauvegarder les registres plus tard
         comp.addInstruction(new ADDSP(a.size()+1));
+
+        // Pour établir la taille max de la pile
+        incrementPile(a.size()+1);
+        decrementPile(a.size()+1);
 
         indexLB = 1;
 
@@ -142,6 +147,7 @@ public class GenCode {
         if(indexTmp >= maxReg) {
             // On met dans la pile (du programme la valeur du dernier registre)
             comp.addInstruction(new PUSH(tmpReg.peek()));
+            incrementPile(1);
 
             r = GPRegister.getR(maxReg-1);
             comp.addInstruction(new LOAD(v, r));
@@ -165,6 +171,7 @@ public class GenCode {
             r = tmpReg.pop();
             comp.addInstruction(new LOAD(r, r1));
             comp.addInstruction(new POP(r));
+            decrementPile(1);
         }
         else {
             return tmpReg.pop();
@@ -278,9 +285,11 @@ public class GenCode {
         comp.addInstruction(new LOAD(new NullOperand(), r0));
         comp.addInstruction(new STORE(r0, new RegisterOffset(indexGB, Register.GB)));
         indexGB++;
+        debutPile++;
         comp.addInstruction(new LOAD(new LabelOperand(objectEquals), r0));
         comp.addInstruction(new STORE(r0, new RegisterOffset(indexGB, Register.GB)));
         indexGB++;
+        debutPile++;
 
         // On parcourt les classes
         for (AbstractDeclClass ac:lc) {
@@ -328,6 +337,7 @@ public class GenCode {
                 cDef = cDef.getSuperClass();
             }
             indexGB += pas;
+            debutPile += pas;
         }
     }
 
@@ -366,6 +376,10 @@ public class GenCode {
                 comp.addInstruction(new LOAD(getRetReg(), getR0()));
                 comp.addInstruction(new POP(getRetReg()));
                 comp.addInstruction(new STORE(getR0(), addr));
+
+                // Pour établir la taille max de la pile
+                incrementPile(1);
+                decrementPile(1);
             }
 
             // On apelle l'initialisation parente pour initialiser les attributs hérités
@@ -427,11 +441,16 @@ public class GenCode {
         comp.addLabel(getMethodLabel(c, m));
 
         // Verification pile
-        comp.addInstruction(new TSTO(lp.size() + 1));
-        comp.addInstruction(new BOV(pile_pleine));
+        incrementPile(lp.size() + 1);
+        decrementPile(lp.size() + 1);
 
         // On genere le code de la methode
-        m.getBody().generateMethod(comp, this, m.getMethodName().getMethodDefinition().getType().isVoid());
+        if(m.getIsAsm()) {
+            comp.add(new CustomLine(m.getPortion().getValue()));
+        }
+        else {
+            m.getBody().generateMethod(comp, this, m.getMethodName().getMethodDefinition().getType().isVoid());
+        }
 
         comp.addInstruction(new RTS());
     }
@@ -442,6 +461,7 @@ public class GenCode {
     public void saveRegister() {
         int i = 3;
         while(i < maxReg) {
+            incrementPile(1);
             comp.addInstruction(new PUSH(Register.getR(i)));
             i++;
         }
@@ -451,6 +471,7 @@ public class GenCode {
     public void restoreRegister() {
         int i = maxReg - 1;
         while(i >= 3) {
+            decrementPile(1);
             comp.addInstruction(new POP(Register.getR(i)));
             i--;
         }
@@ -469,6 +490,11 @@ public class GenCode {
 
         // On reserve l'espace memoire pour l'objet
         comp.addInstruction(new NEW(1 + totalNumberField, getRetReg()));
+
+        // On vérfie que la memoire n'est pas dépassée
+        if(!(comp.getCompilerOptions().getNoCheck())) {
+            comp.addInstruction(new BOV(tas_plein));
+        }
 
         // La première valeur contient le debut de la table des methodes
         // de l'objet
@@ -490,14 +516,37 @@ public class GenCode {
     /* Ajoute les instructions au debut du programme */
     public void initProgram()
     {
-        comp.addComment("Début du programme principal");
-        comp.addComment("Taille maximale de la pile");
-        comp.addInstruction(new TSTO(taillePile));
-        comp.addInstruction(new BOV(pile_pleine));
-        comp.addInstruction(new ADDSP(taillePile));
+        comp.addFirst(new ADDSP(debutPile));
+        if(!(comp.getCompilerOptions().getNoCheck())) {
+            comp.addFirst(new BOV(pile_pleine));
+            comp.addFirst(new TSTO(debutPile + taillePileMax));
+        }
     }
 
+
+    // Fonctions permettant de définir la taille maximale de la pile
+
+    private int taillePile = 64;      // Borne de sécurité
+    private int taillePileMax = 64;
+    private int debutPile = 16;       // Sécurité
+
+    public void incrementPile(int i) {
+        taillePile += i;
+        if(taillePile > taillePileMax) {
+            taillePileMax = taillePile;
+        }
+    }
+
+    private void decrementPile(int i) {
+        taillePile -= i;
+    }
+
+
     public void terminateProgram(){
+
+        // On connait maintenant la taille max de la pile
+        initProgram();
+
         comp.addComment("Code du programme principal");
         comp.addInstruction(new HALT());
         comp.addComment("Messages d’erreurs");

@@ -1,0 +1,6 @@
+{
+    int a = 0;
+    int b = 6;
+    int c = b%a;
+}
+//ERROR Error : divided by zero.

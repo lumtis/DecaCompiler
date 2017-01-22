@@ -63,6 +63,10 @@ public class DeclMethod extends AbstractDeclMethod {
         return this.params;
     }
 
+    public StringLiteral getPortion() {
+        return portionAssembleur;
+    }
+
     @Override
     protected void verifyDeclMethodHeader(DecacCompiler compiler, ClassDefinition classDef)
             throws ContextualError {
