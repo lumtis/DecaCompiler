@@ -164,15 +164,21 @@ class Math {
         float tmp;
         float tmp1;
         int k=0;
-        float fcarre = f*f; //Beber
+        float fcarre = f*f;
         GrandFloat r=new GrandFloat();
         if (f == 1) {
             return 0.78539816;
         }
         else if (f<1 && f>=0 ) {
+            //Cas particulier pour k = 0
+            tmp=1.0;
+            tmp1=f;
+            r=g.multiplicationSimple(tmp,tmp1);
+            solution=g.additionGrandFloat(solution,r);
+            k=k+1;
             while (k < 50) {
                 tmp=1.0/(2*k+1);
-                tmp1=g.pow(-1,k)*g.pow(f,2*k+1);
+                tmp1 = -tmp1*fcarre; //(-1)^k * f^(2k+1)
                 r=g.multiplicationSimple(tmp,tmp1);
                 solution=g.additionGrandFloat(solution,r);
                 k=k+1;
@@ -190,16 +196,24 @@ class Math {
 
     float asin_GrandFloat(float f) {
         GrandFloat solution= new GrandFloat();
-        float tmp;
-        float tmp1;
+        float tmp=1.0;
+        float tmp1=f;
+        float coef=1.0;
+        float fcarre = f*f;
         int k=0;
         GrandFloat r=new GrandFloat();
         if (f<=1 && f>=-1 ) { //definie seulement sur -1..1
             solution.f = 0.0;
             solution.erreur = 0.0;
-            while (k < 7) {
-                tmp=1.0/((2*k+1)*g.pow(factoriel(k)*g.pow(2,k),2));
-                tmp1=g.pow(f,2*k+1)*factoriel(2*k);
+            //Cas particulier k = 0
+            r=g.multiplicationSimple(tmp,tmp1);
+            solution=g.additionGrandFloat(solution,r);
+            k=k+1;
+            while (k < 10) {
+                coef = coef*k*2;
+                tmp=1.0/((2*k+1)*coef*coef);
+                //tmp = 1/((2k+1)*(k!*2^k)^2)
+                tmp1 = tmp1*fcarre*(2*k-1)*2*k; //tmp1=f^(2k+1)*(2k)!
                 r=g.multiplicationSimple(tmp,tmp1);
                 solution=g.additionGrandFloat(solution,r);
                 k=k+1;
