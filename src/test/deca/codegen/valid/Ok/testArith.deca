@@ -1,0 +1,15 @@
+class A {
+
+     void function(float f) {
+          float tmp = f*f;
+          print(f, "/",tmp);
+          if (f == 4.0 && tmp == 16.0) {
+             println("OK");
+          }
+     }
+}
+
+{
+        A a = new A();
+        a.function(4.0);
+}
