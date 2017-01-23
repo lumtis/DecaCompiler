@@ -501,7 +501,9 @@ public class Mathe {
 
     // calcul de l'ulp
         public static float ulp(float f) {
-
+        if (f == 0) {
+            return Mathe.pow((float)2, -149);
+        }
         return Mathe.pow((float)2,Mathe.exposant(f)) * Mathe.pow((float)2,-23);
     }
 

@@ -7,13 +7,19 @@ PATH=./src/test/script/launchers:"$PATH"
 # exemple de définition d'une fonction
 test_synt_invalide () {
     # $1 = premier argument.
-    if test_synt "$1" 2>&1 | grep -q -e "$1:[0-9][0-9]*:"
+    message=$(test_synt "$1" 2>&1);
+    if  echo "$message" | grep -q -e "$1:[0-9][0-9]*:"
     then
         echo -e "\033[32m$1 : PASS.\033[0m"
     else
-        echo -e "\033[31m$1 : ERROR.\033[0m"
-        test_synt "$1";
-        exit 1
+        if echo "$message" | grep -q -e "Circular include"
+        then
+            echo -e "\033[32m$1 : PASS.\033[0m"
+        else
+            echo -e "\033[31m$1 : ERROR.\033[0m"
+            test_synt "$1";
+            exit 1
+        fi
     fi
 }    
 
