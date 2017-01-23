@@ -40,8 +40,16 @@ public class DeclField extends AbstractDeclField {
         return this.initialization;
     }
 
+    /** Verify the pass 2.
+     *  Control if a field with the same name has already been declared.
+     *
+     * @param compiler
+     * @param currentClass
+     * @throws ContextualError
+     */
     @Override
-    protected void verifyDeclFieldHeader(DecacCompiler compiler, ClassDefinition currentClass)            throws ContextualError {
+    protected void verifyDeclFieldHeader(DecacCompiler compiler, ClassDefinition currentClass)
+            throws ContextualError {
         Type t = type.verifyType(compiler);
         if (compiler.getType(fieldName.getName()) != null) {
             throw new ContextualError("Field name used is a type", this.getLocation());
@@ -57,6 +65,12 @@ public class DeclField extends AbstractDeclField {
         currentClass.incNumberOfFields();
     }
 
+    /** Verify the pass 3.
+     *
+     * @param compiler
+     * @param currentClass
+     * @throws ContextualError
+     */
     @Override
     protected void verifyDeclFieldInit(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError {

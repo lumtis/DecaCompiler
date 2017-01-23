@@ -23,12 +23,24 @@ public class ListDeclField extends TreeList<AbstractDeclField>{
         }
     }
 
+    /** Verify the pass 2.
+     *
+     * @param compiler
+     * @param classDef
+     * @throws ContextualError
+     */
     void verifyListFieldHeader(DecacCompiler compiler, ClassDefinition classDef) throws ContextualError {
         for (AbstractDeclField f : getList()) {
             f.verifyDeclFieldHeader(compiler, classDef);
         }
     }
 
+    /** Verify the pass 3.
+     *
+     * @param compiler
+     * @param classDef
+     * @throws ContextualError
+     */
     void verifyListFieldInit(DecacCompiler compiler, ClassDefinition classDef) throws ContextualError {
         for (AbstractDeclField f : getList()) {
             f.verifyDeclFieldInit(compiler, classDef);
