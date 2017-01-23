@@ -27,7 +27,7 @@ class Math {
         if (-pi()<=f && f<0){
             return -sin(-f);
         }
-        return 0.0;
+        errorAdapt();
     }
 
     float cos(float f) {
@@ -46,7 +46,7 @@ class Math {
         if (-pi()<=f && f<0){
             return cos(-f);
         }
-        return 0.0;
+        errorAdapt();
     }
 
     //tan(x)=sin(x)/cos(x) version finale
@@ -75,8 +75,7 @@ class Math {
         if (f==-1){
             return -pi()/2;
         }
-        println("Impossible de faire le calcul en dehors de l'intervalle (-1,1), la valeur retournée est fausse.");
-        return f;
+        errorArgument();
     }
 
     //acos(x)=pi/2 - asin(x) version finale
@@ -227,7 +226,7 @@ class Math {
         else if (f<0) {
             return -atan_GrandFloat(-f);
         }
-        return 0.0;
+        errorAdapt();
     }
 
     float asin_GrandFloat(float f) {
@@ -256,8 +255,20 @@ class Math {
             }
             return solution.f + solution.erreur;
         }
-        else {
-            println("Impossible de faire le calcul en dehors de l'intervalle (-1,1), la valeur retournée est fausse.");
-        }
+        errorArgument();
     }
+
+    /*------------------ Methode pour lever une erreur -----------------------*/
+
+    void errorAdapt() asm (
+        "WSTR \"Internal error of method AdaptGrandFloat.\"
+         WNL
+         ERROR"
+    );
+
+    void errorArgument() asm (
+        "WSTR \"Invalid value of argument.\"
+         WNL
+         ERROR"
+    );
 }
