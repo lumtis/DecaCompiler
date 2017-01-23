@@ -19,6 +19,10 @@ public class EnvironmentType {
 
     private AbstractIdentifier object;
 
+    /**Constructeur qui crée tout l'environnement des types par défaut avec leur définition.
+     * La location pour les types par défaut est initialisée à 0, 0, "Default".
+     * @param symbols
+     */
     public EnvironmentType(SymbolTable symbols) {
         env_type = new HashMap<>();
         def_type = new HashMap<>();
@@ -83,6 +87,12 @@ public class EnvironmentType {
         }
     }
 
+    /**Ajoute un type et renvoie une erreur si le type est déjà existant.
+     * Ce type est ajouté aux 2 tables de hachage de cette classe.
+     * @param sym
+     * @param t
+     * @param def
+     */
     public void addType(Symbol sym, Type t, Definition def) {
         if (env_type.containsKey(sym) || def_type.containsKey(t)) {
             throw new DecacInternalError("Définition d'un type déjà existant.");
@@ -91,6 +101,9 @@ public class EnvironmentType {
         def_type.put(t, def);
     }
 
+    /**Renvoie un identifieur faire la classe Object de base dans le langage.
+     * @return
+     */
     public AbstractIdentifier getObject() {
         return this.object;
     }

@@ -34,6 +34,7 @@ public class DecacMain {
             options.displayUsage();
         }
         if (options.getParallel()) {
+            //Fait planter cobertura. Commenter cette ligne avant lancer cobertura.
             options.getSourceFiles().parallelStream().forEach(e -> compilation(e, options));
 
         } else {

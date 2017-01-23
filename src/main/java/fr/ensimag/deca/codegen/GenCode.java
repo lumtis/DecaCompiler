@@ -49,15 +49,17 @@ public class GenCode {
     private String getRegName(int n) {
         return "R" + String.valueOf(n);
     }
-    //private GPRegister getReg(int n) {
-    //    return new GPRegister(getRegName(n), n);
-    //}
 
-
+    /**
+    * Obtient le registre 0
+    */
     public GPRegister getR0() {
         return r0;
     }
 
+    /**
+    * Obtient le registre 1
+    */
     public GPRegister getR1() {
         return r1;
     }
@@ -84,7 +86,9 @@ public class GenCode {
     ////////////////////////////////////////////////////////////////////
     // Gestion des variables
 
-    // Initialise les variables globlales
+    /**
+    * Initialise les variables globales
+    */
     public void initGlobalVar(List<AbstractDeclVar> a) {
 
         addSeparatorComment();
@@ -107,7 +111,9 @@ public class GenCode {
         }
     }
 
-    // Initialise les variables locales par rapport au registre LB
+    /**
+    * Initialise les variables locales
+    */
     public void initLocalVar(List<AbstractDeclVar> a) {
 
         comp.addComment("Initialisation des variables Locales");
@@ -128,11 +134,16 @@ public class GenCode {
         }
     }
 
-
+    /**
+    * Obtient l'adresse d'une variable à partir de son identifier
+    */
     public DAddr getAddrVar(Identifier i) {
           return i.getExpDefinition().getOperand();
     }
 
+    /**
+    * Permet de retenir le registre temporaire d'une expression
+    */
     public void pushTmpReg(DVal v) {
         GPRegister r;
 
@@ -155,6 +166,9 @@ public class GenCode {
         indexTmp++;
     }
 
+    /**
+    * Depile un registre temporaire utilisé lors d'une expression
+    */
     public GPRegister popTmpReg() {
         GPRegister r;
         indexTmp--;
@@ -173,16 +187,24 @@ public class GenCode {
         return r1;
     }
 
-
+    /**
+    * Obtient le registre de retour d'expression (R2)
+    */
     public GPRegister getRetReg()
     {
         return retReg;
     }
 
+    /**
+    * Fonction a appeler pour dire que l'expression renvoie un float
+    */
     public void setExprFloat(boolean b) {
         exprFloat = b;
     }
 
+    /**
+    * Verifie que l'expression retourne un flottant
+    */
     public boolean isExprFloat() {
         return exprFloat;
     }
@@ -195,7 +217,9 @@ public class GenCode {
     ////////////////////////////////////////////////////////////////////
     // Gestion des labels
 
-    /* Obtient un nom qui n'a jamais été pris pour un nouveau label */
+    /**
+    * Obtient un nouveau label unique
+    */
     public Label newLabel() {
         String name = "label" + labelIndex;
         labelIndex++;
@@ -204,6 +228,9 @@ public class GenCode {
         return l;
     }
 
+    /**
+    * Obtient un nouveau label unique avec prefix
+    */
     public Label newLabel(String prefix) {
         String name = prefix + labelIndex;
         labelIndex++;
@@ -212,6 +239,9 @@ public class GenCode {
         return l;
     }
 
+    /**
+    * Obtient le label lié à une methode
+    */
     public Label getMethodLabel(DeclClass c, DeclMethod m) {
         String className = c.getClassName().getName().getName();
         String methodName = m.getMethodName().getName().getName();
@@ -219,6 +249,9 @@ public class GenCode {
         return new Label(className + "." + methodName);
     }
 
+    /**
+    * Obtient le label lié à une methode
+    */
     public Label getMethodLabel(DeclClass c, String mName) {
         String className = c.getClassName().getName().getName();
 
@@ -229,11 +262,17 @@ public class GenCode {
     private DeclClass currClass = null;
     private DeclMethod currMethod = null;
 
+    /**
+    * Specifie quelle est la classe et methode courantes
+    */
     public void setCurrContext(DeclClass c, DeclMethod m) {
         currClass = c;
         currMethod = m;
     }
 
+    /**
+    * Obtient le label du return de la methode courante
+    */
     public Label getRetLabel() {
         String className = currClass.getClassName().getName().getName();
         String methodName = currMethod.getMethodName().getName().getName();
@@ -241,6 +280,9 @@ public class GenCode {
         return new Label(className + "." + methodName + "." + "end");
     }
 
+    /**
+    * Obtient le label d'initialisation lié à une classe
+    */
     public Label getInitLabel(Identifier c) {
         String className = c.getName().getName();
 
@@ -257,13 +299,18 @@ public class GenCode {
     // Gestion des classes
 
 
-    // Utilitaires
+    /**
+    * Obtient la classe parente d'une classe
+    */
     public DAddr getParentAddr(DeclClass c) {
         int parentOffset = c.getParent().getClassDefinition().getOffset();
 
         return new RegisterOffset(parentOffset, Register.GB);
     }
 
+    /**
+    * Initialise la table des methodes
+    */
     public void initMethodTable(List<AbstractDeclClass> lc) {
         int indexObject;
 
@@ -335,7 +382,9 @@ public class GenCode {
     }
 
 
-    // Initialisation des classes à la fin du programme
+    /**
+    * Initialise les classes à la fin du programme
+    */
     public void initClass(List<AbstractDeclClass> lc) {
 
         // Pour la methode object il n'y a rien a initialiser
@@ -387,6 +436,9 @@ public class GenCode {
         }
     }
 
+    /**
+    * Genere la fonction object.Equals
+    */
     public void generateObjectEquals() {
         Label equal = newLabel("objEquals");
         Label end = newLabel("objEnd");
@@ -411,6 +463,9 @@ public class GenCode {
         comp.addInstruction(new RTS());
     }
 
+    /**
+    * Genere une méthodes
+    */
     public void generateMethod(DeclClass c, DeclMethod m) {
         String className = c.getClassName().getName().getName();
         String methodName = m.getMethodName().getName().getName();
@@ -439,7 +494,7 @@ public class GenCode {
 
         // On genere le code de la methode
         if(m.getIsAsm()) {
-            comp.add(new CustomLine(m.getPortion().getValue()));
+            comp.add(new InlinePortion(m.getPortion().getValue().toString().replace("\\","")));
         }
         else {
             m.getBody().generateMethod(comp, this, m.getMethodName().getMethodDefinition().getType().isVoid());
@@ -449,8 +504,9 @@ public class GenCode {
     }
 
 
-    // Sauvegarde les registres déjà utilisés et remet à 0 le gestionnaire
-    // de registre
+    /**
+    * Enregistre tout les registres
+    */
     public void saveRegister() {
         int i = 3;
         while(i < maxReg) {
@@ -460,7 +516,9 @@ public class GenCode {
         }
     }
 
-    // Restore les registres utilisés precedement
+    /**
+    * Restore tout les registres
+    */
     public void restoreRegister() {
         int i = maxReg - 1;
         while(i >= 3) {
@@ -471,7 +529,9 @@ public class GenCode {
     }
 
 
-    // Création d'un objet
+    /**
+    * Creer un nouvel objet
+    */
     public void newObject(Identifier c) {
         ClassDefinition cd = c.getClassDefinition();
         DAddr classAddr = new RegisterOffset(cd.getOffset(), Register.GB);
@@ -506,7 +566,9 @@ public class GenCode {
     ////////////////////////////////////////////////////////////////////
     // Fonctions generales
 
-    /* Ajoute les instructions au debut du programme */
+    /**
+    * Ajoute tout le code necessaire au début du programme, necette de connaitre la taille de la pile
+    */
     public void initProgram()
     {
         comp.addFirst(new ADDSP(debutPile));
@@ -523,6 +585,9 @@ public class GenCode {
     private int taillePileMax = 64;
     private int debutPile = 16;       // Sécurité
 
+    /**
+    * Incremente la taille necessaire de la pile pour la verification
+    */
     public void incrementPile(int i) {
         taillePile += i;
         if(taillePile > taillePileMax) {
@@ -530,11 +595,16 @@ public class GenCode {
         }
     }
 
+    /**
+    * Decremente la taille necessaire de la pile pour la verification
+    */
     public void decrementPile(int i) {
         taillePile -= i;
     }
 
-
+    /**
+    * Genere toute les erreurs necessaires pour le runtime
+    */
     public void terminateProgram(){
 
         // On connait maintenant la taille max de la pile

@@ -1,0 +1,24 @@
+
+
+class C {
+
+}
+
+class B extends C {
+
+}
+
+class A extends B {
+
+}
+
+{
+    A a = new A();
+    C c = (C) (a);
+    int i = 5;
+    float f = 6.3;
+
+    if((float)(i) == 5.0 && (int)(f) == 6) {
+        println("OK");
+    }
+}

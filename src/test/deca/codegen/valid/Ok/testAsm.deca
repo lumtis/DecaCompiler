@@ -1,0 +1,12 @@
+class A {
+    void testAsm() asm(
+        "WSTR \"OK\"
+        WNL"
+    );
+}
+
+
+{
+    A test = new A();
+    test.testAsm();
+}

@@ -21,12 +21,24 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
             }
         }
 
+    /**  Verify the pass 2.
+     *
+     * @param compiler
+     * @param classDef
+     * @throws ContextualError
+     */
         void verifyListMethodHeader(DecacCompiler compiler, ClassDefinition classDef) throws ContextualError {
             for (AbstractDeclMethod m : getList()) {
                 m.verifyDeclMethodHeader(compiler, classDef);
             }
         }
 
+    /** Verify the pass 3.
+     *
+     * @param compiler
+     * @param classDef
+     * @throws ContextualError
+     */
         void verifyListMethodBody(DecacCompiler compiler, ClassDefinition classDef) throws ContextualError {
             for (AbstractDeclMethod m : getList()) {
                 m.verifyDeclMethodBody(compiler, classDef);

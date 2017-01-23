@@ -1,4 +1,4 @@
-#include "GrandFloat.deca"
+#include "GrandFloat.decah"
 
 class Math {
     GrandFloat g = new GrandFloat();
@@ -27,7 +27,7 @@ class Math {
         if (-pi()<=f && f<0){
             return -sin(-f);
         }
-        return 0.0;
+        errorAdapt();
     }
 
     float cos(float f) {
@@ -46,7 +46,7 @@ class Math {
         if (-pi()<=f && f<0){
             return cos(-f);
         }
-        return 0.0;
+        errorAdapt();
     }
 
     //tan(x)=sin(x)/cos(x) version finale
@@ -75,13 +75,48 @@ class Math {
         if (f==-1){
             return -pi()/2;
         }
-        println("Impossible de faire le calcul en dehors de l'intervalle (-1,1), la valeur retournée est fausse.");
-        return f;
+        errorArgument();
     }
 
     //acos(x)=pi/2 - asin(x) version finale
     float acos(float f) {
         return 1.570796327-asin(f);
+    }
+
+
+    // calcul de l'ulp
+    float ulp(float f) {
+        return g.pow(2,exposant(f))*g.pow(2,-23);
+    }
+
+
+    // calcul l'exposant de la représentaion en binaire 32
+    int exposant(float f){
+        int exp;
+        int f1;
+        if (f < 0) {
+            return exposant(-f);
+        }
+        if (f==0) {
+            return 0;
+        }
+        exp = 0;
+        if (f > 1) {
+            //f1=(int)f;
+            while (f1>1){
+                exp=exp+1;
+                f1=f1/2;
+            }
+            return exp;
+        }
+        if (f<1){
+            while(f<1){
+                exp=exp-1;
+                f=f*2;
+            }
+            return exp;
+        }
+        return exp;
     }
 
     /*------------- Fonctions annexes ---------------*/
@@ -164,7 +199,7 @@ class Math {
         float tmp;
         float tmp1;
         int k=0;
-        float fcarre = f*f; //Beber
+        float fcarre = f*f;
         GrandFloat r=new GrandFloat();
         if (f == 1) {
             return 0.78539816;
@@ -191,7 +226,7 @@ class Math {
         else if (f<0) {
             return -atan_GrandFloat(-f);
         }
-        return 0.0;
+        errorAdapt();
     }
 
     float asin_GrandFloat(float f) {
@@ -220,8 +255,20 @@ class Math {
             }
             return solution.f + solution.erreur;
         }
-        else {
-            println("Impossible de faire le calcul en dehors de l'intervalle (-1,1), la valeur retournée est fausse.");
-        }
+        errorArgument();
     }
+
+    /*------------------ Methode pour lever une erreur -----------------------*/
+
+    void errorAdapt() asm (
+        "WSTR \"Internal error of method AdaptGrandFloat.\"
+         WNL
+         ERROR"
+    );
+
+    void errorArgument() asm (
+        "WSTR \"Invalid value of argument.\"
+         WNL
+         ERROR"
+    );
 }

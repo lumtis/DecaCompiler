@@ -1,7 +1,7 @@
 {
     float a= 100000000000000000000000000000000000000.0; //10^38
-    float b= 4.0;
+    float b= 0.1;
 
-    float f = a*b;
+    float f = a/b;
 }
 //ERROR Error : arithmetic overflow.
