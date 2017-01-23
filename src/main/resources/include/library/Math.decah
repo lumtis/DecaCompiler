@@ -87,7 +87,7 @@ class Math {
 
     // calcul de l'ulp
     float ulp(float f) {
-        return pow(2,exposant(f))*pow(2,-23);
+        return g.pow(2,exposant(f))*g.pow(2,-23);
     }
 
 
