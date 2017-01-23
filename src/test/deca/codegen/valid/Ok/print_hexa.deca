@@ -1,0 +1,7 @@
+{
+
+float f= 0xa428.525F2p12;
+print(f);
+print("OK");
+
+}
