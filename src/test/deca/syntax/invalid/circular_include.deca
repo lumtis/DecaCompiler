@@ -1,0 +1,5 @@
+#include "circular_include2.deca"
+
+{
+print("ok");
+}

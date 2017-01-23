@@ -1,0 +1,4 @@
+#include "include.deca"
+{
+	print("ok");
+}
