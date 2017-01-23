@@ -586,7 +586,7 @@ class Mathe {
     //fonction sinus dernière en GrandFloat version finale 
     float sin(float f) {
         
-        f=g.adaptGranfloat(f);
+        f=g.adaptGrandFloat(f);
         
         
         if (0<=f && f<=pisur2()) {
@@ -613,7 +613,7 @@ class Mathe {
     //fonction cosinus en GrandFloat version finale
     float cos(float f) {
         
-        f=g.adaptGranfloat(f);
+        f=g.adaptGrandFloat(f);
         
         if (f==0){
             return 1.0;

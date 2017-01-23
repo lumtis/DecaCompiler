@@ -2,6 +2,35 @@ class GrandFloat {
     float f;
     float erreur;
 
+    void setFloat1(float f){
+        this.f=f;
+    }
+    void setFloat2(float e){
+        this.erreur=e;
+    }
+
+    GrandFloat newGrandFloat(float f,float e){
+        
+        this.setFloat1(f);
+        this.setFloat2(e);
+        return this;
+    }
+
+    
+    float getErreur(){
+        return this.erreur;
+    }
+    float getFLoatt(){
+        return this.f;
+    }
+    
+    void Affiche(){
+        print("grand float= ");
+        print(this.f);
+        print(" + ");
+        print(this.erreur);
+    }
+
     // Somme deux float et garde l'erreur dans notre structure
     GrandFloat additionSimple(float f, float g){
         float somme = f+g;

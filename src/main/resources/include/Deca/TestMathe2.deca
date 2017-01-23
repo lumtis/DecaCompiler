@@ -55,8 +55,8 @@
         //}
 
         println("TEST ATAN");
-        i=-10+9;
-        while (i<=10){ 
+        i=-1;
+        while (i<=5){
             //print("atan(");   
             //print(i);
             //print(")= ");
