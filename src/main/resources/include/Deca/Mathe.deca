@@ -244,6 +244,9 @@ class Mathe {
 
     // calcul de l'ulp
     float ulp(float f) {
+        if (f == 0) {
+            return pow(2,-149);
+        }
         return pow(2,exposant(f))*pow(2,-23);
     }
 
