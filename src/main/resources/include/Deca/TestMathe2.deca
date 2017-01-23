@@ -4,64 +4,64 @@
         float py=m.pi();
         float i;
         
-        println("TEST SIN");
-        i=-py;
-        while (i<=py){ 
-            print("sin(");   
-            print(i);
-            print(")= ");
-            println(m.sin(i));
-            i=i+py/6;
-        }
+        //println("TEST SIN");
+        //i=-py;
+        //while (i<=py){ 
+            //print("sin(");   
+            //println(i);
+            //print(")= ");
+            //println(m.cos(i));
+            //i=i+py/24;
+        //}
 
-        println("TEST COS");
-        i=-py;
-        while (i<=py){ 
-            print("cos(");   
-            print(i);
-            print(")= ");
-            println(m.cos(i));
-            i=i+py/6;
-        }
+        //println("TEST COS");
+        //i=-py;
+        //while (i<=py){ 
+            //print("cos(");   
+            //print(i);
+            //print(")= ");
+            //println(m.cos(i));
+            //i=i+py/12;
+        //}
         
-        println("TEST TAN");
-        i=-py/2+py/48;
-        while (i<=py/2-py/48){
-            print("tan(");   
-            print(i);
-            print(")= ");
-            println(m.tan(i));
-            i=i+py/6;
-        }
+        //println("TEST TAN");
+        //i=-py/2+py/48;
+        //while (i<=py/2-py/48){
+            //print("tan(");   
+            //print(i);
+            //print(")= ");
+            //println(m.tan(i));
+            //i=i+py/6;
+        //}
 
-        println("TEST ASIN");
-        i=-1;
-        while (i<=1){
-            print("asin(");   
-            print(i);
-            print(")= ");
-            println(m.asin(i));
-            i=i+0.1;
-        }
+        //println("TEST ASIN");
+        //i=-1+0.01*180;
+        //while (i<=1){
+            //print("asin(");   
+            //print(i);
+            //print(")= ");
+            //println(m.asin(i));
+            //i=i+0.01;
+        //}
        
-        println("TEST ACOS");
-        i=-1;
-        while (i<=1){
-            print("acos(");   
-            print(i);
-            print(")= ");
-            println(m.acos(i));
-            i=i+0.1;
-        }
+        //println("TEST ACOS");
+        //i=-1;
+        //while (i<=1){
+            //print("acos(");   
+            //print(i);
+            //print(")= ");
+            //println(m.acos(i));
+            //i=i+0.1;
+        //}
 
         println("TEST ATAN");
-        i=-10;
+        i=-10+9;
         while (i<=10){ 
-            print("atan(");   
-            print(i);
-            print(")= ");
+            //print("atan(");   
+            //print(i);
+            //print(")= ");
             println(m.atan(i));
-            i=i+0.1;
+            i=i+1;
         }
 
 }
