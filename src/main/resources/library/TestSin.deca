@@ -1,0 +1,18 @@
+#include "Math.deca"
+
+{
+    Math m = new Math();
+    float v1 = m.pi();
+    float v2 = 0.45485;
+    float v3 = 0.00006748;
+    println("------------Début du test de sinus---------");
+    println("Valeur testée :",v1);
+    println("Notre résultat :",m.sin(v1));
+    println("Résultat attendu : 6.53589793e-7");
+    println("Valeur testée :",v2);
+    println("Notre résultat :",m.sin(v2));
+    println("Résultat attendu : 0.4393275697");
+    println("Valeur testée :",v3);
+    println("Notre résultat :",m.sin(v3));
+    println("Résultat attendu : 6.747999995e-5");
+}

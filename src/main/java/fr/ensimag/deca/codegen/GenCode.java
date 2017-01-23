@@ -112,13 +112,6 @@ public class GenCode {
 
         comp.addComment("Initialisation des variables Locales");
 
-        // On incremente la pile pour sauvegarder les registres plus tard
-        comp.addInstruction(new ADDSP(a.size()+1));
-
-        // Pour établir la taille max de la pile
-        incrementPile(a.size()+1);
-        decrementPile(a.size()+1);
-
         indexLB = 1;
 
         for (AbstractDeclVar d:a){
@@ -537,7 +530,7 @@ public class GenCode {
         }
     }
 
-    private void decrementPile(int i) {
+    public void decrementPile(int i) {
         taillePile -= i;
     }
 

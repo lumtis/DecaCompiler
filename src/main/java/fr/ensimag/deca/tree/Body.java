@@ -11,6 +11,7 @@ import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
+import java.util.List;
 import java.io.PrintStream;
 
 /**
@@ -39,12 +40,18 @@ public class Body extends AbstractBody{
     }
     @Override
     protected void codeGenBody(DecacCompiler compiler, GenCode gc) {
+        List<AbstractDeclVar> a = this.declVariables.getList();
 
-        gc.initLocalVar(this.declVariables.getList());
+        // On incremente la pile pour sauvegarder les registres plus tard
+        compiler.addInstruction(new ADDSP(a.size()+1));
+        gc.incrementPile(a.size()+1);
+        gc.decrementPile(a.size()+1);
 
         // On sauvegarde les registres actuellement utilisés
         compiler.addComment("Save used register:");
         gc.saveRegister();
+
+        gc.initLocalVar(a);
 
         compiler.addComment("Beginning of method:");
         insts.codeGenListInst(compiler, gc);
