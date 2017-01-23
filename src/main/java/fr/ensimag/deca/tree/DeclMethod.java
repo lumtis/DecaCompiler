@@ -67,6 +67,14 @@ public class DeclMethod extends AbstractDeclMethod {
         return portionAssembleur;
     }
 
+    /** Verify the pass 2 of Contextual syntax.
+     * Control if a method with the same name is already declared. If a method has already been declared,
+     * control if the method has the same signature to override it. Otherwise, throw a Contextual error.
+     *
+     * @param compiler
+     * @param classDef
+     * @throws ContextualError
+     */
     @Override
     protected void verifyDeclMethodHeader(DecacCompiler compiler, ClassDefinition classDef)
             throws ContextualError {
@@ -108,6 +116,12 @@ public class DeclMethod extends AbstractDeclMethod {
         methodName.setType(returnType);
     }
 
+    /**Verify the pass 3.
+     *
+     * @param compiler
+     * @param classDef
+     * @throws ContextualError
+     */
     @Override
     protected void verifyDeclMethodBody(DecacCompiler compiler, ClassDefinition classDef)
             throws ContextualError {

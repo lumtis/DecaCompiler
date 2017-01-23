@@ -1,4 +1,4 @@
-#include "GrandFloat.deca"
+#include "GrandFloat.decah"
 
 class Math {
     GrandFloat g = new GrandFloat();
@@ -84,6 +84,42 @@ class Math {
         return 1.570796327-asin(f);
     }
 
+
+    // calcul de l'ulp
+    float ulp(float f) {
+        return pow(2,exposant(f))*pow(2,-23);
+    }
+
+
+    // calcul l'exposant de la représentaion en binaire 32
+    int exposant(float f){
+        int exp;
+        int f1;
+        if (f < 0) {
+            return exposant(-f);
+        }
+        if (f==0) {
+            return 0;
+        }
+        exp = 0;
+        if (f > 1) {
+            //f1=(int)f;
+            while (f1>1){
+                exp=exp+1;
+                f1=f1/2;
+            }
+            return exp;
+        }
+        if (f<1){
+            while(f<1){
+                exp=exp-1;
+                f=f*2;
+            }
+            return exp;
+        }
+        return exp;
+    }
+
     /*------------- Fonctions annexes ---------------*/
 
     // fonction factoriel
@@ -164,7 +200,7 @@ class Math {
         float tmp;
         float tmp1;
         int k=0;
-        float fcarre = f*f; //Beber
+        float fcarre = f*f;
         GrandFloat r=new GrandFloat();
         if (f == 1) {
             return 0.78539816;
