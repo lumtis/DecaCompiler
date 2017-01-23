@@ -164,7 +164,7 @@ class Math {
         float tmp;
         float tmp1;
         int k=0;
-        float fcarre = f*f; //Beber
+        float fcarre = f*f;
         GrandFloat r=new GrandFloat();
         if (f == 1) {
             return 0.78539816;

@@ -439,7 +439,7 @@ public class GenCode {
 
         // On genere le code de la methode
         if(m.getIsAsm()) {
-            comp.add(new CustomLine(m.getPortion().getValue()));
+            comp.add(new InlinePortion(m.getPortion().getValue().toString().replace("\\","")));
         }
         else {
             m.getBody().generateMethod(comp, this, m.getMethodName().getMethodDefinition().getType().isVoid());
