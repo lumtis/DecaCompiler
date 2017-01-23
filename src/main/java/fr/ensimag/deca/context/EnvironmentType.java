@@ -83,6 +83,7 @@ public class EnvironmentType {
         }
     }
 
+    
     public void addType(Symbol sym, Type t, Definition def) {
         if (env_type.containsKey(sym) || def_type.containsKey(t)) {
             throw new DecacInternalError("Définition d'un type déjà existant.");

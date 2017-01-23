@@ -1,4 +1,4 @@
-#include "Math.deca"
+#include "Math.decah"
 
 {
     Math m = new Math();
