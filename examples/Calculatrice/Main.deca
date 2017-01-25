@@ -1,0 +1,118 @@
+#include "Math.decah"
+
+class Utile {
+
+    Math m = new Math();
+
+    void afficheMenu() {
+        println("#####################################");
+        println("###### Calculatrice groupe 35 #######");
+        println("#####################################");
+        println("1=cos    2=sin    3=tan");
+        println("4=acos   5=asin   6=atan");
+        println("Choisissez une fonction (rentrez 7 pour quitter).");
+    }
+
+    int faireUnChoix() {
+        int choix = 0;
+        boolean pass = false;
+        while (choix<1 || choix>7) {
+            if (pass) {
+                println("Vous devez rentrer un chiffre entre 1 et 7.");
+            }
+            pass = true;
+            choix = readInt();
+        }
+        return choix;
+    }
+
+    void afficheSousMenu(int choix) {
+        println("");
+        print("Fonction choisie : ");
+        if (choix==1) {
+            println("cos");
+        }
+        else if (choix==2) {
+            println("sin");
+        }
+        else if (choix==3) {
+            println("tan");
+        }
+        else if (choix==4) {
+            println("acos");
+        }
+        else if (choix==5) {
+            println("asin");
+        }
+        else {
+            println("atan");
+        }
+    }
+
+    float lireUnFlottant() {
+        float f;
+        println("Veuillez rentrer une valeur de type float :");
+        f = readFloat();
+        return f;
+    }
+
+    void afficheResultat(int choix, float f) {
+        print("Résultat : ");
+        if (choix==1) {
+            print("cos(");
+            print(f);
+            print(") = ");
+            print(m.cos(f));
+        }
+        else if (choix==2) {
+            print("sin(");
+            print(f);
+            print(") = ");
+            print(m.sin(f));
+        }
+        else if (choix==3) {
+            print("tan(");
+            print(f);
+            print(") = ");
+            print(m.tan(f));
+        }
+        else if (choix==4) {
+            print("acos(");
+            print(f);
+            print(") = ");
+            print(m.acos(f));
+        }
+        else if (choix==5) {
+            print("asin(");
+            print(f);
+            print(") = ");
+            print(m.asin(f));
+        }
+        else {
+            print("atan(");
+            print(f);
+            print(") = ");
+            print(m.atan(f));
+        }
+        println("");
+    }
+}
+
+{
+    int choix;
+    float val;
+    Utile ut = new Utile();
+    boolean continu = true;
+    while (continu){
+        ut.afficheMenu();
+        choix=ut.faireUnChoix();
+        if (choix != 7){
+        ut.afficheSousMenu(choix);
+        val=ut.lireUnFlottant();
+        ut.afficheResultat(choix,val);
+        }
+        else {
+            continu = false;
+        }
+    }
+}
