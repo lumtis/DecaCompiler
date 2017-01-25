@@ -1,0 +1,9 @@
+class Case_vide extends Case{
+
+    void getValeur(){
+        print(" ");
+    }
+    boolean isVide(){
+        return true;
+    }
+}

@@ -1,0 +1,17 @@
+class Case{
+
+    void getValeur(){
+
+    }
+
+    boolean isVide(){
+        return false;
+    }
+    boolean isRond(){
+        return false;
+    }
+    boolean isCroix(){
+        return false;
+    }
+
+}
