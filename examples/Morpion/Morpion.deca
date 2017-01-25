@@ -16,13 +16,13 @@ class Morpion{
     protected Case case9=new Case_vide();
 
     Case getCase(int numCase){
-        if(numCase==1){
+        if(numCase==7){
             return this.case1;
         }
-        else if(numCase==2){
+        else if(numCase==8){
             return this.case2;
         }
-        else if(numCase==3){
+        else if(numCase==9){
             return this.case3;
         }
         else if(numCase==4){
@@ -34,10 +34,10 @@ class Morpion{
         else if(numCase==6){
             return this.case6;
         }
-        else if(numCase==7){
+        else if(numCase==1){
             return this.case7;
         }
-        else if(numCase==8){
+        else if(numCase==2){
             return this.case8;
         }
         else {
@@ -48,13 +48,13 @@ class Morpion{
     void setCase(int numCase, int numJoueur){
 
         if(numJoueur==1){
-            if(numCase==1){
+            if(numCase==7){
                 this.case1 = new Case_rond();
             }
-            else if(numCase==2){
+            else if(numCase==8){
                 this.case2 = new Case_rond();
             }
-            else if(numCase==3){
+            else if(numCase==9){
                 this.case3 = new Case_rond();
             }
             else if(numCase==4){
@@ -66,10 +66,10 @@ class Morpion{
             else if(numCase==6){
                 this.case6 = new Case_rond();
             }
-            else if(numCase==7){
+            else if(numCase==1){
                 this.case7 = new Case_rond();
             }
-            else if(numCase==8){
+            else if(numCase==2){
                 this.case8 = new Case_rond();
             }
             else {
@@ -78,13 +78,13 @@ class Morpion{
 
         }
         else{
-            if(numCase==1){
+            if(numCase==7){
                 this.case1 = new Case_croix();
             }
-            else if(numCase==2){
+            else if(numCase==8){
                 this.case2 = new Case_croix();
             }
-            else if(numCase==3){
+            else if(numCase==9){
                 this.case3 = new Case_croix();
             }
             else if(numCase==4){
@@ -96,10 +96,10 @@ class Morpion{
             else if(numCase==6){
                 this.case6 = new Case_croix();
             }
-            else if(numCase==7){
+            else if(numCase==1){
                 this.case7 = new Case_croix();
             }
-            else if(numCase==8){
+            else if(numCase==2){
                 this.case8 = new Case_croix();
             }
             else {
@@ -109,10 +109,13 @@ class Morpion{
     }
 
     boolean jouer(int numCase, int numJoueur){
+
             //On récupère la case jouée
             Case myCase = getCase(numCase);
+
             if(myCase.isVide()){
                 //Si la case est vide, on remplit par une croix ou un rond suivant le joueur.
+
                 if(numJoueur==1) {
                     this.setCase(numCase, 1);
                 }
@@ -122,12 +125,15 @@ class Morpion{
                 this.affiche();
                 return true;
             }
+
             //Sinon la case est déjà jouée.
             println("La case jouée n'est pas vide");
             return  false;
     }
 
     void affiche(){
+
+        //Affiche la grille
 
         print(" ");case1.getValeur();print("|");case2.getValeur();print("|");case3.getValeur();
         println(" ");
@@ -137,17 +143,32 @@ class Morpion{
         println("-------");
         print(" ");case7.getValeur();print("|");case8.getValeur();print("|");case9.getValeur();
         println(" ");
+        println("");
 
     }
 
     boolean finPartie() {
+
         if ((case1.isRond() && case2.isRond() && case3.isRond()) || (case4.isRond() && case5.isRond() && case6.isRond()) || (case7.isRond() && case8.isRond() && case9.isRond()) || (case1.isRond() && case4.isRond() && case7.isRond()) || (case2.isRond() && case5.isRond() && case8.isRond()) || (case3.isRond() && case6.isRond() && case9.isRond()) || (case3.isRond() && case5.isRond() && case7.isRond()) || (case1.isRond() && case5.isRond() && case9.isRond())) {
+
             println("Joueur 1 a gagné !");
-            return true;
-        } else if ((case1.isCroix() && case2.isCroix() && case3.isCroix()) || (case4.isCroix() && case5.isCroix() && case6.isCroix()) || (case7.isCroix() && case8.isCroix() && case9.isCroix()) || (case1.isCroix() && case4.isCroix() && case7.isCroix()) || (case2.isCroix() && case5.isCroix() && case8.isCroix()) || (case3.isCroix() && case6.isCroix() && case9.isCroix()) || (case3.isCroix() && case5.isCroix() && case7.isCroix()) || (case1.isCroix() && case5.isCroix() && case9.isCroix())) {
-            println("Joueur 2 a gagné !");
+            println("");
             return true;
         }
+
+        else if ((case1.isCroix() && case2.isCroix() && case3.isCroix()) || (case4.isCroix() && case5.isCroix() && case6.isCroix()) || (case7.isCroix() && case8.isCroix() && case9.isCroix()) || (case1.isCroix() && case4.isCroix() && case7.isCroix()) || (case2.isCroix() && case5.isCroix() && case8.isCroix()) || (case3.isCroix() && case6.isCroix() && case9.isCroix()) || (case3.isCroix() && case5.isCroix() && case7.isCroix()) || (case1.isCroix() && case5.isCroix() && case9.isCroix())) {
+            println("Joueur 2 a gagné !");
+            println("");
+            return true;
+        }
+
+        else if(!case1.isVide() && !case2.isVide() && !case3.isVide() && !case4.isVide() && !case5.isVide() && !case6.isVide() && !case7.isVide() && !case8.isVide() && !case9.isVide()){
+
+            println("Egalité !");
+            println("");
+            return true;
+        }
+
         return false;
     }
 

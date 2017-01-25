@@ -4,11 +4,53 @@
 
         Morpion morp=new Morpion();
         boolean fin=false;
+        boolean coup_correct;
+        int coup;
 
-        morp.jouer(1,1);
-        morp.jouer(2,1);
-        morp.finPartie();
-        morp.jouer(3,1);
-        morp.finPartie();
+        // -------------------------------------------
+        println("");
+        println("##########################");
+        println("MORPION groupe 35");
+        println("Joueur 1: O");
+        println("Joueur 2: X");
+        println("##########################");
+        println("");
+        morp.affiche();
+        // --------------------------------------------
+
+
+        while (!fin){
+
+            coup_correct=false;
+            while(!coup_correct){
+                print("Joueur 1:");
+                coup=readInt();
+                println("");
+                if(coup<1 || coup >9){
+                    println("Vous devez rentrez un entier entre 1 et 9");
+                }
+                else{
+                    coup_correct=morp.jouer(coup,1);
+                    fin=morp.finPartie();
+                }
+
+            }
+
+            coup_correct=false;
+            while(!coup_correct && !fin){
+                print("Joueur 2:");
+                coup=readInt();
+                if(coup<1 || coup >9){
+                    println("Vous devez rentrez un entier entre 1 et 9");
+                }
+                else{
+                    coup_correct=morp.jouer(coup,2);
+                    fin=morp.finPartie();
+                }
+
+            }
+
+        }
+        print("Ce jeu a l'air bien compilé ...");
 
 }

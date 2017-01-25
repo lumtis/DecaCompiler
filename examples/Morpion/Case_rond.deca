@@ -1,7 +1,7 @@
 class Case_rond extends Case{
 
     void getValeur(){
-        System.out.print("O");
+        print("O");
     }
 
     boolean isRond(){

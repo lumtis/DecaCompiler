@@ -1,7 +1,7 @@
 class Case_croix extends Case{
 
     void getValeur(){
-        System.out.print("X");
+        print("X");
     }
 
     boolean isCroix(){
