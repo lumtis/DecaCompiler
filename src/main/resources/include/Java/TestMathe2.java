@@ -50,21 +50,21 @@ public class TestMathe2 {
         //System.out.println(c);
         
         
-        /*
+        
         System.out.println("TEST SIN");
         int c11=0;
         int c22=0;
         for (float i=-py;i<=py;i=i+py/24){    
             //System.out.println(i);
             //System.out.print("  ");
-            //System.out.println(Mathe.sin(i));
+            System.out.println(Mathe.ulp(Mathe.sin(i)));
             //c11=c11+fon.testSinus(i);
         
             //System.out.print(i);
             //System.out.print("  ");
             //c22=c22+fon.testSinus2(i);
             //System.out.println("");
-        }*/
+        }
         //System.out.print("Nombre total de SIN PASS : ");
         //System.out.println(c11);
         
@@ -110,7 +110,7 @@ public class TestMathe2 {
             System.out.println("  ");
             fon.testTan(i);
         }*/
-        
+        /*
         System.out.println("TEST ASIN");
         for (float i=-10;i<=10;i=i+(float)1){    
             //System.out.println(i);
@@ -120,7 +120,7 @@ public class TestMathe2 {
             
             //fon.testAsin(i);
             //fon.testAsin2(i);
-        }
+        }/*
         /*
         System.out.println("TEST ACOS");
         for (float i=-1;i<=1;i=i+(float)0.01){    
