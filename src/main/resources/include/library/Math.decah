@@ -158,13 +158,13 @@ class Math {
         tmp = 1.0;
         tmp1= f;
         r = g.multiplicationSimple(tmp,tmp1);
-        solution = g.additionGrandFloat(solution,r);
+        solution.additionGrandFloat(r);
         k = k+1;
         while (k<10){
             tmp = tmp/(2*k*(2*k+1));// tmp = 1.0/factoriel(2*k+1);
             tmp1= -tmp1*fcarre; //tmp1 = (-1)^k*f^(2k+1)
             r = g.multiplicationSimple(tmp,tmp1);
-            solution = g.additionGrandFloat(solution,r);
+            solution.additionGrandFloat(r);
             k = k+1;
         }
         return solution.f + solution.erreur;
@@ -184,13 +184,13 @@ class Math {
         tmp=1.0;
         tmp1 = 1.0;
         r=g.multiplicationSimple(tmp,tmp1);
-        solution=g.additionGrandFloat(solution,r);
+        solution.additionGrandFloat(r);
         k=k+1;
         while (k<10){
             tmp = tmp/((2*k-1)*2*k); //tmp = 1/(2k!)
             tmp1 = -tmp1*fcarre; //tmp1 = (-1)^k * f^(2k)
             r=g.multiplicationSimple(tmp,tmp1);
-            solution=g.additionGrandFloat(solution,r);
+            solution.additionGrandFloat(r);
             k=k+1;
         }
         return solution.f + solution.erreur;
@@ -212,13 +212,13 @@ class Math {
             tmp=1.0;
             tmp1=f;
             r=g.multiplicationSimple(tmp,tmp1);
-            solution=g.additionGrandFloat(solution,r);
+            solution.additionGrandFloat(r);
             k=k+1;
             while (k < 50) {
                 tmp=1.0/(2*k+1);
                 tmp1 = -tmp1*f*f; //(-1)^k * f^(2k+1)
                 r=g.multiplicationSimple(tmp,tmp1);
-                solution=g.additionGrandFloat(solution,r);
+                solution.additionGrandFloat(r);
                 k=k+1;
             }
             return solution.f + solution.erreur;
@@ -245,7 +245,7 @@ class Math {
             solution.erreur = 0.0;
             //Cas particulier k = 0
             r=g.multiplicationSimple(tmp,tmp1);
-            solution=g.additionGrandFloat(solution,r);
+            solution.additionGrandFloat(r);
             k=k+1;
             while (k < 10) {
                 coef = coef*k*2;
@@ -253,7 +253,7 @@ class Math {
                 //tmp = 1/((2k+1)*(k!*2^k)^2)
                 tmp1 = tmp1*fcarre*(2*k-1)*2*k; //tmp1=f^(2k+1)*(2k)!
                 r=g.multiplicationSimple(tmp,tmp1);
-                solution=g.additionGrandFloat(solution,r);
+                solution.additionGrandFloat(r);
                 k=k+1;
             }
             return solution.f + solution.erreur;
