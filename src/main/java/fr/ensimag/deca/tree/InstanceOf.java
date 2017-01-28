@@ -79,6 +79,11 @@ public class InstanceOf extends AbstractExpr {
         // On réalise l'expression
         expr.codeGenInst(compiler, gc);
 
+        // Si l'objet est null alors ce n'est pas une instacne
+        compiler.addInstruction(new CMP(new NullOperand(), gc.getRetReg()));
+        compiler.addInstruction(new LOAD(0, gc.getRetReg()));
+        compiler.addInstruction(new BEQ(fin));
+
         compiler.addLabel(debut);
         compiler.addInstruction(new LOAD(new RegisterOffset(0, gc.getRetReg()), gc.getRetReg()));
         compiler.addInstruction(new CMP(new NullOperand(), gc.getRetReg()));
